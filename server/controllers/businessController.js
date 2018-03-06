@@ -67,6 +67,27 @@ class Business {
 			error: true
 		});
 	}
+
+	/**
+   * @returns {Object} getABusiness
+   * @param {*} req
+   * @param {*} res
+   */
+	static getABusiness(req, res) {
+		for (let i = 0; i < business.length; i += 1) {
+			if (business[i].id === parseInt(req.params.businessId, 10)) {
+				return res.json({
+					business: business[business[i].id - 1],
+					message: 'Success',
+					error: false
+				});
+			}
+		}
+		return res.status(404).json({
+			message: 'Business not found',
+			error: true
+		});
+	}
 }
 
 export default Business;

@@ -12,5 +12,6 @@ router.post('/auth/login', Users.loginUser);
 router.post('/businesses', Business.registerBusiness);
 router.put('/businesses/:businessId', Business.updateBusiness);
 router.delete('/businesses/:businessId', Business.removeBusiness);
+router.get('/businesses/:businessId', Business.getABusiness);
 
 export default router;
