@@ -281,3 +281,63 @@ form {
 	font-weight: bold;
 }
 /* BUSINESS LISTING */
+
+/* INDEX PAGE CONTENT */
+.main-image {
+	background: url(../images/connect.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: calc(100vh - 75px);
+	background-attachment: fixed;
+	background-size: cover;
+	font-family: Lato;
+	color: white;
+}
+
+.catchphrase {
+	color: #99738e;
+	font-style: italic;
+	margin-top: 20%;
+}
+
+.catchphrase > h3 {
+	font-size: 30px;
+	color: blue;
+}
+
+.button {
+    background-color: #fff;
+    border: none;
+		color: #fd654d;
+		font-weight: bolder;
+}
+
+#content {
+	background: #fd654d;
+	color: white;
+	padding: 10px;
+	margin-top: 100px;
+	width: 50%;
+	display: flex;
+	justify-content: center;
+  align-items: center;
+}
+
+#index-hr {
+	width: 400px;
+	border-top: 1px solid #f8f8f8;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+#regbutton {
+	margin: 10px;
+	text-transform: uppercase;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 900px) {
+	#content > * {
+		padding: 6px;
+	}
+}
+/* INDEX PAGE CONTENT END */
