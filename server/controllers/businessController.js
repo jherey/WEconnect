@@ -5,6 +5,17 @@ import business from '../models/business';
  */
 class Business {
 	/**
+ * @returns {Object} getAllBusinesses
+ * @param {*} req
+ * @param {*} res
+ */
+	static getAllBusinesses(req, res) {
+		return res.json({
+			business
+		});
+	}
+
+	/**
    * @returns {Object} registerBusiness
    * @param {*} req
    * @param {*} res
