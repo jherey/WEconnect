@@ -11,5 +11,6 @@ router.post('/auth/login', Users.loginUser);
 //	Business endpoints
 router.post('/businesses', Business.registerBusiness);
 router.put('/businesses/:businessId', Business.updateBusiness);
+router.delete('/businesses/:businessId', Business.removeBusiness);
 
 export default router;
