@@ -341,3 +341,36 @@ form {
 	}
 }
 /* INDEX PAGE CONTENT END */
+
+/* ABOUT PAGE */
+.images {
+	font-size: 0;
+	margin-top: 100px;
+	text-align: center;
+}
+
+.images img {
+	border: none;
+	display: inline-block;
+	margin: 0 auto;
+}
+
+.about {
+	color: #fff;
+	background-color: #2F2FA2;
+	padding: 25px;
+}
+
+.team {
+	font-size: 1.15em;
+	margin: -8px;
+	background: #F4F6F7;
+	color: #fd654d;
+	padding: 40px;
+}
+
+.header {
+	padding-top: 50px;
+}
+/* END OF ABOUT */
+
