@@ -5,6 +5,19 @@ html {
 	line-height: 30px;
 }
 
+.team {
+	font-size: 1.15em;
+	margin: -8px;
+	background: #F4F6F7;
+	color: #fd654d;
+	padding: 40px;
+}
+
+.btn-primary {
+	background-color:  #fd654d;
+	border: none;
+}
+
 /* NAVBAR */
 .navbar-nav {
 	font-weight: bold;
