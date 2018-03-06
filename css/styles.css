@@ -374,3 +374,29 @@ form {
 }
 /* END OF ABOUT */
 
+/* BUS.HTML */
+.flex-container {
+	height: 50%;
+	display: flex;
+	justify-content: center;
+	background-color: #55efc4;
+	margin-bottom: 15px;
+}
+
+#tops {
+	margin: 20px;
+}
+
+.flex-container>div {
+	background-color: #00b894;
+	font-size: 250%;
+	font-weight: bolder;
+	font-style: italic;
+	margin: 5px;
+	padding: 20px;
+}
+
+.tech-content {
+	margin-top: 30px;
+}
+/* BUS.HTML END */
