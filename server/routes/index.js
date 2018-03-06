@@ -10,5 +10,6 @@ router.post('/auth/login', Users.loginUser);
 
 //	Business endpoints
 router.post('/businesses', Business.registerBusiness);
+router.put('/businesses/:businessId', Business.updateBusiness);
 
 export default router;
