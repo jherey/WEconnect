@@ -122,6 +122,21 @@ class Business {
 			error: true
 		});
 	}
+
+	/**
+   * @returns {Object} getAllReviews
+   * @param {*} req
+   * @param {*} res
+   */
+	static getAllReviews(req, res) {
+		business.forEach((bus) => {
+			if (bus.id === parseInt(req.params.businessId, 10)) {
+				res.json({
+					Reviews: bus.reviews
+				});
+			}
+		});
+	}
 }
 
 export default Business;
