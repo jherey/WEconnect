@@ -10,8 +10,9 @@ class Business {
  * @param {*} res
  */
 	static getAllBusinesses(req, res) {
-		const { location } = req.query;
+		const { location, category } = req.query;
 		const loc = [];
+		const cat = [];
 		if (location) {
 			for (let i = 0; i < business.length; i += 1) {
 				if (location.toLowerCase() === business[i].location.toLowerCase()) {
@@ -19,6 +20,14 @@ class Business {
 				}
 			}
 			return res.json(loc);
+		}
+		if (category) {
+			for (let i = 0; i < business.length; i += 1) {
+				if (category.toLowerCase() === business[i].category.toLowerCase()) {
+					cat.push(business[i]);
+				}
+			}
+			return res.json(cat);
 		}
 		return res.json({
 			business
