@@ -99,6 +99,29 @@ class Business {
 			error: true
 		});
 	}
+
+	/**
+   * @returns {Object} addReview
+   * @param {*} req
+   * @param {*} res
+   */
+	static addReview(req, res) {
+		const { name, review } = req.body;
+		for (let i = 0; i < business.length; i += 1) {
+			if (business[i].id === parseInt(req.params.businessId, 10)) {
+				business[i].reviews.push(review);
+				return res.json({
+					message: 'Review successfully added',
+					Name: name,
+					business: business[i].reviews
+				});
+			}
+		}
+		return res.status(404).json({
+			message: 'Business does not exist',
+			error: true
+		});
+	}
 }
 
 export default Business;

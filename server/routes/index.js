@@ -14,5 +14,6 @@ router.put('/businesses/:businessId', Business.updateBusiness);
 router.delete('/businesses/:businessId', Business.removeBusiness);
 router.get('/businesses/:businessId', Business.getABusiness);
 router.get('/businesses', Business.getAllBusinesses);
+router.post('/businesses/:businessId/reviews', Business.addReview);
 
 export default router;
