@@ -13,7 +13,7 @@ const business = [
 		name: 'Facebook',
 		address: '2, Facebook road, Lekki, Abuja',
 		website: 'www.facebook.com',
-		location: 'Lagos',
+		location: 'Abuja',
 		category: 'Sports',
 		reviews: ['Good firm', 'Really bad', 'I can\'t seem to understand them']
 	}

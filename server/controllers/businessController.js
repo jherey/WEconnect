@@ -10,6 +10,16 @@ class Business {
  * @param {*} res
  */
 	static getAllBusinesses(req, res) {
+		const { location } = req.query;
+		const loc = [];
+		if (location) {
+			for (let i = 0; i < business.length; i += 1) {
+				if (location.toLowerCase() === business[i].location.toLowerCase()) {
+					loc.push(business[i]);
+				}
+			}
+			return res.json(loc);
+		}
 		return res.json({
 			business
 		});
