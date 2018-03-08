@@ -2,6 +2,7 @@ import express from 'express';
 import Users from '../controllers/userController';
 import Business from '../controllers/businessController';
 import userValidator from '../middleware/userValidator';
+import businessValidator from '../middleware/businessValidator';
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.post('/businesses', Business.registerBusiness);
 router.put('/businesses/:businessId', Business.updateBusiness);
 router.delete('/businesses/:businessId', Business.removeBusiness);
 router.get('/businesses/:businessId', Business.getABusiness);
-router.get('/businesses', Business.getAllBusinesses);
+router.get('/businesses', businessValidator.queryLocation, businessValidator.queryCategory, Business.getAllBusinesses);
 router.post('/businesses/:businessId/reviews', Business.addReview);
 router.get('/businesses/:businessId/reviews', Business.getAllReviews);
 
