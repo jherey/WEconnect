@@ -5,20 +5,31 @@ import users from '../models/users';
  */
 class Users {
 	/**
+ * @returns {Object} getAllUsers
+ * @param {*} req
+ * @param {*} res
+ */
+	static getAllUsers(req, res) {
+		return res.json({
+			users
+		});
+	}
+
+	/**
    * @returns {Object} registerUsers
    * @param {*} req
    * @param {*} res
    */
 	static registerUsers(req, res) {
-		const { name, email, password } = req.body;
-		if (!name || !email || !password) {
-			return res.json({
-				message: 'Fill in all fields',
-				error: true
-			});
-		}
-		users.push(req.body);
-		return res.json({
+		const { username, email, password } = req.body;
+		const id = users[users.length - 1].id + 1;
+		users.push({
+			id,
+			username,
+			email,
+			password
+		});
+		return res.status(200).json({
 			message: 'User registered successfully',
 			error: false
 		});
@@ -31,16 +42,16 @@ class Users {
    */
 	static loginUser(req, res) {
 		const { email, password } = req.body;
-		users.forEach((user) => {
+		for (let i = 0; i < users.length; i += 1) {
 			if (
-				email === user.email && password === user.password
+				email === users[i].email && password === users[i].password
 			) {
 				return res.status(200).json({
 					message: 'Success',
 					error: false
 				});
 			}
-		});
+		}
 		res.status(400).json({
 			message: 'Error logining in',
 			error: true

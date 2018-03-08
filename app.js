@@ -1,6 +1,7 @@
 import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
+import expressValidator from 'express-validator';
 import routes from './server/routes/index';
 
 // Set up the express app
@@ -12,6 +13,9 @@ app.use(logger('dev'));
 // Parse incoming requests data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+//	Validator to check requests
+app.use(expressValidator());
 
 // Versioning and Routes
 app.use('/api/v1/', routes);
