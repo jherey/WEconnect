@@ -9,11 +9,11 @@ class validateUsers {
 	 * @param {*} next
    */
 	static userSignUp(req, res, next) {
-		req.check('username', 'Username is required').notEmpty();
-		req.check('email', 'Email is not valid').isEmail();
-		req
-			.check('password', 'minimum password length is 5 characters')
-			.isLength({ min: 5 });
+		// req.check('username', 'Username is required').notEmpty();
+		// req.check('email', 'Email is not valid').isEmail();
+		// req
+		// 	.check('password', 'minimum password length is 5 characters')
+		// 	.isLength({ min: 5 });
 
 		const errors = req.validationErrors();
 		if (errors) {
