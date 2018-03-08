@@ -56,6 +56,10 @@
             2,
             "tab"
         ],
-        "no-tabs": 0
+        "no-tabs": 0,
+        "import/no-extraneous-dependencies": [
+            2,
+            {}
+        ]
     }
 }
