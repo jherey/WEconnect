@@ -19,7 +19,9 @@ class Business {
 					loc.push(business[i]);
 				}
 			}
-			return res.json(loc);
+			return res.json({
+				found_location: loc
+			});
 		}
 		if (category) {
 			for (let i = 0; i < business.length; i += 1) {
@@ -27,7 +29,9 @@ class Business {
 					cat.push(business[i]);
 				}
 			}
-			return res.json(cat);
+			return res.json({
+				found_category: cat
+			});
 		}
 		return res.json({
 			business
@@ -42,7 +46,7 @@ class Business {
 	static registerBusiness(req, res) {
 		const { name, address, website } = req.body;
 		if (!name || !address || !website) {
-			return res.json({
+			return res.status(200).json({
 				message: 'Fill all fields',
 				error: true
 			});
@@ -125,13 +129,12 @@ class Business {
    * @param {*} res
    */
 	static addReview(req, res) {
-		const { name, review } = req.body;
+		const { review } = req.body;
 		for (let i = 0; i < business.length; i += 1) {
 			if (business[i].id === parseInt(req.params.businessId, 10)) {
 				business[i].reviews.push(review);
 				return res.json({
-					message: 'Review successfully added',
-					Name: name,
+					message: 'Review sucessfully added',
 					business: business[i].reviews
 				});
 			}
