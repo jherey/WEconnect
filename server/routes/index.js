@@ -12,7 +12,7 @@ router.post('/auth/login', userValidator.userLogin, Users.loginUser);
 router.get('/auth/', Users.getAllUsers);
 
 //	Business endpoints
-router.post('/businesses', Business.registerBusiness);
+router.post('/businesses', businessValidator.registerBusiness, Business.registerBusiness);
 router.put('/businesses/:businessId', Business.updateBusiness);
 router.delete('/businesses/:businessId', Business.removeBusiness);
 router.get('/businesses/:businessId', Business.getABusiness);

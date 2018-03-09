@@ -1,5 +1,15 @@
 import business from '../models/business';
 
+const successMessage = (res, message) => res.status(200).json({
+	message,
+	error: false
+});
+
+const errorMessage = (res, message) => res.status(400).json({
+	message,
+	error: true
+});
+
 /**
  * @class business
  */
@@ -21,18 +31,8 @@ class Business {
    * @param {*} res
    */
 	static registerBusiness(req, res) {
-		const { name, address, website } = req.body;
-		if (!name || !address || !website) {
-			return res.status(200).json({
-				message: 'Fill all fields',
-				error: true
-			});
-		}
 		business.push(req.body);
-		return res.json({
-			message: 'Business saved successfully',
-			error: false
-		});
+		return successMessage(res, 'Registered business successfully');
 	}
 
 	/**
@@ -46,16 +46,10 @@ class Business {
 				business[i].name = req.body.name;
 				business[i].address = req.body.address;
 				business[i].website = req.body.website;
-				return res.json({
-					message: 'Business successfully updated',
-					error: false
-				});
+				return successMessage(res, 'Business successfully updated');
 			}
 		}
-		return res.status(400).json({
-			message: 'Business not found',
-			error: true
-		});
+		return errorMessage(res, 'Business not found');
 	}
 
 	/**
@@ -67,16 +61,10 @@ class Business {
 		for (let i = 0; i < business.length; i += 1) {
 			if (business[i].id === parseInt(req.params.businessId, 10)) {
 				business.splice(business[i], 1);
-				return res.json({
-					message: 'Business successfully deleted',
-					error: false
-				});
+				return successMessage(res, 'Business successfully deleted');
 			}
 		}
-		return res.status(404).json({
-			message: 'Business cannot be deleted because it does not exist',
-			error: true
-		});
+		return errorMessage(res, 'Business cannot be deleted because it does not exist');
 	}
 
 	/**
@@ -94,10 +82,7 @@ class Business {
 				});
 			}
 		}
-		return res.status(404).json({
-			message: 'Business not found',
-			error: true
-		});
+		return errorMessage(res, 'Business not found');
 	}
 
 	/**
@@ -116,10 +101,7 @@ class Business {
 				});
 			}
 		}
-		return res.status(404).json({
-			message: 'Business does not exist',
-			error: true
-		});
+		return errorMessage(res, 'Review cannot be added to business that does not exist');
 	}
 
 	/**
@@ -128,13 +110,13 @@ class Business {
    * @param {*} res
    */
 	static getAllReviews(req, res) {
-		business.forEach((bus) => {
-			if (bus.id === parseInt(req.params.businessId, 10)) {
-				res.json({
-					Reviews: bus.reviews
+		for (let i = 0; i < business.length; i += 1) {
+			if (business[i].id === parseInt(req.params.businessId, 10)) {
+				return res.json({
+					Reviews: business[i].reviews
 				});
 			}
-		});
+		}
 	}
 }
 

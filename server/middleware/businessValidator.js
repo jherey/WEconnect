@@ -1,5 +1,10 @@
 import business from '../models/business';
 
+const errorMessage = (res, message) => res.status(400).json({
+	message,
+	error: true
+});
+
 /**
  * @class validateUsers
  */
@@ -25,12 +30,7 @@ class validateBusinesses {
 		}
 
 		const errors = req.validationErrors();
-		if (errors) {
-			return res.status(400).json({
-				message: errors[0].msg,
-				error: true
-			});
-		}
+		if (errors) { return errorMessage(res, errors[0].msg); }
 
 		next();
 	}
@@ -56,12 +56,23 @@ class validateBusinesses {
 		}
 
 		const errors = req.validationErrors();
-		if (errors) {
-			return res.status(400).json({
-				message: errors[0].msg,
-				error: true
-			});
-		}
+		if (errors) { return errorMessage(res, errors[0].msg); }
+
+		next();
+	}
+
+	/**
+   * @returns {Object} query
+   * @param {*} req
+   * @param {*} res
+	 * @param {*} next
+   */
+	static registerBusiness(req, res, next) {
+		req.check('name', 'Name is required').notEmpty();
+		req.check('address', 'Address is required').notEmpty();
+
+		const errors = req.validationErrors();
+		if (errors) { return errorMessage(res, errors[0].msg); }
 
 		next();
 	}

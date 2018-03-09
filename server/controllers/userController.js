@@ -10,7 +10,7 @@ class Users {
  * @param {*} res
  */
 	static getAllUsers(req, res) {
-		return res.json({
+		return res.status(200).json({
 			users
 		});
 	}
@@ -52,7 +52,7 @@ class Users {
 				});
 			}
 		}
-		res.status(400).json({
+		return res.status(400).json({
 			message: 'Error logining in',
 			error: true
 		});

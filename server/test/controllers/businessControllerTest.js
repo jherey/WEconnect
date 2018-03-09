@@ -84,17 +84,15 @@ describe('/POST REQUESTS', () => {
 		//	HTTP POST - REGISTER A BUSINESS
 		const business = {
 			name: 'seyi',
-			address: '23, Akin Street, Lagos',
-			website: 'jerry.com'
+			address: '23, Akin Street, Lagos'
 		};
 		chai.request(app)
 			.post('/api/v1/businesses')
 			.send(business)
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message');
-				expect(res.body).to.have.property('error');
 				expect(res.body).to.not.equal(0);
+				expect(res.body).to.have.property('message');
 				expect(res.status).to.equal(200);
 				done();
 			});
@@ -134,8 +132,6 @@ describe('/PUT REQUESTS', () => {
 			})
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message');
-				expect(res.body).to.have.property('error');
 				expect(res.status).to.equal(200);
 				done();
 			});
