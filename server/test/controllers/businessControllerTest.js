@@ -9,8 +9,21 @@ const { expect } = chai;
   * Test the /GET requests
   */
 describe('/GET REQUESTS', () => {
+	it('it should not GET any business', (done) => {
+		//	HTTP GET -> RETURN NO BUSINESS
+		chai.request(app)
+			.get('/api/v1/business')
+			.end((err, res) => {
+				expect(res.body)
+					.to.be.an.instanceof(Object)
+					.and.to.have.property('message');
+				expect(res.status).to.equal(200);
+				done();
+			});
+	});
+
 	it('it should GET all the businesses', (done) => {
-		//	HTTP GET ALL BUSINESSES
+		//	HTTP GET -> RETURN ALL BUSINESSES
 		chai.request(app)
 			.get('/api/v1/businesses')
 			.end((err, res) => {
@@ -24,8 +37,21 @@ describe('/GET REQUESTS', () => {
 			});
 	});
 
+	it('it should not GET a business', (done) => {
+		//	HTTP GET -> RETURN ERROR
+		chai.request(app)
+			.get('/api/v1/businesses/6')
+			.end((err, res) => {
+				expect(res.body).to.be.an.instanceof(Object);
+				expect(res.body).to.have.property('message');
+				expect(res.body).to.have.property('error');
+				expect(res.status).to.equal(400);
+				done();
+			});
+	});
+
 	it('it should GET a business', (done) => {
-		//	HTTP GET A BUSINESS
+		//	HTTP GET -> RETURN A BUSINESS
 		chai.request(app)
 			.get('/api/v1/businesses/1')
 			.end((err, res) => {
@@ -41,8 +67,21 @@ describe('/GET REQUESTS', () => {
 			});
 	});
 
+	it('it should not GET reviews for a business that doesn\'t exist', (done) => {
+		//	HTTP GET -> NO REVIEWS FOR WRONG BUSINESS
+		chai.request(app)
+			.get('/api/v1/businesses/6/reviews')
+			.end((err, res) => {
+				expect(res.body).to.be.a('object');
+				expect(res.body).to.have.property('message');
+				expect(res.body).to.have.property('error');
+				expect(res.status).to.equal(400);
+				done();
+			});
+	});
+
 	it('it should GET all reviews for a business', (done) => {
-		//	HTTP GET ALL REVIEWS FOR A  BUSINESS
+		//	HTTP GET -> RETURN ALL REVIEWS FOR A BUSINESS
 		chai.request(app)
 			.get('/api/v1/businesses/1/reviews')
 			.end((err, res) => {
@@ -53,8 +92,20 @@ describe('/GET REQUESTS', () => {
 			});
 	});
 
+	it('it should return an empty array if location doesn\'t exist for any business', (done) => {
+		//	HTTP GET -> RETURN EMPTY ARRAY, LOCATION DOESN'T EXIST
+		chai.request(app)
+			.get('/api/v1/businesses?location=lago')
+			.end((err, res) => {
+				expect(res.body).to.be.a('object');
+				expect(res.body).to.have.property('found_location');
+				expect(res.status).to.equal(200);
+				done();
+			});
+	});
+
 	it('it should GET all business with the specified location', (done) => {
-		//	HTTP GET ALL BUSINESS WITH THE SPECIFIED LOCATION
+		//	HTTP GET -> RETURN ALL BUSINESS WITH THE SPECIFIED LOCATION
 		chai.request(app)
 			.get('/api/v1/businesses?location=lagos')
 			.end((err, res) => {
@@ -64,8 +115,20 @@ describe('/GET REQUESTS', () => {
 			});
 	});
 
+	it('it should return an empty array if category doesn\'t exist for any business', (done) => {
+		//	HTTP GET -> RETURN EMPTY ARRAY,CATEGORY DOESN'T EXIST
+		chai.request(app)
+			.get('/api/v1/businesses?category=ict')
+			.end((err, res) => {
+				expect(res.body).to.be.a('object');
+				expect(res.body).to.have.property('found_category');
+				expect(res.status).to.equal(200);
+				done();
+			});
+	});
+
 	it('it should GET all business with the specified category', (done) => {
-		//	HTTP GET ALL BUSINESS WITH THE SPECIFIED CATEGORY
+		//	HTTP GET -> RETURN ALL BUSINESS WITH THE SPECIFIED CATEGORY
 		chai.request(app)
 			.get('/api/v1/businesses?category=sports')
 			.end((err, res) => {
@@ -80,8 +143,26 @@ describe('/GET REQUESTS', () => {
   * Test the /POST requests
   */
 describe('/POST REQUESTS', () => {
+	it('it should not register a new business', (done) => {
+		//	HTTP POST -> DON'T REGISTER A BUSINESS
+		const business = {
+			name: 'seyi'
+		};
+		chai.request(app)
+			.post('/api/v1/businesses')
+			.send(business)
+			.end((err, res) => {
+				expect(res.body).to.be.a('object');
+				expect(res.body).to.not.equal(0);
+				expect(res.body).to.have.property('message');
+				expect(res.body).to.have.property('error');
+				expect(res.status).to.equal(400);
+				done();
+			});
+	});
+
 	it('it should register a new business', (done) => {
-		//	HTTP POST - REGISTER A BUSINESS
+		//	HTTP POST -> REGISTER A BUSINESS
 		const business = {
 			name: 'seyi',
 			address: '23, Akin Street, Lagos'
@@ -98,8 +179,26 @@ describe('/POST REQUESTS', () => {
 			});
 	});
 
+	it('it should not add a review for a business that doesn\'t exist', (done) => {
+		//	HTTP POST -> DON'T ADD A REVIEW FOR A BUSINESS
+		const review = {
+			name: 'john',
+			review: 'good company, I like them'
+		};
+		chai.request(app)
+			.post('/api/v1/businesses/6/reviews')
+			.send(review)
+			.end((err, res) => {
+				expect(res.body).to.be.a('object');
+				expect(res.body).to.have.property('message');
+				expect(res.body).to.have.property('error');
+				expect(res.status).to.equal(400);
+				done();
+			});
+	});
+
 	it('it should add a review for a business', (done) => {
-		//	HTTP POST - ADD A REVIEW FOR A BUSINESS
+		//	HTTP POST -> ADD A REVIEW FOR A BUSINESS
 		const review = {
 			name: 'john',
 			review: 'good company, I like them'
@@ -121,8 +220,26 @@ describe('/POST REQUESTS', () => {
   * Test the /PUT requests
   */
 describe('/PUT REQUESTS', () => {
+	it('it should not update a business that doesn\'t exist', (done) => {
+		//	HTTP PUT -> DON'T UPDATE A BUSINESS
+		chai.request(app)
+			.put('/api/v1/businesses/6')
+			.send({
+				name: 'jerry@gmail.com',
+				address: 'jerry',
+				website: 'www.fav.com'
+			})
+			.end((err, res) => {
+				expect(res.body).to.be.a('object');
+				expect(res.body).to.have.property('message');
+				expect(res.body).to.have.property('error');
+				expect(res.status).to.equal(400);
+				done();
+			});
+	});
+
 	it('it should update a business', (done) => {
-		//	HTTP PUT - UPDATE A BUSINESS
+		//	HTTP PUT -> UPDATE A BUSINESS
 		chai.request(app)
 			.put('/api/v1/businesses/1')
 			.send({
@@ -142,8 +259,21 @@ describe('/PUT REQUESTS', () => {
   * Test the /DELETE route
   */
 describe('/DELETE REQUESTS', () => {
+	it('it should not delete a business', (done) => {
+		//	HTTP DELETE -> DON'T REMOVE A BUSINESS
+		chai.request(app)
+			.delete('/api/v1/businesses/6')
+			.end((err, res) => {
+				expect(res.body).to.be.a('object');
+				expect(res.body).to.have.property('message').eql('Business cannot be deleted because it does not exist');
+				expect(res.body).to.have.property('error');
+				expect(res.status).to.equal(400);
+				done();
+			});
+	});
+
 	it('it should update a business', (done) => {
-		//	HTTP DELETE - REMOVE A BUSINESS
+		//	HTTP DELETE -> REMOVE A BUSINESS
 		chai.request(app)
 			.delete('/api/v1/businesses/1')
 			.end((err, res) => {

@@ -117,6 +117,7 @@ class Business {
 				});
 			}
 		}
+		return errorMessage(res, 'Business that does not exist, review cannot be gotten');
 	}
 }
 
