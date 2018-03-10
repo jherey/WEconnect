@@ -16,7 +16,7 @@ router.post('/businesses', businessValidator.registerBusiness, Business.register
 router.put('/businesses/:businessId', Business.updateBusiness);
 router.delete('/businesses/:businessId', Business.removeBusiness);
 router.get('/businesses/:businessId', Business.getABusiness);
-router.get('/businesses', businessValidator.queryLocation, businessValidator.queryCategory, Business.getAllBusinesses);
+router.get('/businesses', businessValidator.query, Business.getAllBusinesses);
 router.post('/businesses/:businessId/reviews', Business.addReview);
 router.get('/businesses/:businessId/reviews', Business.getAllReviews);
 

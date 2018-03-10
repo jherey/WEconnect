@@ -1,10 +1,5 @@
 import business from '../models/business';
 
-const errorMessage = (res, message) => res.status(400).json({
-	message,
-	error: true
-});
-
 /**
  * @class validateUsers
  */
@@ -15,49 +10,43 @@ class validateBusinesses {
    * @param {*} res
 	 * @param {*} next
    */
-	static queryLocation(req, res, next) {
-		const { location } = req.query;
-		const loc = [];
-		if (location) {
-			for (let i = 0; i < business.length; i += 1) {
-				if (location.toLowerCase() === business[i].location.toLowerCase()) {
-					loc.push(business[i]);
+	static query(req, res, next) {
+		const { location, category } = req.query;
+		const filter = [];
+		if (location || category) {
+			if (location) {
+				for (let i = 0; i < business.length; i += 1) {
+					if (location.toLowerCase() === business[i].location.toLowerCase()) {
+						filter.push(business[i]);
+					}
 				}
 			}
-			return res.json({
-				found_location: loc
-			});
-		}
-
-		const errors = req.validationErrors();
-		if (errors) { return errorMessage(res, errors[0].msg); }
-
-		next();
-	}
-
-	/**
-   * @returns {Object} query
-   * @param {*} req
-   * @param {*} res
-	 * @param {*} next
-   */
-	static queryCategory(req, res, next) {
-		const { category } = req.query;
-		const cat = [];
-		if (category) {
-			for (let i = 0; i < business.length; i += 1) {
-				if (category.toLowerCase() === business[i].category.toLowerCase()) {
-					cat.push(business[i]);
+			if (category) {
+				for (let i = 0; i < business.length; i += 1) {
+					if (category.toLowerCase() === business[i].category.toLowerCase()) {
+						if (filter.length === 0) {
+							filter.push(business[i]);
+						} else {
+							for (let j = 0; j < filter.length; j += 1) {
+								if (business[i].id !== filter[j].id) {
+									filter.push(business[i]);
+								}
+							}
+						}
+					}
 				}
 			}
+			if (filter.length === 0) {
+				return res.status(400).json({
+					message: 'Search keyword doesn\'t esixt',
+					error: true
+				});
+			}
 			return res.json({
-				found_category: cat
+				found: filter,
+				error: false
 			});
 		}
-
-		const errors = req.validationErrors();
-		if (errors) { return errorMessage(res, errors[0].msg); }
-
 		next();
 	}
 
@@ -72,7 +61,12 @@ class validateBusinesses {
 		req.check('address', 'Address is required').notEmpty();
 
 		const errors = req.validationErrors();
-		if (errors) { return errorMessage(res, errors[0].msg); }
+		if (errors) {
+			res.status(400).json({
+				message: errors[0],
+				error: true
+			});
+		}
 
 		next();
 	}

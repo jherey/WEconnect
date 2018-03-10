@@ -92,14 +92,15 @@ describe('/GET REQUESTS', () => {
 			});
 	});
 
-	it('it should return an empty array if location doesn\'t exist for any business', (done) => {
+	it('it should return an error if location is wrong', (done) => {
 		//	HTTP GET -> RETURN EMPTY ARRAY, LOCATION DOESN'T EXIST
 		chai.request(app)
 			.get('/api/v1/businesses?location=lago')
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('found_location');
-				expect(res.status).to.equal(200);
+				expect(res.body).to.have.property('message');
+				expect(res.body).to.have.property('error');
+				expect(res.status).to.equal(400);
 				done();
 			});
 	});
@@ -115,14 +116,15 @@ describe('/GET REQUESTS', () => {
 			});
 	});
 
-	it('it should return an empty array if category doesn\'t exist for any business', (done) => {
+	it('it should return an error if category is wrong', (done) => {
 		//	HTTP GET -> RETURN EMPTY ARRAY,CATEGORY DOESN'T EXIST
 		chai.request(app)
 			.get('/api/v1/businesses?category=ict')
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('found_category');
-				expect(res.status).to.equal(200);
+				expect(res.body).to.have.property('message');
+				expect(res.body).to.have.property('error');
+				expect(res.status).to.equal(400);
 				done();
 			});
 	});

@@ -1,11 +1,12 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+//	import app from '../../../app';
 import middleware from '../../middleware/businessValidator';
 
 chai.use(chaiHttp);
 const { expect } = chai;
 const register = middleware.registerBusiness;
-const location = middleware.queryLocation;
+const { query } = middleware;
 
 /*
   * Test REGISTER BUSINESS FUNCTION
@@ -22,15 +23,15 @@ describe('MIDDLEWARE TESTS', () => {
 	});
 
 	/*
-		* Test LOGIN
+		* Test QUERY METHOD
 		*/
-	describe('login tests', () => {
+	describe('method tests', () => {
 		it('should return a function()', () => {
-			expect(location).to.be.a('function');
+			expect(query).to.be.a('function');
 		});
 
 		it('should accept three arguments', () => {
-			expect(location.length).to.equal(3);
+			expect(query.length).to.equal(3);
 		});
 	});
 });
