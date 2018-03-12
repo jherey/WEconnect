@@ -20,11 +20,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //	Validator to check requests
 app.use(expressValidator());
 
-//	Document API with Swagger
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 // Versioning and Routes
 app.use('/api/v1/', routes);
+
+//	Document API with Swagger
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 app.get('*', (req, res) => res.status(200).send({

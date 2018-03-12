@@ -11,8 +11,6 @@ describe('api testing', () => {
 		chai.request(app)
 			.get('/')
 			.end((err, res) => {
-				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message');
 				expect(res.status).to.equal(200);
 				done();
 			});

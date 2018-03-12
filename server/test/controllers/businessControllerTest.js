@@ -15,8 +15,7 @@ describe('/GET REQUESTS', () => {
 			.get('/api/v1/business')
 			.end((err, res) => {
 				expect(res.body)
-					.to.be.an.instanceof(Object)
-					.and.to.have.property('message');
+					.to.be.an.instanceof(Object);
 				expect(res.status).to.equal(200);
 				done();
 			});
