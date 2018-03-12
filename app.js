@@ -2,7 +2,10 @@ import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
+import swaggerUi from 'swagger-ui-express';
 import routes from './server/routes/index';
+
+const swaggerDocument = require('./swagger.json');
 
 // Set up the express app
 const app = express();
@@ -16,6 +19,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //	Validator to check requests
 app.use(expressValidator());
+
+//	Document API with Swagger
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Versioning and Routes
 app.use('/api/v1/', routes);
