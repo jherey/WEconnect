@@ -32,8 +32,7 @@ class validateUsers {
 	 * @param {*} next
    */
 	static userLogin(req, res, next) {
-		req.check('email', 'Email field is empty').notEmpty();
-		req.check('email', 'Email is not valid').isEmail();
+		req.check('username', 'Username field is empty').notEmpty();
 		req.check('password', 'Password field is empty').notEmpty();
 		req
 			.check('password', 'Minimum password length is 5 characters')
