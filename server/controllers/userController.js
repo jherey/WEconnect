@@ -1,4 +1,7 @@
-import users from '../models/users';
+import bcrypt, { hashSync } from 'bcrypt';
+import models from '../models/index';
+
+const users = models.User;
 
 /**
  * @class users
@@ -22,17 +25,14 @@ class Users {
    */
 	static registerUsers(req, res) {
 		const { username, email, password } = req.body;
-		const id = users[users.length - 1].id + 1;
-		users.push({
-			id,
-			username,
-			email,
-			password
-		});
-		return res.status(200).json({
-			message: 'User registered successfully',
-			error: false
-		});
+		users
+			.create({
+				username,
+				email,
+				password: hashSync(password, 10)
+			})
+			.then(user => res.status(201).json(user))
+			.catch(error => res.status(400).json(error));
 	}
 
 	/**
@@ -41,21 +41,17 @@ class Users {
    * @param {*} res
    */
 	static loginUser(req, res) {
-		const { email, password } = req.body;
-		for (let i = 0; i < users.length; i += 1) {
-			if (
-				email === users[i].email && password === users[i].password
-			) {
-				return res.status(200).json({
-					message: 'Success',
-					error: false
-				});
-			}
-		}
-		return res.status(400).json({
-			message: 'Error logining in',
-			error: true
-		});
+		const { username, password } = req.body;
+		users.findOne({ where: { username } })
+			.then((user) => {
+				if (user && bcrypt.compareSync(password, user.password)) {
+					return res.status(200).json({
+						message: 'User logged in successfully'
+					});
+				}
+				return res.status(400).json({ message: 'Username/Password Incorrect' });
+			})
+			.catch(error => res.status(400).json(error));
 	}
 }
 
