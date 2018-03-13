@@ -27,7 +27,8 @@
     "express": "^4.16.2",
     "express-validator": "^5.0.3",
     "morgan": "^1.9.0",
-    "nyc": "^11.4.1"
+    "nyc": "^11.4.1",
+    "sequelize-cli": "^4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
