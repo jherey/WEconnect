@@ -1,0 +1,21 @@
+{
+  "development": {
+    "username": "jherey",
+    "password": "EmechetaMaureen147",
+    "database": "weconnect-users",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "jherey",
+    "password": "EmechetaMaureen147",
+    "database": "weconnect-users",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL"
+  }
+}
