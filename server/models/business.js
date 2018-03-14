@@ -1,22 +1,47 @@
-const business = [
-	{
-		id: 1,
-		name: 'Shell Inc',
-		address: '2, Shell lane, Anthony, Lagos',
-		website: 'www.shellinc.com',
-		location: 'Lagos',
-		category: 'Technology',
-		reviews: ['Good firm', 'Really bad', 'I can\'t seem to understand them']
-	},
-	{
-		id: 2,
-		name: 'Facebook',
-		address: '2, Facebook road, Lekki, Abuja',
-		website: 'www.facebook.com',
-		location: 'Abuja',
-		category: 'Sports',
-		reviews: ['Good firm', 'Really bad', 'I can\'t seem to understand them']
-	}
-];
-
-export default business;
+module.exports = (sequelize, DataTypes) => {
+	const Business = sequelize.define('Business', {
+		id: {
+			allowNull: false,
+			primaryKey: true,
+			type: DataTypes.UUID,
+			defaultValue: DataTypes.UUIDV4
+		},
+		busname: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				len: {
+					args: [3, 50],
+					msg: 'Your business name must be between 3 and 70 characters.  Please try again.'
+				}
+			}
+		},
+		website: {
+			type: DataTypes.STRING
+		},
+		telephone: {
+			type: DataTypes.BIGINT
+		},
+		category: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+		businfo: {
+			type: DataTypes.TEXT
+		},
+		email: {
+			type: DataTypes.STRING
+		},
+		busimage: {
+			type: DataTypes.STRING
+		},
+		location: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+	}, {});
+	Business.associate = (models) => {
+		// associations can be defined here
+	};
+	return Business;
+};
