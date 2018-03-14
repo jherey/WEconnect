@@ -1,0 +1,17 @@
+## Node modules
+/node_modules
+
+## Coverage
+coverage
+
+## Coveralls
+.coveralls.yml
+
+## Nyc_output
+.nyc_output
+
+## Build
+build
+
+## Env variables
+.env
