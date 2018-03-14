@@ -1,6 +1,10 @@
 import bcrypt, { hashSync } from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import models from '../models/index';
 
+dotenv.config();
+const secret = process.env.secretKey;
 const users = models.User;
 
 /**
@@ -24,15 +28,26 @@ class Users {
    * @param {*} res
    */
 	static registerUsers(req, res) {
-		const { username, email, password } = req.body;
+		const {
+			firstname, lastname, sex, username, password
+		} = req.body;
 		users
 			.create({
+				firstname,
+				lastname,
 				username,
-				email,
+				sex,
 				password: hashSync(password, 10)
 			})
-			.then(user => res.status(201).json(user))
-			.catch(error => res.status(400).json(error));
+			.then((user) => {
+				res.status(201).json({
+					message: 'signed up successfully',
+					user
+				});
+			})
+			.catch(() => res.status(500).json({
+				message: 'Internal server error'
+			}));
 	}
 
 	/**
@@ -45,8 +60,10 @@ class Users {
 		users.findOne({ where: { username } })
 			.then((user) => {
 				if (user && bcrypt.compareSync(password, user.password)) {
+					const token = jwt.sign({ user }, secret, { expiresIn: '12h' });
 					return res.status(200).json({
-						message: 'User logged in successfully'
+						message: 'User logged in successfully',
+						token
 					});
 				}
 				return res.status(400).json({ message: 'Username/Password Incorrect' });
