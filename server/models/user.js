@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
 	}, {});
 	User.associate = (models) => {
 		// associations can be defined here
+		User.hasMany(models.business, {
+			foreignKey: 'userId',
+			onDelete: 'CASCADE'
+		});
 	};
 	return User;
 };
