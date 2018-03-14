@@ -1,11 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
 	const Business = sequelize.define('Business', {
-		id: {
-			allowNull: false,
-			primaryKey: true,
-			type: DataTypes.UUID,
-			defaultValue: DataTypes.UUIDV4
-		},
 		busname: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -41,7 +35,6 @@ module.exports = (sequelize, DataTypes) => {
 		},
 	}, {});
 	Business.associate = (models) => {
-		// associations can be defined here
 		Business.belongsTo(models.User, {
 			foreignKey: 'userId',
 			onDelete: 'CASCADE'

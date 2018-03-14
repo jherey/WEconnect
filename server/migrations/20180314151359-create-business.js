@@ -2,9 +2,9 @@ module.exports = {
 	up: (queryInterface, Sequelize) => queryInterface.createTable('Businesses', {
 		id: {
 			allowNull: false,
+			autoIncrement: true,
 			primaryKey: true,
-			type: Sequelize.UUID,
-			defaultValue: Sequelize.UUIDV4
+			type: Sequelize.INTEGER,
 		},
 		busname: {
 			type: Sequelize.STRING,
@@ -40,12 +40,13 @@ module.exports = {
 			allowNull: false
 		},
 		userId: {
-			type: Sequelize.UUID,
+			type: Sequelize.INTEGER,
 			onDelete: 'CASCADE',
 			references: {
 				model: 'Users',
-				key: 'id'
-			}
+				key: 'id',
+				as: 'userId',
+			},
 		},
 		createdAt: {
 			allowNull: false,

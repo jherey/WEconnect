@@ -1,11 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
 	const User = sequelize.define('User', {
-		id: {
-			allowNull: false,
-			primaryKey: true,
-			type: DataTypes.UUID,
-			defaultValue: DataTypes.UUIDV4
-		},
 		firstname: {
 			type: DataTypes.STRING,
 			allowNull: false
@@ -37,10 +31,9 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false
 		}
-	}, {});
+	});
 	User.associate = (models) => {
-		// associations can be defined here
-		User.hasMany(models.business, {
+		User.hasMany(models.Business, {
 			foreignKey: 'userId',
 			onDelete: 'CASCADE'
 		});
