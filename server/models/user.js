@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false
 		},
+		profilepic: {
+			type: DataTypes.STRING
+		},
 		sex: {
 			type: DataTypes.ENUM,
 			values: [

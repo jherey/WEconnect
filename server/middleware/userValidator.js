@@ -16,6 +16,7 @@ class validateUsers {
 		req.check('firstname', 'Firstname is required').notEmpty();
 		req.check('lastname', 'Lastname is required').notEmpty();
 		req.check('email', 'Email is required').notEmpty();
+		req.check('email', 'Email is not valid').isEmail();
 		req.check('sex', 'Sex is required').notEmpty();
 		req.check('username', 'Username is required').notEmpty();
 		req.check('password', 'Password is required').notEmpty();

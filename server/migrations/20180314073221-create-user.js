@@ -22,6 +22,9 @@ module.exports = {
 			password: {
 				type: Sequelize.STRING
 			},
+			profilepic: {
+				type: Sequelize.STRING
+			},
 			sex: {
 				type: Sequelize.ENUM,
 				values: [

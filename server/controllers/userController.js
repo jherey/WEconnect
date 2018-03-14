@@ -29,13 +29,27 @@ class Users {
    */
 	static registerUsers(req, res) {
 		const {
-			firstname, lastname, sex, username, email, password
+			firstname, lastname, profilepic, sex, username, email, password
 		} = req.body;
+		// if (req.files) {
+		// 	const file = req.files.filename;
+		// 	const filename = file.name;
+		// 	const filepath = `../../src' ${filename}`;
+		// 	file.mv(filepath, (err) => {
+		// 		if (err) {
+		// 			res.send('Error occured');
+		// 		} else {
+		// 			console.log(`File uploaded to ${filepath}`);
+		// 			res.send('Done!');
+		// 		}
+		// 	});
+		// }
 		users
 			.create({
 				firstname,
 				lastname,
 				username,
+				profilepic,
 				email,
 				sex,
 				password: hashSync(password, 10)
