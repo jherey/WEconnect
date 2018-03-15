@@ -170,6 +170,36 @@ class Business {
 			}
 		});
 	}
+
+	/**
+   * {Object} getABusiness
+   * @param {*} req
+   * @param {*} res
+	 * @returns {json} json
+   */
+	static getABusiness(req, res) {
+		const { businessId } = req.params;
+		businesses
+			//	FInd one business by the businessId from the user
+			.findById(businessId)
+			.then((business) => {
+				//	If no business found
+				if (!business) {
+					return res.status(404).send({
+						message: 'Business Not Found!',
+					});
+				}
+				//	Business found!
+				return res.status(200).json({
+					message: 'Business Found',
+					business,
+				});
+			})
+			//	Catch any error
+			.catch(() => res.status(500).json({
+				message: 'Some error occured',
+			}));
+	}
 }
 
 export default Business;

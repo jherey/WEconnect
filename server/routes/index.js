@@ -14,5 +14,6 @@ router.post('/auth/login', userValidator.userLogin, Users.loginUser);
 router.post('/businesses', businessValidator.registerBusiness, businessValidator.verifyToken, Business.registerBusiness);
 router.put('/businesses/:businessId', businessValidator.registerBusiness, businessValidator.verifyToken, Business.updateBusiness);
 router.delete('/businesses/:businessId', businessValidator.verifyToken, Business.removeBusiness);
+router.get('/businesses/:businessId', Business.getABusiness);
 
 export default router;
