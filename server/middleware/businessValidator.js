@@ -14,46 +14,55 @@ class validateBusinesses {
    */
 	static query(req, res, next) {
 		const { location, category } = req.query;
+		//	If there's a location query string
 		if (location) {
 			businesses
+				//	Find by location
 				.findAll({
 					where: {
 						location
 					}
 				})
 				.then((business) => {
+					//	If no businesses found, return error
 					if (!business.length) {
 						return res.status(404).send({
 							message: 'No business found for this location!',
 						});
 					}
+					//	If business found, return business found
 					return res.status(200).json({
 						message: 'Business Found!',
 						business
 					});
 				})
+				//	Catch error
 				.catch(() => res.status(500).json({
 					message: 'Some error occured'
 				}));
 		}
 		if (category) {
 			businesses
+				//	Find by category
 				.findAll({
 					where: {
 						category
 					}
 				})
 				.then((business) => {
+					//	If no businesses found, return error
 					if (!business.length) {
 						return res.status(404).send({
 							message: 'No business found for this category!',
 						});
 					}
+					//	If business found, return business found
 					return res.status(200).json({
 						message: 'Business Found!',
 						business
 					});
 				})
+				//	Catch error
 				.catch(() => res.status(500).json({
 					message: 'Some error occured'
 				}));
