@@ -12,5 +12,6 @@ router.post('/auth/login', userValidator.userLogin, Users.loginUser);
 
 //	Business endpoints
 router.post('/businesses', businessValidator.registerBusiness, businessValidator.verifyToken, Business.registerBusiness);
+router.put('/businesses/:businessId', businessValidator.registerBusiness, businessValidator.verifyToken, Business.updateBusiness);
 
 export default router;
