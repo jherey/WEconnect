@@ -5,6 +5,7 @@ import models from '../models/index';
 
 dotenv.config();
 const secret = process.env.secretKey;
+//	Users model
 const users = models.User;
 
 /**
@@ -12,20 +13,10 @@ const users = models.User;
  */
 class Users {
 	/**
- * @returns {Object} getAllUsers
- * @param {*} req
- * @param {*} res
- */
-	static getAllUsers(req, res) {
-		return res.status(200).json({
-			users
-		});
-	}
-
-	/**
    * @returns {Object} registerUsers
    * @param {*} req
    * @param {*} res
+	 * @returns {json} json
    */
 	static registerUsers(req, res) {
 		const {
@@ -44,6 +35,7 @@ class Users {
 		// 		}
 		// 	});
 		// }
+		//	Create new user and push to Database
 		users
 			.create({
 				firstname,
@@ -55,9 +47,11 @@ class Users {
 				password: hashSync(password, 10)
 			})
 			.then((user) => {
+				//	Assign token to the user for six hours
 				const token = jwt.sign({ user }, secret, { expiresIn: '6h' });
+				//	Success message
 				res.status(201).json({
-					message: 'signed up successfully',
+					message: 'Signed up successfully',
 					token
 				});
 			})
@@ -70,23 +64,29 @@ class Users {
    * @returns {Object} loginUser
    * @param {*} req
    * @param {*} res
+	 * @returns {json} json
    */
 	static loginUser(req, res) {
 		const { username, password } = req.body;
+		//	Find one user with username sent in the body
 		users.findOne({ where: { username } })
 			.then((user) => {
+				//	Compare inputed password with hashed password in the database
 				if (user && bcrypt.compareSync(password, user.password)) {
 					const userData = {
 						username: user.username,
 						email: user.email,
 						id: user.id
 					};
+					//	Assign token to user for six hours
 					const token = jwt.sign(userData, secret, { expiresIn: '6h' });
+					//	Success message
 					return res.status(200).json({
 						message: 'User logged in successfully',
 						token
 					});
 				}
+				//	Details mismatch
 				return res.status(400).json({ message: 'Username/Password Incorrect' });
 			})
 			.catch(error => res.status(400).json(error));
