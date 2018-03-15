@@ -7,6 +7,8 @@ dotenv.config();
 const secret = process.env.secretKey;
 //	Business model
 const businesses = models.Business;
+//	Review model
+const reviews = models.Review;
 
 /**
  * @class business
@@ -218,6 +220,32 @@ class Business {
 			}))
 			//	Catch any error
 			.catch(error => res.status(500).json(error));
+	}
+
+	/**
+   * {Object} addReview
+   * @param {*} req
+   * @param {*} res
+	 * @returns {json} json
+   */
+	static addReview(req, res) {
+		const { businessId } = req.params;
+		const { review, userId } = req.body;
+		reviews
+			.create({
+				review,
+				userId,
+				businessId
+			})
+			.then((rev) => {
+				res.status(201).json({
+					message: 'Review successfully added',
+					rev
+				});
+			})
+			.catch(() => res.status(500).json({
+				message: 'Internal server error'
+			}));
 	}
 }
 
