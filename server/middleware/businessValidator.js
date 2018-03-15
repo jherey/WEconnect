@@ -57,8 +57,9 @@ class validateBusinesses {
 	 * @param {*} next
    */
 	static registerBusiness(req, res, next) {
-		req.check('name', 'Name is required').notEmpty();
-		req.check('address', 'Address is required').notEmpty();
+		req.check('busname', 'Business name is required').notEmpty();
+		req.check('category', 'Category is required').notEmpty();
+		req.check('location', 'Location is required').notEmpty();
 
 		const errors = req.validationErrors();
 		if (errors) {

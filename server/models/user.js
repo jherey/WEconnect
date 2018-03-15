@@ -1,17 +1,57 @@
-module.exports = (sequelize, DataTypes) => {
+const userModel = (sequelize, DataTypes) => {
 	const User = sequelize.define('User', {
 		firstname: {
 			type: DataTypes.STRING,
-			allowNull: false
+			allowNull: false,
+			validate: {
+				notEmpty: {
+					args: true,
+					msg: 'Firstname cannot be empty',
+				},
+				is: {
+					args: ['^[a-z]+$', 'i'],
+					msg: 'Firstname can only contain letters',
+				},
+				len: {
+					args: [3, 30],
+					msg: 'Firstname should be more than two characters',
+				}
+			}
 		},
 		lastname: {
 			type: DataTypes.STRING,
-			allowNull: false
+			allowNull: false,
+			validate: {
+				notEmpty: {
+					args: true,
+					msg: 'Lastname cannot be empty',
+				},
+				is: {
+					args: ['^[a-z]+$', 'i'],
+					msg: 'Lastname can only contain letters',
+				},
+				len: {
+					args: [3, 30],
+					msg: 'Lastname should be more than two characters',
+				}
+			}
 		},
 		email: {
 			type: DataTypes.STRING,
 			allowNull: false,
-			unique: true
+			unique: {
+				args: true,
+				msg: 'A user with this email exists',
+			},
+			validate: {
+				notEmpty: {
+					args: true,
+					msg: 'Email field cannot be empty',
+				},
+				isEmail: {
+					msg: 'Invalid email, Enter a valid email, like so: you@mail.com'
+				}
+			}
 		},
 		profilepic: {
 			type: DataTypes.STRING
@@ -25,18 +65,37 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		username: {
 			type: DataTypes.STRING,
-			allowNull: false
+			allowNull: false,
+			unique: {
+				args: true,
+				msg: 'Username taken, Please use another',
+			},
+			validate: {
+				notEmpty: {
+					args: true,
+					msg: 'Username is required',
+				},
+				is: [/([a-zA-Z0-9])+/]
+			}
 		},
 		password: {
 			type: DataTypes.STRING,
-			allowNull: false
-		}
+			allowNull: false,
+			validate: {
+				notEmpty: {
+					args: true,
+					msg: 'Password is required',
+				}
+			}
+		},
 	});
 	User.associate = (models) => {
 		User.hasMany(models.Business, {
 			foreignKey: 'userId',
-			onDelete: 'CASCADE'
+			as: 'business',
 		});
 	};
 	return User;
 };
+
+export default userModel;

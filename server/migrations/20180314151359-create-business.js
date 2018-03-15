@@ -9,18 +9,13 @@ module.exports = {
 		busname: {
 			type: Sequelize.STRING,
 			allowNull: false,
-			validate: {
-				len: {
-					args: [3, 50],
-					msg: 'Your business name must be between 3 and 70 characters.  Please try again.'
-				}
-			}
+			unique: true
 		},
 		website: {
 			type: Sequelize.STRING
 		},
 		telephone: {
-			type: Sequelize.BIGINT
+			type: Sequelize.TEXT
 		},
 		category: {
 			type: Sequelize.STRING,
@@ -30,7 +25,9 @@ module.exports = {
 			type: Sequelize.TEXT
 		},
 		email: {
-			type: Sequelize.STRING
+			type: Sequelize.STRING,
+			allowNull: false,
+			unique: true
 		},
 		busimage: {
 			type: Sequelize.STRING
