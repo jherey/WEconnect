@@ -6,7 +6,7 @@ const reviewModel = (sequelize, DataTypes) => {
 		},
 		userId: {
 			type: DataTypes.INTEGER,
-			allowNull: false,
+			//	allowNull: false,
 			validate: {
 				notEmpty: {
 					args: true,
