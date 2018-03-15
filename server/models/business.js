@@ -43,6 +43,9 @@ const businessModel = (sequelize, DataTypes) => {
 		busimage: {
 			type: DataTypes.STRING
 		},
+		address: {
+			type: DataTypes.STRING
+		},
 		location: {
 			type: DataTypes.STRING,
 			allowNull: false,

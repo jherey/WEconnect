@@ -32,6 +32,9 @@ module.exports = {
 		busimage: {
 			type: Sequelize.STRING
 		},
+		address: {
+			type: Sequelize.STRING
+		},
 		location: {
 			type: Sequelize.STRING,
 			allowNull: false
