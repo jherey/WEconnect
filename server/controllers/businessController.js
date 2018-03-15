@@ -13,7 +13,7 @@ const businesses = models.Business;
  */
 class Business {
 	/**
-   * @returns {Object} registerBusiness
+   * {Object} registerBusiness
    * @param {*} req
    * @param {*} res
 	 * @returns {json} json
@@ -61,7 +61,7 @@ class Business {
 	}
 
 	/**
-   * @returns {Object} updateBusiness
+   * {Object} updateBusiness
    * @param {*} req
    * @param {*} res
 	 * @returns {json} json
@@ -117,6 +117,54 @@ class Business {
 							//	Catch any errors
 							.catch(() => res.status(400).json({
 								message: 'You cant update another person\'s business'
+							}));
+					});
+			}
+		});
+	}
+
+	/**
+   * {Object} removeBusiness
+   * @param {*} req
+   * @param {*} res
+	 * @returns {json} json
+   */
+	static removeBusiness(req, res) {
+		const { businessId } = req.params;
+		//	Verify if user is logged in
+		jwt.verify(req.token, secret, (err, authData) => {
+			//	If there's a mismatch
+			if (err) {
+				res.status(403).json({
+					message: 'Token unmatch'
+				});
+			} else {
+				//	Find the business to be deleted
+				businesses
+					.findOne({
+						where: {
+							id: businessId,
+							userId: authData.id
+						}
+					})
+					.then((business) => {
+						//	If no business is found
+						if (!business) {
+							//	Error message
+							return res.status(404).send({
+								message: 'You cannot delete this business!',
+							});
+						}
+						return business
+						//	Delete the business
+							.destroy()
+							//	Success message
+							.then(res.status(200).json({
+								message: 'Business Successfully Deleted!'
+							}))
+							//	Catch any errors
+							.catch(() => res.status(400).json({
+								message: 'You cant delete another person\'s business'
 							}));
 					});
 			}
