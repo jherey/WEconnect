@@ -200,6 +200,25 @@ class Business {
 				message: 'Some error occured',
 			}));
 	}
+
+	/**
+ * {Object} getAllBusinesses
+ * @param {*} req
+ * @param {*} res
+ * @returns {json} json
+ */
+	static getAllBusinesses(req, res) {
+		businesses
+			//	Find all businesses
+			.all()
+			//	Business found
+			.then(business => res.status(200).json({
+				message: 'Businesses found!',
+				business
+			}))
+			//	Catch any error
+			.catch(error => res.status(500).json(error));
+	}
 }
 
 export default Business;

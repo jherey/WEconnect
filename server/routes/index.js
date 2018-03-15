@@ -15,5 +15,6 @@ router.post('/businesses', businessValidator.registerBusiness, businessValidator
 router.put('/businesses/:businessId', businessValidator.registerBusiness, businessValidator.verifyToken, Business.updateBusiness);
 router.delete('/businesses/:businessId', businessValidator.verifyToken, Business.removeBusiness);
 router.get('/businesses/:businessId', Business.getABusiness);
+router.get('/businesses', businessValidator.query, Business.getAllBusinesses);
 
 export default router;
