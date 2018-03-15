@@ -6,26 +6,9 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 /*
-  * Test the /GET requests
-  */
-describe('/GET REQUESTS', () => {
-	it('it should GET all registered users', (done) => {
-		//	HTTP POST -> REGISTER A NEW USER
-		chai.request(app)
-			.get('/api/v1/auth/')
-			.end((err, res) => {
-				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('users');
-				expect(res.status).to.equal(200);
-				done();
-			});
-	});
-});
-
-/*
   * Test the /POST requests
   */
-describe('/POST REQUESTS', () => {
+describe('User', () => {
 	it('it should not register a user', (done) => {
 		//	HTTP POST -> DONT REGISTER A NEW USER
 		const userDetails = {
@@ -37,7 +20,7 @@ describe('/POST REQUESTS', () => {
 			.send(userDetails)
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message').eql('Email is not valid');
+				expect(res.body).to.have.property('message');
 				expect(res.body).to.have.property('error');
 				expect(res.status).to.equal(400);
 				done();
@@ -47,18 +30,21 @@ describe('/POST REQUESTS', () => {
 	it('it should register a new user', (done) => {
 		//	HTTP POST -> REGISTER A NEW USER
 		const userDetails = {
-			username: 'Seyih',
-			email: 'jade@gmail.com',
-			password: 'olufayo'
+			firstname: 'tobesky',
+			username: 'tobey',
+			password: 'olufayo',
+			lastname: 'ologun',
+			email: 'tobesyi@gmail.com',
+			profilepic: 'tobesky.jpg',
+			sex: 'male'
 		};
 		chai.request(app)
 			.post('/api/v1/auth/signup')
 			.send(userDetails)
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message').eql('User registered successfully');
-				expect(res.body).to.have.property('error');
-				expect(res.status).to.equal(200);
+				expect(res.body).to.have.property('message').eql('Signed up successfully');
+				expect(res.status).to.equal(201);
 				done();
 			});
 	});
@@ -66,7 +52,7 @@ describe('/POST REQUESTS', () => {
 	it('it should not login a user', (done) => {
 		//	HTTP POST -> DON'T LOGIN A USER
 		const userDetails = {
-			email: 'jerry@gmail.com'
+			username: 'jherey'
 		};
 		chai.request(app)
 			.post('/api/v1/auth/login')
@@ -74,7 +60,6 @@ describe('/POST REQUESTS', () => {
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
 				expect(res.body).to.have.property('message').eql('Password field is empty');
-				expect(res.body).to.have.property('error');
 				expect(res.status).to.equal(400);
 				done();
 			});
@@ -83,16 +68,15 @@ describe('/POST REQUESTS', () => {
 	it('it should not login a user', (done) => {
 		//	HTTP POST -> DON'T LOGIN A USER
 		const userDetails = {
-			email: 'jerry@gmail.com',
-			password: 'jerry1'
+			username: 'jherey',
+			password: 'jeremiah'
 		};
 		chai.request(app)
 			.post('/api/v1/auth/login')
 			.send(userDetails)
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message').eql('Error logining in');
-				expect(res.body).to.have.property('error');
+				expect(res.body).to.have.property('message').eql('Username/Password Incorrect');
 				expect(res.status).to.equal(400);
 				done();
 			});
@@ -101,16 +85,16 @@ describe('/POST REQUESTS', () => {
 	it('it should login a user', (done) => {
 		//	HTTP POST -> LOGIN A USER
 		const userDetails = {
-			email: 'jerry@gmail.com',
-			password: 'jerry'
+			username: 'jherey',
+			password: 'jeremiaholufayo'
 		};
 		chai.request(app)
 			.post('/api/v1/auth/login')
 			.send(userDetails)
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message').eql('Success');
-				expect(res.body).to.have.property('error');
+				expect(res.body).to.have.property('message').eql('User logged in successfully');
+				expect(res.body).to.have.property('token');
 				expect(res.status).to.equal(200);
 				done();
 			});
