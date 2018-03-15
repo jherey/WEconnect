@@ -1,4 +1,6 @@
-import business from '../models/business';
+import models from '../models/index';
+
+const businesses = models.Business;
 
 /**
  * @class validateUsers
@@ -12,46 +14,56 @@ class validateBusinesses {
    */
 	static query(req, res, next) {
 		const { location, category } = req.query;
-		const filter = [];
-		if (location || category) {
-			if (location) {
-				for (let i = 0; i < business.length; i += 1) {
-					if (location.toLowerCase() === business[i].location.toLowerCase()) {
-						filter.push(business[i]);
+		if (location) {
+			businesses
+				.findAll({
+					where: {
+						location
 					}
-				}
-			}
-			if (category) {
-				for (let i = 0; i < business.length; i += 1) {
-					if (category.toLowerCase() === business[i].category.toLowerCase()) {
-						if (filter.length === 0) {
-							filter.push(business[i]);
-						} else {
-							for (let j = 0; j < filter.length; j += 1) {
-								if (business[i].id !== filter[j].id) {
-									filter.push(business[i]);
-								}
-							}
-						}
+				})
+				.then((business) => {
+					if (!business.length) {
+						return res.status(404).send({
+							message: 'No business found for this location!',
+						});
 					}
-				}
-			}
-			if (filter.length === 0) {
-				return res.status(400).json({
-					message: 'Search keyword doesn\'t esixt',
-					error: true
-				});
-			}
-			return res.json({
-				found: filter,
-				error: false
-			});
+					return res.status(200).json({
+						message: 'Business Found!',
+						business
+					});
+				})
+				.catch(() => res.status(500).json({
+					message: 'Some error occured'
+				}));
 		}
+		if (category) {
+			businesses
+				.findAll({
+					where: {
+						category
+					}
+				})
+				.then((business) => {
+					if (!business.length) {
+						return res.status(404).send({
+							message: 'No business found for this category!',
+						});
+					}
+					return res.status(200).json({
+						message: 'Business Found!',
+						business
+					});
+				})
+				.catch(() => res.status(500).json({
+					message: 'Some error occured'
+				}));
+		}
+
 		next();
 	}
 
 	/**
-   * @returns {Object} query
+   * @returns {Object} Register Business
    * @param {*} req
    * @param {*} res
 	 * @param {*} next
@@ -70,6 +82,29 @@ class validateBusinesses {
 		}
 
 		next();
+	}
+
+	/**
+ * @returns {Object} Verify Token
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+	static verifyToken(req, res, next) {
+		// Get auth header value
+		const bearerHeader = req.headers.authorization;
+		// Check if bearer is undefined
+		if (typeof bearerHeader !== 'undefined') {
+			req.token = bearerHeader;
+
+			next();
+		} else {
+			// Forbidden
+			res.status(403).json({
+				message: 'Add token to header',
+				error: true
+			});
+		}
 	}
 }
 
