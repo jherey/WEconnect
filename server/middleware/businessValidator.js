@@ -20,7 +20,7 @@ class validateBusinesses {
 				//	Find by location
 				.findAll({
 					where: {
-						location
+						location: { $iLike: `%${location}%` }
 					}
 				})
 				.then((business) => {
@@ -42,7 +42,7 @@ class validateBusinesses {
 				//	Find by category
 				.findAll({
 					where: {
-						category
+						category: { $iLike: `%${category}%` }
 					}
 				})
 				.then((business) => {
