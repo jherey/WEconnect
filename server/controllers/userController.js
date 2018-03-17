@@ -47,17 +47,15 @@ class Users {
 				password: hashSync(password, 10)
 			})
 			.then((user) => {
-				//	Assign token to the user for six hours
-				const token = jwt.sign({ user }, secret, { expiresIn: '6h' });
 				//	Success message
 				res.status(201).json({
 					message: 'Signed up successfully',
-					token
+					user
 				});
-			})
-			.catch(() => res.status(500).json({
-				message: 'Internal server error'
-			}));
+			});
+		// .catch(() => res.status(500).json({
+		// 	message: 'Internal server error'
+		// }));
 	}
 
 	/**
@@ -88,8 +86,8 @@ class Users {
 				}
 				//	Details mismatch
 				return res.status(400).json({ message: 'Username/Password Incorrect' });
-			})
-			.catch(error => res.status(400).json(error));
+			});
+		// .catch(error => res.status(400).json(error));
 	}
 }
 
