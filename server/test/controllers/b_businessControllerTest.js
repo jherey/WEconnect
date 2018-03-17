@@ -166,14 +166,26 @@ describe('This test describes the user', () => {
 				});
 		});
 
-		it('it should return an error if location is wrong', (done) => {
-			//	HTTP GET -> LOCATION DOESN'T EXIST
+		it('it should return no business found if location does not exist', (done) => {
+			//	HTTP GET -> BUSINESS DOESN'T EXIST
+			chai.request(app)
+				.get('/api/v1/businesses?location=usa')
+				.end((err, res) => {
+					expect(res.body).to.be.a('object');
+					expect(res.body).to.have.property('message');
+					expect(res.status).to.equal(404);
+					done();
+				});
+		});
+
+		it('it should return all businesses with the inputed prefix location', (done) => {
+			//	HTTP GET -> LOCATION EXIST
 			chai.request(app)
 				.get('/api/v1/businesses?location=nige')
 				.end((err, res) => {
 					expect(res.body).to.be.a('object');
 					expect(res.body).to.have.property('message');
-					expect(res.status).to.equal(404);
+					expect(res.status).to.equal(200);
 					done();
 				});
 		});
@@ -189,14 +201,26 @@ describe('This test describes the user', () => {
 				});
 		});
 
-		it('it should return an error if category does not exist', (done) => {
-			//	HTTP GET -> CATEGORY DOESN'T EXIST
+		it('it should return no business found if category does not exist', (done) => {
+			//	HTTP GET -> BUSINESS DOESN'T EXIST
+			chai.request(app)
+				.get('/api/v1/businesses?category=fashion')
+				.end((err, res) => {
+					expect(res.body).to.be.a('object');
+					expect(res.body).to.have.property('message');
+					expect(res.status).to.equal(404);
+					done();
+				});
+		});
+
+		it('it should return all businesses with the inputed prefix category', (done) => {
+			//	HTTP GET -> CATEGORY EXIST
 			chai.request(app)
 				.get('/api/v1/businesses?category=sal')
 				.end((err, res) => {
 					expect(res.body).to.be.a('object');
 					expect(res.body).to.have.property('message');
-					expect(res.status).to.equal(404);
+					expect(res.status).to.equal(200);
 					done();
 				});
 		});
