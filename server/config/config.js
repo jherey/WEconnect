@@ -8,7 +8,7 @@ module.exports = {
 		host: '127.0.0.1',
 		port: 5432,
 		secret_key: process.env.secretKey,
-		dialect: process.env.DB_DIALECT
+		dialect: 'postgres'
 	},
 	test: {
 		username: process.env.DB_USERNAME,
@@ -17,7 +17,7 @@ module.exports = {
 		host: '127.0.0.1',
 		port: 5432,
 		secret_key: process.env.secretKey,
-		dialect: process.env.DB_DIALECT
+		dialect: 'postgres'
 	},
 	production: {
 		environment: 'production'
