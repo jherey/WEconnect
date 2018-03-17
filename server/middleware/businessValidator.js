@@ -35,11 +35,7 @@ class validateBusinesses {
 						message: 'Business Found!',
 						business
 					});
-				})
-				//	Catch error
-				.catch(() => res.status(500).json({
-					message: 'Some error occured'
-				}));
+				});
 		}
 		if (category) {
 			businesses
@@ -61,11 +57,7 @@ class validateBusinesses {
 						message: 'Business Found!',
 						business
 					});
-				})
-				//	Catch error
-				.catch(() => res.status(500).json({
-					message: 'Some error occured'
-				}));
+				});
 		}
 
 		next();
