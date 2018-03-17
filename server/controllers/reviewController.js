@@ -25,37 +25,36 @@ class Review {
 		jwt.verify(req.token, secret, (err, authData) => {
 			//	If there's a mismatch
 			if (err) {
-				res.status(403).json({
+				return res.status(403).json({
 					message: 'Token unmatch'
 				});
-			} else {
-				businesses
-				//	Find business by id
-					.findById(businessId)
-					.then((business) => {
-						//	If no business found, return error
-						if (business === null) {
-							return res.status(404).json({
-								message: 'Business does not exist'
-							});
-						}
-					});
-				reviews
-				//	Add a new review
-					.create({
-						review,
-						userId,
-						businessId
-					})
-				//	Successfully added
-					.then((rev) => {
-						res.status(201).json({
-							message: 'Review successfully added',
-							rev,
-							authData
-						});
-					});
 			}
+			businesses
+				//	Find business by id
+				.findById(businessId)
+				.then((business) => {
+					//	If no business found, return error
+					if (business === null) {
+						return res.status(404).json({
+							message: 'Business does not exist'
+						});
+					}
+				});
+			reviews
+				//	Add a new review
+				.create({
+					review,
+					userId,
+					businessId
+				})
+				//	Successfully added
+				.then((rev) => {
+					res.status(201).json({
+						message: 'Review successfully added',
+						rev,
+						authData
+					});
+				});
 		});
 	}
 

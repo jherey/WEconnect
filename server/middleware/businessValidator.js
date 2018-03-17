@@ -26,7 +26,7 @@ class validateBusinesses {
 				.then((business) => {
 					//	If no businesses found, return error
 					if (!business.length) {
-						return res.status(404).send({
+						return res.status(404).json({
 							message: 'No business found for this location!',
 						});
 					}
@@ -48,7 +48,7 @@ class validateBusinesses {
 				.then((business) => {
 					//	If no businesses found, return error
 					if (!business.length) {
-						return res.status(404).send({
+						return res.status(404).json({
 							message: 'No business found for this category!',
 						});
 					}
@@ -76,7 +76,7 @@ class validateBusinesses {
 
 		const errors = req.validationErrors();
 		if (errors) {
-			res.status(400).json({
+			return res.status(400).json({
 				message: errors[0],
 				error: true
 			});
@@ -101,7 +101,7 @@ class validateBusinesses {
 			next();
 		} else {
 			// Forbidden
-			res.status(403).json({
+			return res.status(403).json({
 				message: 'Add token to header',
 				error: true
 			});

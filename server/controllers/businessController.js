@@ -27,31 +27,30 @@ class Business {
 		jwt.verify(req.token, secret, (err, authData) => {
 			if (err) {
 				//	Wrong token
-				res.status(403).json({
+				return res.status(403).json({
 					message: 'Token unmatch'
 				});
-			} else {
-				//	Create the business
-				businesses
-					.create({
-						busname,
-						website,
-						telephone,
-						category: cat,
-						businfo,
-						address,
-						email,
-						busimage,
-						location: loc,
-						userId: authData.id	//	Get the id of the user from the authData in the token
-					})
-					//	Success message
-					.then(business => res.status(201).json({
-						message: 'Business created successfully',
-						business,
-						authData
-					}));
 			}
+			//	Create the business
+			businesses
+				.create({
+					busname,
+					website,
+					telephone,
+					category: cat,
+					businfo,
+					address,
+					email,
+					busimage,
+					location: loc,
+					userId: authData.id	//	Get the id of the user from the authData in the token
+				})
+			//	Success message
+				.then(business => res.status(201).json({
+					message: 'Business created successfully',
+					business,
+					authData
+				}));
 		});
 	}
 
@@ -73,44 +72,43 @@ class Business {
 		jwt.verify(req.token, secret, (err, authData) => {
 			if (err) {
 				//	Wrong token
-				res.status(403).json({
+				return res.status(403).json({
 					message: 'Token unmatch'
 				});
-			} else {
-				//	Find the business
-				businesses
-					.findOne({
-						where: {
-							id: businessId,
-							userId: authData.id
-						}
-					})
-					.then((business) => {
-						//	No business found or a different user tries to update the business
-						if (!business) {
-							return res.status(404).send({
-								message: 'You cannot update this business!',
-							});
-						}
-						//	Update the business
-						business
-							.update({
-								busname,
-								website,
-								telephone,
-								category: cat,
-								businfo,
-								email,
-								busimage,
-								location: loc
-							})
-							//	Success message
-							.then(updatedBusiness => res.status(200).json({
-								message: 'Business Update Successful',
-								updatedBusiness,
-							}));
-					});
 			}
+			//	Find the business
+			businesses
+				.findOne({
+					where: {
+						id: businessId,
+						userId: authData.id
+					}
+				})
+				.then((business) => {
+					//	No business found or a different user tries to update the business
+					if (!business) {
+						return res.status(404).send({
+							message: 'You cannot update this business!',
+						});
+					}
+					//	Update the business
+					business
+						.update({
+							busname,
+							website,
+							telephone,
+							category: cat,
+							businfo,
+							email,
+							busimage,
+							location: loc
+						})
+					//	Success message
+						.then(updatedBusiness => res.status(200).json({
+							message: 'Business Update Successful',
+							updatedBusiness,
+						}));
+				});
 		});
 	}
 
