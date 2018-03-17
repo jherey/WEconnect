@@ -1,17 +1,16 @@
 language: node_js
 node_js:
- - "6"
-notifications:
- email: false
-cache:
- directories:
-   - node_modules
+- "stable"
+install: npm install
+services:
+- postgresql
+env:
+- NODE_ENV=test
 before_script:
- - npm install
-script:
- - npm run test
- - npm run check-coverage
-after_success:
- - npm run coverage
- - npm run report-coverage
- - npm run coveralls
+- psql -c 'create database weconnect_test;' -U postgres
+- psql -c "CREATE USER root WITH PASSWORD 'password';" -U postgres
+- npm run build
+- sequelize db:migrate
+- sequelize db:seed:all
+script: npm test
+after_success: npm run coverage
