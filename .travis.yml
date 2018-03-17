@@ -6,8 +6,12 @@ services:
 - postgresql
 env:
 - NODE_ENV=test
+- DB_USERNAME=jherey
+- DB_PASSWORD=password
+- DB_NAME=travis
+- secret_key=secret
 before_script:
-- psql -c 'create database travis;' -U postgres
+- psql -c 'create database weconnect-test;' -U postgres
 - psql -c "CREATE USER jherey WITH PASSWORD 'password';" -U postgres
 script: npm test
 after_success: npm run coverage

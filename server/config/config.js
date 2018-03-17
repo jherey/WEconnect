@@ -7,7 +7,6 @@ module.exports = {
 		database: process.env.DB_NAME,
 		host: '127.0.0.1',
 		port: 5432,
-		secret_key: process.env.secretKey,
 		dialect: 'postgres'
 	},
 	test: {
@@ -16,7 +15,6 @@ module.exports = {
 		database: process.env.DB_NAME,
 		host: '127.0.0.1',
 		port: 5432,
-		secret_key: process.env.secretKey,
 		dialect: 'postgres'
 	},
 	production: {
