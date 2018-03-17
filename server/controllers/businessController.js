@@ -1,14 +1,10 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 import models from '../models/index';
 
-dotenv.config();
 //	Secret key
 const secret = process.env.secretKey;
 //	Business model
 const businesses = models.Business;
-//	Review model
-const reviews = models.Review;
 
 /**
  * @class business
@@ -22,7 +18,7 @@ class Business {
    */
 	static registerBusiness(req, res) {
 		const {
-			busname, website, telephone, category, businfo, email, busimage, location
+			busname, website, telephone, category, address, businfo, email, busimage, location
 		} = req.body;
 		//	Change location and category to lowercase
 		const loc = location.toLowerCase();
@@ -43,6 +39,7 @@ class Business {
 						telephone,
 						category: cat,
 						businfo,
+						address,
 						email,
 						busimage,
 						location: loc,
@@ -53,10 +50,6 @@ class Business {
 						message: 'Business created successfully',
 						business,
 						authData
-					}))
-					//	Any errors
-					.catch(() => res.status(500).json({
-						message: 'Internal server error'
 					}));
 			}
 		});
@@ -115,10 +108,6 @@ class Business {
 							.then(updatedBusiness => res.status(200).json({
 								message: 'Business Update Successful',
 								updatedBusiness,
-							}))
-							//	Catch any errors
-							.catch(() => res.status(400).json({
-								message: 'You cant update another person\'s business'
 							}));
 					});
 			}
@@ -163,10 +152,6 @@ class Business {
 							//	Success message
 							.then(res.status(200).json({
 								message: 'Business Successfully Deleted!'
-							}))
-							//	Catch any errors
-							.catch(() => res.status(400).json({
-								message: 'You cant delete another person\'s business'
 							}));
 					});
 			}
@@ -196,11 +181,7 @@ class Business {
 					message: 'Business Found',
 					business,
 				});
-			})
-			//	Catch any error
-			.catch(() => res.status(500).json({
-				message: 'Some error occured',
-			}));
+			});
 	}
 
 	/**
@@ -220,69 +201,6 @@ class Business {
 			}))
 			//	Catch any error
 			.catch(error => res.status(500).json(error));
-	}
-
-	/**
-   * {Object} addReview
-   * @param {*} req
-   * @param {*} res
-	 * @returns {json} json
-   */
-	static addReview(req, res) {
-		const { businessId } = req.params;
-		const { review, userId } = req.body;
-		reviews
-			//	Add a new review
-			.create({
-				review,
-				userId,
-				businessId
-			})
-			//	Successfully added
-			.then((rev) => {
-				res.status(201).json({
-					message: 'Review successfully added',
-					rev
-				});
-			})
-			//	Catch errors
-			.catch(() => res.status(500).json({
-				message: 'Internal server error'
-			}));
-	}
-
-	/**
-   * {Object} getAllReviews
-   * @param {*} req
-   * @param {*} res
-	 * @returns {json} json
-   */
-	static getAllReviews(req, res) {
-		const { businessId } = req.params;
-		reviews
-			//	Find all reviews of a business
-			.findAll({
-				where: {
-					businessId
-				}
-			})
-			.then((review) => {
-				//	If no reviews found
-				if (!review.length) {
-					return res.status(404).send({
-						message: 'No reviews for this business!',
-					});
-				}
-				//	If reviews found
-				return res.status(200).json({
-					message: 'Reviews Found!',
-					review
-				});
-			})
-			//	Catch error
-			.catch(() => res.status(500).json({
-				message: 'Some error occured'
-			}));
 	}
 }
 
