@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "set NODE_ENV=test&& sequelize db:migrate:undo:all&& sequelize db:migrate&& sequelize db:seed:all&& nyc mocha ./server/test/**/*.js --compilers js:babel-core/register --exit",
+    "test": "set NODE_ENV=test&& sequelize db:migrate:undo:all&& sequelize db:migrate&& nyc mocha ./server/test/**/*.js --compilers js:babel-core/register --exit",
     "babel-node": "babel-node bin/www --presets=env",
     "startDev": "nodemon --exec npm run babel-node -- bin/www",
     "start": "babel-node bin/www",

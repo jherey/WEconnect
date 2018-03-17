@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import configPath from './../config/config';
+import configJson from '../config/config';
 
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = configPath[env];
+const env = process.env.NODE_ENV || 'development'; // Use development if no environment is specified
+const config = configJson[env];
 const db = {};
 let sequelize;
 
@@ -17,19 +17,18 @@ if (config.use_env_variable) {
 
 fs
 	.readdirSync(__dirname)
-	.filter(file => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+	.filter(file => (file.indexOf('.') !== 0) &&
+		(file !== basename) &&
+		(file.slice(-3) === '.js'))
 	.forEach((file) => {
 		const model = sequelize.import(path.join(__dirname, file));
 		db[model.name] = model;
 	});
-
 Object.keys(db).forEach((modelName) => {
 	if (db[modelName].associate) {
 		db[modelName].associate(db);
 	}
 });
-
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-
-export { db, config };
+export default db;
