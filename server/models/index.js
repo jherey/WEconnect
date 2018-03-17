@@ -27,7 +27,10 @@ if (config.environment === 'production') {
 		}
 	);
 } else {
-	sequelize = new Sequelize(config.database, config.username, config.password, config);
+	sequelize = new Sequelize(config.database, config.username, config.password, {
+		host: 'localhost',
+		dialect: 'postgres'
+	});
 }
 fs
 	.readdirSync(__dirname)
