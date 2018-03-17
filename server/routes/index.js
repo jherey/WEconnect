@@ -1,6 +1,7 @@
 import express from 'express';
 import Users from '../controllers/userController';
 import Business from '../controllers/businessController';
+import Review from '../controllers/reviewController';
 import userValidator from '../middleware/userValidator';
 import businessValidator from '../middleware/businessValidator';
 
@@ -16,7 +17,7 @@ router.put('/businesses/:businessId', businessValidator.registerBusiness, busine
 router.delete('/businesses/:businessId', businessValidator.verifyToken, Business.removeBusiness);
 router.get('/businesses/:businessId', Business.getABusiness);
 router.get('/businesses', businessValidator.query, Business.getAllBusinesses);
-router.post('/businesses/:businessId/reviews', Business.addReview);
-router.get('/businesses/:businessId/reviews', Business.getAllReviews);
+router.post('/businesses/:businessId/reviews', businessValidator.verifyToken, Review.addReview);
+router.get('/businesses/:businessId/reviews', Review.getAllReviews);
 
 export default router;
