@@ -1,14 +1,23 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import models from '../../models';
 import app from '../../../app';
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
+//	Users model
+const { User } = models;
+
 /*
   * Test the /POST requests
   */
 describe('User', () => {
+	before((done) => {
+		User.sync({ force: true })
+			.then(() => done());
+	});
+
 	it('it should not register a user', (done) => {
 		//	HTTP POST -> DONT REGISTER A NEW USER
 		const userDetails = {
@@ -30,12 +39,12 @@ describe('User', () => {
 	it('it should register a new user', (done) => {
 		//	HTTP POST -> REGISTER A NEW USER
 		const userDetails = {
-			firstname: 'tobesky',
-			username: 'tobey',
-			password: 'olufayo',
+			firstname: 'jeremiah',
+			username: 'jherey',
+			password: 'jeremiaholufayo',
 			lastname: 'ologun',
-			email: 'tobesyi@gmail.com',
-			profilepic: 'tobesky.jpg',
+			email: 'jeremiah@gmail.com',
+			profilepic: 'jeremiah.jpg',
 			sex: 'male'
 		};
 		chai.request(app)
