@@ -15,7 +15,7 @@ const reviewModel = (sequelize, DataTypes) => {
 			},
 			onDelete: 'CASCADE',
 			references: {
-				model: 'event',
+				model: 'User',
 				Key: 'id',
 				as: 'userId',
 			},
@@ -31,7 +31,7 @@ const reviewModel = (sequelize, DataTypes) => {
 			},
 			onDelete: 'CASCADE',
 			references: {
-				model: 'review',
+				model: 'Business',
 				Key: 'id',
 				as: 'businessId',
 			},
