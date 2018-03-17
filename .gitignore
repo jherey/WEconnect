@@ -15,6 +15,3 @@ build
 
 ## Env variables
 .env
-
-## Config file
-config/
