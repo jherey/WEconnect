@@ -4,13 +4,13 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --watch server --exec babel-node -- bin/www",
-    "lint": "eslint --fix server/ test/",
-    "test": "nyc --reporter=html --reporter=text mocha ./server/test/**/*.js --exit --compilers js:babel-register",
+    "test": "set NODE_ENV=test&& sequelize db:migrate:undo:all&& sequelize db:migrate&& sequelize db:seed:all&& nyc mocha ./server/test/**/*.js --compilers js:babel-core/register --exit",
+    "babel-node": "babel-node bin/www --presets=env",
+    "startDev": "nodemon --exec npm run babel-node -- bin/www",
+    "heroku-postbuild": "npm run build",
+    "start": "babel-node bin/www",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "check-coverage": "nyc check-coverage --lines 70 --per-file",
-    "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test"
+    "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
