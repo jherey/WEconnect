@@ -114,7 +114,7 @@ describe('/GET REQUESTS', () => {
 		it('it should GET all reviews for a business', (done) => {
 			//	HTTP GET -> RETURN ALL REVIEWS FOR A BUSINESS
 			chai.request(app)
-				.get('/api/v1/businesses/1/reviews')
+				.get('/api/v1/businesses/2/reviews')
 				.end((err, res) => {
 					expect(res.body).to.be.a('object');
 					expect(res.body).to.have.property('message');
