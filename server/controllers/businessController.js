@@ -196,9 +196,7 @@ class Business {
 			.then(business => res.status(200).json({
 				message: 'Businesses found!',
 				business
-			}))
-			//	Catch any error
-			.catch(error => res.status(500).json(error));
+			}));
 	}
 }
 

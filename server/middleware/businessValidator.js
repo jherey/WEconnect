@@ -14,53 +14,55 @@ class validateBusinesses {
    */
 	static query(req, res, next) {
 		const { location, category } = req.query;
-		//	If there's a location query string
-		if (location) {
-			businesses
-				//	Find by location
-				.findAll({
-					where: {
-						location: { $iLike: `%${location}%` }
-					}
-				})
-				.then((business) => {
-					//	If no businesses found, return error
-					if (!business.length) {
-						return res.status(404).json({
-							message: 'No business found for this location!',
+		if (location || category) {
+			//	If there's a location query string
+			if (location) {
+				businesses
+					//	Find by location
+					.findAll({
+						where: {
+							location: { $iLike: `%${location}%` }
+						}
+					})
+					.then((business) => {
+						//	If no businesses found, return error
+						if (business.length < 1) {
+							return res.status(404).json({
+								message: 'No business found for this location!',
+							});
+						}
+						//	If business found, return business found
+						return res.status(200).json({
+							message: 'Business Found!',
+							business
 						});
-					}
-					//	If business found, return business found
-					return res.status(200).json({
-						message: 'Business Found!',
-						business
 					});
-				});
-		}
-		if (category) {
-			businesses
-				//	Find by category
-				.findAll({
-					where: {
-						category: { $iLike: `%${category}%` }
-					}
-				})
-				.then((business) => {
-					//	If no businesses found, return error
-					if (!business.length) {
-						return res.status(404).json({
-							message: 'No business found for this category!',
+			}
+			if (category) {
+				businesses
+					//	Find by category
+					.findAll({
+						where: {
+							category: { $iLike: `%${category}%` }
+						}
+					})
+					.then((business) => {
+						//	If no businesses found, return error
+						if (business.length < 1) {
+							return res.status(404).json({
+								message: 'No business found for this category!',
+							});
+						}
+						//	If business found, return business found
+						return res.status(200).json({
+							message: 'Business Found!',
+							business
 						});
-					}
-					//	If business found, return business found
-					return res.status(200).json({
-						message: 'Business Found!',
-						business
 					});
-				});
+			}
+		} else if (!location || !category) {
+			return next();
 		}
-
-		next();
 	}
 
 	/**
@@ -97,15 +99,13 @@ class validateBusinesses {
 		// Check if bearer is undefined
 		if (typeof bearerHeader !== 'undefined') {
 			req.token = bearerHeader;
-
-			next();
-		} else {
-			// Forbidden
-			return res.status(403).json({
-				message: 'Add token to header',
-				error: true
-			});
+			return next();
 		}
+		// Forbidden
+		return res.status(403).json({
+			message: 'Add token to header',
+			error: true
+		});
 	}
 }
 
