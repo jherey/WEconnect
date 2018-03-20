@@ -2,17 +2,8 @@ import models from '../models/index';
 
 const businesses = models.Business;
 
-/**
- * @class validateUsers
- */
-class validateBusinesses {
-	/**
-   * @returns {Object} query
-   * @param {*} req
-   * @param {*} res
-	 * @param {*} next
-   */
-	static query(req, res, next) {
+const validateBusinesses = {
+	query: (req, res, next) => {
 		const { location, category } = req.query;
 		if (location || category) {
 			//	If there's a location query string
@@ -63,15 +54,9 @@ class validateBusinesses {
 		} else if (!location || !category) {
 			return next();
 		}
-	}
+	},
 
-	/**
-   * @returns {Object} Register Business
-   * @param {*} req
-   * @param {*} res
-	 * @param {*} next
-   */
-	static registerBusiness(req, res, next) {
+	registerBusiness: (req, res, next) => {
 		req.check('busname', 'Business name is required').notEmpty();
 		req.check('category', 'Category is required').notEmpty();
 		req.check('location', 'Location is required').notEmpty();
@@ -85,15 +70,9 @@ class validateBusinesses {
 		}
 
 		next();
-	}
+	},
 
-	/**
- * @returns {Object} Verify Token
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-	static verifyToken(req, res, next) {
+	verifyToken: (req, res, next) => {
 		// Get auth header value
 		const bearerHeader = req.headers.authorization;
 		// Check if bearer is undefined
@@ -107,6 +86,6 @@ class validateBusinesses {
 			error: true
 		});
 	}
-}
+};
 
 export default validateBusinesses;

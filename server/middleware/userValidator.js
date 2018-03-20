@@ -2,17 +2,9 @@ const errorMessage = (res, message) => res.status(400).json({
 	message,
 	error: true
 });
-/**
- * @class validateUsers
- */
-class validateUsers {
-	/**
-   * @returns {Object} userSignUp
-   * @param {*} req
-   * @param {*} res
-	 * @param {*} next
-   */
-	static userSignUp(req, res, next) {
+
+const validateUsers = {
+	userSignUp: (req, res, next) => {
 		req.check('firstname', 'Firstname is required').notEmpty();
 		req.check('lastname', 'Lastname is required').notEmpty();
 		req.check('email', 'Email is required').notEmpty();
@@ -28,15 +20,9 @@ class validateUsers {
 		if (errors) { return errorMessage(res, errors[0].msg); }
 
 		next();
-	}
+	},
 
-	/**
-   * @returns {Object} userLogin
-   * @param {*} req
-   * @param {*} res
-	 * @param {*} next
-   */
-	static userLogin(req, res, next) {
+	userLogin: (req, res, next) => {
 		req.check('username', 'Username field is empty').notEmpty();
 		req.check('password', 'Password field is empty').notEmpty();
 		req
@@ -48,6 +34,6 @@ class validateUsers {
 
 		next();
 	}
-}
+};
 
 export default validateUsers;
