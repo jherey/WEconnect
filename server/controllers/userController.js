@@ -1,41 +1,18 @@
 import bcrypt, { hashSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 import models from '../models/index';
 
-dotenv.config();
 const secret = process.env.secretKey;
 //	Users model
 const users = models.User;
 
-/**
- * @class users
- */
-class Users {
-	/**
-   * @returns {Object} registerUsers
-   * @param {*} req
-   * @param {*} res
-	 * @returns {json} json
-   */
-	static registerUsers(req, res) {
+const Users = {
+	// Method to register a new user
+	registerUsers: (req, res) => {
+		// Create new user and push to Database
 		const {
 			firstname, lastname, profilepic, sex, username, email, password
 		} = req.body;
-		// if (req.files) {
-		// 	const file = req.files.filename;
-		// 	const filename = file.name;
-		// 	const filepath = `../../src' ${filename}`;
-		// 	file.mv(filepath, (err) => {
-		// 		if (err) {
-		// 			res.send('Error occured');
-		// 		} else {
-		// 			console.log(`File uploaded to ${filepath}`);
-		// 			res.send('Done!');
-		// 		}
-		// 	});
-		// }
-		//	Create new user and push to Database
 		users
 			.create({
 				firstname,
@@ -52,19 +29,12 @@ class Users {
 					message: 'Signed up successfully',
 					user
 				});
-			});
-		// .catch(() => res.status(500).json({
-		// 	message: 'Internal server error'
-		// }));
-	}
+			})
+			.catch(error => res.status(400).json({ error }));
+	},
 
-	/**
-   * @returns {Object} loginUser
-   * @param {*} req
-   * @param {*} res
-	 * @returns {json} json
-   */
-	static loginUser(req, res) {
+	// Method to login
+	loginUser: (req, res) => {
 		const { username, password } = req.body;
 		//	Find one user with username sent in the body
 		users.findOne({ where: { username } })
@@ -86,9 +56,9 @@ class Users {
 				}
 				//	Details mismatch
 				return res.status(400).json({ message: 'Username/Password Incorrect' });
-			});
-		// .catch(error => res.status(400).json(error));
+			})
+			.catch(error => res.status(400).json(error));
 	}
-}
+};
 
 export default Users;

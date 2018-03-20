@@ -1,7 +1,7 @@
 import express from 'express';
-import Users from '../controllers/userController';
-import Business from '../controllers/businessController';
-import Review from '../controllers/reviewController';
+import Users from '../controllers/UserController';
+import Business from '../controllers/BusinessController';
+import Review from '../controllers/ReviewController';
 import userValidator from '../middleware/userValidator';
 import businessValidator from '../middleware/businessValidator';
 
