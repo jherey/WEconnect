@@ -40,10 +40,10 @@ const Review = {
 					businessId
 				})
 				//	Successfully added
-				.then((rev) => {
+				.then((createdRev) => {
 					res.status(201).json({
 						message: 'Review successfully added',
-						rev,
+						createdRev,
 						authData
 					});
 				});
