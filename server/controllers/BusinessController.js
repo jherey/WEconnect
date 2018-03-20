@@ -20,7 +20,7 @@ const Business = {
 			if (err) {
 				//	Wrong token
 				return res.status(403).json({
-					message: 'Token unmatch'
+					message: 'Invalid Token'
 				});
 			}
 			//	Create the business
