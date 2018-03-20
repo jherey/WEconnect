@@ -8,17 +8,9 @@ const reviews = models.Review;
 //	Business model
 const businesses = models.Business;
 
-/**
- * @class review
- */
-class Review {
-	/**
-   * {Object} addReview
-   * @param {*} req
-   * @param {*} res
-	 * @returns {json} json
-   */
-	static addReview(req, res) {
+const Review = {
+	// Method to register a new user
+	addReview: (req, res) => {
 		const { businessId } = req.params;
 		const { review, userId } = req.body;
 		//	Verify if user is logged in
@@ -56,15 +48,9 @@ class Review {
 					});
 				});
 		});
-	}
+	},
 
-	/**
-   * {Object} getAllReviews
-   * @param {*} req
-   * @param {*} res
-	 * @returns {json} json
-   */
-	static getAllReviews(req, res) {
+	getAllReviews: (req, res) => {
 		const { businessId } = req.params;
 		reviews
 			//	Find all reviews of a business
@@ -87,6 +73,6 @@ class Review {
 				});
 			});
 	}
-}
+};
 
 export default Review;
