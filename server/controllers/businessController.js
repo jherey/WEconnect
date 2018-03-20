@@ -6,17 +6,9 @@ const secret = process.env.secretKey;
 //	Business model
 const businesses = models.Business;
 
-/**
- * @class business
- */
-class Business {
-	/**
-   * {Object} registerBusiness
-   * @param {*} req
-   * @param {*} res
-	 * @returns {json} json
-   */
-	static registerBusiness(req, res) {
+const Business = {
+	// Method to register business
+	registerBusiness: (req, res) => {
 		const {
 			busname, website, telephone, category, address, businfo, email, busimage, location
 		} = req.body;
@@ -45,22 +37,16 @@ class Business {
 					location: loc,
 					userId: authData.id	//	Get the id of the user from the authData in the token
 				})
-			//	Success message
+				//	Success message
 				.then(business => res.status(201).json({
 					message: 'Business created successfully',
 					business,
 					authData
 				}));
 		});
-	}
+	},
 
-	/**
-   * {Object} updateBusiness
-   * @param {*} req
-   * @param {*} res
-	 * @returns {json} json
-   */
-	static updateBusiness(req, res) {
+	updateBusiness: (req, res) => {
 		const {
 			busname, website, telephone, category, businfo, email, busimage, location
 		} = req.body;
@@ -103,22 +89,16 @@ class Business {
 							busimage,
 							location: loc
 						})
-					//	Success message
+						//	Success message
 						.then(updatedBusiness => res.status(200).json({
 							message: 'Business Update Successful',
 							updatedBusiness,
 						}));
 				});
 		});
-	}
+	},
 
-	/**
-   * {Object} removeBusiness
-   * @param {*} req
-   * @param {*} res
-	 * @returns {json} json
-   */
-	static removeBusiness(req, res) {
+	removeBusiness: (req, res) => {
 		const { businessId } = req.params;
 		//	Verify if user is logged in
 		jwt.verify(req.token, secret, (err, authData) => {
@@ -154,15 +134,9 @@ class Business {
 					});
 			}
 		});
-	}
+	},
 
-	/**
-   * {Object} getABusiness
-   * @param {*} req
-   * @param {*} res
-	 * @returns {json} json
-   */
-	static getABusiness(req, res) {
+	getABusiness: (req, res) => {
 		const { businessId } = req.params;
 		businesses
 			//	FInd one business by the businessId from the user
@@ -180,15 +154,9 @@ class Business {
 					business,
 				});
 			});
-	}
+	},
 
-	/**
- * {Object} getAllBusinesses
- * @param {*} req
- * @param {*} res
- * @returns {json} json
- */
-	static getAllBusinesses(req, res) {
+	getAllBusinesses: (req, res) => {
 		businesses
 			//	Find all businesses
 			.all()
@@ -198,6 +166,6 @@ class Business {
 				business
 			}));
 	}
-}
+};
 
 export default Business;
