@@ -5,14 +5,14 @@
 		"title": "WeConnect",
 		"description": "WeConnect provides a platform that brings businesses and individuals together. This platform creates awareness for businesses and gives the users the ability to write reviews about the businesses they have interacted with. You can proceed to the WeConnect website at [https://jherey.github.io/WeConnect/index.html](https://jherey.github.io/WeConnect/index.html)",
 		"contact": {
-    	"email": "olufayojeremiah@gmail.com"
+			"email": "olufayojeremiah@gmail.com"
 		},
 		"license": {
 			"name": "ISC",
 			"url": "https://opensource.org/licenses/ISC"
 		}
 	},
-	"host": "localhost:8000",
+	"host": "weconnect-server.herokuapp.com",
 	"basePath": "/api/v1/",
 	"tags": [
 		{
@@ -25,7 +25,7 @@
 		}
 	],
 	"schemes": [
-		"http"
+		"https"
 	],
 	"consumes": [
 		"application/json"
