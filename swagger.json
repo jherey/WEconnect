@@ -22,6 +22,10 @@
 		{
 			"name": "Businesses",
 			"description": "API for businesses in the system"
+		},
+		{
+			"name": "Reviews",
+			"description": "API for reviews in the system"
 		}
 	],
 	"schemes": [
@@ -99,6 +103,13 @@
 				"description": "Register a business",
 				"parameters": [
 					{
+						"in": "header",
+						"name": "Authorization",
+						"description": "Enter token",
+						"type": "string",
+						"required": true
+					},
+					{
 						"name": "business",
 						"in": "body",
 						"description": "A new business that we want to register",
@@ -140,6 +151,21 @@
 				],
 				"parameters": [
 					{
+						"in": "header",
+						"name": "Authorization",
+						"description": "Enter token",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "businessId",
+						"in": "path",
+						"description": "The id of the business to be updated",
+						"required": "true",
+						"type": "integer",
+						"format": "int64"
+					},
+					{
 						"name": "business",
 						"in": "body",
 						"description": "Business with new values of properties",
@@ -162,10 +188,19 @@
 				"description": "This can only be done by the logged in user.",
 				"parameters": [
 					{
-						"id": "businessId",
+						"in": "header",
+						"name": "Authorization",
+						"description": "Enter token",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "businessId",
 						"in": "path",
 						"description": "The id of the business to be deleted",
-						"type": "integer"
+						"required": "true",
+						"type": "integer",
+						"format": "int64"
 					}
 				],
 				"responses": {
@@ -181,10 +216,12 @@
 				"summary": "Get a business with given ID",
 				"parameters": [
 					{
-						"id": "businessId",
+						"name": "businessId",
 						"in": "path",
 						"description": "The id of the business to be found",
-						"type": "integer"
+						"required": "true",
+						"type": "integer",
+						"format": "int64"
 					}
 				],
 				"responses": {
@@ -200,60 +237,7 @@
 				}
 			}
 		},
-		"/businesses/{businessId}/reviews": {
-			"post": {
-				"summary": "Add a review for a business",
-				"tags": [
-					"Businesses"
-				],
-				"description": "Review a business",
-				"parameters": [
-					{
-						"name": "business",
-						"in": "body",
-						"description": "Add a new business review",
-						"required": true,
-						"schema": {
-							"$ref": "#/definitions/BusinessReview"
-						}
-					}
-				],
-				"produces": [
-					"application/json"
-				],
-				"responses": {
-					"200": {
-						"description": "Review sucessfully added"
-					}
-				}
-			},
-			"get": {
-				"tags": [
-					"Businesses"
-				],
-				"summary": "Get all reviews for a business",
-				"parameters": [
-					{
-						"id": "businessId",
-						"in": "query",
-						"description": "The id of the business to get all reviews",
-						"type": "integer"
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Business review is found",
-						"schema": {
-							"$ref": "#/definitions/Found"
-						}
-					},
-					"400": {
-						"description": "Invalid ID supplied"
-					}
-				}
-			}
-		},
-		"/businesses?location={location}": {
+		"/businesses?location=location": {
 			"get": {
 				"tags": [
 					"Businesses"
@@ -261,7 +245,7 @@
 				"summary": "Get all businesses with the specified location",
 				"parameters": [
 					{
-						"location": "place",
+						"name": "location",
 						"in": "query",
 						"description": "The name of the location to search for",
 						"type": "string"
@@ -280,7 +264,7 @@
 				}
 			}
 		},
-		"/businesses?category={category}": {
+		"/businesses?category=category": {
 			"get": {
 				"tags": [
 					"Businesses"
@@ -288,7 +272,7 @@
 				"summary": "Get all businesses with the specified category",
 				"parameters": [
 					{
-						"category": "category",
+						"name": "category",
 						"in": "query",
 						"description": "The name of the category to search for",
 						"type": "string"
@@ -306,17 +290,100 @@
 					}
 				}
 			}
+		},
+		"/businesses/{businessId}/reviews": {
+			"post": {
+				"summary": "Add a review for a business",
+				"tags": [
+					"Reviews"
+				],
+				"description": "Review a business",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Authorization",
+						"description": "Enter token",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "businessId",
+						"in": "path",
+						"description": "The id of the business to be found",
+						"required": "true",
+						"type": "integer",
+						"format": "int64"
+					},
+					{
+						"name": "business",
+						"in": "body",
+						"description": "Add a new business review",
+						"schema": {
+							"$ref": "#/definitions/BusinessReview"
+						}
+					}
+				],
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Review sucessfully added"
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Reviews"
+				],
+				"summary": "Get all reviews for a business",
+				"parameters": [
+					{
+						"name": "businessId",
+						"in": "path",
+						"description": "The id of the business to get all reviews",
+						"required": "true",
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Business review is found",
+						"schema": {
+							"$ref": "#/definitions/Found"
+						}
+					},
+					"400": {
+						"description": "Invalid ID supplied"
+					}
+				}
+			}
 		}
 	},
 	"definitions": {
 		"UserSignUp": {
 			"type": "object",
 			"required": [
+				"firstname",
+				"lastname",
 				"email",
 				"username",
 				"password"
 			],
 			"properties": {
+				"firstname": {
+					"type": "string"
+				},
+				"lastname": {
+					"type": "string"
+				},
+				"profilepic": {
+					"type": "string"
+				},
+				"sex": {
+					"type": "string"
+				},
 				"username": {
 					"type": "string",
 					"uniqueItems": true
@@ -334,11 +401,11 @@
 		"UserLogin": {
 			"type": "object",
 			"required": [
-				"email",
+				"username",
 				"password"
 			],
 			"properties": {
-				"email": {
+				"username": {
 					"type": "string",
 					"uniqueItems": true
 				},
@@ -351,18 +418,39 @@
 		"BusinessRegister": {
 			"type": "object",
 			"required": [
-				"name",
-				"address",
-				"website"
+				"busname",
+				"website",
+				"telephone",
+				"email",
+				"category",
+				"location"
 			],
 			"properties": {
-				"name": {
+				"busname": {
+					"type": "string"
+				},
+				"website": {
+					"type": "string"
+				},
+				"telephone": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"category": {
+					"type": "string"
+				},
+				"location": {
+					"type": "string"
+				},
+				"businfo": {
 					"type": "string"
 				},
 				"address": {
 					"type": "string"
 				},
-				"website": {
+				"busimage": {
 					"type": "string"
 				}
 			}
