@@ -10,7 +10,7 @@ const { Business } = models;
 
 let authToken;
 
-describe('This test describes the user', () => {
+describe('This test describes the business', () => {
 	before((done) => {
 		Business.sync({ force: true })
 			.then(() => done());
