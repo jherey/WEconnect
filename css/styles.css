@@ -182,3 +182,74 @@ form {
 	font-size: 12px;
 }
 /* END BUSSINESS REGISTRATION PAGE */
+
+/*BUSINESS PROFILE 1 PAGE*/
+.mid {
+	display: block;
+  margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	background-color: #F4F6F7;
+	padding: 30px;
+	width: 80%;
+}
+
+.edit {
+	margin-top: 10px;
+}
+
+.details {
+	margin-top: 5px;
+}
+
+.top {
+	margin-top: 25px;
+}
+
+.bus-name {
+	color: #fd654d;
+}
+
+.verticalLine {
+	border-left: thick solid #fd654d;
+	font-size: 1.3em;
+}
+
+#reviews {
+	text-align: center;
+}
+
+#motto {
+	margin-top: 10px;
+	font-style: italic;
+	font-size: 1.3em;
+}
+
+#write {
+	margin-top: 10px;
+}
+
+#logo {
+	margin: 10px;
+	width: 200px;
+	border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+	.mid {
+		width: 100%;
+		margin-top: 0px;
+		text-align: center;
+	}
+	.verticalLine {
+	border-left: none;
+	font-size: 1.3em;
+}
+	hr {
+		border: none;
+		width: 95%;
+		height: 4px;
+		background-color: #fd654d;
+	}
+}
+/*BUSINESS PROFILE 1*/
