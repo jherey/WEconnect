@@ -45,6 +45,11 @@ $ cd WeConnect
 # Install dependencies
 $ npm install
 
+# Create .env file for environmental variables in your root directory like the .env.example file
+
+# Run sequelize migrate command
+$ node_modules/.bin/sequelize db:migrate
+
 # Run the app
 $ npm start
 ```
@@ -53,11 +58,13 @@ $ npm start
 
 This software uses code from several open source packages.
 
+- [Bootstrap](https://getbootstrap.com/)
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
 - [Body-parser](https://www.npmjs.com/package/body-parser)
 - [Morgan](https://www.npmjs.com/package/morgan)
 - [Express-Validator](https://www.npmjs.com/package/express-validator)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ## License
 
