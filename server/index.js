@@ -4,11 +4,11 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import expressValidator from 'express-validator';
 import swaggerUi from 'swagger-ui-express';
-import routes from './server/routes/index';
+import routes from './routes/index';
 
 dotenv.config();
 
-const swaggerDocument = require('./swagger.json');
+const swaggerDocument = require('../swagger.json');
 
 // Set up the express app
 const app = express();
@@ -33,11 +33,5 @@ app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get('*', (req, res) => res.status(200).send({
 	message: 'Welcome to the beginning of nothingnessve.',
 }));
-
-// Listen for requests
-const port = parseInt(process.env.PORT, 10) || 8000;
-app.listen(port, () => {
-	console.log(`Hi there, check me out on http://localhost:${port}`);
-});
 
 export default app;

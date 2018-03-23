@@ -7,10 +7,6 @@
 
 WeConnect provides a platform that brings businesses and individuals together. This platform creates awareness for businesses and gives the users the ability to write reviews about the businesses they have interacted with.
 
-<br><br>
-    <img width=70% src="./src/homepage.jpg">
-<br><br>
-
 <p align="center">
   <a href="#webpage">Link to hosted webpage</a> •
   <a href="#key-features">Key Features</a> •

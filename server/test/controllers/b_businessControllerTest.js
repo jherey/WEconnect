@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import models from '../../models';
-import app from '../../../app';
+import app from '../../../index';
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -10,7 +10,7 @@ const { Business } = models;
 
 let authToken;
 
-describe('This test describes the user', () => {
+describe('This test describes the business', () => {
 	before((done) => {
 		Business.sync({ force: true })
 			.then(() => done());

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>WEconnect</title>
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-custom navbar-expand-lg navbar-dark">
+		<div class="container">
+			<a class="navbar-brand" href="index.html">WEconnect</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+			 aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto nav-pills">
+					<li class="nav-item">
+						<a class="nav-link" href="index.html">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="about.html">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="contact.html">Contact</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="signup.html">Sign Up
+							<i class="fa fa-user-plus"></i>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="signin.html">Sign In
+							<i class="fa fa-user"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="mid">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="text-lg-center">
+					<h1 class="bus-name">BRUTE DEV HUB</h1>
+					<div>
+						<img id="logo" src="images/business-logo.jpg" alt="">
+					</div>
+					<p id="motto">Motto/Slogan of Business</p>
+				</div>
+			</div>
+			<hr>
+			<div class="col-lg-6 verticalLine">
+				<h3 class="text-lg-center details bus-name">Details</h3>
+				<div class="top">
+					<p>
+						<strong>Address:</strong> 5, Soko Street, Ilupeju, Lagos State</p>
+					<p>
+						<strong>Email Address:</strong> bus@gmail.com</p>
+					<p>
+						<strong>Telephone:</strong> 08012345678</p>
+					<p>
+						<strong>Brief Bio:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua.</p>
+				</div>
+			</div>
+		</div>
+		<div class="form-row text-center">
+			<div class="col-12">
+				<a href="busUpdate.html" class="btn btn-primary edit fa fa-cog"> Edit Account Details</a>
+				<a href="" class="btn btn-danger edit fa fa-cog"> Delete Business</a>
+			</div>
+		</div>
+		<hr>
+		<h3 class="text-center rev">REVIEWS</h3>
+		<div class="row">
+			<div class="col-lg-1 text-center">
+				<img src="images/ppic.JPG">
+			</div>
+			<div class="col-lg-11">
+				<p>
+					<strong>sheyii</strong>
+				</p>
+				<p>Good working conditions. Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+			</div>
+			<hr>
+			<div class="col-lg-1 text-center">
+				<img src="images/ppic.JPG">
+			</div>
+			<div class="col-lg-11">
+				<p>
+					<strong>sheyii</strong>
+				</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+					aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			</div>
+		</div>
+		<div class="text-center">
+			<!-- Button trigger modal -->
+			<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+				Add Review
+			</button>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Write Review</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="comment">Review:</label>
+						<textarea class="form-control" rows="5" id="review"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save review</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<hr id="footer-hr">
+
+	<!-- FOOTER -->
+	<footer class="footer-distributed">
+		<div class="footer-right">
+			<a href="#">
+				<i class="fa fa-facebook"></i>
+			</a>
+			<a href="#">
+				<i class="fa fa-twitter"></i>
+			</a>
+			<a href="#">
+				<i class="fa fa-linkedin"></i>
+			</a>
+			<a href="#">
+				<i class="fa fa-github"></i>
+			</a>
+		</div>
+		<div class="footer-left">
+			<p class="footer-links">
+				<a href="index.html">Home</a>
+				·
+				<a href="about.html">About</a>
+				·
+				<a href="contact.html">Contact</a>
+			</p>
+
+			<p id="cortesy">WEconnect &copy; 2018</p>
+		</div>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	 crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	 crossorigin="anonymous"></script>
+
+</body>
+
+</html>
