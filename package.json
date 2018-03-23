@@ -8,6 +8,9 @@
     "babel-node": "babel-node index --presets=env",
     "startDev": "nodemon --exec npm run babel-node -- index",
     "start": "babel-node index",
+    "unmigrate": "node ./node_modules/sequelize-cli/lib/sequelize db:migrate:undo:all",
+    "migrate": "npm run unmigrate && node ./node_modules/sequelize-cli/lib/sequelize db:migrate",
+    "heroku-postbuild": "npm run migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
   },
