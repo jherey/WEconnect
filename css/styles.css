@@ -253,3 +253,31 @@ form {
 	}
 }
 /*BUSINESS PROFILE 1*/
+
+/* UPDATE BUSINESS PAGE */
+#update {
+	color: #fd654d;
+	font-size: 1.15em;
+	margin-top: 30px;
+}
+.form-horizontal{
+	border-radius: 10px;
+	background: #F4F6F7;
+	padding: 50px;
+	width: auto;
+	margin-right: 0px;
+}
+/* UPDATE BUSINESS */
+
+/* BUSINESS LISTING */
+.title {
+	color: #fff;
+	font-size: 2.5em;
+}
+
+.category {
+	font-size: 22px;
+	color: #fd654d;
+	font-weight: bold;
+}
+/* BUSINESS LISTING */
