@@ -15,35 +15,27 @@ const Business = {
 		//	Change location and category to lowercase
 		const loc = location.toLowerCase();
 		const cat = category.toLowerCase();
-		//	Verify the user and issue a token
-		jwt.verify(req.token, secret, (err, authData) => {
-			if (err) {
-				//	Wrong token
-				return res.status(403).json({
-					message: 'Invalid Token'
-				});
-			}
-			//	Create the business
-			businesses
-				.create({
-					busname,
-					website,
-					telephone,
-					category: cat,
-					businfo,
-					address,
-					email,
-					busimage,
-					location: loc,
-					userId: authData.id	//	Get the id of the user from the authData in the token
-				})
-				//	Success message
-				.then(business => res.status(201).json({
-					message: 'Business created successfully',
-					business,
-					authData
-				}));
-		});
+		const { authData } = req;
+		//	Create the business
+		businesses
+			.create({
+				busname,
+				website,
+				telephone,
+				category: cat,
+				businfo,
+				address,
+				email,
+				busimage,
+				location: loc,
+				userId: authData.id	//	Get the id of the user from the authData in the token
+			})
+			//	Success message
+			.then(business => res.status(201).json({
+				message: 'Business created successfully',
+				business,
+				authData
+			}));
 	},
 
 	updateBusiness: (req, res) => {
@@ -54,48 +46,40 @@ const Business = {
 		const loc = location.toLowerCase();
 		const cat = category.toLowerCase();
 		const { businessId } = req.params;
-		//	Verify the user and issue a token
-		jwt.verify(req.token, secret, (err, authData) => {
-			if (err) {
-				//	Wrong token
-				return res.status(403).json({
-					message: 'Token unmatch'
-				});
-			}
-			//	Find the business
-			businesses
-				.findOne({
-					where: {
-						id: businessId,
-						userId: authData.id
-					}
-				})
-				.then((business) => {
-					//	No business found or a different user tries to update the business
-					if (!business) {
-						return res.status(404).send({
-							message: 'You cannot update this business!',
-						});
-					}
-					//	Update the business
-					business
-						.update({
-							busname,
-							website,
-							telephone,
-							category: cat,
-							businfo,
-							email,
-							busimage,
-							location: loc
-						})
-						//	Success message
-						.then(updatedBusiness => res.status(200).json({
-							message: 'Business Update Successful',
-							updatedBusiness,
-						}));
-				});
-		});
+		const { authData } = req;
+		//	Find the business
+		businesses
+			.findOne({
+				where: {
+					id: businessId,
+					userId: authData.id
+				}
+			})
+			.then((business) => {
+				//	No business found or a different user tries to update the business
+				if (!business) {
+					return res.status(404).send({
+						message: 'You cannot update this business!',
+					});
+				}
+				//	Update the business
+				business
+					.update({
+						busname,
+						website,
+						telephone,
+						category: cat,
+						businfo,
+						email,
+						busimage,
+						location: loc
+					})
+					//	Success message
+					.then(updatedBusiness => res.status(200).json({
+						message: 'Business Update Successful',
+						updatedBusiness,
+					}));
+			});
 	},
 
 	removeBusiness: (req, res) => {
@@ -125,7 +109,7 @@ const Business = {
 							});
 						}
 						return business
-						//	Delete the business
+							//	Delete the business
 							.destroy()
 							//	Success message
 							.then(res.status(200).json({
