@@ -18,7 +18,8 @@ const businessModel = (sequelize, DataTypes) => {
 				},
 				len: {
 					args: [3, 70],
-					msg: 'Business name should be longer than 3 words and less than 70 words',
+					msg: `Business name should be longer than
+								3 words and less than 70 words`,
 				},
 			},
 		},
