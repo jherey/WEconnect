@@ -4,20 +4,55 @@ import Business from '../controllers/BusinessController';
 import Review from '../controllers/ReviewController';
 import userValidator from '../middleware/userValidator';
 import businessValidator from '../middleware/businessValidator';
+import verifyToken from '../middleware/verifyToken';
 
 const router = express.Router();
 
-//	Users endpoints
-router.post('/auth/signup', userValidator.userSignUp, Users.registerUsers);
-router.post('/auth/login', userValidator.userLogin, Users.loginUser);
+// Destructure middleware
+const { userSignUp } = userValidator;
+const { userLogin } = userValidator;
+const { createBusinessValidator } = businessValidator;
+const { query } = businessValidator;
+const { tokenVerification } = verifyToken;
 
-//	Business endpoints
-router.post('/businesses', businessValidator.registerBusiness, businessValidator.verifyToken, Business.registerBusiness);
-router.put('/businesses/:businessId', businessValidator.registerBusiness, businessValidator.verifyToken, Business.updateBusiness);
-router.delete('/businesses/:businessId', businessValidator.verifyToken, Business.removeBusiness);
-router.get('/businesses/:businessId', Business.getABusiness);
-router.get('/businesses', businessValidator.query, Business.getAllBusinesses);
-router.post('/businesses/:businessId/reviews', businessValidator.verifyToken, Review.addReview);
-router.get('/businesses/:businessId/reviews', Review.getAllReviews);
+// Destructure controllers
+const { registerUsers } = Users;
+const { loginUser } = Users;
+const { registerBusiness } = Business;
+const { updateBusiness } = Business;
+const { removeBusiness } = Business;
+const { getBusiness } = Business;
+const { addReview } = Review;
+const { getAllReviews } = Review;
+
+// Users endpoints
+router
+	.post('/auth/signup', userSignUp, registerUsers);
+router
+	.post('/auth/login', userLogin, loginUser);
+
+// Business endpoints
+router
+	.post(
+		'/businesses',
+		createBusinessValidator, tokenVerification, registerBusiness
+	);
+router
+	.put(
+		'/businesses/:businessId',
+		createBusinessValidator, tokenVerification, updateBusiness
+	);
+router
+	.delete('/businesses/:businessId', tokenVerification, removeBusiness);
+router
+	.get('/businesses/:businessId', getBusiness);
+router
+	.get('/businesses', query, Business.getAllBusinesses);
+
+// Review endpoints
+router
+	.post('/businesses/:businessId/reviews', tokenVerification, addReview);
+router
+	.get('/businesses/:businessId/reviews', getAllReviews);
 
 export default router;
