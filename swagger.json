@@ -469,13 +469,9 @@
 		"BusinessReview": {
 			"type": "object",
 			"required": [
-				"name",
 				"review"
 			],
 			"properties": {
-				"name": {
-					"type": "string"
-				},
 				"review": {
 					"type": "string"
 				}
