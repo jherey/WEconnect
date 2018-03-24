@@ -1,12 +1,9 @@
 import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
 import expressValidator from 'express-validator';
 import swaggerUi from 'swagger-ui-express';
 import routes from './routes/index';
-
-dotenv.config();
 
 const swaggerDocument = require('../swagger.json');
 
@@ -29,9 +26,9 @@ app.use('/api/v1/', routes);
 // Document API with Swagger
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Setup a default catch-all route that sends back a welcome message in JSON format.
+// Setup a default catch-all route
 app.get('*', (req, res) => res.status(200).send({
-	message: 'Welcome to the beginning of nothingnessve.',
+  message: 'Welcome to the beginning of nothingness.',
 }));
 
 export default app;

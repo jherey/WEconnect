@@ -1,38 +1,38 @@
 const errorMessage = (res, message) => res.status(400).json({
-	message,
-	error: true
+  message,
+  error: true
 });
 
-const validateUsers = {
-	userSignUp: (req, res, next) => {
-		req.check('firstname', 'Firstname is required').notEmpty();
-		req.check('lastname', 'Lastname is required').notEmpty();
-		req.check('email', 'Email is required').notEmpty();
-		req.check('email', 'Email is not valid').isEmail();
-		req.check('username', 'Username is required').notEmpty();
-		req.check('password', 'Password is required').notEmpty();
-		req
-			.check('password', 'Minimum password length is 5 characters')
-			.isLength({ min: 5 });
+const userValidator = {
+  userSignUp: (req, res, next) => {
+    req.check('firstname', 'Firstname is required').notEmpty();
+    req.check('lastname', 'Lastname is required').notEmpty();
+    req.check('email', 'Email is required').notEmpty();
+    req.check('email', 'Email is not valid').isEmail();
+    req.check('username', 'Username is required').notEmpty();
+    req.check('password', 'Password is required').notEmpty();
+    req
+      .check('password', 'Minimum password length is 5 characters')
+      .isLength({ min: 5 });
 
-		const errors = req.validationErrors();
-		if (errors) { return errorMessage(res, errors[0].msg); }
+    const errors = req.validationErrors();
+    if (errors) { return errorMessage(res, errors[0].msg); }
 
-		next();
-	},
+    next();
+  },
 
-	userLogin: (req, res, next) => {
-		req.check('username', 'Username field is empty').notEmpty();
-		req.check('password', 'Password field is empty').notEmpty();
-		req
-			.check('password', 'Minimum password length is 5 characters')
-			.isLength({ min: 5 });
+  userLogin: (req, res, next) => {
+    req.check('username', 'Username field is empty').notEmpty();
+    req.check('password', 'Password field is empty').notEmpty();
+    req
+      .check('password', 'Minimum password length is 5 characters')
+      .isLength({ min: 5 });
 
-		const errors = req.validationErrors();
-		if (errors) { return errorMessage(res, errors[0].msg); }
+    const errors = req.validationErrors();
+    if (errors) { return errorMessage(res, errors[0].msg); }
 
-		next();
-	}
+    next();
+  }
 };
 
-export default validateUsers;
+export default userValidator;

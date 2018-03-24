@@ -19,8 +19,7 @@
         ],
         "import/no-unresolved": [
             2,
-            {
-                "commonjs": true
+            { "commonjs": true
             }
         ],
         "no-shadow": [
@@ -51,19 +50,6 @@
                     "ClassDeclaration": true
                 }
             }
-        ],
-        "indent": [
-            2,
-            "tab"
-        ],
-        "no-tabs": 0,
-        "import/no-extraneous-dependencies": [
-            2,
-            {}
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
         ]
     }
 }

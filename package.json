@@ -2,9 +2,9 @@
   "name": "weconnect",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test&& sequelize db:migrate:undo:all&& sequelize db:migrate&& nyc mocha ./server/test/**/*.js --compilers js:babel-core/register --exit",
+    "test": "set NODE_ENV=test&& npm run migrate&& nyc mocha ./server/test/**/*.js --compilers js:babel-core/register --exit",
     "babel-node": "babel-node index --presets=env",
     "startDev": "nodemon --exec npm run babel-node -- index",
     "start": "babel-node index",
@@ -35,14 +35,14 @@
     "nyc": "^11.4.1",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "sequelize": "^4.36.0",
     "sequelize-cli": "^4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "chai": "^4.1.2",
-    "chai-http": "^3.0.0",
     "chai-spies": "^1.0.0",
     "coveralls": "^3.0.0",
     "eslint": "^4.18.2",
