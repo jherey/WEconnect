@@ -28,7 +28,7 @@ app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Setup a default catch-all route
 app.get('*', (req, res) => res.status(200).send({
-	message: 'Welcome to the beginning of nothingness.',
+  message: 'Welcome to the beginning of nothingness.',
 }));
 
 export default app;

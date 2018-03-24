@@ -27,32 +27,32 @@ const { getAllReviews } = Review;
 
 // Users endpoints
 router
-	.post('/auth/signup', userSignUp, registerUsers);
+  .post('/auth/signup', userSignUp, registerUsers);
 router
-	.post('/auth/login', userLogin, loginUser);
+  .post('/auth/login', userLogin, loginUser);
 
 // Business endpoints
 router
-	.post(
-		'/businesses',
-		createBusinessValidator, tokenVerification, registerBusiness
-	);
+  .post(
+    '/businesses',
+    createBusinessValidator, tokenVerification, registerBusiness
+  );
 router
-	.put(
-		'/businesses/:businessId',
-		createBusinessValidator, tokenVerification, updateBusiness
-	);
+  .put(
+    '/businesses/:businessId',
+    createBusinessValidator, tokenVerification, updateBusiness
+  );
 router
-	.delete('/businesses/:businessId', tokenVerification, removeBusiness);
+  .delete('/businesses/:businessId', tokenVerification, removeBusiness);
 router
-	.get('/businesses/:businessId', getBusiness);
+  .get('/businesses/:businessId', getBusiness);
 router
-	.get('/businesses', query, Business.getAllBusinesses);
+  .get('/businesses', query, Business.getAllBusinesses);
 
 // Review endpoints
 router
-	.post('/businesses/:businessId/reviews', tokenVerification, addReview);
+  .post('/businesses/:businessId/reviews', tokenVerification, addReview);
 router
-	.get('/businesses/:businessId/reviews', getAllReviews);
+  .get('/businesses/:businessId/reviews', getAllReviews);
 
 export default router;
