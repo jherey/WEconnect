@@ -4,16 +4,22 @@ import models from '../models/index';
 
 const secret = process.env.secretKey;
 //	Users model
-const users = models.User;
+const { User } = models;
 
 const Users = {
 	// Method to register a new user
 	registerUsers: (req, res) => {
 		// Create new user and push to Database
 		const {
-			firstname, lastname, profilepic, sex, username, email, password
+			firstname,
+			lastname,
+			profilepic,
+			sex,
+			username,
+			email,
+			password
 		} = req.body;
-		users
+		User
 			.create({
 				firstname,
 				lastname,
@@ -37,7 +43,7 @@ const Users = {
 	loginUser: (req, res) => {
 		const { username, password } = req.body;
 		//	Find one user with username sent in the body
-		users.findOne({ where: { username } })
+		User.findOne({ where: { username } })
 			.then((user) => {
 				//	Compare inputed password with hashed password in the database
 				if (user && bcrypt.compareSync(password, user.password)) {
