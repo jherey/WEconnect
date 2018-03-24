@@ -3,7 +3,7 @@ const errorMessage = (res, message) => res.status(400).json({
 	error: true
 });
 
-const validateUsers = {
+const userValidator = {
 	userSignUp: (req, res, next) => {
 		req.check('firstname', 'Firstname is required').notEmpty();
 		req.check('lastname', 'Lastname is required').notEmpty();
@@ -35,4 +35,4 @@ const validateUsers = {
 	}
 };
 
-export default validateUsers;
+export default userValidator;
