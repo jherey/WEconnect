@@ -1,23 +1,14 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import models from '../../models';
 import app from '../../../index';
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-//	Users model
-const { User } = models;
-
 /*
   * Test the /POST requests
   */
 describe('User', () => {
-	before((done) => {
-		User.sync({ force: true })
-			.then(() => done());
-	});
-
 	it('it should not register a user', (done) => {
 		//	HTTP POST -> DONT REGISTER A NEW USER
 		const userDetails = {
@@ -52,7 +43,8 @@ describe('User', () => {
 			.send(userDetails)
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message').eql('Signed up successfully');
+				expect(res.body).to.have.property('message')
+					.eql('Signed up successfully');
 				expect(res.status).to.equal(201);
 				done();
 			});
@@ -68,7 +60,8 @@ describe('User', () => {
 			.send(userDetails)
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message').eql('Password field is empty');
+				expect(res.body).to.have.property('message')
+					.eql('Password field is empty');
 				expect(res.status).to.equal(400);
 				done();
 			});
@@ -85,7 +78,8 @@ describe('User', () => {
 			.send(userDetails)
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message').eql('Username/Password Incorrect');
+				expect(res.body).to.have.property('message')
+					.eql('Username/Password Incorrect');
 				expect(res.status).to.equal(400);
 				done();
 			});
@@ -102,7 +96,8 @@ describe('User', () => {
 			.send(userDetails)
 			.end((err, res) => {
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.have.property('message').eql('User logged in successfully');
+				expect(res.body).to.have.property('message')
+					.eql('User logged in successfully');
 				expect(res.body).to.have.property('token');
 				expect(res.status).to.equal(200);
 				done();

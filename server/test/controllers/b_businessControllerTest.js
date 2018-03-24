@@ -1,21 +1,13 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import models from '../../models';
 import app from '../../../index';
 
 chai.use(chaiHttp);
 const { expect } = chai;
-//	Business model
-const { Business } = models;
 
 let authToken;
 
 describe('This test describes the business', () => {
-	before((done) => {
-		Business.sync({ force: true })
-			.then(() => done());
-	});
-
 	/*
   * Test the /POST requests
   */
@@ -146,7 +138,8 @@ describe('This test describes the business', () => {
 				.get('/api/v1/businesses/11')
 				.end((err, res) => {
 					expect(res.body).to.be.an.instanceof(Object);
-					expect(res.body).to.have.property('message').eql('Business Not Found!');
+					expect(res.body).to.have.property('message')
+						.eql('Business Not Found!');
 					expect(res.status).to.equal(404);
 					done();
 				});
@@ -166,29 +159,35 @@ describe('This test describes the business', () => {
 				});
 		});
 
-		it('it should return no business found if location does not exist', (done) => {
+		it(
+			'it should return no business found if location does not exist',
+			(done) => {
 			//	HTTP GET -> BUSINESS DOESN'T EXIST
-			chai.request(app)
-				.get('/api/v1/businesses?location=usa')
-				.end((err, res) => {
-					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('message');
-					expect(res.status).to.equal(404);
-					done();
-				});
-		});
+				chai.request(app)
+					.get('/api/v1/businesses?location=usa')
+					.end((err, res) => {
+						expect(res.body).to.be.a('object');
+						expect(res.body).to.have.property('message');
+						expect(res.status).to.equal(404);
+						done();
+					});
+			}
+		);
 
-		it('it should return all businesses with the inputed prefix location', (done) => {
+		it(
+			'it should return all businesses with the inputed prefix location',
+			(done) => {
 			//	HTTP GET -> LOCATION EXIST
-			chai.request(app)
-				.get('/api/v1/businesses?location=nige')
-				.end((err, res) => {
-					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('message');
-					expect(res.status).to.equal(200);
-					done();
-				});
-		});
+				chai.request(app)
+					.get('/api/v1/businesses?location=nige')
+					.end((err, res) => {
+						expect(res.body).to.be.a('object');
+						expect(res.body).to.have.property('message');
+						expect(res.status).to.equal(200);
+						done();
+					});
+			}
+		);
 
 		it('it should GET all business with the specified location', (done) => {
 			//	HTTP GET -> RETURN ALL BUSINESS WITH THE SPECIFIED LOCATION
@@ -201,29 +200,35 @@ describe('This test describes the business', () => {
 				});
 		});
 
-		it('it should return no business found if category does not exist', (done) => {
+		it(
+			'it should return no business found if category does not exist',
+			(done) => {
 			//	HTTP GET -> BUSINESS DOESN'T EXIST
-			chai.request(app)
-				.get('/api/v1/businesses?category=fashion')
-				.end((err, res) => {
-					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('message');
-					expect(res.status).to.equal(404);
-					done();
-				});
-		});
+				chai.request(app)
+					.get('/api/v1/businesses?category=fashion')
+					.end((err, res) => {
+						expect(res.body).to.be.a('object');
+						expect(res.body).to.have.property('message');
+						expect(res.status).to.equal(404);
+						done();
+					});
+			}
+		);
 
-		it('it should return all businesses with the inputed prefix category', (done) => {
+		it(
+			'it should return all businesses with the inputed prefix category',
+			(done) => {
 			//	HTTP GET -> CATEGORY EXIST
-			chai.request(app)
-				.get('/api/v1/businesses?category=sal')
-				.end((err, res) => {
-					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('message');
-					expect(res.status).to.equal(200);
-					done();
-				});
-		});
+				chai.request(app)
+					.get('/api/v1/businesses?category=sal')
+					.end((err, res) => {
+						expect(res.body).to.be.a('object');
+						expect(res.body).to.have.property('message');
+						expect(res.status).to.equal(200);
+						done();
+					});
+			}
+		);
 
 		it('it should GET all business with the specified category', (done) => {
 			//	HTTP GET -> RETURN ALL BUSINESS WITH THE SPECIFIED CATEGORY
@@ -316,7 +321,8 @@ describe('This test describes the business', () => {
 				.set('Authorization', authToken)
 				.end((err, res) => {
 					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('message').eql('You cannot delete this business!');
+					expect(res.body).to.have.property('message')
+						.eql('You cannot delete this business!');
 					expect(res.status).to.equal(404);
 					done();
 				});
@@ -330,7 +336,7 @@ describe('This test describes the business', () => {
 				.set('Authorization', wrongToken)
 				.end((err, res) => {
 					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('message').eql('Token unmatch');
+					expect(res.body).to.have.property('message').eql('Kindly sign in');
 					expect(res.status).to.equal(403);
 					done();
 				});

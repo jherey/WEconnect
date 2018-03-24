@@ -44,23 +44,26 @@ describe('/GET REQUESTS', () => {
 				});
 		});
 
-		it('it should not add a review for a business that doesn\'t exist', (done) => {
+		it(
+			'it should not add a review for a business that doesn\'t exist',
+			(done) => {
 			//	HTTP POST -> DON'T ADD A REVIEW FOR A BUSINESS
-			const review = {
-				userId: 1,
-				review: 'good company, I like them'
-			};
-			chai.request(app)
-				.post('/api/v1/businesses/11/reviews')
-				.set('Authorization', loginToken)
-				.send(review)
-				.end((err, res) => {
-					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('message');
-					expect(res.status).to.equal(404);
-					done();
-				});
-		});
+				const review = {
+					userId: 1,
+					review: 'good company, I like them'
+				};
+				chai.request(app)
+					.post('/api/v1/businesses/11/reviews')
+					.set('Authorization', loginToken)
+					.send(review)
+					.end((err, res) => {
+						expect(res.body).to.be.a('object');
+						expect(res.body).to.have.property('message');
+						expect(res.status).to.equal(404);
+						done();
+					});
+			}
+		);
 
 		it('it should not add a review for a business if token unmatch', (done) => {
 			//	HTTP POST -> DON'T ADD A REVIEW FOR A BUSINESS
@@ -99,17 +102,20 @@ describe('/GET REQUESTS', () => {
 				});
 		});
 
-		it('it should not GET reviews for a business that doesn\'t exist', (done) => {
+		it(
+			'it should not GET reviews for a business that doesn\'t exist',
+			(done) => {
 			//	HTTP GET -> NO REVIEWS FOR WRONG BUSINESS
-			chai.request(app)
-				.get('/api/v1/businesses/8/reviews')
-				.end((err, res) => {
-					expect(res.body).to.be.a('object');
-					expect(res.body).to.have.property('message');
-					expect(res.status).to.equal(404);
-					done();
-				});
-		});
+				chai.request(app)
+					.get('/api/v1/businesses/8/reviews')
+					.end((err, res) => {
+						expect(res.body).to.be.a('object');
+						expect(res.body).to.have.property('message');
+						expect(res.status).to.equal(404);
+						done();
+					});
+			}
+		);
 
 		it('it should GET all reviews for a business', (done) => {
 			//	HTTP GET -> RETURN ALL REVIEWS FOR A BUSINESS
