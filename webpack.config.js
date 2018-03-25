@@ -36,5 +36,10 @@ module.exports = {
         exclude: /node_modules/
       }
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextWebpackPlugin('app.css', {
+      allChunks: true
+    })
+  ]
 };
