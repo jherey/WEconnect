@@ -231,6 +231,15 @@ form {
 	font-size: 1.3em;
 }
 
+#exampleModalLabel {
+	color: #fd654d;
+}
+
+#col {
+	color: #fd654d;
+	font-size: 1.15em;
+}
+
 #write {
 	margin-top: 10px;
 }
@@ -241,9 +250,9 @@ form {
 	border-radius: 50%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 770px) {
 	.mid {
-		width: 100%;
+		width: 90%;
 		margin-top: 0px;
 		text-align: center;
 	}
@@ -338,6 +347,13 @@ form {
 #regbutton {
 	margin: 10px;
 	text-transform: uppercase;
+}
+
+#select {
+	height: 39px;
+	color: #fd654d;
+	font-size: 1.1em;
+	margin-right: 15px;
 }
 
 /* MEDIA QUERIES */
