@@ -40,7 +40,9 @@ const Business = {
         message: 'Business created successfully',
         business,
         authData
-      }));
+      }))
+      .catch(error => res.status(400)
+        .json(error.errors[0].message));
   },
 
   updateBusiness: (req, res) => {
