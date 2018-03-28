@@ -22,7 +22,6 @@ const userValidator = {
   },
 
   userLogin: (req, res, next) => {
-    req.check('busname', 'Business name field is empty').notEmpty();
     req.check('username', 'Username field is empty').notEmpty();
     req.check('password', 'Password field is empty').notEmpty();
     req
