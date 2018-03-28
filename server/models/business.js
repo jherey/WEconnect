@@ -1,6 +1,6 @@
 const businessModel = (sequelize, DataTypes) => {
   const Business = sequelize.define('Business', {
-    busname: {
+    businessName: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: {
@@ -26,14 +26,11 @@ const businessModel = (sequelize, DataTypes) => {
     website: {
       type: DataTypes.STRING
     },
-    telephone: {
-      type: DataTypes.TEXT
-    },
     category: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    businfo: {
+    businessInfo: {
       type: DataTypes.TEXT
     },
     email: {
@@ -41,7 +38,7 @@ const businessModel = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    busimage: {
+    businessImage: {
       type: DataTypes.STRING
     },
     address: {
