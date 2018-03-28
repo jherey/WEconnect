@@ -25,7 +25,8 @@ describe('USER VALIDATOR TESTS', () => {
       // HTTP POST -> DONT REGISTER A NEW USER
       const userDetails = {
         username: 'Seyih',
-        password: 'olufayo'
+        password: 'olufayo',
+        sex: 'male'
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
@@ -43,7 +44,8 @@ describe('USER VALIDATOR TESTS', () => {
       const userDetails = {
         firstname: 'Jeremiah',
         username: 'Seyih',
-        password: 'olufayo'
+        password: 'olufayo',
+        sex: 'male'
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
@@ -61,6 +63,7 @@ describe('USER VALIDATOR TESTS', () => {
       const userDetails = {
         firstname: 'Jeremiah',
         lastname: 'Oluwaseyi',
+        sex: 'male',
         username: 'Seyih',
         password: 'olufayo'
       };
@@ -88,7 +91,7 @@ describe('USER VALIDATOR TESTS', () => {
         .send(userDetails)
         .end((err, res) => {
           expect(res.body).to.have.property('message')
-            .eql('Password is required');
+            .eql('Sex is required');
           expect(res.status).to.equal(400);
           done();
         });
