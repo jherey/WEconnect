@@ -368,6 +368,7 @@
 				"firstname",
 				"lastname",
 				"email",
+				"sex",
 				"username",
 				"password"
 			],
