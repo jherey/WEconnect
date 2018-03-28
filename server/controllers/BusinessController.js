@@ -7,14 +7,14 @@ const Business = {
   // Method to register business
   registerBusiness: (req, res) => {
     const {
-      busname,
+      businessName,
       website,
       telephone,
       category,
       address,
-      businfo,
+      businessInfo,
       email,
-      busimage,
+      businessImage,
       location
     } = req.body;
     // Change location and category to lowercase
@@ -24,14 +24,14 @@ const Business = {
     // Create the business
     Businesses
       .create({
-        busname,
+        businessName,
         website,
         telephone,
         category: cat,
-        businfo,
+        businessInfo,
         address,
         email,
-        busimage,
+        businessImage,
         location: loc,
         userId: authData.id // Get the id of the user from the authData
       })
@@ -47,7 +47,7 @@ const Business = {
 
   updateBusiness: (req, res) => {
     const {
-      busname, website, telephone, category, businfo, email, busimage, location
+      businessName, website, telephone, category, businessInfo, email, businessImage, location
     } = req.body;
     // Change location and category to lowercase
     const loc = location.toLowerCase();
@@ -72,20 +72,22 @@ const Business = {
         // Update the business
         business
           .update({
-            busname,
+            businessName,
             website,
             telephone,
             category: cat,
-            businfo,
+            businessInfo,
             email,
-            busimage,
+            businessImage,
             location: loc
           })
         // Success message
           .then(updatedBusiness => res.status(200).json({
             message: 'Business Update Successful',
             updatedBusiness,
-          }));
+          }))
+          .catch(error => res.status(400)
+            .json(error.errors[0].message));
       });
   },
 
@@ -105,7 +107,7 @@ const Business = {
         if (!business) {
           // Error message
           return res.status(404).send({
-            message: 'You cannot delete this business!',
+            message: 'Business does not exist!',
           });
         }
         return business
@@ -114,7 +116,9 @@ const Business = {
         // Success message
           .then(res.status(200).json({
             message: 'Business Successfully Deleted!'
-          }));
+          }))
+          .catch(error => res.status(400)
+            .json(error.errors[0].message));
       });
   },
 

@@ -36,7 +36,9 @@ const Review = {
           createdReview,
           authData
         });
-      });
+      })
+      .catch(error => res.status(400)
+        .json(error.errors[0].message));
   },
 
   getAllReviews: (req, res) => {
