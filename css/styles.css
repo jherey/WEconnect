@@ -183,6 +183,7 @@ form {
 /*BUSINESS PROFILE 1 PAGE*/
 .back {
 	margin: 0;
+	font-size: 0.8em;
 	padding: 10px;
 	background: white;
 }
@@ -378,7 +379,7 @@ form {
 
 .about {
 	color: #fff;
-	background-color: #2F2FA2;
+	background-color: #4343e2;
 	padding: 25px;
 }
 
