@@ -7,19 +7,31 @@
 
 WeConnect provides a platform that brings businesses and individuals together. This platform creates awareness for businesses and gives the users the ability to write reviews about the businesses they have interacted with.
 
-<p align="center">
-  <a href="#webpage">Link to hosted webpage</a> •
-  <a href="#key-features">Key Features</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#license">License</a>
-</p>
+## Table of Contents
+1. <a href="#tech-stack-used">Tech Stack Used</a>
+2. <a href="#application-features">Application Features</a>
+3. <a href="#how-to-use">How To Use</a>
+4. <a href="#author">Author</a>
+5. <a href="#license">License</a>
 
-## Webpage
 
-Click [here](https://jherey.github.io/WeConnect/index.html) to go to homepage
+## Tech Stack Used
 
-## Key Features
+- [Bootstrap](https://getbootstrap.com/)
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [Body-parser](https://www.npmjs.com/package/body-parser)
+- [Express-Validator](https://www.npmjs.com/package/express-validator)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Sequelize](http://docs.sequelizejs.com/)
+
+WeConnect is hosted on gh-pages and API Documentation uses Swagger on Heroku
+
+- [Github Pages](https://jherey.github.io/WeConnect/index.html)
+- [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2153206)
+- [API Documentation](https://weconnect-server.herokuapp.com)
+
+## Application Features
 
 * Register a business
 * Update a business profile
@@ -54,17 +66,30 @@ $ node_modules/.bin/sequelize db:migrate
 $ npm start
 ```
 
-## Credits
+## API endpoints
+```
+POST Request -> localhost:8000/api/v1/auth/signup
+POST Request -> localhost:8000/api/v1/auth/login
+POST Request -> localhost:8000/api/v1/businesses
+GET Request ->  localhost:8000/api/v1/businesses
+GET Request ->  localhost:8000/api/v1/businesses/:businessId
+PUT Request ->  localhost:8000/api/v1/businesses/:businessId        
+DELETE Request -> localhost:8000/api/v1/businesses/:businessId
+GET Request -> localhost:8000/api/v1/businesses?location=location
+GET Request -> localhost:8000/api/v1/businesses?category=category
+POST Request -> localhost:8000/api/v1/businesses/:businessId/reviews
+GET Request -> localhost:8000/api/v1/businesses/:businessId/reviews
+```
 
-This software uses code from several open source packages.
+## Tests
 
-- [Bootstrap](https://getbootstrap.com/)
-- [Node.js](https://nodejs.org/)
-- [Express](https://expressjs.com/)
-- [Body-parser](https://www.npmjs.com/package/body-parser)
-- [Morgan](https://www.npmjs.com/package/morgan)
-- [Express-Validator](https://www.npmjs.com/package/express-validator)
-- [PostgreSQL](https://www.postgresql.org/)
+* To run tests, navigate to the project's root directory
+* After installation, run `npm run test`
+
+## Author
+
+Jeremiah Olufayo
+
 
 ## License
 
