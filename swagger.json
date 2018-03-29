@@ -368,6 +368,7 @@
 				"firstname",
 				"lastname",
 				"email",
+				"sex",
 				"username",
 				"password"
 			],
@@ -418,9 +419,8 @@
 		"BusinessRegister": {
 			"type": "object",
 			"required": [
-				"busname",
+				"businessName",
 				"website",
-				"telephone",
 				"email",
 				"category",
 				"location"
@@ -432,9 +432,6 @@
 				"website": {
 					"type": "string"
 				},
-				"telephone": {
-					"type": "string"
-				},
 				"email": {
 					"type": "string"
 				},
@@ -444,13 +441,13 @@
 				"location": {
 					"type": "string"
 				},
-				"businfo": {
+				"businessInfo": {
 					"type": "string"
 				},
 				"address": {
 					"type": "string"
 				},
-				"busimage": {
+				"businessImage": {
 					"type": "string"
 				}
 			}

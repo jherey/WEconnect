@@ -58,14 +58,15 @@ const businessValidator = {
   },
 
   createBusinessValidator: (req, res, next) => {
-    req.check('busname', 'Business name is required').notEmpty();
+    req.check('businessName', 'Business name is required').notEmpty();
+    req.check('email', 'Email is required').notEmpty();
     req.check('category', 'Category is required').notEmpty();
     req.check('location', 'Location is required').notEmpty();
 
     const errors = req.validationErrors();
     if (errors) {
       return res.status(400).json({
-        message: errors[0],
+        message: errors[0].msg,
         error: true
       });
     }

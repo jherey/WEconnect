@@ -5,6 +5,7 @@ const errorMessage = (res, message) => res.status(400).json({
 
 const userValidator = {
   userSignUp: (req, res, next) => {
+    req.check('sex', 'Sex is required').notEmpty();
     req.check('firstname', 'Firstname is required').notEmpty();
     req.check('lastname', 'Lastname is required').notEmpty();
     req.check('email', 'Email is required').notEmpty();

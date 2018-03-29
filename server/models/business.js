@@ -1,6 +1,6 @@
 const businessModel = (sequelize, DataTypes) => {
   const Business = sequelize.define('Business', {
-    busname: {
+    businessName: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: {
@@ -10,7 +10,7 @@ const businessModel = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'Business Field Required!',
+          msg: 'Business Name is Required!',
         },
         is: {
           args: /([a-zA-Z0-9])+/,
@@ -18,22 +18,18 @@ const businessModel = (sequelize, DataTypes) => {
         },
         len: {
           args: [3, 70],
-          msg: `Business name should be longer than
-               3 words and less than 70 words`,
+          msg: 'Business name should be longer than 3 words and less than 70 words',
         },
       },
     },
     website: {
       type: DataTypes.STRING
     },
-    telephone: {
-      type: DataTypes.TEXT
-    },
     category: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    businfo: {
+    businessInfo: {
       type: DataTypes.TEXT
     },
     email: {
@@ -41,7 +37,7 @@ const businessModel = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    busimage: {
+    businessImage: {
       type: DataTypes.STRING
     },
     address: {

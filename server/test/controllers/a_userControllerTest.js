@@ -9,24 +9,6 @@ const { expect } = chai;
   * Test the /POST requests
   */
 describe('User', () => {
-  it('it should not register a user', (done) => {
-    // HTTP POST -> DONT REGISTER A NEW USER
-    const userDetails = {
-      username: 'Seyih',
-      password: 'olufayo'
-    };
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .send(userDetails)
-      .end((err, res) => {
-        expect(res.body).to.be.a('object');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('error');
-        expect(res.status).to.equal(400);
-        done();
-      });
-  });
-
   it('it should register a new user', (done) => {
     // HTTP POST -> REGISTER A NEW USER
     const userDetails = {
@@ -42,7 +24,6 @@ describe('User', () => {
       .post('/api/v1/auth/signup')
       .send(userDetails)
       .end((err, res) => {
-        expect(res.body).to.be.a('object');
         expect(res.body).to.have.property('message')
           .eql('Signed up successfully');
         expect(res.status).to.equal(201);
@@ -59,9 +40,24 @@ describe('User', () => {
       .post('/api/v1/auth/login')
       .send(userDetails)
       .end((err, res) => {
-        expect(res.body).to.be.a('object');
         expect(res.body).to.have.property('message')
           .eql('Password field is empty');
+        expect(res.status).to.equal(400);
+        done();
+      });
+  });
+
+  it('it should not login a user', (done) => {
+    // HTTP POST -> DON'T LOGIN A USER
+    const userDetails = {
+      password: 'jherey'
+    };
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(userDetails)
+      .end((err, res) => {
+        expect(res.body).to.have.property('message')
+          .eql('Username field is empty');
         expect(res.status).to.equal(400);
         done();
       });

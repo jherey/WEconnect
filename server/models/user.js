@@ -28,7 +28,7 @@ const userModel = (sequelize, DataTypes) => {
         },
         is: {
           args: ['^[a-z]+$', 'i'],
-          msg: 'Lastname can only contain letters',
+          msg: 'Lastname can only contain letters and no space',
         },
         len: {
           args: [3, 30],

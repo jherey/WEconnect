@@ -19,6 +19,15 @@ const Users = {
       email,
       password
     } = req.body;
+    // Check if spaces exist in fields and trim
+    if (username.trim() === '' || firstname.trim() === ''
+        || sex.trim() === '' || lastname.trim() === ''
+        || email.trim() === '' || password.trim() === '') {
+      return res.status(400).json({
+        message: 'Fill in the fields',
+        error: true
+      });
+    }
     User
       .create({
         firstname,
@@ -42,6 +51,12 @@ const Users = {
   // Method to login
   loginUser: (req, res) => {
     const { username, password } = req.body;
+    if (username.trim() === '' || password.trim() === '') {
+      return res.status(400).json({
+        message: 'Fill in the fields',
+        error: true
+      });
+    }
     // Find one user with username sent in the body
     User.findOne({ where: { username } })
       .then((user) => {

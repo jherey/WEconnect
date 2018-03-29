@@ -6,7 +6,7 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    busname: {
+    businessName: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true
@@ -14,14 +14,11 @@ module.exports = {
     website: {
       type: Sequelize.STRING
     },
-    telephone: {
-      type: Sequelize.TEXT
-    },
     category: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    businfo: {
+    businessInfo: {
       type: Sequelize.TEXT
     },
     email: {
@@ -29,7 +26,7 @@ module.exports = {
       allowNull: false,
       unique: true
     },
-    busimage: {
+    businessImage: {
       type: Sequelize.STRING
     },
     address: {

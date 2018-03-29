@@ -7,7 +7,7 @@ const { expect } = chai;
 
 let loginToken;
 
-describe('/GET REQUESTS', () => {
+describe('REVIEWS', () => {
   before((done) => {
     const userDetails = {
       username: 'jherey',
@@ -22,11 +22,11 @@ describe('/GET REQUESTS', () => {
       });
   });
 
-  describe('', () => {
+  describe('POST REQUESTS', () => {
     before((done) => {
       const business = {
-        busname: 'shoprite',
-        busimage: 'shoprite.jpg',
+        businessName: 'shoprite',
+        businessImage: 'shoprite.jpg',
         category: 'Sales',
         website: 'www.shoprite.com',
         email: 'shoprite@gmail.com',
@@ -101,7 +101,9 @@ describe('/GET REQUESTS', () => {
           done();
         });
     });
+  });
 
+  describe('GET REQUESTS', () => {
     it(
       'it should not GET reviews for a business that doesn\'t exist',
       (done) => {
