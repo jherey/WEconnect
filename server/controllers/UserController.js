@@ -21,10 +21,10 @@ const Users = {
     } = req.body;
     // Check if spaces exist in fields and trim
     if (username.trim() === '' || firstname.trim() === ''
-        || sex.trim() === '' || lastname.trim() === ''
-        || email.trim() === '' || password.trim() === '') {
+      || sex.trim() === '' || lastname.trim() === ''
+      || email.trim() === '' || password.trim() === '') {
       return res.status(400).json({
-        message: 'Fill in the fields',
+        message: 'Please fill in all fields',
         error: true
       });
     }
@@ -39,13 +39,24 @@ const Users = {
         password: hashSync(password, 10)
       })
       .then((user) => {
+        const userDetails = {
+          id: user.id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          username: user.username,
+          email: user.email,
+          sex: user.sex
+        };
         // Success message
         res.status(201).json({
           message: 'Signed up successfully',
-          user
+          userDetails
         });
       })
-      .catch(error => res.status(400).json({ error }));
+      .catch(error => res.status(400)
+        .json({
+          message: error.errors[0].message
+        }));
   },
 
   // Method to login
@@ -53,7 +64,7 @@ const Users = {
     const { username, password } = req.body;
     if (username.trim() === '' || password.trim() === '') {
       return res.status(400).json({
-        message: 'Fill in the fields',
+        message: 'Please fill in all fields',
         error: true
       });
     }
@@ -63,22 +74,25 @@ const Users = {
         // Compare inputed password with hashed password in the database
         if (user && bcrypt.compareSync(password, user.password)) {
           const userData = {
-            username: user.username,
-            email: user.email,
-            id: user.id
+            id: user.id,
+            username: user.username
           };
           // Assign token to user for six hours
           const token = jwt.sign(userData, secret, { expiresIn: '6h' });
           // Success message
           return res.status(200).json({
             message: 'User logged in successfully',
+            userData,
             token
           });
         }
         // Details mismatch
         return res.status(400).json({ message: 'Username/Password Incorrect' });
       })
-      .catch(error => res.status(400).json(error));
+      .catch(error => res.status(400)
+        .json({
+          message: error.errors[0].message
+        }));
   }
 };
 
