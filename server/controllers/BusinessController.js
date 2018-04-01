@@ -16,43 +16,73 @@ const Business = {
       businessImage,
       location
     } = req.body;
-    // Change location and category to lowercase
-    const loc = location.toLowerCase();
-    const cat = category.toLowerCase();
     const { authData } = req;
     // Create the business
     Businesses
       .create({
         businessName,
         website,
-        category: cat,
+        category,
         businessInfo,
         address,
         email,
         businessImage,
-        location: loc,
+        location,
         userId: authData.id // Get the id of the user from the authData
       })
-    // Success message
+      // Success message
       .then(business => res.status(201).json({
         message: 'Business created successfully',
-        business,
-        authData
+        business
       }))
       .catch(error => res.status(400)
-        .json(error.errors[0].message));
+        .json({
+          message: error.errors[0].message
+        }));
   },
 
   updateBusiness: (req, res) => {
     const {
-      businessName, website, category, businessInfo, email, businessImage, location
+      businessName,
+      website,
+      category,
+      businessInfo,
+      email,
+      businessImage,
+      location
     } = req.body;
-    // Change location and category to lowercase
-    const loc = location.toLowerCase();
-    const cat = category.toLowerCase();
     const { businessId } = req.params;
     const { authData } = req;
-    // Find the business
+    Businesses.find({
+      where: {
+        businessName
+      }
+    })
+      .then((businessFound) => {
+        if (businessFound) {
+          return res.status(400).json({
+            message: 'A business with this name exists!',
+            error: true
+          });
+        }
+      });
+    // Check if business exist
+    Businesses
+      .findOne({
+        where: {
+          id: businessId
+        }
+      })
+      .then((business) => {
+        // No buisness found
+        if (!business) {
+          return res.status(404).json({
+            message: 'Business Not Found!',
+            error: true
+          });
+        }
+      });
+    // Find business only if authorized
     Businesses
       .findOne({
         where: {
@@ -61,10 +91,11 @@ const Business = {
         }
       })
       .then((business) => {
-        // No business found or a different user tries to update the business
+        // Different user tries to update the business
         if (!business) {
-          return res.status(404).send({
-            message: 'You cannot update this business!',
+          return res.status(404).json({
+            message: 'Oops! You cannot update this business',
+            error: true
           });
         }
         // Update the business
@@ -72,17 +103,18 @@ const Business = {
           .update({
             businessName,
             website,
-            category: cat,
+            category,
             businessInfo,
             email,
             businessImage,
-            location: loc
+            location
           })
-        // Success message
+          // Success message
           .then(updatedBusiness => res.status(200).json({
             message: 'Business Update Successful',
             updatedBusiness,
           }))
+          // Catch errors
           .catch(error => res.status(400)
             .json(error.errors[0].message));
       });
@@ -91,7 +123,23 @@ const Business = {
   removeBusiness: (req, res) => {
     const { businessId } = req.params;
     const { authData } = req;
-    // Find the business to be deleted
+    // Check if business exist
+    Businesses
+      .findOne({
+        where: {
+          id: businessId
+        }
+      })
+      .then((business) => {
+        // No business found
+        if (!business) {
+          return res.status(404).json({
+            message: 'Business Not Found!',
+            error: true
+          });
+        }
+      });
+    // Find business only if authorized
     Businesses
       .findOne({
         where: {
@@ -103,14 +151,14 @@ const Business = {
         // If no business is found
         if (!business) {
           // Error message
-          return res.status(404).send({
-            message: 'Business does not exist!',
+          return res.status(404).json({
+            message: 'Oops! You cannot delete this business',
           });
         }
         return business
-        // Delete the business
+          // Delete the business
           .destroy()
-        // Success message
+          // Success message
           .then(res.status(200).json({
             message: 'Business Successfully Deleted!'
           }))
@@ -122,7 +170,7 @@ const Business = {
   getBusiness: (req, res) => {
     const { businessId } = req.params;
     Businesses
-    // FInd one business by the businessId from the user
+      // FInd one business by the businessId from the user
       .findById(businessId)
       .then((business) => {
         // If no business found
@@ -141,9 +189,9 @@ const Business = {
 
   getAllBusinesses: (req, res) => {
     Businesses
-    // Find all businesses
+      // Find all businesses
       .all()
-    // Promise returned
+      // Promise returned
       .then((allBusinesses) => {
         // If no business found
         if (!allBusinesses) {

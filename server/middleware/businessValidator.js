@@ -10,7 +10,7 @@ const businessValidator = {
       // If there's a location query string
       if (location) {
         Businesses
-        // Find by location
+          // Find by location
           .findAll({
             where: {
               location: { $iLike: `%${location}%` }
@@ -32,7 +32,7 @@ const businessValidator = {
       }
       if (category) {
         Businesses
-        // Find by category
+          // Find by category
           .findAll({
             where: {
               category: { $iLike: `%${category}%` }
@@ -60,6 +60,7 @@ const businessValidator = {
   createBusinessValidator: (req, res, next) => {
     req.check('businessName', 'Business name is required').notEmpty();
     req.check('email', 'Email is required').notEmpty();
+    req.check('email', 'Email is not valid').isEmail();
     req.check('category', 'Category is required').notEmpty();
     req.check('location', 'Location is required').notEmpty();
 
