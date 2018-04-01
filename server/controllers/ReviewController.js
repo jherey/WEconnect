@@ -49,9 +49,9 @@ const Review = {
           businessId
         }
       })
-      .then((review) => {
+      .then((reviews) => {
         // If no reviews found
-        if (!review.length) {
+        if (!reviews.length) {
           return res.status(404).send({
             message: 'No reviews for this business!',
           });
@@ -59,7 +59,7 @@ const Review = {
         // If reviews found
         return res.status(200).json({
           message: 'Reviews Found!',
-          review
+          reviews
         });
       });
   }
