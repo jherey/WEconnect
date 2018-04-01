@@ -12,7 +12,7 @@ const Review = {
     const { review } = req.body;
     const { authData } = req;
     Businesses
-    // Find business by id
+      // Find business by id
       .findById(businessId)
       .then((business) => {
         // If no business found, return error
@@ -23,18 +23,17 @@ const Review = {
         }
       });
     Reviews
-    // Add a new review
+      // Add a new review
       .create({
         review,
         userId: authData.id,
         businessId
       })
-    // Successfully added
+      // Successfully added
       .then((createdReview) => {
         res.status(201).json({
           message: 'Review successfully added',
-          createdReview,
-          authData
+          createdReview
         });
       })
       .catch(error => res.status(400)
@@ -44,7 +43,7 @@ const Review = {
   getAllReviews: (req, res) => {
     const { businessId } = req.params;
     Reviews
-    // Find all reviews of a business
+      // Find all reviews of a business
       .findAll({
         where: {
           businessId
