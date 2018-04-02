@@ -24,24 +24,12 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto nav-pills">
 					<li class="nav-item">
-						<a class="nav-link" href="index.html">Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="about.html">About</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="contact.html">Contact</a>
+						<a class="nav-link" href="contact.html">Contact Us</a>
 					</li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="signup.html">Sign Up
-							<i class="fa fa-user-plus"></i>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="signin.html">Sign In
-							<i class="fa fa-user"></i>
+						<a class="nav-link" href="index.html">Logout
 						</a>
 					</li>
 				</ul>
@@ -49,115 +37,60 @@
 		</div>
 	</nav>
 
-	<div class="container">
-		<div class="row" id="update">
-			<div class="col-md-8 offset-md-2">
-				<form class="form-horizontal">
-					<div class "form-group">
-						<h1>
-							Edit Business Profile
-						</h1>
+	<div class="signin">
+		<div class="login-form col-md-4 offset-md-4">
+			<h1 class="title">Edit Business Profile</h1>
+			<form>
+				<fieldset>
+					<label for="firstname">Business Name:
+						<span class="red">*</span>
+					</label>
+					<input type="text" class="form-control" placeholder="" name="firstname" value="Brute Dev Hub" required>
+					<label for="categories">Category
+						<span class="red"> *</span>
+					</label>
+					<select class="form-control" id="sel1">
+						<option>Technology</option>
+						<option>Fashion</option>
+						<option>Consumer Goods</option>
+						<option>Entertainment</option>
+					</select>
+					<label for="email">Email:
+						<span class="red">*</span>
+					</label>
+					<input type="email" class="form-control" id="email" placeholder="contact@company.com" name="email" required>
+					<label for="exampleInputFile">Company Logo</label>
+					<input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+					<label for="bio">Brief Bio:</label>
+					<textarea class="form-control" rows="4" id="comment"></textarea>
+					<label>Address:</label>
+					<input type="text" class="form-control" id="address" placeholder="street address" name="address" required>
+					<label>Country:
+						<span class="red">*</span>
+					</label>
+					<select class="form-control" id="sel1">
+						<option>Nigeria</option>
+						<option>Uganda</option>
+						<option>Kenya</option>
+						<option>Ghana</option>
+					</select>
+					<label>State:
+					</label>
+					<input type="text" class="form-control" placeholder="" name="state" required>
+					<br>
+					<div align="center">
+						<button type="submit" class="btn btn-primary">Update</button>
 					</div>
-					<hr>
-					<div class="form-row">
-						<div class="form-group input group col-md-6">
-							<label for="first_name">
-								<b>Business Name</b>
-							</label>
-							<input type="text" class="form-control" name="first_name" placeholder="Enter Business Name" required />
-						</div>
-						<div class="form-group input group col-md-6">
-							<label for="category">
-								<b>Category</b>
-							</label>
-							<select class="form-control input-md">
-								<option selected>Choose...</option>
-								<option>Technology</option>
-								<option>Vehicle</option>
-								<option>Photography</option>
-								<option>Clothing</option>
-								<option>Education</option>
-								<option>Sports</option>
-								<option>Agriculture</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group input group col-md-6">
-							<label for="phone_number">
-								<b>Phone Number</b>
-							</label>
-							<input type="number" class="form-control" name="phone_number" placeholder="Enter Phone Number" required />
-						</div>
-						<div class="form-group input group col-md-6">
-							<label for="email">
-								<b>Email</b>
-							</label>
-							<input type="email" class="form-control" name="email" placeholder="Enter email address" required />
-						</div>
-					</div>
-					<div class="form-group input group">
-						<label for="address">
-							<b>Address</b>
-						</label>
-						<input type="text" class="form-control" name="address" placeholder="Enter Address" required />
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="City">
-								<b>City</b>
-							</label>
-							<input type="text" class="form-control" name="city" placeholder="Enter City" required>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="inputState">
-								<b>State</b>
-							</label>
-							<input type="text" class="form-control" name="state" placeholder="Enter State" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="businessDescription">
-							<b>Description</b>
-						</label>
-						<textarea class="form-control" id="businessDesription" rows="5" required></textarea>
-					</div>
-					<hr />
-					<div class="form-group text-center">
-						<button class="btn btn-primary">Update</button>
-					</div>
-				</form>
-
-			</div>
+			</form>
 		</div>
-		<br />
-		<br />
 	</div>
 
-
-	<hr id="footer-hr">
-
 	<!-- FOOTER -->
-	<footer class="footer-distributed">
-		<div class="footer-right">
-			<a href="#">
-				<i class="fa fa-facebook"></i>
-			</a>
-			<a href="#">
-				<i class="fa fa-twitter"></i>
-			</a>
-			<a href="#">
-				<i class="fa fa-linkedin"></i>
-			</a>
-			<a href="#">
-				<i class="fa fa-github"></i>
-			</a>
-		</div>
+	<footer class="footer-distributed text-center">
+		<hr id="footer-hr">
 		<div class="footer-left">
 			<p class="footer-links">
 				<a href="index.html">Home</a>
-				·
-				<a href="about.html">About</a>
 				·
 				<a href="contact.html">Contact</a>
 			</p>

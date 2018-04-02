@@ -6,7 +6,7 @@
 	<title>WEconnect</title>
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/signin.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 
@@ -24,7 +24,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto nav-pills">
 					<li class="nav-item">
-						<a class="nav-link" href="contact.html">Contact us</a>
+						<a class="nav-link" href="contact.html">Contact Us</a>
 					</li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
@@ -43,24 +43,51 @@
 		</div>
 	</nav>
 
-	<div class="signup">
-		<div class="login-form col-md-4 offset-md-4">
-			<h1 class="title btn-primary">Sign In</h1>
-			<form>
-				<div class="form-group">
-					<label>Username</label>
-					<input type="text" name="" class="form-control">
-				</div>
-				<div class="form-group">
-					<label>Password</label>
-					<input type="password" name="" class="form-control">
-				</div>
-				<button id="signup" class="btn btn-primary">Login</button>
-			</form>
+	<div class="team">
+		<div class="text-center contact_header">
+			<p>Send us a message and we'll reply you in no time</p>
 		</div>
-		<br>
-		<br>
-		<br>
+		<div class="container contact_content">
+			<div class="row">
+				<div class="col-lg-6 mb-4">
+					<div class="input-group input-group-lg up">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1">
+								<i class="fa fa-user text-primary"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1">
+					</div>
+					<br>
+					<div class="input-group input-group-lg">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1">
+								<i class="fa fa-envelope text-primary"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control" placeholder="Email Address" aria-label="Email Address" aria-describedby="basic-addon1">
+					</div>
+					<br>
+					<div class="input-group input-group-lg">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1">
+								<i class="fa fa-phone text-primary"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control" placeholder="Phone Number" aria-label="Phone Number" aria-describedby="basic-addon1">
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="input-group">
+						<textarea rows="6" class="form-control" aria-label="With textarea" placeholder="Write Message..."></textarea>
+					</div>
+					<br>
+					<div class="text-center">
+						<button class="btn btn-primary btn-block rounded-0 py-2" pl>Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<br>
 	</div>
 
@@ -84,6 +111,7 @@
 	 crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	 crossorigin="anonymous"></script>
+
 </body>
 
 </html>

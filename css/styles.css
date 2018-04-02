@@ -6,15 +6,19 @@ html {
 }
 
 .team {
-	font-size: 1.15em;
+	font-size: 1.10em;
 	margin: -8px;
-	background: #F4F6F7;
-	color: #fd654d;
+	background: #fff;
 	padding: 40px;
 }
 
 .btn-primary {
-	background-color:  #fd654d;
+	background-color:  #4343e2;
+	border: none;
+}
+
+.btn-primary:hover {
+	background-color: #fd654d;
 	border: none;
 }
 
@@ -27,7 +31,7 @@ html {
 
 /* change the background color */
 .navbar-custom {
-    background-color: #2F2FA2;
+    background-color: #4343e2;
 }
 
 /* change the brand and text color */
@@ -58,7 +62,9 @@ html {
 /* FOOTER */
 footer {
 	position: fixed;
+	left: 0;
 	bottom: 0;
+	width: 100%;
 }
 
 @media (max-height: 800px) {
@@ -109,25 +115,6 @@ footer {
 	color: inherit;
 }
 
-.footer-distributed .footer-right {
-	float: right;
-	margin-top: 6px;
-	max-width: 180px;
-}
-
-.footer-distributed .footer-right a {
-	display: inline-block;
-	width: 35px;
-	height: 35px;
-	background-color: #33383b;
-	border-radius: 2px;
-	font-size: 20px;
-	color: #ffffff;
-	text-align: center;
-	line-height: 35px;
-	margin-left: 3px;
-}
-
 #cortesy {
 	color: #fff;
 	font-size: 1.01em;
@@ -149,17 +136,6 @@ footer {
 /* FOOTER END */
 
 /* BUSINESS REGISTRATION PAGE */
-section {
-	margin-top: 60px;
-	padding-left: 60px;
-	padding-right: 60px;
-}
-
-#reg-form .container {
-	max-width: 500px;
-	border: 2px solid #fd654d;
-}
-
 .form-group,
 .form-check {
 	margin: 25px 0;
@@ -171,27 +147,55 @@ section {
 }
 
 form {
-	padding: 30px;
-}
-
-.red {
-	color: red;
+	padding: 10px;
 }
 
 .small {
 	font-size: 12px;
 }
+
+.signin {
+	background: white;
+	padding: 20px;
+}
+
+.login-form {
+	box-shadow: 0px 0px 10px 1px grey;
+	border-radius: 5px;
+	padding-bottom: 20px;
+	background: white;
+	color: #4343e2;
+}
+
+.title {
+	text-align: center;
+	background-color: #4343e2;
+	color: #fff;
+	border-radius: 0px 0px 10px 10px;
+}
+
 /* END BUSSINESS REGISTRATION PAGE */
 
 /*BUSINESS PROFILE 1 PAGE*/
+.back {
+	margin: 0;
+	font-size: 0.8em;
+	padding: 10px;
+	background: white;
+}
+
 .mid {
 	display: block;
-  margin-left: auto;
-	margin-right: auto;
-	margin-top: 20px;
+	margin: auto;
 	background-color: #F4F6F7;
 	padding: 30px;
 	width: 80%;
+}
+
+.rev {
+	color: #fd654d;
+	font-weight: bold;
+	margin-bottom: 20px;
 }
 
 .edit {
@@ -225,6 +229,15 @@ form {
 	font-size: 1.3em;
 }
 
+#exampleModalLabel {
+	color: #fd654d;
+}
+
+#col {
+	color: #fd654d;
+	font-size: 1.15em;
+}
+
 #write {
 	margin-top: 10px;
 }
@@ -235,9 +248,9 @@ form {
 	border-radius: 50%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 770px) {
 	.mid {
-		width: 100%;
+		width: 90%;
 		margin-top: 0px;
 		text-align: center;
 	}
@@ -276,8 +289,126 @@ form {
 }
 
 .category {
-	font-size: 22px;
-	color: #fd654d;
+	font-size: 1.1em;
+	color: #4343e2;
 	font-weight: bold;
 }
 /* BUSINESS LISTING */
+
+/* INDEX PAGE CONTENT */
+.main-image {
+	background: url(../images/connect1.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: calc(100vh - 255px);
+	background-attachment: fixed;
+	background-size: cover;
+	font-family: Lato;
+	color: white;
+}
+
+.catchphrase {
+	color: #99738e;
+	font-style: italic;
+	margin-top: 10%;
+}
+
+.catchphrase > h3 {
+	font-size: 30px;
+	color: blue;
+}
+
+.button {
+    background-color: #fff;
+    border: none;
+		color: #fd654d;
+		font-weight: bolder;
+}
+
+#content {
+	color: white;
+	margin-top: 70px;
+	width: 70%;
+	display: flex;
+	justify-content: center;
+  align-items: center;
+}
+
+#index-hr {
+	width: 400px;
+	border-top: 1px solid #f8f8f8;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+#regbutton {
+	padding: 10px;
+	text-transform: uppercase;
+}
+
+#select {
+	height: 39px;
+	color: #fd654d;
+	font-size: 1.1em;
+	margin-right: 15px;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 900px) {
+	#content > * {
+		padding: 6px;
+	}
+}
+/* INDEX PAGE CONTENT END */
+
+/* ABOUT PAGE */
+.images {
+	font-size: 0;
+	margin-top: 100px;
+	text-align: center;
+}
+
+.images img {
+	border: none;
+	display: inline-block;
+	margin: 0 auto;
+}
+
+.team {
+	font-size: 1.15em;
+	margin: -8px;
+	background: #fff;
+	color: #4343e2;
+	padding: 40px;
+}
+
+.header {
+	padding-top: 50px;
+}
+/* END OF ABOUT */
+
+/* BUS.HTML */
+.flex-container {
+	height: 50%;
+	display: flex;
+	justify-content: center;
+	background-color: #55efc4;
+	margin-bottom: 15px;
+}
+
+#tops {
+	margin: 20px;
+}
+
+.flex-container>div {
+	background-color: #00b894;
+	font-size: 250%;
+	font-weight: bolder;
+	font-style: italic;
+	margin: 5px;
+	padding: 20px;
+}
+
+.tech-content {
+	margin-top: 30px;
+}
+/* BUS.HTML END */

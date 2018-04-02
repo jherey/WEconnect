@@ -24,120 +24,121 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto nav-pills">
 					<li class="nav-item">
-						<a class="nav-link" href="index.html">Home</a>
+						<a class="nav-link" href="contact.html">Contact Us</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="signup.html">Sign Up
+							<i class="fa fa-user-plus"></i>
+						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="about.html">About</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="contact.html">Contact</a>
+						<a class="nav-link" href="signin.html">Sign In
+							<i class="fa fa-user"></i>
+						</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
-	<div class="mid">
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="text-lg-center">
-					<h1 class="bus-name">BRUTE DEV HUB</h1>
-					<div>
-						<img id="logo" src="images/business-logo.jpg" alt="">
+	<div class="back">
+		<div class="mid">
+			<div class="row">
+				<div class="col-md-6 col-lg-6">
+					<div class="text-lg-center">
+						<h1 class="bus-name">BRUTE DEV HUB</h1>
+						<div>
+							<img id="logo" src="images/business-logo.jpg" alt="">
+						</div>
+						<p id="motto">Motto/Slogan of Business</p>
 					</div>
-					<p id="motto">Motto/Slogan of Business</p>
+				</div>
+				<hr>
+				<div class="col-md-6 col-lg-6 verticalLine">
+					<h3 class="text-lg-center details bus-name">Details</h3>
+					<div class="top">
+						<p>
+							<strong>Address:</strong> 5, Soko Street, Ilupeju, Lagos State</p>
+						<p>
+							<strong>Email Address:</strong> bus@gmail.com</p>
+						<p>
+							<strong>Brief Bio:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+							labore et dolore magna aliqua.</p>
+					</div>
+				</div>
+			</div>
+			<div class="form-row text-center">
+				<div class="col-12">
+					<a href="busUpdate.html" class="btn btn-primary edit fa fa-cog"> Edit Account Details</a>
+					<a href="" class="btn btn-danger edit fa fa-cog"> Delete Business</a>
 				</div>
 			</div>
 			<hr>
-			<div class="col-lg-6 verticalLine">
-				<h3 class="text-lg-center details bus-name">Details</h3>
-				<div class="top">
+			<h3 class="text-center rev">REVIEWS</h3>
+			<div class="row">
+				<div class="col-lg-1 text-center">
+					<img src="images/ppic.JPG">
+				</div>
+				<div class="col-lg-11">
 					<p>
-						<strong>Address:</strong> 5, Soko Street, Ilupeju, Lagos State</p>
+						<strong>sheyii</strong>
+					</p>
+					<p>Good working conditions. Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+				</div>
+				<hr>
+				<div class="col-lg-1 text-center">
+					<img src="images/ppic.JPG">
+				</div>
+				<div class="col-lg-11">
 					<p>
-						<strong>Email Address:</strong> bus@gmail.com</p>
-					<p>
-						<strong>Telephone:</strong> 08012345678</p>
-					<p>
-						<strong>Brief Bio:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-						et dolore magna aliqua.</p>
+						<strong>sheyii</strong>
+					</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+						aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 				</div>
 			</div>
-		</div>
-		<div class="form-row text-center">
-			<div class="col-12">
-				<button type="submit" class="btn btn-primary edit">Edit Account Details</button>
-			</div>
-		</div>
-		<hr>
-		<div id="reviews">
-			<h3>Reviews</h3>
-			<button type="button" class="btn btn-primary">View all Reviews</button>
-			<div class="comments">
-				<div>
-					<strong>John: </strong>
-					<span>Good firm</span>
-				</div>
-				<div>
-					<strong>Taye: </strong>
-					<span>I don't like them</span>
-				</div>
-				<div>
-					<strong>Chi: </strong>
-					<span>Good working conditions. Lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-				</div>
-			</div>
-			<button type="button" class="btn btn-primary" id="write" data-toggle="modal" data-target="#exampleModal">Write a Review</button>
-		</div>
-
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Write Review</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label for="comment">Review:</label>
-							<textarea class="form-control" rows="5" id="review"></textarea>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save review</button>
-					</div>
-				</div>
+			<div class="text-center">
+				<!-- Button trigger modal -->
+				<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+					Add Review
+				</button>
 			</div>
 		</div>
 	</div>
 
-	<hr id="footer-hr">
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Write Review</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="comment" id="col">Review:</label>
+						<textarea class="form-control" rows="5" id="review"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save review</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
 
 	<!-- FOOTER -->
-	<footer class="footer-distributed">
-		<div class="footer-right">
-			<a href="#">
-				<i class="fa fa-facebook"></i>
-			</a>
-			<a href="#">
-				<i class="fa fa-twitter"></i>
-			</a>
-			<a href="#">
-				<i class="fa fa-linkedin"></i>
-			</a>
-			<a href="#">
-				<i class="fa fa-github"></i>
-			</a>
-		</div>
+	<footer class="footer-distributed text-center">
+		<hr id="footer-hr">
 		<div class="footer-left">
 			<p class="footer-links">
 				<a href="index.html">Home</a>
-				·
-				<a href="about.html">About</a>
 				·
 				<a href="contact.html">Contact</a>
 			</p>
