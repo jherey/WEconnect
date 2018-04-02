@@ -5,6 +5,7 @@ import Review from '../controllers/ReviewController';
 import userValidator from '../middleware/userValidator';
 import businessValidator from '../middleware/businessValidator';
 import verifyToken from '../middleware/verifyToken';
+import paramsChecker from '../middleware/paramsChecker';
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ const { userLogin } = userValidator;
 const { createBusinessValidator } = businessValidator;
 const { query } = businessValidator;
 const { tokenVerification } = verifyToken;
+const { idChecker } = paramsChecker;
 
 // Destructure controllers
 const { registerUsers } = Users;
@@ -40,19 +42,19 @@ router
 router
   .put(
     '/businesses/:businessId',
-    createBusinessValidator, tokenVerification, updateBusiness
+    createBusinessValidator, idChecker, tokenVerification, updateBusiness
   );
 router
-  .delete('/businesses/:businessId', tokenVerification, removeBusiness);
+  .delete('/businesses/:businessId', idChecker, tokenVerification, removeBusiness);
 router
-  .get('/businesses/:businessId', getBusiness);
+  .get('/businesses/:businessId', idChecker, getBusiness);
 router
   .get('/businesses', query, Business.getAllBusinesses);
 
 // Review endpoints
 router
-  .post('/businesses/:businessId/reviews', tokenVerification, addReview);
+  .post('/businesses/:businessId/reviews', idChecker, tokenVerification, addReview);
 router
-  .get('/businesses/:businessId/reviews', getAllReviews);
+  .get('/businesses/:businessId/reviews', idChecker, getAllReviews);
 
 export default router;
