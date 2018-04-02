@@ -210,7 +210,7 @@ describe('This test describes the business', () => {
     * Test the /PUT requests
   */
   describe('/PUT REQUESTS', () => {
-    it('it should not update a business that doesn\'t exist', (done) => {
+    it('it should not update a business if name exists', (done) => {
       // HTTP PUT -> DON'T UPDATE A BUSINESS
       chai.request(app)
         .put('/api/v1/businesses/20')
@@ -225,8 +225,8 @@ describe('This test describes the business', () => {
         })
         .end((err, res) => {
           expect(res.body).to.have.property('message')
-            .eql('You cannot update this business!');
-          expect(res.status).to.equal(404);
+            .eql('A business with this name exists!');
+          expect(res.status).to.equal(400);
           done();
         });
     });
@@ -287,7 +287,7 @@ describe('This test describes the business', () => {
         .end((err, res) => {
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('message')
-            .eql('Business does not exist!');
+            .eql('Oops! You cannot delete this business');
           expect(res.status).to.equal(404);
           done();
         });
