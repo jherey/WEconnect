@@ -279,20 +279,6 @@ describe('This test describes the business', () => {
     * Test the /DELETE route
   */
   describe('/DELETE REQUESTS', () => {
-    it('it should not delete a business that does not exist', (done) => {
-      // HTTP DELETE -> DON'T REMOVE A BUSINESS
-      chai.request(app)
-        .delete('/api/v1/businesses/23')
-        .set('Authorization', authToken)
-        .end((err, res) => {
-          expect(res.body).to.be.a('object');
-          expect(res.body).to.have.property('message')
-            .eql('Oops! You cannot delete this business');
-          expect(res.status).to.equal(404);
-          done();
-        });
-    });
-
     it('it should not delete a business if user is not logged in', (done) => {
       // HTTP DELETE -> DON'T REMOVE A BUSINESS
       const wrongToken = `${authToken}gftsg`;

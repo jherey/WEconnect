@@ -159,8 +159,9 @@ const Business = {
           // Delete the business
           .destroy()
           // Success message
-          .then(res.status(200).json({
-            message: 'Business Successfully Deleted!'
+          .then(deletedBusiness => res.status(200).json({
+            message: 'Business Successfully Deleted!',
+            deletedBusiness
           }))
           .catch(error => res.status(400)
             .json(error.errors[0].message));
