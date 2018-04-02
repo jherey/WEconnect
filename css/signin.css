@@ -1,7 +1,6 @@
 body,
 html {
 	height: 100%;
-	font-weight: bolder;
 	background-color: #1B4F72;
 	line-height: 30px;
 }
@@ -118,32 +117,31 @@ footer {
 }
 /* FOOTER END */
 
-.signin {
+.signup {
 	background: white;
-	padding: 30px;
+	padding: 15px;
 }
 
 .login-form {
-	margin-top: 20px;
+	margin-top: 10px;
 	box-shadow: 0px 0px 10px 1px grey;
 	border-radius: 5px;
-	padding-bottom: 20px;
+	padding-bottom: 10px;
 	background: white;
 	color: #4343e2;
 }
 
 .title {
-	padding: 10px;
 	text-align: center;
-	color: #fff;
 	border-radius: 0px 0px 10px 10px;
 }
 
 #signup {
 	text-align: center;
-	 margin:auto;
+	margin:auto;
 	display:block;
 	width: 40%;
+	margin-top: 8px
 }
 
 #signup:hover {
