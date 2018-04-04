@@ -6,6 +6,7 @@ import Footer from './Footer';
 import Signin from './Signin';
 import Signup from './Signup';
 import Register from './Register';
+import BusinessProfile from './BusinessProfile';
 
 class Root extends Component {
 	render() {
@@ -18,6 +19,7 @@ class Root extends Component {
 						<Route path="/signin" exact component={Signin} />
 						<Route path="/signup" exact component={Signup} />
 						<Route path="/register" exact component={Register} />
+						<Route path="/business" exact component={BusinessProfile} />
 					</Switch>
 				</main>
 				<Footer />
