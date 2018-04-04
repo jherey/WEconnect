@@ -8,7 +8,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'index.bundle.js'
+    filename: 'bundle.js'
   },
   module: {
     rules: [
@@ -33,6 +33,11 @@ module.exports = {
             }
           ]
         }),
+        exclude: /node_modules/
+      },
+      {
+        test: /\.svg|.png|.jpg$/,
+        loader: 'url-loader',
         exclude: /node_modules/
       }
     ]
