@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Home extends Component {
 	render() {
@@ -24,7 +25,7 @@ class Home extends Component {
 
 				<div style={{ background: 'white' }}>
 					<div class="row align-items-center justify-content-center" id="regbutton">
-						<a href="busreg.html" class="btn btn-primary btn-md">Register a Business</a>
+						<Link to="/register" class="btn btn-primary btn-md">Register a Business</Link>
 					</div>
 
 					<div class="container tech-content">
