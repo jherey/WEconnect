@@ -11,6 +11,12 @@ const Review = {
     const { businessId } = req.params;
     const { review } = req.body;
     const { authData } = req;
+    if (review.trim() === '') {
+      return res.status(400).json({
+        message: 'Please write a review',
+        error: true
+      });
+    }
     Businesses
       // Find business by id
       .findById(businessId)
@@ -35,9 +41,7 @@ const Review = {
           message: 'Review successfully added',
           createdReview
         });
-      })
-      .catch(error => res.status(400)
-        .json(error.errors[0].message));
+      });
   },
 
   getAllReviews: (req, res) => {
