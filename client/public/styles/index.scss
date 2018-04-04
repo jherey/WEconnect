@@ -134,14 +134,15 @@ footer {
 	}
 }
 
+/* FOOTER END */
+
 /* INDEX PAGE CONTENT */
 
 .main-image {
-	background-image: url(../images/connect.jpg);
-	width: 100%;
+	background: url(../images/connect.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
-	height: calc(100vh - 75px);
+	height: calc(100vh - 255px);
 	background-attachment: fixed;
 	background-size: cover;
 	font-family: Lato;
@@ -203,9 +204,7 @@ footer {
 
 /* INDEX PAGE CONTENT END */
 
-/* FOOTER END */
-
-/* SIGN IN/ SIGN UP */
+/* SIGN IN/SIGNUP */
 
 .signup {
 	background: white;
@@ -239,4 +238,44 @@ footer {
 	border: none;
 }
 
-/* SIGN IN END */
+/* SIGN IN END/SIGNUP */
+
+.form-group,
+.form-check {
+	margin: 25px 0;
+}
+
+.btn,
+.form-control {
+	border-radius: 0;
+}
+
+form {
+	padding: 10px;
+}
+
+.small {
+	font-size: 12px;
+}
+
+.signin {
+	background: white;
+	padding: 20px;
+}
+
+.login-form {
+	box-shadow: 0px 0px 10px 1px grey;
+	border-radius: 5px;
+	padding-bottom: 20px;
+	background: white;
+	color: #4343e2;
+}
+
+.title {
+	text-align: center;
+	background-color: #4343e2;
+	color: #fff;
+	border-radius: 0px 0px 10px 10px;
+}
+
+/* END BUSSINESS REGISTRATION PAGE */
