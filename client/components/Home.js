@@ -31,10 +31,10 @@ class Home extends Component {
 					<div class="container tech-content">
 						<div class="row text-center">
 							<div class="col-lg-2 col-sm-6">
-								<a href="busprofile1.html" class="d-block mb-4 h-100">
+								<Link to="/business" class="d-block mb-4 h-100">
 									<img class="img-fluid img-thumbnail" src={require('../public/images/companies/nbc.jpg')} alt="" />
 									<p class="category">NBC</p>
-								</a>
+								</Link>
 							</div>
 							<div class="col-lg-2 col-sm-6">
 								<a href="busprofile1.html" class="d-block mb-4 h-100">
