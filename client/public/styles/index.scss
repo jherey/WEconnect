@@ -137,10 +137,11 @@ footer {
 /* INDEX PAGE CONTENT */
 
 .main-image {
-	background: url(../images/connect1.jpg);
+	background-image: url(../images/connect.jpg);
+	width: 100%;
 	background-repeat: no-repeat;
 	background-position: center center;
-	height: calc(100vh - 255px);
+	height: calc(100vh - 75px);
 	background-attachment: fixed;
 	background-size: cover;
 	font-family: Lato;
