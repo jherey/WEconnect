@@ -4,6 +4,7 @@ import Home from './Home';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Signin from './Signin';
+import Signup from './Signup';
 
 class Root extends Component {
 	render() {
@@ -14,6 +15,7 @@ class Root extends Component {
 					<Switch>
 						<Route path="/index" exact component={Home} />
 						<Route path="/signin" exact component={Signin} />
+						<Route path="/signup" exact component={Signup} />
 					</Switch>
 				</main>
 				<Footer />
