@@ -34,6 +34,11 @@ module.exports = {
           ]
         }),
         exclude: /node_modules/
+      },
+      {
+        test: /\.svg|.png|.jpg$/,
+        loader: 'url-loader',
+        exclude: /node_modules/
       }
     ]
   },
