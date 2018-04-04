@@ -3,12 +3,18 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import swaggerUi from 'swagger-ui-express';
+import path from 'path';
+import webpack from 'webpack';
+import webpackServer from 'webpack-dev-middleware';
+import webpackConfig from '../webpack.config';
 import routes from './routes/index';
 
 const swaggerDocument = require('../swagger.json');
 
 // Set up the express app
 const app = express();
+
+app.use(webpackServer(webpack(webpackConfig)));
 
 // Log requests to the console.
 app.use(logger('dev'));
@@ -24,11 +30,11 @@ app.use(expressValidator());
 app.use('/api/v1/', routes);
 
 // Document API with Swagger
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Setup a default catch-all route
-app.get('*', (req, res) => res.status(200).send({
-  message: 'Welcome to the beginning of nothingness.',
-}));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'));
+});
 
 export default app;
