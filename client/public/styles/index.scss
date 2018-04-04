@@ -204,3 +204,39 @@ footer {
 /* INDEX PAGE CONTENT END */
 
 /* FOOTER END */
+
+/* SIGN IN/ SIGN UP */
+
+.signup {
+	background: white;
+	padding: 15px;
+}
+
+.login-form {
+	margin-top: 10px;
+	box-shadow: 0px 0px 10px 1px grey;
+	border-radius: 5px;
+	padding-bottom: 10px;
+	background: white;
+	color: #4343e2;
+}
+
+.title {
+	text-align: center;
+	border-radius: 0px 0px 10px 10px;
+}
+
+#signup {
+	text-align: center;
+	margin: auto;
+	display: block;
+	width: 40%;
+	margin-top: 8px
+}
+
+#signup:hover {
+	background-color: #fd654d;
+	border: none;
+}
+
+/* SIGN IN END */
