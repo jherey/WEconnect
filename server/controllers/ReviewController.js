@@ -11,8 +11,14 @@ const Review = {
     const { businessId } = req.params;
     const { review } = req.body;
     const { authData } = req;
+    if (review.trim() === '') {
+      return res.status(400).json({
+        message: 'Please write a review',
+        error: true
+      });
+    }
     Businesses
-    // Find business by id
+      // Find business by id
       .findById(businessId)
       .then((business) => {
         // If no business found, return error
@@ -23,36 +29,33 @@ const Review = {
         }
       });
     Reviews
-    // Add a new review
+      // Add a new review
       .create({
         review,
         userId: authData.id,
         businessId
       })
-    // Successfully added
+      // Successfully added
       .then((createdReview) => {
         res.status(201).json({
           message: 'Review successfully added',
-          createdReview,
-          authData
+          createdReview
         });
-      })
-      .catch(error => res.status(400)
-        .json(error.errors[0].message));
+      });
   },
 
   getAllReviews: (req, res) => {
     const { businessId } = req.params;
     Reviews
-    // Find all reviews of a business
+      // Find all reviews of a business
       .findAll({
         where: {
           businessId
         }
       })
-      .then((review) => {
+      .then((reviews) => {
         // If no reviews found
-        if (!review.length) {
+        if (!reviews.length) {
           return res.status(404).send({
             message: 'No reviews for this business!',
           });
@@ -60,7 +63,7 @@ const Review = {
         // If reviews found
         return res.status(200).json({
           message: 'Reviews Found!',
-          review
+          reviews
         });
       });
   }

@@ -22,7 +22,8 @@ const verifyToken = {
       if (err) {
         // Wrong token
         return res.status(403).json({
-          message: 'Kindly sign in'
+          message: 'Kindly sign in',
+          error: true
         });
       }
       req.authData = authData;
@@ -34,8 +35,8 @@ const verifyToken = {
         })
         .then((user) => {
           if (!user) {
-            return res.status(404).send({
-              message: 'You cannot perform this action!',
+            return res.status(401).send({
+              message: 'Ooops! You cannot perform this action!',
             });
           }
           return next();

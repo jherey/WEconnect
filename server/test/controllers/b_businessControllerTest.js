@@ -210,7 +210,7 @@ describe('This test describes the business', () => {
     * Test the /PUT requests
   */
   describe('/PUT REQUESTS', () => {
-    it('it should not update a business that doesn\'t exist', (done) => {
+    it('it should not update a business if name exists', (done) => {
       // HTTP PUT -> DON'T UPDATE A BUSINESS
       chai.request(app)
         .put('/api/v1/businesses/20')
@@ -225,8 +225,8 @@ describe('This test describes the business', () => {
         })
         .end((err, res) => {
           expect(res.body).to.have.property('message')
-            .eql('You cannot update this business!');
-          expect(res.status).to.equal(404);
+            .eql('A business with this name exists!');
+          expect(res.status).to.equal(400);
           done();
         });
     });
@@ -279,20 +279,6 @@ describe('This test describes the business', () => {
     * Test the /DELETE route
   */
   describe('/DELETE REQUESTS', () => {
-    it('it should not delete a business that does not exist', (done) => {
-      // HTTP DELETE -> DON'T REMOVE A BUSINESS
-      chai.request(app)
-        .delete('/api/v1/businesses/23')
-        .set('Authorization', authToken)
-        .end((err, res) => {
-          expect(res.body).to.be.a('object');
-          expect(res.body).to.have.property('message')
-            .eql('Business does not exist!');
-          expect(res.status).to.equal(404);
-          done();
-        });
-    });
-
     it('it should not delete a business if user is not logged in', (done) => {
       // HTTP DELETE -> DON'T REMOVE A BUSINESS
       const wrongToken = `${authToken}gftsg`;

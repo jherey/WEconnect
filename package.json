@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test&& npm run migrate&& nyc mocha ./server/test/**/*.js --compilers js:babel-core/register --exit",
+    "test": "set NODE_ENV=test&& npm run migrate&& nyc mocha --exit --timeout 15000 ./server/test/**/*.js --compilers js:babel-core/register",
     "babel-node": "babel-node index --presets=env",
     "startDev": "nodemon --exec npm run babel-node -- index",
     "start": "babel-node index",
