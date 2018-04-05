@@ -65,58 +65,58 @@ const Business = {
             error: true
           });
         }
-      });
-    // Check if business exist
-    Businesses
-      .findOne({
-        where: {
-          id: businessId
-        }
-      })
-      .then((business) => {
-        // No buisness found
-        if (!business) {
-          return res.status(404).json({
-            message: 'Business Not Found!',
-            error: true
-          });
-        }
-      });
-    // Find business only if authorized
-    Businesses
-      .findOne({
-        where: {
-          id: businessId,
-          userId: authData.id
-        }
-      })
-      .then((business) => {
-        // Different user tries to update the business
-        if (!business) {
-          return res.status(404).json({
-            message: 'Oops! You cannot update this business',
-            error: true
-          });
-        }
-        // Update the business
-        business
-          .update({
-            businessName,
-            website,
-            category,
-            businessInfo,
-            email,
-            businessImage,
-            location
+        // Check if business exist
+        Businesses
+          .findOne({
+            where: {
+              id: businessId
+            }
           })
-          // Success message
-          .then(updatedBusiness => res.status(200).json({
-            message: 'Business Update Successful',
-            updatedBusiness,
-          }))
-          // Catch errors
-          .catch(error => res.status(400)
-            .json(error.errors[0].message));
+          .then((business) => {
+            // No buisness found
+            if (!business) {
+              return res.status(404).json({
+                message: 'Business Not Found!',
+                error: true
+              });
+            }
+            // Find business only if authorized
+            Businesses
+              .findOne({
+                where: {
+                  id: businessId,
+                  userId: authData.id
+                }
+              })
+              .then((authorizedBusiness) => {
+                // Different user tries to update the business
+                if (!authorizedBusiness) {
+                  return res.status(404).json({
+                    message: 'Oops! You cannot update this business',
+                    error: true
+                  });
+                }
+                // Update the business
+                authorizedBusiness
+                  .update({
+                    businessName,
+                    website,
+                    category,
+                    businessInfo,
+                    email,
+                    businessImage,
+                    location
+                  })
+                  // Success message
+                  .then(updatedBusiness => res.status(200).json({
+                    message: 'Business Update Successful',
+                    updatedBusiness,
+                  }))
+                  // Catch errors
+                  .catch(error => res.status(400)
+                    .json(error.errors[0].message));
+              });
+          });
       });
   },
 
@@ -155,7 +155,7 @@ const Business = {
             message: 'Oops! You cannot delete this business',
           });
         }
-        return business
+        business
           // Delete the business
           .destroy()
           // Success message

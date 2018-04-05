@@ -71,8 +71,7 @@ const businessValidator = {
         error: true
       });
     }
-
-    next();
+    return next();
   }
 };
 

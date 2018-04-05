@@ -1,0 +1,372 @@
+$zero: 0;
+$font: Helvetica,
+sans-serif;
+$height: 100%;
+$background: #1B4F72;
+$line: 30px;
+body {
+	margin: $zero;
+	padding: $zero;
+	font-family: $font;
+	height: $height;
+	background-color: $background;
+	line-height: $line;
+}
+
+/* NAVBAR */
+
+.navbar-nav {
+	font-weight: bold;
+	border: none;
+	text-transform: uppercase;
+}
+
+/* change the background color */
+
+.navbar-custom {
+	background-color: #4343e2;
+}
+
+/* change the brand and text color */
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+	color: #fd654d;
+}
+
+/* change the link color */
+
+.navbar-custom .navbar-nav .nav-link {
+	color: #fff;
+}
+
+/* change the color of active or hovered links */
+
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+	color: #fd654d;
+}
+
+.nabar-collapse {
+	color: #fd654d;
+}
+
+.custom-toggler.navbar-toggler {
+	border-color: #fd654d;
+}
+
+/* NAVBAR END */
+
+/* FOOTER */
+
+footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+@media (max-height: 800px) {
+	footer {
+		position: static;
+	}
+	header {
+		padding-top: 40px;
+	}
+}
+
+.footer-distributed {
+	border: none;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: normal 16px sans-serif;
+	padding: 8px 40px;
+}
+
+.footer-distributed .footer-left p {
+	color: #8f9296;
+	font-size: 14px;
+	margin: 0;
+}
+
+#footer-hr {
+	border: none;
+	width: 95%;
+	height: 4px;
+	background-color: #fd654d;
+}
+
+/* Footer links */
+
+.footer-distributed p.footer-links {
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff;
+	margin: 0 0 10px;
+	padding: 0;
+}
+
+.footer-distributed p.footer-links a {
+	display: inline-block;
+	line-height: 1.8;
+	text-decoration: none;
+	color: inherit;
+}
+
+#cortesy {
+	color: #fff;
+	font-size: 1.01em;
+}
+
+@media (max-width: 600px) {
+	.footer-distributed .footer-left,
+	.footer-distributed .footer-right {
+		text-align: center;
+	}
+	.footer-distributed .footer-right {
+		float: none;
+		margin: 0 auto 20px;
+	}
+	.footer-distributed .footer-left p.footer-links {
+		line-height: 1.8;
+	}
+}
+
+/* FOOTER END */
+
+/* INDEX PAGE CONTENT */
+
+.main-image {
+	background: url(../images/connect.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: calc(100vh - 255px);
+	background-attachment: fixed;
+	background-size: cover;
+	font-family: Lato;
+	color: white;
+}
+
+.catchphrase {
+	color: #99738e;
+	font-style: italic;
+	margin-top: 10%;
+}
+
+.catchphrase>h3 {
+	font-size: 30px;
+	color: blue;
+}
+
+.button {
+	background-color: #fff;
+	border: none;
+	color: #fd654d;
+	font-weight: bolder;
+}
+
+#content {
+	color: white;
+	margin-top: 70px;
+	width: 70%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#index-hr {
+	width: 400px;
+	border-top: 1px solid #f8f8f8;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+#regbutton {
+	padding: 10px;
+	text-transform: uppercase;
+}
+
+#select {
+	height: 39px;
+	color: #fd654d;
+	font-size: 1.1em;
+	margin-right: 15px;
+}
+
+/* MEDIA QUERIES */
+
+@media (max-width: 900px) {
+	#content>* {
+		padding: 6px;
+	}
+}
+
+/* INDEX PAGE CONTENT END */
+
+/* SIGN IN/SIGNUP */
+
+.signup {
+	background: white;
+	padding: 15px;
+}
+
+.login-form {
+	margin-top: 10px;
+	box-shadow: 0px 0px 10px 1px grey;
+	border-radius: 5px;
+	padding-bottom: 10px;
+	background: white;
+	color: #4343e2;
+}
+
+.title {
+	text-align: center;
+	border-radius: 0px 0px 10px 10px;
+}
+
+#signup {
+	text-align: center;
+	margin: auto;
+	display: block;
+	width: 40%;
+	margin-top: 8px
+}
+
+#signup:hover {
+	background-color: #fd654d;
+	border: none;
+}
+
+/* SIGN IN END/SIGNUP */
+
+.form-group,
+.form-check {
+	margin: 25px 0;
+}
+
+.btn,
+.form-control {
+	border-radius: 0;
+}
+
+form {
+	padding: 10px;
+}
+
+.small {
+	font-size: 12px;
+}
+
+.signin {
+	background: white;
+	padding: 20px;
+}
+
+.login-form {
+	box-shadow: 0px 0px 10px 1px grey;
+	border-radius: 5px;
+	padding-bottom: 20px;
+	background: white;
+	color: #4343e2;
+}
+
+.title {
+	text-align: center;
+	background-color: #4343e2;
+	color: #fff;
+	border-radius: 0px 0px 10px 10px;
+}
+
+/* END BUSSINESS REGISTRATION PAGE */
+
+.back {
+	margin: 0;
+	font-size: 0.8em;
+	padding: 10px;
+	background: white;
+}
+
+.mid {
+	display: block;
+	margin: auto;
+	background-color: #F4F6F7;
+	padding: 30px;
+	width: 80%;
+}
+
+.rev {
+	color: #fd654d;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.edit {
+	margin: 10px;
+}
+
+.details {
+	margin-top: 5px;
+}
+
+.top {
+	margin-top: 25px;
+}
+
+.bus-name {
+	color: #fd654d;
+}
+
+.verticalLine {
+	border-left: thick solid #fd654d;
+	font-size: 1.3em;
+}
+
+#reviews {
+	text-align: center;
+}
+
+#motto {
+	margin-top: 10px;
+	font-style: italic;
+	font-size: 1.3em;
+}
+
+#exampleModalLabel {
+	color: #fd654d;
+}
+
+#col {
+	color: #fd654d;
+	font-size: 1.15em;
+}
+
+#write {
+	margin-top: 10px;
+}
+
+#logo {
+	margin: 10px;
+	width: 200px;
+	border-radius: 50%;
+}
+
+@media (max-width: 770px) {
+	.mid {
+		width: 90%;
+		margin-top: 0px;
+		text-align: center;
+	}
+	.verticalLine {
+		border-left: none;
+		font-size: 1.3em;
+	}
+	hr {
+		border: none;
+		width: 95%;
+		height: 4px;
+		background-color: #fd654d;
+	}
+}
+
+/*BUSINESS PROFILE PAGE*/

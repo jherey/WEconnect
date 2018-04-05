@@ -17,9 +17,10 @@ const userValidator = {
       .isLength({ min: 5 });
 
     const errors = req.validationErrors();
-    if (errors) { return errorMessage(res, errors[0].msg); }
-
-    next();
+    if (errors) {
+      return errorMessage(res, errors[0].msg);
+    }
+    return next();
   },
 
   userLogin: (req, res, next) => {
@@ -30,9 +31,10 @@ const userValidator = {
       .isLength({ min: 5 });
 
     const errors = req.validationErrors();
-    if (errors) { return errorMessage(res, errors[0].msg); }
-
-    next();
+    if (errors) {
+      return errorMessage(res, errors[0].msg);
+    }
+    return next();
   }
 };
 
