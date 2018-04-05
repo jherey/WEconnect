@@ -27,20 +27,20 @@ const Review = {
             message: 'Business does not exist'
           });
         }
-      });
-    Reviews
-      // Add a new review
-      .create({
-        review,
-        userId: authData.id,
-        businessId
-      })
-      // Successfully added
-      .then((createdReview) => {
-        res.status(201).json({
-          message: 'Review successfully added',
-          createdReview
-        });
+        Reviews
+          // Add a new review
+          .create({
+            review,
+            userId: authData.id,
+            businessId
+          })
+          // Successfully added
+          .then((createdReview) => {
+            return res.status(201).json({
+              message: 'Review successfully added',
+              createdReview
+            });
+          });
       });
   },
 

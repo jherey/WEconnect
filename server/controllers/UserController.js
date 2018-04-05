@@ -48,7 +48,7 @@ const Users = {
           sex: user.sex
         };
         // Success message
-        res.status(201).json({
+        return res.status(201).json({
           message: 'Signed up successfully',
           userDetails
         });
@@ -87,7 +87,10 @@ const Users = {
           });
         }
         // Details mismatch
-        return res.status(400).json({ message: 'Username/Password Incorrect' });
+        return res.status(400)
+          .json({
+            message: 'Username/Password Incorrect'
+          });
       })
       .catch(error => res.status(400)
         .json({

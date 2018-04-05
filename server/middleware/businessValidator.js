@@ -9,7 +9,7 @@ const businessValidator = {
     if (location || category) {
       // If there's a location query string
       if (location) {
-        return Businesses
+        Businesses
           // Find by location
           .findAll({
             where: {
@@ -31,7 +31,7 @@ const businessValidator = {
           });
       }
       if (category) {
-        return Businesses
+        Businesses
           // Find by category
           .findAll({
             where: {
