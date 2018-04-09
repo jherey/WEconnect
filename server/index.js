@@ -6,7 +6,8 @@ import swaggerUi from 'swagger-ui-express';
 import path from 'path';
 import webpack from 'webpack';
 import webpackServer from 'webpack-dev-middleware';
-import webpackConfig from '../webpack.config';
+import devWebpackConfig from '../webpack.dev';
+import prodWebpackConfig from '../webpack.prod';
 import routes from './routes/index';
 
 const swaggerDocument = require('../swagger.json');
@@ -14,7 +15,11 @@ const swaggerDocument = require('../swagger.json');
 // Set up the express app
 const app = express();
 
-app.use(webpackServer(webpack(webpackConfig)));
+if (process.env.NODE_ENV !== 'production') {
+  app.use(webpackServer(webpack(devWebpackConfig)));
+} else {
+  app.use(webpackServer(webpack(prodWebpackConfig)));
+}
 
 // Log requests to the console.
 app.use(logger('dev'));
