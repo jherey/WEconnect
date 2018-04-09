@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-class Register extends Component {
+class EditBusiness extends Component {
 	render() {
 		return (
 			<div class="signin">
 				<div class="login-form col-md-4 offset-md-4">
-					<h1 class="title">Register Business</h1>
+					<h1 class="title">Edit Business</h1>
 					<form>
 						<fieldset>
 							<label for="firstname">Business Name:<span class="red">*</span></label>
@@ -37,13 +37,13 @@ class Register extends Component {
 						</fieldset>
 						<br />
 						<div align="center">
-							<button type="submit" class="btn btn-primary">Register</button>
+							<button type="submit" class="btn btn-primary">Update</button>
 						</div>
 					</form>
 				</div>
 			</div>
-		);
+		)
 	}
-};
+}
 
-export default Register;
+export default EditBusiness;
