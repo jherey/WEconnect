@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -12,7 +12,7 @@ import BusinessProfile from './components/BusinessProfile';
 class App extends Component {
 	render() {
 		return (
-			<div className="">
+			<BrowserRouter>
 				<Navbar />
 				<main>
 					<Switch>
@@ -25,7 +25,7 @@ class App extends Component {
 					</Switch>
 				</main>
 				<Footer />
-			</div>
+			</BrowserRouter>
 		);
 	}
 }
