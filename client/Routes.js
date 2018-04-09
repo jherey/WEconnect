@@ -13,6 +13,7 @@ class App extends Component {
 	render() {
 		return (
 			<BrowserRouter>
+			<div>
 				<Navbar />
 				<main>
 					<Switch>
@@ -25,6 +26,7 @@ class App extends Component {
 					</Switch>
 				</main>
 				<Footer />
+				</div>
 			</BrowserRouter>
 		);
 	}
