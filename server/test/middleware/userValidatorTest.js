@@ -91,7 +91,27 @@ describe('USER VALIDATOR TESTS', () => {
         .send(userDetails)
         .end((err, res) => {
           expect(res.body).to.have.property('message')
-            .eql('Sex is required');
+            .eql('Password is required');
+          expect(res.status).to.equal(400);
+          done();
+        });
+    });
+
+    it('it should not register a user', (done) => {
+      // HTTP POST -> DONT REGISTER A NEW USER
+      const userDetails = {
+        firstname: 'Jeremiah',
+        lastname: 'Oluwaseyi',
+        username: 'Seyih',
+        password: 'olufayo',
+        email: 'olufayo@gmail.com'
+      };
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.body).to.have.property('message')
+            .eql('Confirm password field is required');
           expect(res.status).to.equal(400);
           done();
         });
