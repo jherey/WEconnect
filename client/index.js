@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import Routes from './Routes';
-import styles from './public/styles/index.scss';
+import allReducers from './reducers';
 
 const store = createStore(
-	(state = {}) => state,
+	allReducers,
 	applyMiddleware(thunk)
 );
 
