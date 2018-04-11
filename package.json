@@ -12,9 +12,7 @@
     "migrate": "npm run unmigrate && node ./node_modules/sequelize-cli/lib/sequelize db:migrate",
     "heroku-postbuild": "npm run migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls",
-    "build": "webpack",
-    "startWebpack": "webpack-dev-server --output-public-path=/build/"
+    "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -27,10 +25,12 @@
   },
   "homepage": "https://github.com/jherey/WeConnect#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
+    "classnames": "^2.2.5",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "express-validator": "^5.0.3",
@@ -48,6 +48,7 @@
     "redux-thunk": "^2.2.0",
     "sequelize": "^4.36.0",
     "sequelize-cli": "^4.0.0",
+    "shortid": "^2.2.8",
     "swagger-ui-express": "^2.0.15",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "url-loader": "^1.0.1",

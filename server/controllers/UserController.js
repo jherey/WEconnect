@@ -17,7 +17,8 @@ const Users = {
       sex,
       username,
       email,
-      password
+      password,
+      confirmPassword
     } = req.body;
     // Check if spaces exist in fields and trim
     if (username.trim() === '' || firstname.trim() === ''
@@ -25,6 +26,12 @@ const Users = {
       || email.trim() === '' || password.trim() === '') {
       return res.status(400).json({
         message: 'Please fill in all fields',
+        error: true
+      });
+    }
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        message: 'Passwords do not match',
         error: true
       });
     }
@@ -41,11 +48,8 @@ const Users = {
       .then((user) => {
         const userDetails = {
           id: user.id,
-          firstname: user.firstname,
-          lastname: user.lastname,
           username: user.username,
-          email: user.email,
-          sex: user.sex
+          email: user.email
         };
         // Success message
         return res.status(201).json({

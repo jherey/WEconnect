@@ -4,18 +4,18 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Signin from './components/Signin';
-import Signup from './components/Signup';
+import Signup from './components/Signup/Signup';
 import Register from './components/Register';
 import EditBusiness from './components/EditBusiness';
 import BusinessProfile from './components/BusinessProfile';
+import styles from './public/styles/index.scss';
 
 class App extends Component {
 	render() {
 		return (
 			<BrowserRouter>
-			<div>
-				<Navbar />
-				<main>
+				<div>
+					<Navbar />
 					<Switch>
 						<Route path="/" exact component={Home} />
 						<Route path="/signin" exact component={Signin} />
@@ -24,8 +24,7 @@ class App extends Component {
 						<Route path="/edit" exact component={EditBusiness} />
 						<Route path="/business" exact component={BusinessProfile} />
 					</Switch>
-				</main>
-				<Footer />
+					<Footer />
 				</div>
 			</BrowserRouter>
 		);
