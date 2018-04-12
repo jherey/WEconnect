@@ -86,7 +86,6 @@ const Users = {
           // Success message
           return res.status(200).json({
             message: 'User logged in successfully',
-            userData,
             token
           });
         }
