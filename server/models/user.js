@@ -41,7 +41,7 @@ const userModel = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {
         args: true,
-        msg: 'A user with this email exists',
+        msg: 'Email address taken',
       },
       validate: {
         notEmpty: {
@@ -68,7 +68,7 @@ const userModel = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {
         args: true,
-        msg: 'Username taken, Please use another',
+        msg: 'Username already exists',
       },
       validate: {
         notEmpty: {
