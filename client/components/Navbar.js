@@ -1,8 +1,36 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signout } from '../actions/userActions';
 
 class Navbar extends Component {
+	signout(e) {
+		e.preventDefault();
+		this.props.signout();
+	}
+
 	render() {
+		const { isAuthenticated } = this.props.authUser;
+
+		const authUserLinks = (
+			<ul className="navbar-nav ml-auto">
+				<li className="nav-item">
+					<a href="#" onClick={this.signout.bind(this)}>Sign out</a>
+				</li>
+			</ul>
+		);
+
+		const guestLinks = (
+			<ul className="navbar-nav ml-auto">
+				<li className="nav-item">
+					<Link className="nav-link" to="/signup">Sign Up</Link>
+				</li>
+				<li className="nav-item">
+					<Link className="nav-link" to="/signin">Sign In</Link>
+				</li>
+			</ul>
+		);
+
 		return (
 			<nav className="navbar navbar-custom navbar-expand-lg navbar-dark">
 				<div className="container">
@@ -13,19 +41,7 @@ class Navbar extends Component {
 					</button>
 
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul className="navbar-nav mr-auto nav-pills">
-							<li className="nav-item">
-								<a className="nav-link" href="contact.html">CONTACT US</a>
-							</li>
-						</ul>
-						<ul className="navbar-nav ml-auto">
-							<li className="nav-item">
-								<Link className="nav-link" to="/signup">Sign Up</Link>
-							</li>
-							<li className="nav-item">
-								<Link className="nav-link" to="/signin">Sign In</Link>
-							</li>
-						</ul>
+						{ isAuthenticated ? authUserLinks : guestLinks }
 					</div>
 				</div>
 			</nav>
@@ -33,4 +49,10 @@ class Navbar extends Component {
 	}
 }
 
-export default Navbar;
+function mapStateToProps(state) {
+	return {
+		authUser: state.authUser
+	}
+}
+
+export default connect(mapStateToProps, { signout })(Navbar);
