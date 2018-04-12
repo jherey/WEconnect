@@ -6,7 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import jwt from 'jsonwebtoken';
 import Routes from './Routes';
 import allReducers from './reducers';
-import setAuthToken from './actions/setAuthToken';
+import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser } from './actions/userActions';
 
 const store = createStore(
