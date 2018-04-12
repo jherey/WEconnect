@@ -34,9 +34,10 @@ const verifyToken = {
           }
         })
         .then((user) => {
+          // Token is valid but user does not exist
           if (!user) {
             return res.status(401).send({
-              message: 'Ooops! You cannot perform this action!',
+              message: 'No such user',
             });
           }
           return next();

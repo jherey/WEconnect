@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import setAuthToken from './setAuthToken';
+import setAuthToken from '../utils/setAuthToken';
 
 /**
  * @returns {Object} promise
