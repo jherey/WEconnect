@@ -57,38 +57,6 @@ describe('User', () => {
   it('it should not login a user', (done) => {
     // HTTP POST -> DON'T LOGIN A USER
     const userDetails = {
-      username: 'jherey'
-    };
-    chai.request(app)
-      .post('/api/v1/auth/login')
-      .send(userDetails)
-      .end((err, res) => {
-        expect(res.body).to.have.property('message')
-          .eql('Password field is empty');
-        expect(res.status).to.equal(400);
-        done();
-      });
-  });
-
-  it('it should not login a user', (done) => {
-    // HTTP POST -> DON'T LOGIN A USER
-    const userDetails = {
-      password: 'jherey'
-    };
-    chai.request(app)
-      .post('/api/v1/auth/login')
-      .send(userDetails)
-      .end((err, res) => {
-        expect(res.body).to.have.property('message')
-          .eql('Username field is empty');
-        expect(res.status).to.equal(400);
-        done();
-      });
-  });
-
-  it('it should not login a user', (done) => {
-    // HTTP POST -> DON'T LOGIN A USER
-    const userDetails = {
       username: 'jherey',
       password: 'jeremiah'
     };

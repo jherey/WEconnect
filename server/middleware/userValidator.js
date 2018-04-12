@@ -22,8 +22,8 @@ const userValidator = {
   },
 
   userLogin: (req, res, next) => {
-    req.check('username', 'Username field is empty').notEmpty();
-    req.check('password', 'Password field is empty').notEmpty();
+    req.check('username', 'Username is required').notEmpty();
+    req.check('password', 'Password is required').notEmpty();
     req
       .check('password', 'Minimum password length is 5 characters')
       .isLength({ min: 5 });
