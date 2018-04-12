@@ -43,12 +43,13 @@ class SignupForm extends Component {
 	}
 
 	render() {
-		const { errors, firstname, lastname, email, password, confirmPassword, sex, profilepic } = this.state;
+		const { errors, firstname, lastname, username, email, password, confirmPassword, sex, profilepic } = this.state;
 
 		return (
 			<div className="signup">
 				<div className="login-form col-md-4 offset-md-4">
 					<h1 className="title btn-primary">Create Account</h1>
+					{errors === 'Username already exists' || errors === 'Email address taken' && <div className='alert alert-danger'>{errors}</div>}
 					<form onSubmit={this.onSubmit}>
 						<div>
 							<label className='control-label'>First Name</label>
