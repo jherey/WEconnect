@@ -14,6 +14,17 @@ export function signupUser(userData) {
 
 /**
  * @returns {Object} promise
+ * @param {*} user
+ */
+export function setCurrentUser(user) {
+  return {
+    type: 'SET_CURRENT_USER',
+    user
+  };
+}
+
+/**
+ * @returns {Object} promise
  * @param {*} userData
  */
 export function signinUser(userData) {
@@ -28,12 +39,12 @@ export function signinUser(userData) {
 }
 
 /**
- * @returns {Object} promise
- * @param {*} user
+ * @returns {Object} object
  */
-export function setCurrentUser(user) {
-  return {
-    type: 'SET_CURRENT_USER',
-    user
-  };
-}
+export function signout() {
+  return dispatch => {
+    localStorage.removeItem('token');
+    setAuthToken(false);
+    dispatch(setCurrentUser({}));
+  }
+};
