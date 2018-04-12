@@ -48,13 +48,14 @@ const Users = {
       .then((user) => {
         const userDetails = {
           id: user.id,
-          username: user.username,
-          email: user.email
+          username: user.username
         };
+        // Assign token to user for six hours
+        const token = jwt.sign(userDetails, secret, { expiresIn: '6h' });
         // Success message
         return res.status(201).json({
           message: 'Signed up successfully',
-          userDetails
+          token
         });
       })
       .catch(error => res.status(400)
