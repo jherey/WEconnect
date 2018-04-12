@@ -122,6 +122,38 @@ describe('USER VALIDATOR TESTS', () => {
     * Test LOGIN
   */
   describe('login tests', () => {
+    it('it should not login a user', (done) => {
+      // HTTP POST -> DON'T LOGIN A USER
+      const userDetails = {
+        username: 'jherey'
+      };
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.body).to.have.property('message')
+            .eql('Password is required');
+          expect(res.status).to.equal(400);
+          done();
+        });
+    });
+
+    it('it should not login a user', (done) => {
+      // HTTP POST -> DON'T LOGIN A USER
+      const userDetails = {
+        password: 'jherey'
+      };
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .send(userDetails)
+        .end((err, res) => {
+          expect(res.body).to.have.property('message')
+            .eql('Username is required');
+          expect(res.status).to.equal(400);
+          done();
+        });
+    });
+
     it('should return a function()', () => {
       expect(userLogin).to.be.a('function');
     });
