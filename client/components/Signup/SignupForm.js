@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import { browserHistory } from 'react-router';
-import { Redirect } from 'react-router-dom';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -31,7 +29,6 @@ class SignupForm extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		// const { history } = this.props;
 		this.setState({ errors: '', isLoading: true });
 		this.props.signupUser(this.state).then(
 			() => {
@@ -46,17 +43,17 @@ class SignupForm extends Component {
 	}
 
 	render() {
-		const { errors } = this.state;
+		const { errors, firstname, lastname, email, password, confirmPassword, sex, profilepic } = this.state;
 
 		return (
 			<div className="signup">
 				<div className="login-form col-md-4 offset-md-4">
 					<h1 className="title btn-primary">Create Account</h1>
 					<form onSubmit={this.onSubmit}>
-						<div className={classnames( { 'has-error': errors })}>
+						<div>
 							<label className='control-label'>First Name</label>
 							<input
-								value={this.state.firstname}
+								value={firstname}
 								onChange={this.onChange}
 								type="text"
 								name="firstname"
@@ -67,7 +64,7 @@ class SignupForm extends Component {
 						<div>
 							<label className='control-label'>Last Name</label>
 							<input
-								value={this.state.lastname}
+								value={lastname}
 								onChange={this.onChange}
 								type="text"
 								name="lastname"
@@ -78,7 +75,7 @@ class SignupForm extends Component {
 						<div>
 							<label className='control-label'>Username</label>
 							<input
-								value={this.state.username}
+								value={username}
 								onChange={this.onChange}
 								type="text"
 								name="username"
@@ -89,7 +86,7 @@ class SignupForm extends Component {
 						<div>
 							<label className='control-label'>Email</label>
 							<input
-								value={this.state.email}
+								value={email}
 								onChange={this.onChange}
 								type="email"
 								name="email"
@@ -100,7 +97,7 @@ class SignupForm extends Component {
 						<div>
 							<label className='control-label'>Password</label>
 							<input
-								value={this.state.password}
+								value={password}
 								onChange={this.onChange}
 								type="password"
 								name="password"
@@ -111,7 +108,7 @@ class SignupForm extends Component {
 						<div>
 							<label className='control-label'>Confirm Password</label>
 							<input
-								value={this.state.confirmPassword}
+								value={confirmPassword}
 								onChange={this.onChange}
 								type="password"
 								name="confirmPassword"
@@ -125,7 +122,7 @@ class SignupForm extends Component {
 								className='form-control'
 								name='sex'
 								onChange={this.onChange}
-								value={this.state.sex}
+								value={sex}
 							>
 								<option value='' disabled>Choose your sex</option>
 								<option value='male'>Male</option>
@@ -139,7 +136,7 @@ class SignupForm extends Component {
 								className="form-control-file"
 								id="exampleInputFile"
 								aria-describedby="fileHelp"
-								value={this.state.profilepic}
+								value={profilepic}
 								name="profilepic"
 							/>
 						</div>
