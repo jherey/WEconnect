@@ -8,7 +8,12 @@ import setAuthToken from './setAuthToken';
  */
 export function signupUser(userData) {
   return dispatch => {
-    return axios.post('api/v1/auth/signup', userData);
+    return axios.post('api/v1/auth/signup', userData).then(res => {
+      const token = res.data.token;
+      localStorage.setItem('token', token);
+      setAuthToken(token);
+      dispatch(setCurrentUser(jwt.decode(token)));
+    });
   }
 }
 
