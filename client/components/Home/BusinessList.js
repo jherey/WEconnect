@@ -8,13 +8,15 @@ const BusinessList = ({ businesses }) => {
 	);
 
 	const businessComponent = businesses.reverse().map((business, i) => {
-		return (
-			<Business
-				key={businesses[i].id}
-				id={businesses[i].id}
-				name={businesses[i].businessName}
-			/>
-		);
+		if (i < 8) {
+			return (
+				<Business
+					key={businesses[i].id}
+					id={businesses[i].id}
+					name={businesses[i].businessName}
+				/>
+			);
+		}
 	});
 
 	return (
