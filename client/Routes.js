@@ -8,6 +8,7 @@ import Signup from './components/Signup/Signup';
 import Register from './components/RegisterBusiness/NewBusiness';
 import EditBusiness from './components/EditBusiness';
 import BusinessProfile from './components/BusinessProfile';
+import FlashMessage from './components/FlashMessage/FlashMessage';
 import authVerification from './utils/authVerification';
 import styles from './public/styles/index.scss';
 
@@ -17,6 +18,7 @@ class App extends Component {
 			<BrowserRouter>
 				<div>
 					<Navbar />
+					<FlashMessage />
 					<Switch>
 						<Route path="/" exact component={Home} />
 						<Route path="/signin" exact component={Signin} />

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class NewBusinessForm extends Component {
 	constructor() {
@@ -29,6 +30,10 @@ class NewBusinessForm extends Component {
 		this.setState({ errors: '', isLoading: true });
 		this.props.createBusiness(this.state).then(
 			() => {
+				this.props.addFlashMessage({
+					type: 'success',
+					text: 'Business registered successfully'
+				});
 				this.context.router.history.push('/');
 			},
 			(data) => this.setState({ errors: data.response.data.message, isLoading: false })
@@ -152,5 +157,9 @@ class NewBusinessForm extends Component {
 		);
 	}
 };
+
+NewBusinessForm.contextTypes = {
+	router: PropTypes.object.isRequired
+}
 
 export default NewBusinessForm;

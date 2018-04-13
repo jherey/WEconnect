@@ -25,6 +25,10 @@ class SigninForm extends Component {
 		this.setState({ errors: '', isLoading: true });
 		this.props.signinUser(this.state).then(
 			() => {
+				this.props.addFlashMessage({
+					type: 'success',
+					text: 'Signed in successfully'
+				});
 				this.context.router.history.push('/');
 			},
 			(data) => this.setState({ errors: data.response.data.message, isLoading: false })
