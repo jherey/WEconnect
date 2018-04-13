@@ -1,12 +1,22 @@
 import axios from 'axios';
 
+export function addBusiness(business) {
+	return {
+		type: 'ADD_BUSINESS',
+		business
+	}
+}
+
 /**
  * @returns {Object} promiseost
  * @param {*} businessData
  */
 export function createBusiness(businessData) {
 	return dispatch => {
-		return axios.post('api/v1/businesses', businessData);
+		return axios.post('api/v1/businesses', businessData)
+			.then(businessData => {
+				dispatch(addBusiness(businessData.data.business))
+			});
 	};
 }
 
