@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import jwt from 'jsonwebtoken';
 import Routes from './Routes';
 import allReducers from './reducers';
@@ -11,9 +12,8 @@ import { setCurrentUser } from './actions/userActions';
 
 const store = createStore(
 	allReducers,
-	compose(
-		applyMiddleware(thunk),
-		window.devToolsExtension ? window.devToolsExtension() : f => f
+	composeWithDevTools(
+		applyMiddleware(thunk)
 	)
 );
 
