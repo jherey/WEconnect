@@ -7,7 +7,7 @@ const BusinessList = ({ businesses }) => {
 		<h5>There are no businesses yet</h5>
 	);
 
-	const businessComponent = businesses.map((business, i) => {
+	const businessComponent = businesses.reverse().map((business, i) => {
 		return (
 			<Business
 				key={businesses[i].id}
