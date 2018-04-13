@@ -18,7 +18,7 @@ class Navbar extends Component {
 					<Link className="nav-link" to="/register">Register a Business</Link>
 				</li>
 				<li className="nav-item">
-					<a href="#" onClick={this.signout.bind(this)}>Sign out</a>
+					<a className="nav-link" href="#" onClick={this.signout.bind(this)}>Sign out</a>
 				</li>
 			</ul>
 		);
