@@ -8,7 +8,7 @@ class NewBusinessForm extends Component {
 			businessName: '',
 			email: '',
 			category: '',
-			description: '',
+			businessInfo: '',
 			address: '',
 			location: '',
 			website: '',
@@ -41,7 +41,7 @@ class NewBusinessForm extends Component {
 	}
 
 	render() {
-		const { businessName, email, category, location, address, description, website, errors, isLoading } = this.state;
+		const { businessName, email, category, location, address, businessInfo, website, errors, isLoading } = this.state;
 		return (
 			<div className="signin">
 				<div className="login-form col-md-4 offset-md-4">
@@ -63,8 +63,8 @@ class NewBusinessForm extends Component {
 							<textarea
 								className="form-control"
 								rows="4"
-								name="description"
-								value={description}
+								name="businessInfo"
+								value={businessInfo}
 								onChange={this.onChange}
 							>
 							</textarea>
