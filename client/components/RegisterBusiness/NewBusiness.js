@@ -6,7 +6,7 @@ import { addFlashMessage } from '../../actions/flashMessages';
 
 class NewBusiness extends Component {
 	render() {
-		const { createBusiness } = this.props;
+		const { createBusiness, addFlashMessage } = this.props;
 		return (
 			<div>
 				<NewBusinessForm createBusiness={createBusiness} addFlashMessage={addFlashMessage} />
