@@ -17,9 +17,7 @@ class HomePage extends Component {
             <div>
                 <HeroImage />
                 <div style={{ background: 'white' }}>
-                    <div className="row align-items-center justify-content-center" id="regbutton">
-                        <Link to="/register" className="btn btn-primary btn-md">Register a Business</Link>
-                    </div>
+                    <h2 className='text-center latest'>LATEST BUSINESSES</h2>
                     <BusinessList businesses={businesses} />
                 </div>
             </div>
