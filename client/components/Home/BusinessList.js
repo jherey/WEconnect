@@ -18,9 +18,12 @@ const BusinessList = ({ businesses }) => {
 	});
 
 	return (
-		<div className="container tech-content">
+		<div className="container">
 			<div className="row text-center">
 				{businesses.length === 0 ? noBusiness : businessComponent}
+			</div>
+			<div className="row justify-content-end d-flex">
+				<Link to="/all">View all Businesses...</Link>
 			</div>
 		</div>
 	);
