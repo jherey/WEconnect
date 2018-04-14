@@ -7,7 +7,7 @@ import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
 import Register from './components/RegisterBusiness/NewBusiness';
 import EditBusiness from './components/EditBusiness';
-import BusinessProfile from './components/BusinessProfile';
+import BusinessProfile from './components/BusinessProfile/BusinessProfile';
 import AllBusinesses from './components/AllBusinesses/AllBusinesses';
 import FlashMessage from './components/FlashMessage/FlashMessage';
 import authVerification from './utils/authVerification';
@@ -27,7 +27,7 @@ class App extends Component {
 						<Route path="/register" exact component={authVerification(Register)} />
 						<Route path="/edit" exact component={EditBusiness} />
 						<Route path="/all" exact component={AllBusinesses} />
-						<Route path="/business" exact component={BusinessProfile} />
+						<Route path={"/business/:id"} exact component={BusinessProfile} />
 					</Switch>
 					<Footer />
 				</div>
