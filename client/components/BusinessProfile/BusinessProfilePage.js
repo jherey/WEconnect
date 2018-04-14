@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class BusinessProfilePage extends Component {
-	componentDidMount() {
-		const { business } = this.props;
-		console.log(business);
-	}
-
 	render() {
 		const { business } = this.props;
 
@@ -37,7 +32,7 @@ class BusinessProfilePage extends Component {
 					</div>
 					<div className="form-row text-center">
 						<div className="col-12">
-							<Link to="/edit" className="btn btn-primary edit fa fa-cog"> Edit Account Details</Link>
+							<Link to={`/${business[0].id}`} className="btn btn-primary edit fa fa-cog"> Edit Account Details</Link>
 							<Link to="/delete" className="btn btn-danger edit fa fa-cog"> Delete Business</Link>
 						</div>
 					</div>
