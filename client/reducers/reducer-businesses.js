@@ -5,6 +5,13 @@ export default function businesses(state = [], action = {}) {
 				...state,
 				action.business
 			]
+		case 'UPDATE_BUSINESS':
+			return state.map(item => {
+				if (item.id === action.updatedBusiness) {
+					return action.business;
+				}
+				return item;
+			})
 		case 'SET_BUSINESSES':
 			return action.businesses
 		default:
