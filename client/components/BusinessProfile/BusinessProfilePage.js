@@ -2,25 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class BusinessProfilePage extends Component {
-	constructor() {
-		super();
-		this.state = {
-			foundBusiness: {}
-		}
-	}
-
 	componentWillMount() {
-		this.props.fetchBusiness(this.props.id).then(
-			(business) => {
-				this.setState({
-					foundBusiness: business.data.business
-				})
-			}
-		)
+		this.props.fetchBusiness(this.props.id);
 	}
 
 	render() {
-		const { foundBusiness } = this.state;
+		const { currentBusiness } = this.props;
 
 		return (
 			<div className="back">
@@ -28,22 +15,22 @@ class BusinessProfilePage extends Component {
 					<div className="row">
 						<div className="col-md-6 col-lg-6">
 							<div className="text-lg-center">
-								<h1 className="bus-name">{foundBusiness.businessName}</h1>
+								<h1 className="bus-name">{currentBusiness.businessName}</h1>
 								<div>
 									<img id="logo" src={require('../../public/images/companies/nbc.jpg')} alt="" />
 								</div>
-								<p id="motto">{foundBusiness.website}</p>
+								<p id="motto">{currentBusiness.website}</p>
 							</div>
 						</div>
 						<hr />
 						<div className="col-md-6 col-lg-6 verticalLine">
 							<h3 className="text-lg-center details bus-name">Details</h3>
 							<div className="top">
-								<p><strong>Address:</strong> {foundBusiness.address}</p>
-								<p><strong>Email Address:</strong> {foundBusiness.email}</p>
-								<p><strong>Brief Bio:</strong> {foundBusiness.businessInfo}</p>
-								<p><strong>Category:</strong> {foundBusiness.category}</p>
-								<p><strong>Location:</strong> {foundBusiness.location}</p>
+								<p><strong>Address:</strong> {currentBusiness.address}</p>
+								<p><strong>Email Address:</strong> {currentBusiness.email}</p>
+								<p><strong>Brief Bio:</strong> {currentBusiness.businessInfo}</p>
+								<p><strong>Category:</strong> {currentBusiness.category}</p>
+								<p><strong>Location:</strong> {currentBusiness.location}</p>
 							</div>
 						</div>
 					</div>
