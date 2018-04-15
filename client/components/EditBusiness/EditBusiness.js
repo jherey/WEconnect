@@ -2,25 +2,24 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import EditBusinessForm from './EditBusinessForm';
 import { connect } from 'react-redux';
-import { updateBusiness, fetchBusiness } from '../../actions/businessActions';
+import { updateBusiness, fetchBusiness, currentBusiness } from '../../actions/businessActions';
 import { addFlashMessage } from '../../actions/flashMessages';
 
 class EditBusiness extends Component {
+	componentWillMount() {
+		this.props.fetchBusiness(this.props.match.params.id);
+	}
 	render() {
 		const { id } = this.props.match.params;
-		const { businesses, updateBusiness, fetchBusiness, addFlashMessage } = this.props;
-		const business = businesses.filter(business => {
-			return business.id == id
-		});
 
 		return (
 			<div>
 				<EditBusinessForm
 					id={id}
-					business={business}
-					fetchBusiness={fetchBusiness}
-					updateBusiness={updateBusiness}
-					addFlashMessage={addFlashMessage}
+					currentBusiness={this.props.currentBusiness}
+					fetchBusiness={this.props.fetchBusiness}
+					updateBusiness={this.props.updateBusiness}
+					addFlashMessage={this.props.addFlashMessage}
 				/>
 			</div>
 		)
@@ -29,8 +28,8 @@ class EditBusiness extends Component {
 
 function mapStateToProps(state) {
 	return {
-		businesses: state.businesses
+		currentBusiness: state.currentBusiness
 	}
 }
 
-export default withRouter(connect(mapStateToProps, { updateBusiness, fetchBusiness, addFlashMessage })(EditBusiness));
+export default withRouter(connect(mapStateToProps, { currentBusiness, updateBusiness, fetchBusiness, addFlashMessage })(EditBusiness));
