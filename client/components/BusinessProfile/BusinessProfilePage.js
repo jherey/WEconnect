@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class BusinessProfilePage extends Component {
-	componentDidMount() {
-		const { business } = this.props;
-		console.log(business);
+	componentWillMount() {
+		this.props.fetchBusiness(this.props.id);
 	}
 
 	render() {
-		const { business } = this.props;
+		const { currentBusiness } = this.props;
 
 		return (
 			<div className="back">
@@ -16,28 +15,28 @@ class BusinessProfilePage extends Component {
 					<div className="row">
 						<div className="col-md-6 col-lg-6">
 							<div className="text-lg-center">
-								<h1 className="bus-name">{business[0].businessName}</h1>
+								<h1 className="bus-name">{currentBusiness.businessName}</h1>
 								<div>
 									<img id="logo" src={require('../../public/images/companies/nbc.jpg')} alt="" />
 								</div>
-								<p id="motto">{business[0].website}</p>
+								<p id="motto">{currentBusiness.website}</p>
 							</div>
 						</div>
 						<hr />
 						<div className="col-md-6 col-lg-6 verticalLine">
 							<h3 className="text-lg-center details bus-name">Details</h3>
 							<div className="top">
-								<p><strong>Address:</strong> {business[0].address}</p>
-								<p><strong>Email Address:</strong> {business[0].email}</p>
-								<p><strong>Brief Bio:</strong> {business[0].businessInfo}</p>
-								<p><strong>Category:</strong> {business[0].category}</p>
-								<p><strong>Location:</strong> {business[0].location}</p>
+								<p><strong>Address:</strong> {currentBusiness.address}</p>
+								<p><strong>Email Address:</strong> {currentBusiness.email}</p>
+								<p><strong>Brief Bio:</strong> {currentBusiness.businessInfo}</p>
+								<p><strong>Category:</strong> {currentBusiness.category}</p>
+								<p><strong>Location:</strong> {currentBusiness.location}</p>
 							</div>
 						</div>
 					</div>
 					<div className="form-row text-center">
 						<div className="col-12">
-							<Link to="/edit" className="btn btn-primary edit fa fa-cog"> Edit Account Details</Link>
+							<Link to={`/${this.props.id}/edit`} className="btn btn-primary edit fa fa-cog"> Edit Account Details</Link>
 							<Link to="/delete" className="btn btn-danger edit fa fa-cog"> Delete Business</Link>
 						</div>
 					</div>

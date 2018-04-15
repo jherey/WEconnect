@@ -5,8 +5,8 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
-import Register from './components/RegisterBusiness/NewBusiness';
-import EditBusiness from './components/EditBusiness';
+import Register from './components/NewBusiness/NewBusiness';
+import EditBusiness from './components/EditBusiness/EditBusiness';
 import BusinessProfile from './components/BusinessProfile/BusinessProfile';
 import AllBusinesses from './components/AllBusinesses/AllBusinesses';
 import FlashMessage from './components/FlashMessage/FlashMessage';
@@ -24,10 +24,10 @@ class App extends Component {
 						<Route path="/" exact component={Home} />
 						<Route path="/signin" exact component={Signin} />
 						<Route path="/signup" exact component={Signup} />
-						<Route path="/register" exact component={authVerification(Register)} />
-						<Route path="/edit" exact component={EditBusiness} />
 						<Route path="/all" exact component={AllBusinesses} />
-						<Route path={"/business/:id"} exact component={BusinessProfile} />
+						<Route path={"/:id"} exact component={BusinessProfile} />
+						<Route path="/register" exact component={authVerification(Register)} />
+						<Route path={"/:id/edit"} exact component={authVerification(EditBusiness)} />
 					</Switch>
 					<Footer />
 				</div>
