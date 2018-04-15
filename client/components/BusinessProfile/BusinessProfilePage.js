@@ -2,8 +2,25 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class BusinessProfilePage extends Component {
+	constructor() {
+		super();
+		this.state = {
+			foundBusiness: {}
+		}
+	}
+
+	componentWillMount() {
+		this.props.fetchBusiness(this.props.id).then(
+			(business) => {
+				this.setState({
+					foundBusiness: business.data.business
+				})
+			}
+		)
+	}
+
 	render() {
-		const { business } = this.props;
+		const { foundBusiness } = this.state;
 
 		return (
 			<div className="back">
@@ -11,28 +28,28 @@ class BusinessProfilePage extends Component {
 					<div className="row">
 						<div className="col-md-6 col-lg-6">
 							<div className="text-lg-center">
-								<h1 className="bus-name">{business[0].businessName}</h1>
+								<h1 className="bus-name">{foundBusiness.businessName}</h1>
 								<div>
 									<img id="logo" src={require('../../public/images/companies/nbc.jpg')} alt="" />
 								</div>
-								<p id="motto">{business[0].website}</p>
+								<p id="motto">{foundBusiness.website}</p>
 							</div>
 						</div>
 						<hr />
 						<div className="col-md-6 col-lg-6 verticalLine">
 							<h3 className="text-lg-center details bus-name">Details</h3>
 							<div className="top">
-								<p><strong>Address:</strong> {business[0].address}</p>
-								<p><strong>Email Address:</strong> {business[0].email}</p>
-								<p><strong>Brief Bio:</strong> {business[0].businessInfo}</p>
-								<p><strong>Category:</strong> {business[0].category}</p>
-								<p><strong>Location:</strong> {business[0].location}</p>
+								<p><strong>Address:</strong> {foundBusiness.address}</p>
+								<p><strong>Email Address:</strong> {foundBusiness.email}</p>
+								<p><strong>Brief Bio:</strong> {foundBusiness.businessInfo}</p>
+								<p><strong>Category:</strong> {foundBusiness.category}</p>
+								<p><strong>Location:</strong> {foundBusiness.location}</p>
 							</div>
 						</div>
 					</div>
 					<div className="form-row text-center">
 						<div className="col-12">
-							<Link to={`/${business[0].id}`} className="btn btn-primary edit fa fa-cog"> Edit Account Details</Link>
+							<Link to={`/${this.props.id}/edit`} className="btn btn-primary edit fa fa-cog"> Edit Account Details</Link>
 							<Link to="/delete" className="btn btn-danger edit fa fa-cog"> Delete Business</Link>
 						</div>
 					</div>
