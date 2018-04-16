@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchBusiness, currentBusiness, deleteBusiness } from '../../actions/businessActions';
+import { fetchReviews } from '../../actions/reviewActions';
 import { addFlashMessage } from '../../actions/flashMessages';
 import BusinessProfilePage from './BusinessProfilePage';
 
 class BusinessProfile extends Component {
 	render() {
 		const { id } = this.props.match.params;
-		const { fetchBusiness, currentBusiness, deleteBusiness, addFlashMessage } = this.props;
+		const { fetchBusiness, currentBusiness, deleteBusiness, addFlashMessage, fetchReviews, reviews } = this.props;
 
 		return (
 			<div>
@@ -18,6 +19,8 @@ class BusinessProfile extends Component {
 					currentBusiness={currentBusiness}
 					addFlashMessage={addFlashMessage}
 					deleteBusiness={deleteBusiness}
+					fetchReviews={fetchReviews}
+					reviews={reviews}
 				/>
 			</div>
 		);
@@ -26,9 +29,10 @@ class BusinessProfile extends Component {
 
 function mapStateToProps(state) {
 	return {
-		currentBusiness: state.currentBusiness
+		currentBusiness: state.currentBusiness,
+		reviews: state.reviews
 	}
 }
 
-export default withRouter(connect(mapStateToProps, { fetchBusiness, currentBusiness, addFlashMessage, deleteBusiness })(BusinessProfile));
+export default withRouter(connect(mapStateToProps, { fetchBusiness, currentBusiness, addFlashMessage, deleteBusiness, fetchReviews })(BusinessProfile));
 
