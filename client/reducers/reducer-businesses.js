@@ -5,6 +5,7 @@ export default function businesses(state = [], action = {}) {
 				...state,
 				action.business
 			]
+
 		case 'UPDATE_BUSINESS':
 			return state.map(item => {
 				if (item.id === action.updatedBusiness) {
@@ -12,8 +13,13 @@ export default function businesses(state = [], action = {}) {
 				}
 				return item;
 			})
+
+		case 'DELETE_BUSINESS':
+			return state.filter(item => item.id !== action.businessId);
+
 		case 'SET_BUSINESSES':
 			return action.businesses
+			
 		default:
 			return state;
 	}
