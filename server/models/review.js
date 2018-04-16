@@ -21,7 +21,13 @@ const reviewModel = (sequelize, DataTypes) => {
       },
     },
     username: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Please sign in!',
+        },
+      },
     },
     businessId: {
       type: DataTypes.INTEGER,
