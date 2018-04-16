@@ -83,7 +83,7 @@ class BusinessProfilePage extends Component {
 					</div>
 					<hr />
 
-					{reviews.length === 0 ? noReviews : <ReviewList reviews={reviews} />}
+					{reviews.length === 0 ? noReviews : <ReviewList reviews={reviews} id={id} />}
 				</div>
 			</div>
 		);
