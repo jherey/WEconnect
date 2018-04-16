@@ -1,13 +1,37 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class BusinessProfilePage extends Component {
+	constructor() {
+		super();
+		this.state = {
+			errors: '',
+			isLoading: false
+		}
+	}
+
 	componentWillMount() {
 		this.props.fetchBusiness(this.props.id);
 	}
 
+	onClick(e) {
+		this.setState({ errors: '', isLoading: true });
+		this.props.deleteBusiness(this.props.id).then(
+			() => {
+				this.props.addFlashMessage({
+					type: 'success',
+					text: 'Business deleted successfully'
+				});
+				this.context.router.history.push('/');
+			},
+			(data) => this.setState({ errors: data.response.data.message, isLoading: false })
+		);
+	}
+
 	render() {
-		const { currentBusiness } = this.props;
+		const { currentBusiness, id } = this.props;
+		const { errors } = this.state;
 
 		return (
 			<div className="back">
@@ -36,8 +60,19 @@ class BusinessProfilePage extends Component {
 					</div>
 					<div className="form-row text-center">
 						<div className="col-12">
-							<Link to={`/${this.props.id}/edit`} className="btn btn-primary edit fa fa-cog"> Edit Account Details</Link>
-							<Link to="/delete" className="btn btn-danger edit fa fa-cog"> Delete Business</Link>
+							<Link to={`/${id}/edit`} className="btn btn-primary edit fa fa-cog"> Edit</Link>
+							<button
+								className="btn btn-danger"
+								onClick={this.onClick.bind(this)}
+							>
+								Delete
+							</button>
+							{
+								errors === 'Oops! You cannot delete this business' &&
+								<div style={{ marginTop: '30px' }}>
+									<span className='alert alert-danger'>{errors}</span>
+								</div>
+							}
 						</div>
 					</div>
 					<hr />
@@ -92,6 +127,10 @@ class BusinessProfilePage extends Component {
 			</div>
 		);
 	}
+}
+
+BusinessProfilePage.contextTypes = {
+	router: PropTypes.object.isRequired
 }
 
 export default BusinessProfilePage;

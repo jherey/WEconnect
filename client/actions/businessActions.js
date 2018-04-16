@@ -52,6 +52,22 @@ export function updateBusiness(updatedBusinessData) {
 	};
 }
 
+export function businessDeleted(businessId) {
+	return {
+		type: 'DELETE_BUSINESS',
+		businessId
+	}
+}
+
+export function deleteBusiness(id) {
+	return dispatch => {
+		return axios.delete(`http://localhost:8000/api/v1/businesses/${id}`)
+			.then(data => {
+				dispatch(businessDeleted(id));
+			})
+	}
+}
+
 export function setBusinesses(businesses) {
 	return {
 		type: 'SET_BUSINESSES',
