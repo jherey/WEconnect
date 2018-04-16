@@ -113,7 +113,7 @@ describe('REVIEWS', () => {
           .end((err, res) => {
             expect(res.body).to.be.a('object');
             expect(res.body).to.have.property('message');
-            expect(res.status).to.equal(404);
+            expect(res.status).to.equal(200);
             done();
           });
       }

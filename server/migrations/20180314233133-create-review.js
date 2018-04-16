@@ -18,6 +18,10 @@ module.exports = {
         as: 'userId',
       },
     },
+    username: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     businessId: {
       type: Sequelize.INTEGER,
       onDelete: 'CASCADE',

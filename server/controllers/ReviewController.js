@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import models from '../models/index';
 
 // Review model
@@ -17,6 +18,7 @@ const Review = {
         error: true
       });
     }
+    const decoded = jwt.decode(req.token);
     Businesses
       // Find business by id
       .findById(businessId)
@@ -32,7 +34,8 @@ const Review = {
           .create({
             review,
             userId: authData.id,
-            businessId
+            businessId,
+            username: decoded.username
           })
           // Successfully added
           .then((createdReview) => {
@@ -56,8 +59,9 @@ const Review = {
       .then((reviews) => {
         // If no reviews found
         if (!reviews.length) {
-          return res.status(404).send({
+          return res.status(200).send({
             message: 'No reviews for this business!',
+            reviews: []
           });
         }
         // If reviews found
