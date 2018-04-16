@@ -18,6 +18,9 @@ module.exports = {
         as: 'userId',
       },
     },
+    username: {
+      type: Sequelize.STRING,
+    },
     businessId: {
       type: Sequelize.INTEGER,
       onDelete: 'CASCADE',
