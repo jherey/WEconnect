@@ -20,6 +20,9 @@ const reviewModel = (sequelize, DataTypes) => {
         as: 'userId',
       },
     },
+    username: {
+      type: DataTypes.STRING
+    },
     businessId: {
       type: DataTypes.INTEGER,
       allowNull: false,
