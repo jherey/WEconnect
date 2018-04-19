@@ -14,17 +14,29 @@ body {
 }
 
 /* NAVBAR */
+#search {
+	background-color: #fd654d;
+	color: white;
+	width: 100px;
+}
+
+.navbar {
+	margin:0px;
+	padding:0px;
+}
 
 .navbar-nav {
-	font-weight: bold;
 	border: none;
-	text-transform: uppercase;
 }
 
 /* change the background color */
 
-.navbar-custom {
+#nav {
 	background-color: #4343e2;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 100;
 }
 
 /* change the brand and text color */
@@ -136,9 +148,15 @@ footer {
 
 /* FOOTER END */
 
+/* SEARCH PAGE */
+.search {
+	margin-top: 50px;
+}
+
 #allbusiness {
 	background: white;
-	padding-top: 20px;
+	padding-top: 40px;
+	min-height: 400px;
 }
 
 .latest {
@@ -181,11 +199,9 @@ footer {
 
 #content {
 	color: white;
-	margin-top: 70px;
-	width: 70%;
 	display: flex;
-	justify-content: center;
-	align-items: center;
+	margin:0px;
+	padding:0px;
 }
 
 #index-hr {
@@ -221,6 +237,7 @@ footer {
 .signup {
 	background: white;
 	padding: 15px;
+	margin-top: 50px;
 }
 
 .login-form {
@@ -273,6 +290,7 @@ form {
 .signin {
 	background: white;
 	padding: 20px;
+	margin-top: 50px;
 }
 
 .login-form {
@@ -294,10 +312,10 @@ form {
 
 /* BUSINESS PROFILE PAGE */
 .back {
-	margin: 0;
 	font-size: 0.8em;
 	padding: 10px;
 	background: white;
+	margin-top: 55px;
 }
 
 .mid {
