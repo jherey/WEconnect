@@ -83,3 +83,22 @@ export function getAllBusinesses() {
 		});
 	}
 }
+
+export function businessFound(businesses) {
+	return {
+		type: 'FOUND_BUSINESSES',
+		businesses
+	}
+}
+
+export function search(searchWord, type) {
+	return dispatch => {
+		return axios.get(`http://localhost:8000/api/v1/businesses?${type}=${searchWord}`)
+			.then(foundBusiness => {
+				dispatch(businessFound(foundBusiness.data.business));
+			})
+			.catch(error => {
+				return error;
+			})
+	}
+}
