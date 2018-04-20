@@ -126,7 +126,7 @@ class SignupForm extends Component {
 							>
 								<option value='' disabled>Choose your sex</option>
 								<option value='male'>Male</option>
-								<option value='female' default>Female</option>
+								<option value='female'>Female</option>
 							</select>
 						</div>
 						<div>
