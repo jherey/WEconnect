@@ -40,8 +40,11 @@ class NavbarComponent extends Component {
 				<li className="nav-item">
 					<Link className="nav-link" to="/register">Register a Business</Link>
 				</li>
+				<li className="nav-item">
+					<Link className="nav-link" to="/dashboard">Dashboard</Link>
+				</li>
 				<li className="nav-item mr-5">
-					<a className="nav-link" href="#" onClick={this.props.signout}>Sign out</a>
+					<Link className="nav-link" to="/" onClick={this.props.signout}>Sign out</Link>
 				</li>
 			</ul>
 		);
