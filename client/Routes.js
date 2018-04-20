@@ -10,6 +10,7 @@ import EditBusiness from './components/EditBusiness/EditBusiness';
 import BusinessProfile from './components/BusinessProfile/BusinessProfile';
 import AllBusinesses from './components/AllBusinesses/AllBusinesses';
 import Search from './components/Search/Search';
+import Dashboard from './components/Dashboard/Dashboard';
 import FlashMessage from './components/FlashMessage/FlashMessage';
 import authVerification from './utils/authVerification';
 import styles from './public/styles/index.scss';
@@ -28,6 +29,7 @@ class App extends Component {
 						<Route path="/all" exact component={AllBusinesses} />
 						<Route path="/register" exact component={authVerification(Register)} />
 						<Route path="/search" exact component={Search} />
+						<Route path="/dashboard" exact component={Dashboard} />
 						<Route path={"/:id"} exact component={BusinessProfile} />
 						<Route path={"/:id/edit"} exact component={authVerification(EditBusiness)} />
 					</Switch>
