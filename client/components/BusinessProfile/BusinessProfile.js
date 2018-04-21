@@ -9,7 +9,7 @@ import BusinessProfilePage from './BusinessProfilePage';
 class BusinessProfile extends Component {
 	render() {
 		const { id } = this.props.match.params;
-		const { fetchBusiness, currentBusiness, deleteBusiness, addFlashMessage, fetchReviews, reviews } = this.props;
+		const { fetchBusiness, currentBusiness, deleteBusiness, addFlashMessage, fetchReviews, reviews, userId } = this.props;
 
 		return (
 			<div>
@@ -21,6 +21,7 @@ class BusinessProfile extends Component {
 					deleteBusiness={deleteBusiness}
 					fetchReviews={fetchReviews}
 					reviews={reviews}
+					userId={userId}
 				/>
 			</div>
 		);
@@ -29,6 +30,7 @@ class BusinessProfile extends Component {
 
 function mapStateToProps(state) {
 	return {
+		userId: state.authUser.user.id,
 		currentBusiness: state.currentBusiness,
 		reviews: state.reviews
 	}

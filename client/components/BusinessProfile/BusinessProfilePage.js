@@ -32,7 +32,7 @@ class BusinessProfilePage extends Component {
 	}
 
 	render() {
-		const { currentBusiness, id, reviews } = this.props;
+		const { currentBusiness, id, reviews, userId } = this.props;
 		const { errors } = this.state;
 
 		const noReviews = (
@@ -64,23 +64,28 @@ class BusinessProfilePage extends Component {
 							</div>
 						</div>
 					</div>
-					<div className="form-row text-center">
-						<div className="col-12">
-							<Link to={`/${id}/edit`} className="btn btn-primary edit fa fa-cog"> Edit</Link>
-							<button
-								className="btn btn-danger"
-								onClick={this.onClick.bind(this)}
-							>
-								Delete
-							</button>
-							{
-								errors === 'Oops! You cannot delete this business' &&
-								<div style={{ marginTop: '30px' }}>
-									<span className='alert alert-danger'>{errors}</span>
+					{
+						currentBusiness.userId === userId
+						?
+							<div className="form-row text-center">
+								<div className="col-12">
+									<Link to={`/${id}/edit`} className="btn btn-primary edit fa fa-cog"> Edit</Link>
+									<button
+										className="btn btn-danger"
+										onClick={this.onClick.bind(this)}
+									>
+										Delete
+									</button>
+									{
+										errors === 'Oops! You cannot delete this business' &&
+										<div style={{ marginTop: '30px' }}>
+											<span className='alert alert-danger'>{errors}</span>
+										</div>
+									}
 								</div>
-							}
-						</div>
-					</div>
+							</div>
+						: null
+					}
 					<hr />
 
 					{reviews.length === 0 ? noReviews : <ReviewList reviews={reviews} id={id} />}
