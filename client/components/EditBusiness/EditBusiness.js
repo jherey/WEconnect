@@ -11,15 +11,16 @@ class EditBusiness extends Component {
 	}
 	render() {
 		const { id } = this.props.match.params;
+		const { currentBusiness, fetchBusiness, updateBusiness, addFlashMessage } = this.props;
 
 		return (
 			<div>
 				<EditBusinessForm
 					id={id}
-					currentBusiness={this.props.currentBusiness}
-					fetchBusiness={this.props.fetchBusiness}
-					updateBusiness={this.props.updateBusiness}
-					addFlashMessage={this.props.addFlashMessage}
+					currentBusiness={currentBusiness}
+					fetchBusiness={fetchBusiness}
+					updateBusiness={updateBusiness}
+					addFlashMessage={addFlashMessage}
 				/>
 			</div>
 		)
