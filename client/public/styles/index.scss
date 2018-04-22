@@ -9,6 +9,7 @@ body {
 	padding: $zero;
 	font-family: $font;
 	height: $height;
+	width: 100%;
 	background-color: $background;
 	line-height: $line;
 }
@@ -220,6 +221,16 @@ footer {
 	color: #fd654d;
 	font-size: 1.1em;
 	margin-right: 15px;
+}
+
+.card {
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-orange {
+	background-color: #ffffff;
+	color: #fd654d;
+	border-color: #fd654d;
 }
 
 /* MEDIA QUERIES */
