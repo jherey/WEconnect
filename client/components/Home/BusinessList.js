@@ -14,6 +14,10 @@ const BusinessList = ({ businesses }) => {
 					key={businesses[i].id}
 					id={businesses[i].id}
 					name={businesses[i].businessName}
+					description={businesses[i].businessInfo}
+					address={businesses[i].address}
+					location={businesses[i].location}
+					category={businesses[i].category}
 				/>
 			);
 		}
@@ -21,11 +25,11 @@ const BusinessList = ({ businesses }) => {
 
 	return (
 		<div className="container">
-			<div className="row text-center">
+			<div className="row">
 				{businesses.length === 0 ? noBusiness : businessComponent}
 			</div>
 			{businesses.length < 8 ? <p></p>
-			:
+				:
 				<div className="row justify-content-end d-flex">
 					<Link to="/all">View all Businesses...</Link>
 				</div>
