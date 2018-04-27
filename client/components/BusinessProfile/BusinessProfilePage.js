@@ -35,10 +35,6 @@ class BusinessProfilePage extends Component {
 		const { currentBusiness, id, reviews, userId } = this.props;
 		const { errors } = this.state;
 
-		const noReviews = (
-			<h5>There are no reviews for this business</h5>
-		);
-
 		return (
 			<div className="back">
 				<div className="mid">
@@ -88,7 +84,7 @@ class BusinessProfilePage extends Component {
 					}
 					<hr />
 
-					{reviews.length === 0 ? noReviews : <ReviewList reviews={reviews} id={id} />}
+					<ReviewList reviews={reviews} id={id} />
 				</div>
 			</div>
 		);
