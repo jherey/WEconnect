@@ -83,7 +83,10 @@ export function getAllBusinesses() {
 			.then(businesses => {
 				dispatch(isLoading(false));
 				dispatch(setBusinesses(businesses.data.allBusinesses));
-		});
+			})
+			.catch(error => {
+				dispatch(isLoading(false));
+			});
 	}
 }
 
