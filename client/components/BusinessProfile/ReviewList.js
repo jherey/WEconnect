@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Review from './Review.js';
+import Spinner from '../Spinner';
 import { connect } from 'react-redux';
 import { addReview } from '../../actions/reviewActions';
 import { addFlashMessage } from '../../actions/flashMessages';
@@ -9,8 +10,7 @@ class ReviewList extends Component {
 		super();
 		this.state = {
 			review: '',
-			errors: '',
-			isLoading: ''
+			errors: ''
 		}
 
 		this.onReviewChange = this.onReviewChange.bind(this)
@@ -23,22 +23,25 @@ class ReviewList extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		this.setState({ errors: '', isLoading: true });
-		this.props.addReview(this.props.id, this.state).then(
-			() => {
-				document.getElementById("hidePopUpBtn").click();
-				this.props.addFlashMessage({
-					type: 'success',
-					text: 'Review posted'
-				});
-			},
-			(data) => this.setState({ errors: data.response.data.message, isLoading: false })
-		);
-		this.setState({ review: '' });
+		this.setState({ errors: '' });
+		document.getElementById("hidePopUpBtn").click();
+		this.props.addReview(this.props.id, this.state)
+			.then(
+				() => {
+
+					this.setState({ review: '' });
+					this.props.addFlashMessage({
+						type: 'success',
+						text: 'Review posted'
+					});
+				},
+				(data) => this.setState({ errors: data.response.data.message })
+			);
 	}
 
 	render() {
-		const { reviews } = this.props;
+		const { reviews, isLoading } = this.props;
+
 		const reviewComponent = reviews.map(review => {
 			return (
 				<Review
@@ -48,6 +51,8 @@ class ReviewList extends Component {
 				/>
 			);
 		});
+
+		if (isLoading) { return <Spinner />; }
 
 		return (
 			<div>
@@ -95,4 +100,10 @@ class ReviewList extends Component {
 	}
 }
 
-export default connect(null, { addReview, addFlashMessage })(ReviewList);
+function mapStateToProps(state) {
+	return {
+		isLoading: state.isLoading
+	}
+}
+
+export default connect(mapStateToProps, { addReview, addFlashMessage })(ReviewList);
