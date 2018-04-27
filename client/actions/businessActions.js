@@ -14,9 +14,14 @@ export function addBusiness(business) {
  */
 export function createBusiness(businessData) {
 	return dispatch => {
+		dispatch(isLoading(true));
 		return axios.post('api/v1/businesses', businessData)
 			.then(businessData => {
+				dispatch(isLoading(false));
 				dispatch(addBusiness(businessData.data.business))
+			})
+			.catch(error => {
+				dispatch(isLoading(false));
 			});
 	};
 }
@@ -83,7 +88,10 @@ export function getAllBusinesses() {
 			.then(businesses => {
 				dispatch(isLoading(false));
 				dispatch(setBusinesses(businesses.data.allBusinesses));
-		});
+			})
+			.catch(error => {
+				dispatch(isLoading(false));
+			});
 	}
 }
 
