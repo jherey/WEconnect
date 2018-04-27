@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Spinner from '../Spinner';
 
 class SignupForm extends Component {
 	constructor() {
@@ -13,8 +14,7 @@ class SignupForm extends Component {
 			profilepic: '',
 			password: '',
 			confirmPassword: '',
-			errors: '',
-			isLoading: false
+			errors: ''
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -28,21 +28,25 @@ class SignupForm extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		this.setState({ errors: '', isLoading: true });
-		this.props.signupUser(this.state).then(
-			() => {
-				this.props.addFlashMessage({
-					type: 'success',
-					text: 'Welcome! You signed up successfully!'
-				})
-				this.context.router.history.push('/');
-			},
-			(data) => this.setState({ errors: data.response.data.message, isLoading: false })
-		);
+		this.setState({ errors: '' });
+		this.props.signupUser(this.state)
+			.then(
+				() => {
+					this.props.addFlashMessage({
+						type: 'success',
+						text: 'Welcome! You signed up successfully!'
+					})
+					this.context.router.history.push('/');
+				},
+				(data) => this.setState({ errors: data.response.data.message })
+			);
 	}
 
 	render() {
 		const { errors, firstname, lastname, username, email, password, confirmPassword, sex, profilepic } = this.state;
+		const { isLoading } = this.props;
+
+		if (isLoading) { return <Spinner />; }
 
 		return (
 			<div className="signup">
@@ -142,7 +146,7 @@ class SignupForm extends Component {
 						</div>
 						<button
 							id="signup"
-							disabled={this.state.isLoading}
+							disabled={isLoading}
 							className="btn btn-primary btn-lg"
 						>
 							Sign Up
