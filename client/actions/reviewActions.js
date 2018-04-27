@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isLoading } from './loading';
 
 export function getReview(reviews) {
 	return {
@@ -25,9 +26,14 @@ export function postReview(review) {
 
 export function addReview(id, review) {
 	return dispatch => {
+		dispatch(isLoading(true));
 		return axios.post(`http://localhost:8000/api/v1/businesses/${id}/reviews`, review)
 			.then(review => {
+				dispatch(isLoading(false));
 				dispatch(postReview(review.data.createdReview));
 			})
+			.catch(error => {
+				dispatch(isLoading(false));
+			});
 	}
 }
