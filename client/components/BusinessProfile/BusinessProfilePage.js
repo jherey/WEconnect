@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReviewList from './ReviewList';
+import Spinner from '../Spinner';
 
 class BusinessProfilePage extends Component {
 	constructor() {
 		super();
 		this.state = {
-			errors: '',
-			isLoading: false
+			errors: ''
 		}
 	}
 
@@ -18,7 +18,7 @@ class BusinessProfilePage extends Component {
 	}
 
 	onClick(e) {
-		this.setState({ errors: '', isLoading: true });
+		this.setState({ errors: '' });
 		this.props.deleteBusiness(this.props.id).then(
 			() => {
 				this.props.addFlashMessage({
@@ -27,13 +27,15 @@ class BusinessProfilePage extends Component {
 				});
 				this.context.router.history.push('/');
 			},
-			(data) => this.setState({ errors: data.response.data.message, isLoading: false })
+			(data) => this.setState({ errors: data.response.data.message })
 		);
 	}
 
 	render() {
-		const { currentBusiness, id, reviews, userId } = this.props;
+		const { currentBusiness, id, reviews, userId, isLoading } = this.props;
 		const { errors } = this.state;
+
+		if (isLoading) { return <Spinner />; }
 
 		return (
 			<div className="back">
