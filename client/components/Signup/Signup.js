@@ -6,13 +6,19 @@ import { addFlashMessage } from '../../actions/flashMessages';
 
 class Signup extends Component {
 	render() {
-		const { signupUser, addFlashMessage } = this.props;
+		const { signupUser, addFlashMessage, isLoading } = this.props;
 		return (
 			<div>
-				<SignupForm signupUser={signupUser} addFlashMessage={addFlashMessage} />
+				<SignupForm signupUser={signupUser} addFlashMessage={addFlashMessage} isLoading={isLoading} />
 			</div>
 		);
 	}
 };
 
-export default connect(null, { signupUser, addFlashMessage })(Signup);
+function mapStateToProps(state) {
+	return {
+		isLoading: state.isLoading
+	}
+}
+
+export default connect(mapStateToProps, { signupUser, addFlashMessage })(Signup);
