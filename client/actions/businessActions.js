@@ -35,10 +35,15 @@ export function getOneBusiness(business) {
 
 export function fetchBusiness(id) {
 	return dispatch => {
+		dispatch(isLoading(true));
 		return axios.get(`http://localhost:8000/api/v1/businesses/${id}`)
 			.then(business => {
+				dispatch(isLoading(false));
 				dispatch(getOneBusiness(business.data.business));
 			})
+			.catch(error => {
+				dispatch(isLoading(false));
+			});
 	}
 }
 
@@ -51,9 +56,14 @@ export function businessUpdated(updatedBusiness) {
 
 export function updateBusiness(updatedBusinessData) {
 	return dispatch => {
+		dispatch(isLoading(true));
 		return axios.put(`http://localhost:8000/api/v1/businesses/${updatedBusinessData.id}`, updatedBusinessData)
 			.then(updatedBusinessData => {
+				dispatch(isLoading(false));
 				dispatch(businessUpdated(updatedBusinessData.data.updatedBusiness))
+			})
+			.catch(error => {
+				dispatch(isLoading(false));
 			});
 	};
 }
