@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isLoading } from './loading';
 
 export function addBusiness(business) {
 	return {
@@ -77,9 +78,11 @@ export function setBusinesses(businesses) {
 
 export function getAllBusinesses() {
 	return dispatch => {
+		dispatch(isLoading(true));
 		return axios.get('api/v1/businesses')
 			.then(businesses => {
-			dispatch(setBusinesses(businesses.data.allBusinesses));
+				dispatch(isLoading(false));
+				dispatch(setBusinesses(businesses.data.allBusinesses));
 		});
 	}
 }
