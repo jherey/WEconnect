@@ -33,7 +33,7 @@ class SigninForm extends Component {
 					this.context.router.history.push('/');
 				},
 				(data) => this.setState({ errors: data.response.data.message })
-			);;
+			);
 	}
 
 	render() {
