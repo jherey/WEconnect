@@ -10,10 +10,15 @@ export function getReview(reviews) {
 
 export function fetchReviews(id) {
 	return dispatch => {
+		dispatch(isLoading(true));
 		return axios.get(`http://localhost:8000/api/v1/businesses/${id}/reviews`)
 			.then(review => {
+				dispatch(isLoading(false));
 				dispatch(getReview(review.data.reviews));
 			})
+			.catch(error => {
+				dispatch(isLoading(false));
+			});
 	}
 }
 
