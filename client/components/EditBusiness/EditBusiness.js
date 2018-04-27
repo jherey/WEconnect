@@ -11,7 +11,7 @@ class EditBusiness extends Component {
 	}
 	render() {
 		const { id } = this.props.match.params;
-		const { currentBusiness, fetchBusiness, updateBusiness, addFlashMessage } = this.props;
+		const { currentBusiness, fetchBusiness, updateBusiness, addFlashMessage, isLoading } = this.props;
 
 		return (
 			<div>
@@ -21,6 +21,7 @@ class EditBusiness extends Component {
 					fetchBusiness={fetchBusiness}
 					updateBusiness={updateBusiness}
 					addFlashMessage={addFlashMessage}
+					isLoading={isLoading}
 				/>
 			</div>
 		)
@@ -29,7 +30,8 @@ class EditBusiness extends Component {
 
 function mapStateToProps(state) {
 	return {
-		currentBusiness: state.currentBusiness
+		currentBusiness: state.currentBusiness,
+		isLoading: state.isLoading
 	}
 }
 
