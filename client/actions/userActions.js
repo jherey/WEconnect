@@ -9,12 +9,18 @@ import { isLoading } from './loading';
  */
 export function signupUser(userData) {
   return dispatch => {
-    return axios.post('api/v1/auth/signup', userData).then(res => {
-      const token = res.data.token;
-      localStorage.setItem('token', token);
-      setAuthToken(token);
-      dispatch(setCurrentUser(jwt.decode(token)));
-    });
+    dispatch(isLoading(true));
+    return axios.post('api/v1/auth/signup', userData)
+      .then(res => {
+        dispatch(isLoading(false));
+        const token = res.data.token;
+        localStorage.setItem('token', token);
+        setAuthToken(token);
+        dispatch(setCurrentUser(jwt.decode(token)));
+      })
+      .catch(error => {
+        dispatch(isLoading(false));
+      });
   }
 }
 
