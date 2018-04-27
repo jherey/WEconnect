@@ -1,6 +1,7 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import setAuthToken from '../utils/setAuthToken';
+import { isLoading } from './loading';
 
 /**
  * @returns {Object} promise
@@ -34,12 +35,18 @@ export function setCurrentUser(user) {
  */
 export function signinUser(userData) {
   return dispatch => {
-    return axios.post('api/v1/auth/login', userData).then(res => {
-      const token = res.data.token;
-      localStorage.setItem('token', token);
-      setAuthToken(token);
-      dispatch(setCurrentUser(jwt.decode(token)));
-    });
+    dispatch(isLoading(true));
+    return axios.post('api/v1/auth/login', userData)
+      .then(res => {
+        dispatch(isLoading(false));
+        const token = res.data.token;
+        localStorage.setItem('token', token);
+        setAuthToken(token);
+        dispatch(setCurrentUser(jwt.decode(token)));
+      })
+      .catch(error => {
+        dispatch(isLoading(false));
+      });
   }
 }
 
