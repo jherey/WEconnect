@@ -11,9 +11,9 @@ class Navbar extends Component {
 	}
 
 	render() {
-		const { authUser, signout, search } = this.props;
+		const { authUser, signout, search, isLoading } = this.props;
 		return (
-			<NavbarComponent authUser={authUser} signout={signout} search={search} />
+			<NavbarComponent authUser={authUser} signout={signout} search={search} isLoading={isLoading} />
 		);
 	}
 
@@ -21,7 +21,8 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
 	return {
-		authUser: state.authUser
+		authUser: state.authUser,
+		isLoading: state.isLoading
 	}
 }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Spinner from '../Spinner';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -8,8 +9,7 @@ class NavbarComponent extends Component {
 		this.state = {
 			keyword: '',
 			type: '',
-			errors: '',
-			isLoading: false
+			errors: ''
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -23,12 +23,12 @@ class NavbarComponent extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		this.setState({ errors: '', isLoading: true });
+		this.setState({ errors: '' });
 		this.props.search(this.state.keyword, this.state.type).then(
 			() => {
 				this.context.router.history.push('/search');
 			},
-			(data) => this.setState({ errors: data.response.data.message, isLoading: false })
+			(data) => this.setState({ errors: data.response.data.message })
 		)
 	}
 
@@ -59,6 +59,10 @@ class NavbarComponent extends Component {
 				</li>
 			</ul>
 		);
+
+		const { isLoading } = this.props;
+
+		if (isLoading) { return <Spinner />; }
 
 		return (
 			<div id='nav'>
