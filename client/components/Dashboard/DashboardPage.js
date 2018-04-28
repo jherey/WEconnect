@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Business from '../Home/Business';
+import Spinner from '../Spinner';
 
 class DashboardPage extends Component {
 	render() {
@@ -12,6 +13,11 @@ class DashboardPage extends Component {
 				/>
 			);
 		});
+
+		const { isLoading } = this.props;
+
+		if (isLoading) { return <Spinner />; }
+
 		return (
 			<div className="container">
 				<div className="row text-center">
