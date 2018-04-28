@@ -9,11 +9,11 @@ class AllBusinesses extends Component {
 	}
 
 	render() {
-		const { businesses } = this.props;
+		const { businesses, isLoading } = this.props;
 
 		return (
 			<div id='allbusiness'>
-				<AllBusinessList businesses={businesses} />
+				<AllBusinessList businesses={businesses} isLoading={isLoading} />
 			</div>
 		);
 	}
@@ -21,7 +21,8 @@ class AllBusinesses extends Component {
 
 function mapStateToProps(state) {
 	return {
-		businesses: state.businesses
+		businesses: state.businesses,
+		isLoading: state.isLoading
 	}
 }
 
