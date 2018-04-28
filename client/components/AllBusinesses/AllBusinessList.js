@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Business from '../Home/Business';
+import Spinner from '../Spinner';
 
 const BusinessList = ({ businesses }) => {
 	const businessComponent = businesses.map((business, i) => {
@@ -12,6 +13,10 @@ const BusinessList = ({ businesses }) => {
 			/>
 		);
 	});
+
+	const { isLoading } = this.props;
+
+	if (isLoading) { return <Spinner />; }
 
 	return (
 		<div className="container">
