@@ -6,13 +6,23 @@ import { addFlashMessage } from '../../actions/flashMessages';
 
 class NewBusiness extends Component {
 	render() {
-		const { createBusiness, addFlashMessage } = this.props;
+		const { createBusiness, addFlashMessage, isLoading } = this.props;
 		return (
 			<div>
-				<NewBusinessForm createBusiness={createBusiness} addFlashMessage={addFlashMessage} />
+				<NewBusinessForm
+					createBusiness={createBusiness}
+					addFlashMessage={addFlashMessage}
+					isLoading={isLoading}
+				/>
 			</div>
 		);
 	}
 }
 
-export default connect(null, { createBusiness, addFlashMessage })(NewBusiness);
+function mapStateToProps(state) {
+	return {
+		isLoading: state.isLoading
+	}
+}
+
+export default connect(mapStateToProps, { createBusiness, addFlashMessage })(NewBusiness);

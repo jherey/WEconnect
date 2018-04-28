@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Spinner from '../Spinner';
 
 class EditBusinessForm extends Component {
 	constructor(props) {
@@ -13,8 +14,7 @@ class EditBusinessForm extends Component {
 			address: this.props.currentBusiness.address,
 			location: this.props.currentBusiness.location,
 			website: this.props.currentBusiness.website,
-			errors: '',
-			isLoading: true
+			errors: ''
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -32,7 +32,7 @@ class EditBusinessForm extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		this.setState({ errors: '', isLoading: true });
+		this.setState({ errors: '' });
 		this.props.updateBusiness(this.state).then(
 			() => {
 				this.props.addFlashMessage({
@@ -41,13 +41,15 @@ class EditBusinessForm extends Component {
 				});
 				this.context.router.history.push(`/${this.props.currentBusiness.id}`);
 			},
-			(data) => this.setState({ errors: data.response.data.message, isLoading: false })
+			(data) => this.setState({ errors: data.response.data.message })
 		);
 	}
 
 	render() {
-		const { currentBusiness } = this.props;
-		const { businessName, email, category, location, address, businessInfo, website, errors, isLoading } = this.state;
+		const { currentBusiness, isLoading } = this.props;
+		const { businessName, email, category, location, address, businessInfo, website, errors } = this.state;
+
+		if (isLoading) { return <Spinner />; }
 
 		return (
 			<div className="signin">

@@ -6,13 +6,13 @@ const Business = (props) => {
 	return (
 		<div className="col-lg-3 col-md-6">
 			<div className='card mb-4 testimonial-card'>
-				<div class="avatar mx-auto white">
+				<div className="avatar mx-auto white">
 					<img className="rounded-circle" src={require('../../public/images/companies/nbc.jpg')} alt="" />
     		</div>
 				<div className='card-body'>
 					<p className="category text-center">{name}</p>
 					<hr />
-					<p class="card-text"><small>Description: {description}</small></p>
+					<p className="card-text"><small>Description: {description}</small></p>
 					<Link to={`/${id}`} className="btn btn-orange d-block mb-1">
 						View Profile
 					</Link>

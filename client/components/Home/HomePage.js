@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import BusinessList from './BusinessList';
+import Spinner from '../Spinner';
 import HeroImage from './HeroImage';
 import { getAllBusinesses } from '../../actions/businessActions';
 
 class HomePage extends Component {
-    componentDidMount() {
+    componentWillMount() {
         this.props.getAllBusinesses();
     }
 
     render() {
-        const { businesses } = this.props;
+        const { businesses, isLoading } = this.props;
+
+        if (isLoading) { return <Spinner />; }
 
         return (
             <div>
@@ -27,7 +30,8 @@ class HomePage extends Component {
 
 function mapStateToProps(state) {
     return {
-        businesses: state.businesses
+        businesses: state.businesses,
+        isLoading: state.isLoading
     }
 }
 
