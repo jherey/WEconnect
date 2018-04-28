@@ -114,11 +114,14 @@ export function businessFound(businesses) {
 
 export function search(searchWord, type) {
 	return dispatch => {
+		dispatch(isLoading(true));
 		return axios.get(`http://localhost:8000/api/v1/businesses?${type}=${searchWord}`)
 			.then(foundBusiness => {
+				dispatch(isLoading(false));
 				dispatch(businessFound(foundBusiness.data.business));
 			})
 			.catch(error => {
+				dispatch(isLoading(false));
 				return error;
 			})
 	}
