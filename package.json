@@ -26,6 +26,7 @@
   "homepage": "https://github.com/jherey/WeConnect#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
