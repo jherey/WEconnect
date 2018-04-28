@@ -28,7 +28,6 @@ class ReviewList extends Component {
 		this.props.addReview(this.props.id, this.state)
 			.then(
 				() => {
-
 					this.setState({ review: '' });
 					this.props.addFlashMessage({
 						type: 'success',

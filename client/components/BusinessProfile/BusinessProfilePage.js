@@ -19,16 +19,18 @@ class BusinessProfilePage extends Component {
 
 	onClick(e) {
 		this.setState({ errors: '' });
-		this.props.deleteBusiness(this.props.id).then(
-			() => {
-				this.props.addFlashMessage({
-					type: 'success',
-					text: 'Business deleted successfully'
-				});
-				this.context.router.history.push('/');
-			},
-			(data) => this.setState({ errors: data.response.data.message })
-		);
+		document.getElementById("deleteBtn").click();
+		this.props.deleteBusiness(this.props.id)
+			.then(
+				() => {
+					this.props.addFlashMessage({
+						type: 'success',
+						text: 'Business deleted successfully'
+					});
+					this.context.router.history.push('/');
+				},
+				(data) => this.setState({ errors: data.response.data.message })
+			);
 	}
 
 	render() {
@@ -68,12 +70,36 @@ class BusinessProfilePage extends Component {
 							<div className="form-row text-center">
 								<div className="col-12">
 									<Link to={`/${id}/edit`} className="btn btn-primary edit fa fa-cog"> Edit</Link>
-									<button
-										className="btn btn-danger"
-										onClick={this.onClick.bind(this)}
-									>
+									<button className="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
 										Delete
 									</button>
+
+									<div className="modal fade" id="deleteModal" tabIndex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+										<div className="modal-dialog" role="document">
+											<div className="modal-content">
+												<div className="modal-header">
+													<button id="deleteBtn" type="button" className="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div className="modal-body">
+													<div className="form-group">
+														<p>Are you sure you want to delete this business?</p>
+													</div>
+												</div>
+												<div className="modal-footer">
+													<button type="button" className="btn btn-secondary" data-dismiss="modal">No</button>
+													<button
+														className="btn btn-danger"
+														onClick={this.onClick.bind(this)}
+													>
+														Delete
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+
 									{
 										errors === 'Oops! You cannot delete this business' &&
 										<div style={{ marginTop: '30px' }}>
