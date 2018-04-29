@@ -11,6 +11,7 @@ class SignupForm extends Component {
 			username: '',
 			sex: '',
 			email: '',
+			imageUpload: '',
 			profilepic: '',
 			password: '',
 			confirmPassword: '',
@@ -24,6 +25,19 @@ class SignupForm extends Component {
 		this.setState({
 			[e.target.name]: e.target.value
 		});
+	}
+
+	fileChange(e) {
+		this.setState({
+			profilepic: '',
+			imageUpload: e.target.files[0]
+		});
+		this.props.userPicture(e.target.files[0])
+			.then(response => {
+				this.setState({
+					profilepic: response.data.secure_url
+				});
+			})
 	}
 
 	onSubmit(e) {
@@ -43,8 +57,8 @@ class SignupForm extends Component {
 	}
 
 	render() {
-		const { errors, firstname, lastname, username, email, password, confirmPassword, sex, profilepic } = this.state;
-		const { isLoading } = this.props;
+		const { errors, firstname, lastname, username, email, password, confirmPassword, sex, imageUpload } = this.state;
+		const { isLoading, uploadProgress } = this.props;
 
 		if (isLoading) { return <Spinner />; }
 
@@ -128,21 +142,19 @@ class SignupForm extends Component {
 								onChange={this.onChange}
 								value={sex}
 							>
-								<option value='' disabled>Choose your sex</option>
+								<option value='' disabled>Choose</option>
 								<option value='male'>Male</option>
 								<option value='female'>Female</option>
 							</select>
 						</div>
 						<div>
-							<label className='control-label' htmlFor="exampleInputFile">Upload Image</label>
+							<label className='control-label'>Profile Picture</label>
 							<input
 								type="file"
-								className="form-control-file"
-								id="exampleInputFile"
-								aria-describedby="fileHelp"
-								value={profilepic}
-								name="profilepic"
+								onChange={this.fileChange.bind(this)}
+								name="imageUpload"
 							/>
+							<progress value={uploadProgress} max="100" />
 						</div>
 						<button
 							id="signup"
