@@ -24,6 +24,29 @@ export function signupUser(userData) {
   }
 }
 
+export function setProgress(progress) {
+  return {
+    type: 'SET_PROGRESS',
+    progress
+  };
+}
+
+export function userPicture(image) {
+  const formData = new FormData();
+  formData.append("file", image);
+  formData.append("upload_preset", "ugio7gfd");
+  formData.append("api_key", "195434429557533");
+
+  return dispatch => {
+    return axios.post('https://api.cloudinary.com/v1_1/diiceprhy/image/upload', formData, {
+      onUploadProgress: progressEvent => {
+        const progress = Math.round(progressEvent.loaded / progressEvent.total * 100);
+        dispatch(setProgress(progress));
+      }
+    })
+  }
+}
+
 /**
  * @returns {Object} promise
  * @param {*} user
