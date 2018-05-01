@@ -34,7 +34,7 @@ body {
 #search {
 	background-color: $background-orange;
 	color: $background-white;
-	width: $height;
+	width: 100px;
 }
 
 .navbar {
@@ -247,9 +247,8 @@ footer {
 }
 
 .btn-orange {
-	background-color: $background-white;
-	color: $background-orange;
-	border-color: $background-orange;
+	background-color: $background-orange;
+	color: $background-white;
 }
 
 /* MEDIA QUERIES */
@@ -292,11 +291,6 @@ footer {
 	margin-top: 8px
 }
 
-#signup:hover {
-	background-color: $background-orange;
-	border: $none;
-}
-
 /* SIGN IN END/SIGNUP */
 
 .form-group,
@@ -304,7 +298,6 @@ footer {
 	margin: 25px $zero;
 }
 
-.btn,
 .form-control {
 	border-radius: $zero;
 }
