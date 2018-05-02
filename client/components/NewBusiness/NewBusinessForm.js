@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { storage } from '../firebase';
 import Spinner from '../Spinner';
 
 class NewBusinessForm extends Component {
@@ -12,6 +13,7 @@ class NewBusinessForm extends Component {
 			businessInfo: '',
 			address: '',
 			location: '',
+			businessImage: '',
 			website: '',
 			errors: ''
 		}
@@ -22,6 +24,20 @@ class NewBusinessForm extends Component {
 	onChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value
+		});
+	}
+
+	fileChange(e) {
+		this.setState({ businessImage: '' });
+		const uploadTask = storage.child(`businessimage/${new Date().getTime()}`)
+			.put(e.target.files[0]);
+		uploadTask.on('state_changed', snapshot => {
+			const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+			this.props.setProgress(progress);
+		}, error => {
+			this.setState({ errors: err.message })
+		}, () => {
+			this.setState({ businessImage: uploadTask.snapshot.downloadURL });
 		});
 	}
 
@@ -42,7 +58,7 @@ class NewBusinessForm extends Component {
 
 	render() {
 		const { businessName, email, category, location, address, businessInfo, website, errors } = this.state;
-		const { isLoading } = this.props;
+		const { isLoading, uploadProgress } = this.props;
 
 		if (isLoading) { return <Spinner />; }
 
@@ -139,18 +155,17 @@ class NewBusinessForm extends Component {
 							{errors === 'Location is required' && <span className='help-block'>{errors}</span>}
 						</div>
 						<div>
-							<label htmlFor="exampleInputFile">Company Logo</label>
+							<label className='control-label'>Company Logo</label>
 							<input
 								type="file"
-								className="form-control-file"
-								id="exampleInputFile"
-								aria-describedby="fileHelp"
+								onChange={this.fileChange.bind(this)}
 							/>
+							<progress value={uploadProgress} max="100" />
 						</div>
 						<div align="center">
 							<button
 								type="submit"
-								className="btn btn-primary btn-lg"
+								className="btn btn-orange btn-lg"
 							>
 								Register
 							</button>

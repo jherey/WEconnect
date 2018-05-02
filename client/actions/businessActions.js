@@ -1,6 +1,13 @@
 import axios from 'axios';
 import { isLoading } from './loading';
 
+export function setProgress(progress) {
+	return {
+		type: 'SET_PROGRESS',
+		progress
+	};
+}
+
 export function addBusiness(business) {
 	return {
 		type: 'ADD_BUSINESS',

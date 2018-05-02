@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { storage } from '../firebase';
 import Spinner from '../Spinner';
 
 class SignupForm extends Component {
@@ -26,6 +27,20 @@ class SignupForm extends Component {
 		});
 	}
 
+	fileChange(e) {
+		this.setState({ profilepic: '' });
+		const uploadTask = storage.child(`userimage/${new Date().getTime()}`)
+			.put(e.target.files[0]);
+		uploadTask.on('state_changed', snapshot => {
+			const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+			this.props.setProgress(progress);
+		}, error => {
+			this.setState({ errors: err.message })
+		}, () => {
+			this.setState({ profilepic: uploadTask.snapshot.downloadURL });
+		});
+	}
+
 	onSubmit(e) {
 		e.preventDefault();
 		this.setState({ errors: '' });
@@ -43,8 +58,8 @@ class SignupForm extends Component {
 	}
 
 	render() {
-		const { errors, firstname, lastname, username, email, password, confirmPassword, sex, profilepic } = this.state;
-		const { isLoading } = this.props;
+		const { errors, firstname, lastname, username, email, password, confirmPassword, sex } = this.state;
+		const { isLoading, uploadProgress } = this.props;
 
 		if (isLoading) { return <Spinner />; }
 
@@ -128,26 +143,23 @@ class SignupForm extends Component {
 								onChange={this.onChange}
 								value={sex}
 							>
-								<option value='' disabled>Choose your sex</option>
+								<option value='' disabled>Choose</option>
 								<option value='male'>Male</option>
 								<option value='female'>Female</option>
 							</select>
 						</div>
 						<div>
-							<label className='control-label' htmlFor="exampleInputFile">Upload Image</label>
+							<label className='control-label'>Profile Picture</label>
 							<input
 								type="file"
-								className="form-control-file"
-								id="exampleInputFile"
-								aria-describedby="fileHelp"
-								value={profilepic}
-								name="profilepic"
+								onChange={this.fileChange.bind(this)}
 							/>
+							<progress value={uploadProgress} max="100" />
 						</div>
 						<button
 							id="signup"
 							disabled={isLoading}
-							className="btn btn-primary btn-lg"
+							className="btn btn-orange btn-lg"
 						>
 							Sign Up
 						</button>
