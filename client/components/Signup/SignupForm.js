@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { storage } from '../firebase';
 import Spinner from '../Spinner';
 
 class SignupForm extends Component {
@@ -11,7 +12,6 @@ class SignupForm extends Component {
 			username: '',
 			sex: '',
 			email: '',
-			imageUpload: '',
 			profilepic: '',
 			password: '',
 			confirmPassword: '',
@@ -28,16 +28,17 @@ class SignupForm extends Component {
 	}
 
 	fileChange(e) {
-		this.setState({
-			profilepic: '',
-			imageUpload: e.target.files[0]
+		this.setState({ profilepic: '' });
+		const uploadTask = storage.child(`userimage/${new Date().getTime()}`)
+			.put(e.target.files[0]);
+		uploadTask.on('state_changed', snapshot => {
+			const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+			this.props.setProgress(progress);
+		}, error => {
+			this.setState({ errors: err.message })
+		}, () => {
+			this.setState({ profilepic: uploadTask.snapshot.downloadURL });
 		});
-		this.props.userPicture(e.target.files[0])
-			.then(response => {
-				this.setState({
-					profilepic: response.data.secure_url
-				});
-			})
 	}
 
 	onSubmit(e) {
@@ -57,7 +58,7 @@ class SignupForm extends Component {
 	}
 
 	render() {
-		const { errors, firstname, lastname, username, email, password, confirmPassword, sex, imageUpload } = this.state;
+		const { errors, firstname, lastname, username, email, password, confirmPassword, sex } = this.state;
 		const { isLoading, uploadProgress } = this.props;
 
 		if (isLoading) { return <Spinner />; }
@@ -152,14 +153,13 @@ class SignupForm extends Component {
 							<input
 								type="file"
 								onChange={this.fileChange.bind(this)}
-								name="imageUpload"
 							/>
 							<progress value={uploadProgress} max="100" />
 						</div>
 						<button
 							id="signup"
 							disabled={isLoading}
-							className="btn btn-primary btn-lg"
+							className="btn btn-orange btn-lg"
 						>
 							Sign Up
 						</button>
