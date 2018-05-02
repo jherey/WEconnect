@@ -73,7 +73,7 @@ class SigninForm extends Component {
 						<div>
 							<button
 								id="signup"
-								className="btn btn-primary btn-lg"
+								className="btn btn-orange btn-lg"
 								disabled={isLoading}
 							>
 								Login
