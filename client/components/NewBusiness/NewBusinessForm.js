@@ -52,7 +52,10 @@ class NewBusinessForm extends Component {
 				});
 				this.context.router.history.push('/');
 			},
-			(data) => this.setState({ errors: data.response.data.message })
+			(err) => {
+				this.props.loading(false);
+				this.setState({ errors: err.response.data.message });
+			}
 		);
 	}
 
@@ -76,7 +79,8 @@ class NewBusinessForm extends Component {
 								className="form-control"
 								name="businessName"
 							/>
-							{errors === 'Business name is required' && <span className='help-block'>{errors}</span>}
+							{errors === 'Business name is required' && <div className='alert alert-danger'>{errors}</div>}
+							{errors === 'A business with this name exist' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Description</label>
@@ -108,7 +112,7 @@ class NewBusinessForm extends Component {
 								onChange={this.onChange}
 								name="email"
 							/>
-							{errors === 'Email is required' && <span className='help-block'>{errors}</span>}
+							{errors === 'Email is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Category</label>
@@ -126,7 +130,7 @@ class NewBusinessForm extends Component {
 								<option value='entertainment'>Entertainment</option>
 								<option value='others'>Others</option>
 							</select>
-							{errors === 'Category is required' && <span className='help-block'>{errors}</span>}
+							{errors === 'Category is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Address</label>
@@ -152,7 +156,7 @@ class NewBusinessForm extends Component {
 								<option value='kenya'>Kenya</option>
 								<option value='ghana'>Ghana</option>
 							</select>
-							{errors === 'Location is required' && <span className='help-block'>{errors}</span>}
+							{errors === 'Location is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Company Logo</label>
