@@ -1,10 +1,13 @@
 /**
+ * @description - Display flash message
+ *
  * @param {*} message
+ *
  * @returns {Object} type, message
  */
-export function addFlashMessage(message) {
-  return {
-    type: 'ADD_FLASH_MESSAGE',
-    message
-  };
-}
+const addFlashMessage = message => ({
+  type: 'ADD_FLASH_MESSAGE',
+  message
+});
+
+export default addFlashMessage;

@@ -1,32 +1,33 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import setAuthToken from '../utils/setAuthToken';
-import { isLoading } from './loading';
+import isLoading from './loading';
 
 /**
- * @returns {Object} promise
+ * @description - Creates a new user
+ *
  * @param {*} userData
+ *
+ * @returns { user } - Action
  */
-export function signupUser(userData) {
-  return dispatch => {
-    dispatch(isLoading(true));
-    return axios.post('api/v1/auth/signup', userData)
-      .then(res => {
-        dispatch(isLoading(false));
-        const token = res.data.token;
-        localStorage.setItem('token', token);
-        setAuthToken(token);
-        dispatch(setCurrentUser(jwt.decode(token)));
-      })
-      .catch(error => {
-        dispatch(isLoading(false));
-      });
-  }
-}
+export const signupUser = userData => (dispatch) => {
+  dispatch(isLoading(true));
+  return axios.post('api/v1/auth/signup', userData)
+    .then((res) => {
+      dispatch(isLoading(false));
+      const token = res.data.token;
+      localStorage.setItem('token', token);
+      setAuthToken(token);
+      dispatch(setCurrentUser(jwt.decode(token)));
+    });
+};
 
 /**
- * @returns {Object} promise
+ * @description - Sets current user in store
+ *
  * @param {*} user
+ *
+ * @returns {Object} user
  */
 export function setCurrentUser(user) {
   return {
@@ -36,33 +37,31 @@ export function setCurrentUser(user) {
 }
 
 /**
- * @returns {Object} promise
+ * @description - Login a user
+ *
  * @param {*} userData
+ *
+ * @returns {Object} loggedin user
  */
-export function signinUser(userData) {
-  return dispatch => {
-    dispatch(isLoading(true));
-    return axios.post('api/v1/auth/login', userData)
-      .then(res => {
-        dispatch(isLoading(false));
-        const token = res.data.token;
-        localStorage.setItem('token', token);
-        setAuthToken(token);
-        dispatch(setCurrentUser(jwt.decode(token)));
-      })
-      .catch(error => {
-        dispatch(isLoading(false));
-      });
-  }
-}
+export const signinUser = userData => (dispatch) => {
+  dispatch(isLoading(true));
+  return axios.post('api/v1/auth/login', userData)
+    .then((res) => {
+      dispatch(isLoading(false));
+      const token = res.data.token;
+      localStorage.setItem('token', token);
+      setAuthToken(token);
+      dispatch(setCurrentUser(jwt.decode(token)));
+    });
+};
 
 /**
- * @returns {Object} object
+ * @description - Removes token from local storage
+ *
+ * @returns {*} object
  */
-export function signout() {
-  return dispatch => {
-    localStorage.removeItem('token');
-    setAuthToken(false);
-    dispatch(setCurrentUser({}));
-  }
+export const signout = () => (dispatch) => {
+  localStorage.removeItem('token');
+  setAuthToken(false);
+  dispatch(setCurrentUser({}));
 };
