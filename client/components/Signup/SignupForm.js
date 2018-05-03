@@ -53,7 +53,10 @@ class SignupForm extends Component {
 					})
 					this.context.router.history.push('/');
 				},
-				(data) => this.setState({ errors: data.response.data.message })
+				(err) => {
+					this.props.loading(false);
+					this.setState({ errors: err.response.data.message });
+				}
 			);
 	}
 
@@ -67,7 +70,8 @@ class SignupForm extends Component {
 			<div className="signup">
 				<div className="login-form col-md-4 offset-md-4">
 					<h1 className="title btn-primary">Create Account</h1>
-					{errors === 'Username already exists' || errors === 'Email address taken' && <div className='alert alert-danger'>{errors}</div>}
+					{errors === 'Username already exists' && <div className='alert alert-danger'>{errors}</div>}
+					{errors === 'Email address taken' && <div className='alert alert-danger'>{errors}</div>}
 					<form onSubmit={this.onSubmit}>
 						<div>
 							<label className='control-label'>First Name</label>
@@ -78,7 +82,7 @@ class SignupForm extends Component {
 								name="firstname"
 								className="form-control"
 							/>
-							{errors === 'Firstname is required' && <span className='help-block'>{errors}</span>}
+							{errors === 'Firstname is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Last Name</label>
@@ -89,7 +93,7 @@ class SignupForm extends Component {
 								name="lastname"
 								className="form-control"
 							/>
-							{errors === 'Lastname is required' && <span className='help-block'>{errors}</span>}
+							{errors === 'Lastname is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Username</label>
@@ -100,7 +104,7 @@ class SignupForm extends Component {
 								name="username"
 								className="form-control"
 							/>
-							{errors === 'Username is required' && <span className='help-block'>{errors}</span>}
+							{errors === 'Username is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Email</label>
@@ -111,7 +115,7 @@ class SignupForm extends Component {
 								name="email"
 								className="form-control"
 							/>
-							{errors === 'Email is required' && <span className='help-block'>{errors}</span>}
+							{errors === 'Email is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Password</label>
@@ -122,7 +126,8 @@ class SignupForm extends Component {
 								name="password"
 								className="form-control"
 							/>
-							{errors === 'Password is required' || errors === 'Minimum password length is 5 characters' && <span className='help-block'>{errors}</span>}
+							{errors === 'Password is required' && <div className='alert alert-danger'>{errors}</div>}
+							{errors === 'Minimum password length is 5 characters' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Confirm Password</label>
@@ -133,7 +138,7 @@ class SignupForm extends Component {
 								name="confirmPassword"
 								className="form-control"
 							/>
-							{errors === 'Confirm password field is required' && <span className='help-block'>{errors}</span>}
+							{errors === 'Confirm password field is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Sex</label>
@@ -147,6 +152,7 @@ class SignupForm extends Component {
 								<option value='male'>Male</option>
 								<option value='female'>Female</option>
 							</select>
+							{errors === 'Sex is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Profile Picture</label>
