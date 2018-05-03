@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import NewBusinessForm from './NewBusinessForm';
 import { createBusiness, setProgress } from '../../actions/businessActions';
-import { addFlashMessage } from '../../actions/flashMessages';
+import loading from '../../actions/loading';
+import addFlashMessage from '../../actions/flashMessages';
 
 class NewBusiness extends Component {
 	render() {
-		const { createBusiness, addFlashMessage, isLoading, setProgress, uploadProgress } = this.props;
+		const { createBusiness, addFlashMessage, isLoading, setProgress, uploadProgress, loading } = this.props;
 		return (
 			<div>
 				<NewBusinessForm
+					loading={loading}
 					createBusiness={createBusiness}
 					addFlashMessage={addFlashMessage}
 					isLoading={isLoading}
@@ -28,4 +30,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { createBusiness, addFlashMessage, setProgress })(NewBusiness);
+export default connect(mapStateToProps, { createBusiness, addFlashMessage, setProgress, loading })(NewBusiness);

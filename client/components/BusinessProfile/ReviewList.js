@@ -3,7 +3,7 @@ import Review from './Review.js';
 import Spinner from '../Spinner';
 import { connect } from 'react-redux';
 import { addReview } from '../../actions/reviewActions';
-import { addFlashMessage } from '../../actions/flashMessages';
+import addFlashMessage from '../../actions/flashMessages';
 
 class ReviewList extends Component {
 	constructor() {
