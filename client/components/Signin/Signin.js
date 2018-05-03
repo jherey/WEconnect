@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signinUser } from '../../actions/userActions';
 import SigninForm from './SigninForm';
-import { addFlashMessage } from '../../actions/flashMessages';
+import loading from '../../actions/loading';
+import addFlashMessage from '../../actions/flashMessages';
 
 class Signin extends Component {
 	render() {
-		const { signinUser, addFlashMessage, isLoading } = this.props;
+		const { signinUser, addFlashMessage, isLoading, loading } = this.props;
 		return (
 			<div>
-				<SigninForm signinUser={signinUser} addFlashMessage={addFlashMessage} isLoading={isLoading} />
+				<SigninForm
+					loading={loading}
+					signinUser={signinUser}
+					addFlashMessage={addFlashMessage}
+					isLoading={isLoading}
+				/>
 			</div>
 		);
 	}
@@ -21,4 +27,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { signinUser, addFlashMessage })(Signin);
+export default connect(mapStateToProps, { signinUser, addFlashMessage, loading })(Signin);
