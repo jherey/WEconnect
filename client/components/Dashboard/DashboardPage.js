@@ -4,6 +4,10 @@ import Spinner from '../Spinner';
 
 class DashboardPage extends Component {
 	render() {
+		const noBusiness = (
+			<h5>You don't own any business</h5>
+		);
+
 		const businessComponent = this.props.businessList.map((business) => {
 			return (
 				<Business
@@ -21,7 +25,7 @@ class DashboardPage extends Component {
 		return (
 			<div className="container">
 				<div className="row text-center">
-					{businessComponent}
+					{businessComponent.length === 0 ? noBusiness : businessComponent}
 				</div>
 			</div>
 		);
