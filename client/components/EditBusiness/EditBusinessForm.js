@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { storage } from '../firebase';
 import Spinner from '../Spinner';
 
 class EditBusinessForm extends Component {
@@ -14,6 +15,7 @@ class EditBusinessForm extends Component {
 			address: this.props.currentBusiness.address,
 			location: this.props.currentBusiness.location,
 			website: this.props.currentBusiness.website,
+			businessImage: this.props.currentBusiness.businessImage,
 			errors: ''
 		}
 		this.onChange = this.onChange.bind(this);
@@ -27,6 +29,20 @@ class EditBusinessForm extends Component {
 	onChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value
+		});
+	}
+
+	fileChange(e) {
+		this.setState({ businessImage: '' });
+		const uploadTask = storage.child(`businessimage/${new Date().getTime()}`)
+			.put(e.target.files[0]);
+		uploadTask.on('state_changed', snapshot => {
+			const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+			this.props.setProgress(progress);
+		}, error => {
+			this.setState({ errors: err.message })
+		}, () => {
+			this.setState({ businessImage: uploadTask.snapshot.downloadURL });
 		});
 	}
 
@@ -49,7 +65,7 @@ class EditBusinessForm extends Component {
 	}
 
 	render() {
-		const { currentBusiness, isLoading } = this.props;
+		const { currentBusiness, isLoading, uploadProgress } = this.props;
 		const { businessName, email, category, location, address, businessInfo, website, errors } = this.state;
 
 		if (isLoading) { return <Spinner />; }
@@ -151,10 +167,9 @@ class EditBusinessForm extends Component {
 							<label htmlFor="exampleInputFile">Company Logo</label>
 							<input
 								type="file"
-								className="form-control-file"
-								id="exampleInputFile"
-								aria-describedby="fileHelp"
+								onChange={this.fileChange.bind(this)}
 							/>
+							<progress value={uploadProgress} max="100" />
 						</div>
 						<div align="center">
 							<button

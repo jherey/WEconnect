@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import EditBusinessForm from './EditBusinessForm';
 import { connect } from 'react-redux';
 import loading from '../../actions/loading';
-import { updateBusiness, fetchBusiness, currentBusiness } from '../../actions/businessActions';
+import { updateBusiness, fetchBusiness, currentBusiness, setProgress } from '../../actions/businessActions';
 import addFlashMessage from '../../actions/flashMessages';
 
 class EditBusiness extends Component {
@@ -12,7 +12,16 @@ class EditBusiness extends Component {
 	}
 	render() {
 		const { id } = this.props.match.params;
-		const { currentBusiness, fetchBusiness, updateBusiness, addFlashMessage, isLoading, loading } = this.props;
+		const {
+				currentBusiness,
+				fetchBusiness,
+				updateBusiness,
+				setProgress,
+				addFlashMessage,
+				isLoading,
+				loading,
+				uploadProgress
+		} = this.props;
 
 		return (
 			<div>
@@ -24,6 +33,8 @@ class EditBusiness extends Component {
 					updateBusiness={updateBusiness}
 					addFlashMessage={addFlashMessage}
 					isLoading={isLoading}
+					setProgress={setProgress}
+					uploadProgress={uploadProgress}
 				/>
 			</div>
 		)
@@ -33,8 +44,9 @@ class EditBusiness extends Component {
 function mapStateToProps(state) {
 	return {
 		currentBusiness: state.currentBusiness,
-		isLoading: state.isLoading
+		isLoading: state.isLoading,
+		uploadProgress: state.uploadProgress
 	}
 }
 
-export default withRouter(connect(mapStateToProps, { currentBusiness, updateBusiness, fetchBusiness, addFlashMessage, loading })(EditBusiness));
+export default withRouter(connect(mapStateToProps, { currentBusiness, updateBusiness, fetchBusiness, addFlashMessage, loading, setProgress })(EditBusiness));
