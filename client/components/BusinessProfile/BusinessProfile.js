@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchBusiness, currentBusiness, deleteBusiness } from '../../actions/businessActions';
 import { fetchReviews } from '../../actions/reviewActions';
-import { addFlashMessage } from '../../actions/flashMessages';
+import addFlashMessage from '../../actions/flashMessages';
 import BusinessProfilePage from './BusinessProfilePage';
 
 class BusinessProfile extends Component {
