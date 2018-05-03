@@ -3,14 +3,16 @@ import { connect } from 'react-redux';
 import SignupForm from './SignupForm';
 import { signupUser } from '../../actions/userActions';
 import { setProgress } from '../../actions/businessActions';
-import { addFlashMessage } from '../../actions/flashMessages';
+import loading from '../../actions/loading';
+import addFlashMessage from '../../actions/flashMessages';
 
 class Signup extends Component {
 	render() {
-		const { signupUser, addFlashMessage, isLoading, setProgress, uploadProgress } = this.props;
+		const { signupUser, addFlashMessage, isLoading, setProgress, uploadProgress, loading } = this.props;
 		return (
 			<div>
 				<SignupForm
+					loading={loading}
 					signupUser={signupUser}
 					addFlashMessage={addFlashMessage}
 					isLoading={isLoading}
@@ -29,4 +31,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { signupUser, addFlashMessage, setProgress })(Signup);
+export default connect(mapStateToProps, { signupUser, addFlashMessage, setProgress, loading })(Signup);
