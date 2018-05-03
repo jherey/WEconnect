@@ -46,9 +46,6 @@ export const createBusiness = businessData => (dispatch) => {
     .then((res) => {
       dispatch(isLoading(false));
       dispatch(addBusiness(res.data.business));
-    })
-    .catch((error) => {
-      dispatch(isLoading(false));
     });
 };
 
@@ -116,9 +113,6 @@ export const updateBusiness = updatedBusinessData => (dispatch) => {
     .then((res) => {
       dispatch(isLoading(false));
       dispatch(businessUpdated(res.data.updatedBusiness));
-    })
-    .catch((error) => {
-      dispatch(isLoading(false));
     });
 };
 
