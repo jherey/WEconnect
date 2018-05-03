@@ -15,6 +15,7 @@ const BusinessList = ({ businesses }) => {
 					id={businesses[i].id}
 					name={businesses[i].businessName}
 					description={businesses[i].businessInfo}
+					businessImage={businesses[i].businessImage}
 					address={businesses[i].address}
 					location={businesses[i].location}
 					category={businesses[i].category}
