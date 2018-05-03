@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+// import Materialize from 'materialize-css';
 import Spinner from '../Spinner';
 
 class SigninForm extends Component {
@@ -32,7 +33,10 @@ class SigninForm extends Component {
 					});
 					this.context.router.history.push('/');
 				},
-				(data) => this.setState({ errors: data.response.data.message })
+				(err) => {
+					this.props.loading(false);
+					this.setState({ errors: err.response.data.message });
+				}
 			);
 	}
 
@@ -57,7 +61,7 @@ class SigninForm extends Component {
 								name="username"
 								className="form-control"
 							/>
-							{errors === 'Username is required' && <span className='help-block'>{errors}</span>}
+							{errors === 'Username is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label>Password</label>
@@ -68,7 +72,8 @@ class SigninForm extends Component {
 								name="password"
 								className="form-control"
 							/>
-							{errors === 'Password is required' || errors === 'Minimum password length is 5 characters' && <span className='help-block'>{errors}</span>}
+							{errors === 'Password is required' && <div className='alert alert-danger'>{errors}</div>}
+							{errors === 'Minimum password length is 5 characters' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<button
