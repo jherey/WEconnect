@@ -41,7 +41,10 @@ class EditBusinessForm extends Component {
 				});
 				this.context.router.history.push(`/${this.props.currentBusiness.id}`);
 			},
-			(data) => this.setState({ errors: data.response.data.message })
+			(err) => {
+				this.props.loading(false);
+				this.setState({ errors: err.response.data.message });
+			}
 		);
 	}
 
@@ -65,7 +68,8 @@ class EditBusinessForm extends Component {
 								className="form-control"
 								name="businessName"
 							/>
-							{errors === 'A business with this name exists!' && <span className='help-block'>{errors}</span>}
+							{errors === 'Business name is required' && <div className='alert alert-danger'>{errors}</div>}
+							{errors === 'A business with this name exists!' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Description</label>
@@ -97,6 +101,7 @@ class EditBusinessForm extends Component {
 								onChange={this.onChange}
 								name="email"
 							/>
+							{errors === 'Email is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Category</label>
@@ -114,6 +119,7 @@ class EditBusinessForm extends Component {
 								<option value='entertainment'>Entertainment</option>
 								<option value='others'>Others</option>
 							</select>
+							{errors === 'Category is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label className='control-label'>Address</label>
@@ -139,6 +145,7 @@ class EditBusinessForm extends Component {
 								<option value='kenya'>Kenya</option>
 								<option value='ghana'>Ghana</option>
 							</select>
+							{errors === 'Location is required' && <div className='alert alert-danger'>{errors}</div>}
 						</div>
 						<div>
 							<label htmlFor="exampleInputFile">Company Logo</label>
