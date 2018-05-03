@@ -14,6 +14,11 @@ class DashboardPage extends Component {
 					key={business.id}
 					id={business.id}
 					name={business.businessName}
+					description={business.businessInfo}
+					businessImage={business.businessImage}
+					address={business.address}
+					location={business.location}
+					category={business.category}
 				/>
 			);
 		});
