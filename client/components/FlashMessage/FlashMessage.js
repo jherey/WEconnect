@@ -6,9 +6,7 @@ class FlashMessage extends Component {
 	componentWillReceiveProps(nextProps) {
 		const { type, text } = nextProps.message;
 		if (type === 'success') {
-			this.refs.container.success(type, text, {
-				closeButton: true,
-			})
+			this.refs.container.success(text)
 		}
 	}
 
