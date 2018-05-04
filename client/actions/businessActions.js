@@ -81,7 +81,7 @@ export const fetchBusiness = id => (dispatch) => {
       dispatch(isLoading(false));
       dispatch(getOneBusiness(business.data.business));
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch(isLoading(false));
     });
 };
@@ -137,11 +137,14 @@ export function businessDeleted(businessId) {
  *
  * @returns { BusinessId } - Action
  */
-export const deleteBusiness = id => dispatch =>
-  axios.delete(`http://localhost:8000/api/v1/businesses/${id}`)
-    .then((data) => {
+export const deleteBusiness = id => (dispatch) => {
+  dispatch(isLoading(true));
+  return axios.delete(`http://localhost:8000/api/v1/businesses/${id}`)
+    .then(() => {
+      dispatch(isLoading(false));
       dispatch(businessDeleted(id));
     });
+};
 
 /**
  * @description - Updates store with all businesses
@@ -169,7 +172,7 @@ export const getAllBusinesses = () => (dispatch) => {
       dispatch(isLoading(false));
       dispatch(setBusinesses(businesses.data.allBusinesses));
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch(isLoading(false));
     });
 };
@@ -202,9 +205,5 @@ export const search = (searchWord, type) => (dispatch) => {
     .then((foundBusiness) => {
       dispatch(isLoading(false));
       dispatch(businessFound(foundBusiness.data.business));
-    })
-    .catch((error) => {
-      dispatch(isLoading(false));
-      return error;
     });
 };
