@@ -29,7 +29,7 @@ export const fetchReviews = id => (dispatch) => {
       dispatch(isLoading(false));
       dispatch(getReview(review.data.reviews));
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch(isLoading(false));
     });
 };
@@ -63,8 +63,5 @@ export const addReview = (id, review) => (dispatch) => {
     .then((res) => {
       dispatch(isLoading(false));
       dispatch(postReview(res.data.createdReview));
-    })
-    .catch((error) => {
-      dispatch(isLoading(false));
     });
 };
