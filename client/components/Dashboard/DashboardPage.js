@@ -29,7 +29,7 @@ class DashboardPage extends Component {
 
 		return (
 			<div className="container">
-				<div className="row text-center">
+				<div className="row">
 					{businessComponent.length === 0 ? noBusiness : businessComponent}
 				</div>
 			</div>
