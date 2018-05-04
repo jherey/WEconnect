@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import NavbarComponent from './NavbarComponent';
+import loading from '../../actions/loading';
 import { connect } from 'react-redux';
 import { signout } from '../../actions/userActions';
 import { search } from '../../actions/businessActions';
@@ -11,9 +12,15 @@ class Navbar extends Component {
 	}
 
 	render() {
-		const { authUser, signout, search, isLoading } = this.props;
+		const { authUser, signout, search, isLoading, loading } = this.props;
 		return (
-			<NavbarComponent authUser={authUser} signout={signout} search={search} isLoading={isLoading} />
+			<NavbarComponent
+				loading={loading}
+				authUser={authUser}
+				signout={signout}
+				search={search}
+				isLoading={isLoading}
+			/>
 		);
 	}
 
@@ -26,4 +33,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { signout, search })(Navbar);
+export default connect(mapStateToProps, { signout, search, loading })(Navbar);

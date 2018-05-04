@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchBusiness, currentBusiness, deleteBusiness } from '../../actions/businessActions';
 import { fetchReviews } from '../../actions/reviewActions';
 import addFlashMessage from '../../actions/flashMessages';
+import loading from '../../actions/loading';
 import BusinessProfilePage from './BusinessProfilePage';
 
 class BusinessProfile extends Component {
@@ -16,6 +17,7 @@ class BusinessProfile extends Component {
 			addFlashMessage,
 			fetchReviews,
 			reviews,
+			loading,
 			userId,
 			isLoading
 		} = this.props;
@@ -24,6 +26,7 @@ class BusinessProfile extends Component {
 			<div>
 				<BusinessProfilePage
 					id={id}
+					loading={loading}
 					fetchBusiness={fetchBusiness}
 					currentBusiness={currentBusiness}
 					addFlashMessage={addFlashMessage}
@@ -47,5 +50,5 @@ function mapStateToProps(state) {
 	}
 }
 
-export default withRouter(connect(mapStateToProps, { fetchBusiness, currentBusiness, addFlashMessage, deleteBusiness, fetchReviews })(BusinessProfile));
+export default withRouter(connect(mapStateToProps, { fetchBusiness, currentBusiness, loading, addFlashMessage, deleteBusiness, fetchReviews })(BusinessProfile));
 
