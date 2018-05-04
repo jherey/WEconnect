@@ -61,11 +61,17 @@ class ReviewList extends Component {
 			<div>
 				<h3 className="text-center rev">REVIEWS</h3>
 				{reviewComponent}
-				<div className="text-center">
-					<button className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-						Add Review
+				{
+					user
+					?
+					<div className="text-center">
+						<button className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+							Add Review
 						</button>
-				</div>
+					</div>
+					:
+					null
+				}
 
 				<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div className="modal-dialog" role="document">
