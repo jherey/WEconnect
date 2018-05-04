@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Review from './Review.js';
+import Review from './Review';
 import Spinner from '../Spinner';
 import { connect } from 'react-redux';
 import { addReview } from '../../actions/reviewActions';
+import loading from '../../actions/loading';
 import addFlashMessage from '../../actions/flashMessages';
 
 class ReviewList extends Component {
@@ -34,12 +35,15 @@ class ReviewList extends Component {
 						text: 'Review posted'
 					});
 				},
-				(data) => this.setState({ errors: data.response.data.message })
+				(err) => {
+					this.props.loading(false);
+					this.setState({ errors: err.response.data.message });
+				}
 			);
 	}
 
 	render() {
-		const { reviews, isLoading } = this.props;
+		const { reviews, isLoading, user } = this.props;
 
 		const reviewComponent = reviews.map(review => {
 			return (
@@ -101,8 +105,9 @@ class ReviewList extends Component {
 
 function mapStateToProps(state) {
 	return {
-		isLoading: state.isLoading
+		isLoading: state.isLoading,
+		user: state.authUser.isAuthenticated
 	}
 }
 
-export default connect(mapStateToProps, { addReview, addFlashMessage })(ReviewList);
+export default connect(mapStateToProps, { addReview, addFlashMessage, loading })(ReviewList);
