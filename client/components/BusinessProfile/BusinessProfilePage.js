@@ -29,7 +29,10 @@ class BusinessProfilePage extends Component {
 					});
 					this.context.router.history.push('/');
 				},
-				(data) => this.setState({ errors: data.response.data.message })
+				(err) => {
+					this.props.loading(false);
+					this.setState({ errors: err.response.data.message });
+				}
 			);
 	}
 
