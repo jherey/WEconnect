@@ -4,25 +4,6 @@ import setAuthToken from '../utils/setAuthToken';
 import isLoading from './loading';
 
 /**
- * @description - Creates a new user
- *
- * @param {*} userData
- *
- * @returns { user } - Action
- */
-export const signupUser = userData => (dispatch) => {
-  dispatch(isLoading(true));
-  return axios.post('api/v1/auth/signup', userData)
-    .then((res) => {
-      dispatch(isLoading(false));
-      const token = res.data.token;
-      localStorage.setItem('token', token);
-      setAuthToken(token);
-      dispatch(setCurrentUser(jwt.decode(token)));
-    });
-};
-
-/**
  * @description - Sets current user in store
  *
  * @param {*} user
@@ -37,6 +18,25 @@ export function setCurrentUser(user) {
 }
 
 /**
+ * @description - Creates a new user
+ *
+ * @param {*} userData
+ *
+ * @returns { user } - Action
+ */
+export const signupUser = userData => (dispatch) => {
+  dispatch(isLoading(true));
+  return axios.post('api/v1/auth/signup', userData)
+    .then((res) => {
+      dispatch(isLoading(false));
+      const { token } = res.data;
+      localStorage.setItem('token', token);
+      setAuthToken(token);
+      dispatch(setCurrentUser(jwt.decode(token)));
+    });
+};
+
+/**
  * @description - Login a user
  *
  * @param {*} userData
@@ -48,7 +48,7 @@ export const signinUser = userData => (dispatch) => {
   return axios.post('api/v1/auth/login', userData)
     .then((res) => {
       dispatch(isLoading(false));
-      const token = res.data.token;
+      const { token } = res.data;
       localStorage.setItem('token', token);
       setAuthToken(token);
       dispatch(setCurrentUser(jwt.decode(token)));
