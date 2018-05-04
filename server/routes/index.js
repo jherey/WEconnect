@@ -18,6 +18,7 @@ const { tokenVerification } = verifyToken;
 const { idChecker } = paramsChecker;
 
 // Destructure controllers
+const { getAllUsers } = Users;
 const { registerUsers } = Users;
 const { loginUser } = Users;
 const { registerBusiness } = Business;
@@ -28,6 +29,8 @@ const { addReview } = Review;
 const { getAllReviews } = Review;
 
 // Users endpoints
+router
+  .get('/auth/users', getAllUsers);
 router
   .post('/auth/signup', userSignUp, registerUsers);
 router

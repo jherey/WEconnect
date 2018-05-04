@@ -7,6 +7,32 @@ const secret = process.env.secretKey;
 const { User } = models;
 
 const Users = {
+  getAllUsers: (req, res) => {
+    User
+      // Find all users
+      .all()
+      // Promise returned
+      .then((users) => {
+        // Loop through all users
+        const allUsers = users.map(user => ({
+          id: user.id,
+          username: user.username,
+          profilepic: user.profilepic
+        }));
+        // If no user found
+        if (!users) {
+          return res.status(404).send({
+            message: 'No Users Found!',
+          });
+        }
+        // User(es) found!
+        return res.status(200).json({
+          message: 'Users found!',
+          allUsers
+        });
+      });
+  },
+
   // Method to register a new user
   registerUsers: (req, res) => {
     // Create new user and push to Database
