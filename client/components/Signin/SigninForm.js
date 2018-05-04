@@ -49,7 +49,7 @@ class SigninForm extends Component {
 		return (
 			<div className="signup">
 				<div className="login-form col-md-4 offset-md-4">
-					<h1 className="title btn-primary">Sign In</h1>
+					<h1 className="title">Sign In</h1>
 					{errors === 'Username/Password Incorrect' && <div className='alert alert-danger'>{errors}</div>}
 					<form onSubmit={this.onSubmit}>
 						<div>

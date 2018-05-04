@@ -69,7 +69,7 @@ class SignupForm extends Component {
 		return (
 			<div className="signup">
 				<div className="login-form col-md-4 offset-md-4">
-					<h1 className="title btn-primary">Create Account</h1>
+					<h1 className="title">Create Account</h1>
 					{errors === 'Username already exists' && <div className='alert alert-danger'>{errors}</div>}
 					{errors === 'Email address taken' && <div className='alert alert-danger'>{errors}</div>}
 					<form onSubmit={this.onSubmit}>
