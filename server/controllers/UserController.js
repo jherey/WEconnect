@@ -74,7 +74,8 @@ const Users = {
       .then((user) => {
         const userDetails = {
           id: user.id,
-          username: user.username
+          username: user.username,
+          profilepic: user.profilepic
         };
         // Assign token to user for six hours
         const token = jwt.sign(userDetails, secret, { expiresIn: '6h' });
@@ -106,7 +107,8 @@ const Users = {
         if (user && bcrypt.compareSync(password, user.password)) {
           const userData = {
             id: user.id,
-            username: user.username
+            username: user.username,
+            profilepic: user.profilepic
           };
           // Assign token to user for six hours
           const token = jwt.sign(userData, secret, { expiresIn: '6h' });
