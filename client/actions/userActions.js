@@ -56,6 +56,37 @@ export const signinUser = userData => (dispatch) => {
 };
 
 /**
+ * @description - Action to update store with users
+ *
+ * @param {*} users
+ *
+ * @returns { users } - Action
+ */
+export function allUsers(users) {
+  return {
+    type: 'ALL_USERS',
+    users
+  };
+}
+
+/**
+ * @description - Get all users
+ *
+ * @returns {Object} all users
+ */
+export const getAllUsers = () => (dispatch) => {
+  dispatch(isLoading(true));
+  return axios.get('api/v1/auth/users')
+    .then((res) => {
+      dispatch(isLoading(false));
+      dispatch(allUsers(res.data.allUsers));
+    })
+    .catch(() => {
+      dispatch(isLoading(false));
+    });
+};
+
+/**
  * @description - Removes token from local storage
  *
  * @returns {*} object
