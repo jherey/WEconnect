@@ -9,7 +9,7 @@ class Dashboard extends Component {
 	}
 
 	render() {
-		const { userId, businesses, isLoading } = this.props;
+		const { userId, businesses, isLoading, profilepic } = this.props;
 
 		const userBusiness = businesses.filter(business => {
 			return business.userId === userId;
@@ -17,7 +17,12 @@ class Dashboard extends Component {
 
 		return (
 			<div id='allbusiness' className='search'>
-				<DashboardPage userId={userId} businessList={userBusiness} isLoading={isLoading} />
+				<DashboardPage
+					userId={userId}
+					businessList={userBusiness}
+					isLoading={isLoading}
+					profilepic={profilepic}
+				/>
 			</div>
 		);
 	}
@@ -27,7 +32,8 @@ function mapStateToProps(state) {
 	return {
 		userId: state.authUser.user.id,
 		businesses: state.businesses,
-		isLoading: state.isLoading
+		isLoading: state.isLoading,
+		profilepic: state.authUser.user.profilepic
 	}
 }
 
