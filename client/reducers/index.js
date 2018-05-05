@@ -7,8 +7,10 @@ import reviews from './reducer-reviews';
 import searchResults from './reducer-search';
 import isLoading from './reducer-loading';
 import uploadProgress from './reducer-uploadProgress';
+import allUsers from './reducer-allUsers';
 
 const allReducers = combineReducers({
+  allUsers,
   flashMessages,
   authUser,
   uploadProgress,
