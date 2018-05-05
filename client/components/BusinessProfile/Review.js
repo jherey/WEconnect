@@ -1,11 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Review = ({ username, review }) => {
+const Review = ({ username, review, allUsers }) => {
+	const profile = allUsers.filter(user => {
+		return username === user.username;
+	});
+
 	return (
 		<div className="row">
 			<div className="col-lg-1 text-center">
-				<img src={require('../../public/images/ppic.jpg')} />
+				<img
+					className="rounded-circle mt-2"
+					src={profile[0].profilepic}
+					alt="UserImage"
+					style={{ width: '60px', height: '60px' }}
+				/>
 			</div>
 			<div className="col-lg-11">
 				<p><strong>{username}</strong></p>
