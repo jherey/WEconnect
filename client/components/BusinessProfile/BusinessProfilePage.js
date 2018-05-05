@@ -14,6 +14,7 @@ class BusinessProfilePage extends Component {
 
 	componentWillMount() {
 		this.props.fetchBusiness(this.props.id);
+		this.props.getAllUsers();
 		this.props.fetchReviews(this.props.id);
 	}
 
@@ -37,7 +38,7 @@ class BusinessProfilePage extends Component {
 	}
 
 	render() {
-		const { currentBusiness, id, reviews, userId, isLoading } = this.props;
+		const { currentBusiness, id, reviews, userId, isLoading, allUsers } = this.props;
 		const { errors } = this.state;
 
 		if (isLoading) { return <Spinner />; }
@@ -115,7 +116,7 @@ class BusinessProfilePage extends Component {
 					}
 					<hr />
 
-					<ReviewList reviews={reviews} id={id} />
+					<ReviewList reviews={reviews} id={id} allUsers={allUsers} />
 				</div>
 			</div>
 		);
