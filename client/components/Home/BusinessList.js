@@ -10,16 +10,18 @@ const BusinessList = ({ businesses }) => {
 	const businessComponent = businesses.reverse().map((business, i) => {
 		if (i < 8) {
 			return (
-				<Business
-					key={businesses[i].id}
-					id={businesses[i].id}
-					name={businesses[i].businessName}
-					description={businesses[i].businessInfo}
-					businessImage={businesses[i].businessImage}
-					address={businesses[i].address}
-					location={businesses[i].location}
-					category={businesses[i].category}
-				/>
+				<div className="col-lg-3 col-md-6 py-2">
+					<Business
+						key={businesses[i].id}
+						id={businesses[i].id}
+						name={businesses[i].businessName}
+						description={businesses[i].businessInfo}
+						businessImage={businesses[i].businessImage}
+						address={businesses[i].address}
+						location={businesses[i].location}
+						category={businesses[i].category}
+					/>
+				</div>
 			);
 		}
 	});
