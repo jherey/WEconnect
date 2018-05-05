@@ -10,6 +10,7 @@ class DashboardPage extends Component {
 
 		const businessComponent = this.props.businessList.map((business) => {
 			return (
+				<div className="col-lg-3 col-md-6 py-2">
 				<Business
 					key={business.id}
 					id={business.id}
@@ -20,16 +21,26 @@ class DashboardPage extends Component {
 					location={business.location}
 					category={business.category}
 				/>
+				</div>
 			);
 		});
 
-		const { isLoading } = this.props;
+		const { isLoading, profilepic } = this.props;
 
 		if (isLoading) { return <Spinner />; }
 
 		return (
 			<div className="container">
 				<div className="row">
+					<div className="col-lg-3">
+						<img
+							className="mt-2"
+							src={profilepic}
+							alt="UserImage"
+							style={{ width: '200px', height: '200px' }}
+						/>
+					</div>
+
 					{businessComponent.length === 0 ? noBusiness : businessComponent}
 				</div>
 			</div>
