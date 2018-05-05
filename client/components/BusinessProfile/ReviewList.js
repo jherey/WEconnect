@@ -43,7 +43,7 @@ class ReviewList extends Component {
 	}
 
 	render() {
-		const { reviews, isLoading, user } = this.props;
+		const { reviews, isLoading, user, allUsers } = this.props;
 
 		const reviewComponent = reviews.map(review => {
 			return (
@@ -51,6 +51,7 @@ class ReviewList extends Component {
 					key={review.id}
 					username={review.username}
 					review={review.review}
+					allUsers={allUsers}
 				/>
 			);
 		});
