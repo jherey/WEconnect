@@ -153,7 +153,7 @@ export const deleteBusiness = id => (dispatch) => {
  *
  * @returns { Businesses } - Action
  */
-export function setBusinesses(businesses) {
+export function allBusinesses(businesses) {
   return {
     type: 'SET_BUSINESSES',
     businesses
@@ -170,7 +170,7 @@ export const getAllBusinesses = () => (dispatch) => {
   return axios.get('api/v1/businesses')
     .then((businesses) => {
       dispatch(isLoading(false));
-      dispatch(setBusinesses(businesses.data.allBusinesses));
+      dispatch(allBusinesses(businesses.data.allBusinesses));
     })
     .catch(() => {
       dispatch(isLoading(false));
