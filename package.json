@@ -12,7 +12,8 @@
     "migrate": "npm run unmigrate && node ./node_modules/sequelize-cli/lib/sequelize db:migrate --env test",
     "heroku-postbuild": "npm run migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls",
+    "client-test": "jest"
   },
   "repository": {
     "type": "git",
@@ -62,6 +63,12 @@
     "webpack-dev-server": "^3.1.1",
     "webpack-merge": "^4.1.2"
   },
+  "jest": {
+    "collectCoverage": true,
+    "setupFiles": [
+      "<rootDir>/testSetup.js"
+    ]
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.2",
@@ -78,6 +85,7 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "expect": "^22.4.3",
     "istanbul": "^0.4.5",
     "jest": "^22.4.3",
     "mocha": "^5.0.4",
