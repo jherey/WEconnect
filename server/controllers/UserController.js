@@ -7,6 +7,7 @@ const secret = process.env.secretKey;
 const { User } = models;
 
 const Users = {
+  // Method to get all users
   getAllUsers: (req, res) => {
     User
       // Find all users
@@ -128,6 +129,72 @@ const Users = {
         .json({
           message: error.errors[0].message
         }));
+  },
+
+  updateUser: (req, res) => {
+    const {
+      firstname,
+      lastname,
+      profilepic,
+      sex,
+      username,
+      email,
+      password,
+      confirmPassword
+    } = req.body;
+    const { userId } = req.params;
+    const { authData } = req;
+    // Check if user exist
+    User.findOne({
+      where: {
+        id: userId
+      }
+    })
+      .then((user) => {
+        if (!user) {
+          return res.status(400).json({
+            message: 'User does not exist',
+            error: true
+          });
+        }
+        // Find user only if authorized
+        User
+          .findOne({
+            where: {
+              id: userId,
+              username: authData.username
+            }
+          })
+          .then((authorizedUser) => {
+            // Different user tries to update the user details
+            if (!authorizedUser) {
+              return res.status(404).json({
+                message: 'Oops! You cannot update this user details',
+                error: true
+              });
+            }
+            // Update user details
+            authorizedUser
+              .update({
+                firstname,
+                lastname,
+                profilepic,
+                sex,
+                username,
+                email,
+                password,
+                confirmPassword
+              })
+              // Success message
+              .then(updatedUser => res.status(200).json({
+                message: 'User Details Updated Successfully',
+                updatedUser,
+              }))
+              // Catch errors
+              .catch(error => res.status(400)
+                .json({ message: error.errors[0].message }));
+          });
+      });
   }
 };
 
