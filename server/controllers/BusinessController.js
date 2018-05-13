@@ -17,10 +17,12 @@ const Business = {
       location
     } = req.body;
     const { authData } = req;
+    // Change business name to small letter
+    const name = businessName.toLowerCase();
     // Create the business
     Businesses
       .create({
-        businessName,
+        businessName: name,
         website,
         category,
         businessInfo,
@@ -53,69 +55,58 @@ const Business = {
     } = req.body;
     const { businessId } = req.params;
     const { authData } = req;
-    Businesses.find({
-      where: {
-        businessName
-      }
-    })
-      .then((businessFound) => {
-        if (businessFound) {
-          return res.status(400).json({
-            message: 'A business with this name exists!',
+    // Change business name to small letter
+    const name = businessName.toLowerCase();
+    // Check if business exist
+    Businesses
+      .findOne({
+        where: {
+          id: businessId
+        }
+      })
+      .then((business) => {
+        // No buisness found
+        if (!business) {
+          return res.status(404).json({
+            message: 'Business Not Found!',
             error: true
           });
         }
-        // Check if business exist
+        // Find business only if authorized
         Businesses
           .findOne({
             where: {
-              id: businessId
+              id: businessId,
+              userId: authData.id
             }
           })
-          .then((business) => {
-            // No buisness found
-            if (!business) {
+          .then((authorizedBusiness) => {
+            // Different user tries to update the business
+            if (!authorizedBusiness) {
               return res.status(404).json({
-                message: 'Business Not Found!',
+                message: 'Oops! You cannot update this business',
                 error: true
               });
             }
-            // Find business only if authorized
-            Businesses
-              .findOne({
-                where: {
-                  id: businessId,
-                  userId: authData.id
-                }
+            // Update the business
+            authorizedBusiness
+              .update({
+                businessName: name,
+                website,
+                category,
+                businessInfo,
+                email,
+                businessImage,
+                location
               })
-              .then((authorizedBusiness) => {
-                // Different user tries to update the business
-                if (!authorizedBusiness) {
-                  return res.status(404).json({
-                    message: 'Oops! You cannot update this business',
-                    error: true
-                  });
-                }
-                // Update the business
-                authorizedBusiness
-                  .update({
-                    businessName,
-                    website,
-                    category,
-                    businessInfo,
-                    email,
-                    businessImage,
-                    location
-                  })
-                  // Success message
-                  .then(updatedBusiness => res.status(200).json({
-                    message: 'Business Update Successful',
-                    updatedBusiness,
-                  }))
-                  // Catch errors
-                  .catch(error => res.status(400)
-                    .json(error.errors[0].message));
-              });
+              // Success message
+              .then(updatedBusiness => res.status(200).json({
+                message: 'Business Update Successful',
+                updatedBusiness,
+              }))
+              // Catch errors
+              .catch(error => res.status(400)
+                .json(error.errors[0].message));
           });
       });
   },
