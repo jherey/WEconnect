@@ -21,6 +21,7 @@ const { idChecker } = paramsChecker;
 const { getAllUsers } = Users;
 const { registerUsers } = Users;
 const { loginUser } = Users;
+const { updateUser } = Users;
 const { registerBusiness } = Business;
 const { updateBusiness } = Business;
 const { removeBusiness } = Business;
@@ -35,6 +36,8 @@ router
   .post('/auth/signup', userSignUp, registerUsers);
 router
   .post('/auth/login', userLogin, loginUser);
+router
+  .put('/auth/:userId', userSignUp, tokenVerification, updateUser);
 
 // Business endpoints
 router
