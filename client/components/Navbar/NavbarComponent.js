@@ -68,46 +68,44 @@ class NavbarComponent extends Component {
 		if (isLoading) { return <Spinner />; }
 
 		return (
-			<div id='nav'>
-				<nav className="navbar navbar-custom navbar-expand-lg navbar-dark">
-					<Link className="navbar-brand ml-5" to="/">WeConnect</Link>
-					<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-						<span className="navbar-toggler-icon"></span>
-					</button>
-					<div id="navbarNavDropdown" className="navbar-collapse collapse">
-						<ul className="navbar-nav mx-auto">
-							<li className="nav-item">
-								<form onSubmit={this.onSubmit}>
-									<div className="input-group mr-3" id="content">
-										<input
-											value={this.state.keyword}
-											onChange={this.onChange}
-											name="keyword"
-											type="text"
-											size="40"
-											className="form-control"
-											placeholder="Search by location or category"
-											aria-describedby="btnGroupAddon"
-										/>
-										<select
-											className='form-control'
-											name='type'
-											onChange={this.onChange}
-											value={this.state.type}
-										>
-											<option value='' disabled>Choose...</option>
-											<option value='location'>Location</option>
-											<option value='category'>Category</option>
-										</select>
-										<button type="submit" id="search" className="btn button">Search</button>
-									</div>
-								</form>
-							</li>
-						</ul>
-						{isAuthenticated ? authUserLinks : guestLinks}
-					</div>
-				</nav>
-			</div>
+			<nav className="navbar navbar-custom navbar-expand-lg">
+				<Link className="navbar-brand ml-5" to="/">WeConnect</Link>
+				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+					<span className="navbar-toggler-icon"></span>
+				</button>
+				<div id="navbarNavDropdown" className="navbar-collapse collapse">
+					<ul className="navbar-nav mx-auto">
+						<li className="nav-item">
+							<form onSubmit={this.onSubmit}>
+								<div className="input-group mr-3" id="content">
+									<input
+										value={this.state.keyword}
+										onChange={this.onChange}
+										name="keyword"
+										type="text"
+										size="40"
+										className="form-control"
+										placeholder="Search by location or category"
+										aria-describedby="btnGroupAddon"
+									/>
+									<select
+										className='form-control'
+										name='type'
+										onChange={this.onChange}
+										value={this.state.type}
+									>
+										<option value='' disabled>Choose...</option>
+										<option value='location'>Location</option>
+										<option value='category'>Category</option>
+									</select>
+									<button type="submit" id="search" className="btn button">Search</button>
+								</div>
+							</form>
+						</li>
+					</ul>
+					{isAuthenticated ? authUserLinks : guestLinks}
+				</div>
+			</nav>
 		);
 	}
 }

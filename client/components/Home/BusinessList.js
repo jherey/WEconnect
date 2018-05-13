@@ -27,7 +27,8 @@ const BusinessList = ({ businesses }) => {
 	});
 
 	return (
-		<div className="container">
+		<div className="container list">
+			<h2 className='text-center latest'>Latest Businesses</h2>
 			<div className="row">
 				{businesses.length === 0 ? noBusiness : businessComponent}
 			</div>

@@ -19,9 +19,8 @@ class HomePage extends Component {
         return (
             <div>
                 <HeroImage />
-                <div style={{ background: 'white' }}>
-                    <h2 className='text-center latest'>LATEST BUSINESSES</h2>
-                    <BusinessList businesses={businesses} />
+                <div className="businesses">
+									<BusinessList businesses={businesses} />
                 </div>
             </div>
         );
