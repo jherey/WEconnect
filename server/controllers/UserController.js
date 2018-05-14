@@ -144,6 +144,12 @@ const Users = {
     } = req.body;
     const { userId } = req.params;
     const { authData } = req;
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        message: 'Passwords do not match',
+        error: true
+      });
+    }
     // Check if user exist
     User.findOne({
       where: {
@@ -182,8 +188,7 @@ const Users = {
                 sex,
                 username,
                 email,
-                password,
-                confirmPassword
+                password: hashSync(password, 10)
               })
               // Success message
               .then(updatedUser => res.status(200).json({
