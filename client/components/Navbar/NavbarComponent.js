@@ -55,7 +55,7 @@ class NavbarComponent extends Component {
 		const guestLinks = (
 			<ul className="navbar-nav">
 				<li className="nav-item">
-					<Link className="nav-link" to="/signin">Login</Link>
+					<Link className="nav-link" to="/signin">Sign In</Link>
 				</li>
 				<li className="nav-item mr-5">
 					<Link className="nav-link" to="/signup">Sign Up</Link>
