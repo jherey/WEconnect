@@ -1,4 +1,5 @@
 import React from 'react';
+import TextTruncate from 'react-text-truncate';
 import { Link } from 'react-router-dom';
 
 const Business = (props) => {
@@ -16,8 +17,12 @@ const Business = (props) => {
 			<div className='card-body'>
 				<p className="category text-center"><strong>{name}</strong></p>
 				<hr />
-				<p className="card-text"><small>Description: {description}</small></p>
-				<p className="card-text"><small>Category: {category}</small></p>
+				<TextTruncate
+					line={2}
+					text={description}
+				/>
+				<br />
+				<p className="card-text">{category}</p>
 				<Link to={`/${id}`} className="btn btn-orange d-block mb-1">
 					View Profile
 				</Link>

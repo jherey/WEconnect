@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import image from "../../public/images/connect.jpg";
 
 const HeroImage = () => {
 	return (
 		<div className="hero-image">
 			<div className="row">
 				<div className="col-lg-12">
-					<div className="text-center catchphrase">
+					<div className="catchphrase">
 						<h3>Connecting People, Connecting Businesses</h3>
 					</div>
 				</div>
