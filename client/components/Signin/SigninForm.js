@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-// import Materialize from 'materialize-css';
+import { Link } from 'react-router-dom';
 import Spinner from '../Spinner';
 
 class SigninForm extends Component {
@@ -47,48 +47,100 @@ class SigninForm extends Component {
 		if(isLoading) { return <Spinner />; }
 
 		return (
-			<div className="signup">
-				<div className="login-form col-md-4 offset-md-4">
-					<h1 className="title">Sign In</h1>
-					{errors === 'Username/Password Incorrect' && <div className='alert alert-danger'>{errors}</div>}
-					<form onSubmit={this.onSubmit}>
-						<div>
-							<label>Username</label>
-							<input
-								value={username}
-								onChange={this.onChange}
-								type="text"
-								name="username"
-								className="form-control"
-							/>
-							{errors === 'Username is required' && <div className='alert alert-danger'>{errors}</div>}
+			<div className="form-signin">
+				<div className="login-form container py-5">
+					<h1 className="text-center" style={{'color': 'white'}}>Sign In</h1>
+					<div className="row">
+						<div className="col-md-10 mx-auto">
+							{errors === 'Username/Password Incorrect' && <div className='alert alert-danger'>{errors}</div>}
+							<form onSubmit={this.onSubmit}>
+								<div className="form-group row">
+									<div className="col-sm-12">
+										<label>Username</label>
+										<input
+											value={username}
+											onChange={this.onChange}
+											type="text"
+											name="username"
+											className="form-control"
+										/>
+										{errors === 'Username is required' && <div className='alert alert-danger'>{errors}</div>}
+									</div>
+								</div>
+								<div className="form-group row">
+									<div className="col-sm-12">
+										<label>Password</label>
+										<input
+											value={password}
+											onChange={this.onChange}
+											type="password"
+											name="password"
+											className="form-control"
+										/>
+										{errors === 'Password is required' && <div className='alert alert-danger'>{errors}</div>}
+										{errors === 'Minimum password length is 5 characters' && <div className='alert alert-danger'>{errors}</div>}
+									</div>
+								</div>
+								<div className="form-group row">
+									<div className="col-sm-12">
+										<button
+											id="signup"
+											className="btn btn-orange btn-lg"
+											disabled={isLoading}
+										>
+											Login
+										</button>
+										<p id="signin-link">Don't have an account?<span><Link to="/signup"> Sign Up</Link></span></p>
+									</div>
+								</div>
+							</form>
 						</div>
-						<div>
-							<label>Password</label>
-							<input
-								value={password}
-								onChange={this.onChange}
-								type="password"
-								name="password"
-								className="form-control"
-							/>
-							{errors === 'Password is required' && <div className='alert alert-danger'>{errors}</div>}
-							{errors === 'Minimum password length is 5 characters' && <div className='alert alert-danger'>{errors}</div>}
-						</div>
-						<div>
-							<button
-								id="signup"
-								className="btn btn-orange btn-lg"
-								disabled={isLoading}
-							>
-								Login
-							</button>
-						</div>
-					</form>
+					</div>
 				</div>
-				<br />
-				<br />
 			</div>
+			// <div className="form">
+			// 	<h1 className="text-center" style={{'color': 'white'}}>Sign In</h1>
+			// 	<div className="login-form col-md-4 offset-md-4">
+					
+			// 		{errors === 'Username/Password Incorrect' && <div className='alert alert-danger'>{errors}</div>}
+			// 		<form onSubmit={this.onSubmit}>
+			// 			<div>
+			// 				<label>Username</label>
+			// 				<input
+			// 					value={username}
+			// 					onChange={this.onChange}
+			// 					type="text"
+			// 					name="username"
+			// 					className="form-control"
+			// 				/>
+			// 				{errors === 'Username is required' && <div className='alert alert-danger'>{errors}</div>}
+			// 			</div>
+			// 			<div>
+			// 				<label>Password</label>
+			// 				<input
+			// 					value={password}
+			// 					onChange={this.onChange}
+			// 					type="password"
+			// 					name="password"
+			// 					className="form-control"
+			// 				/>
+			// 				{errors === 'Password is required' && <div className='alert alert-danger'>{errors}</div>}
+			// 				{errors === 'Minimum password length is 5 characters' && <div className='alert alert-danger'>{errors}</div>}
+			// 			</div>
+			// 			<div>
+			// 				<button
+			// 					id="signup"
+			// 					className="btn btn-orange btn-lg"
+			// 					disabled={isLoading}
+			// 				>
+			// 					Login
+			// 				</button>
+			// 			</div>
+			// 		</form>
+			// 	</div>
+			// 	<br />
+			// 	<br />
+			// </div>
 		);
 	}
 }
