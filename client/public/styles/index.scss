@@ -67,7 +67,6 @@ footer {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
 	p {
 		margin: 0;
 	}
@@ -75,15 +74,6 @@ footer {
 /* FOOTER END */
 
 /* SEARCH PAGE */
-.search {
-	margin-top: $length-50;
-}
-
-#allbusiness {
-	background: $background-white;
-	padding-top: $length-40;
-	min-height: $length-400;
-}
 
 /* INDEX PAGE CONTENT */
 .hero-image {
@@ -96,13 +86,34 @@ footer {
 	font-family: Lato;
 }
 
-.catchphrase {
-	font-style: $italic;
-	margin-top: 17%;
+@media only screen and (min-width: 701px) and (max-width: 1024px) {
+	.hero-image {
+		height: 430px;
+	}
+}
 
+.catchphrase {
+	text-align: center;
+	font-style: $italic;
+	padding: 200px;
 	h3 {
 		font-size: 30px;
 		color: $background-orange;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	.hero-image {
+		height: 300px;
+	}
+	.catchphrase {
+		text-align: center;
+		font-style: $italic;
+		// padding: 200px;
+		h3 {
+			font-size: 1.2em;
+			color: $background-orange;
+		}
 	}
 }
 
@@ -174,36 +185,81 @@ footer {
 /* INDEX PAGE CONTENT END */
 
 /* SIGN IN/SIGNUP */
-
-.signup {
-	background: $background-white;
+.form-signup {
+	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../images/forms.jpg") center center no-repeat fixed;
 	padding: 15px;
-	margin-top: $length-50;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 770px;
+	position: relative;
+}
+
+.form-signin {
+	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../images/forms.jpg") center center no-repeat fixed;
+	padding: 15px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 685px;
+	position: relative;
+}
+
+@media (max-width: 575px) {
+	.form-signup {
+		height: 1000px;
+	}
+
+	.form-signin {
+		height: 597px;
+	}
+}
+
+.signup-form {
+	border-radius: 5px;
+	opacity: 0.7;
+	background-color: #001f3f!important;
+}
+
+label {
+	color: white;
 }
 
 .login-form {
-	margin-top: $length-10;
-	box-shadow: $zero $zero $length-10 1px grey;
 	border-radius: 5px;
-	padding-bottom: $length-10;
-	background: $background-white;
-	color: $background-blue;
+	opacity: 0.7;
+	background-color: #001f3f!important;
 }
 
-.title {
-	text-align: $center;
-	border-radius: $zero $zero $length-10 $length-10;
+#signup-link {
+	color: $background-white;
+	margin-top: 10px;
+	text-align: center;
 }
 
-#signup {
+#signin-link {
+	color: $background-white;
+	margin-top: 10px;
+}
+
+@media (min-width: 1200px) {
+  .signup-form {
+    width: 850px;
+	}
+	
+	.login-form {
+		width: 600px;
+	}
+}
+
+#submitButton {
 	text-align: $center;
 	margin: auto;
 	display: block;
-	width: 40%;
-	margin-top: 8px
+	width: 120px;
+	margin-top: 5px
 }
-
-/* SIGN IN END/SIGNUP */
+/* SIGN IN/SIGNUP END */
 
 .form-group,
 .form-check {
@@ -235,31 +291,47 @@ form {
 	background: $background-white;
 	color: $background-blue;
 }
-
-.title {
-	text-align: $center;
-	background-color: $background-blue;
-	color: $background-white;
-	border-radius: $zero $zero $length-10 $length-10;
-}
-
 /* END BUSSINESS REGISTRATION PAGE */
 
 /* BUSINESS PROFILE PAGE */
-.back {
-	font-size: 0.8em;
-	padding: $length-10;
-	background: $background-white;
-	margin-top: 55px;
+.profile {
+	margin: 10px;
+	background-color: #F4F6F7;
+	padding-bottom: 10px;
 }
 
-.mid {
+#businessImage {
+	width: 500px;
 	display: block;
-	margin: auto;
-	background-color: #F4F6F7;
-	padding: 30px;
-	width: 80%;
+	margin: 0 auto ;
 }
+
+.businessName {
+	text-align: center;
+}
+
+.business {
+	color: $background-orange;
+	margin-top: 5px;
+}
+
+.address {
+	display: inline-block;
+}
+
+.businessDetails {
+	font-size: 30px;
+}
+
+.details {
+	width: 85%;
+	margin: auto;
+}
+
+.details-margin {
+	margin: 15px;
+}
+
 
 .rev {
 	color: $background-orange;
@@ -271,16 +343,8 @@ form {
 	margin: $length-10;
 }
 
-.details {
-	margin-top: 5px;
-}
-
 .top {
 	margin-top: 25px;
-}
-
-.bus-name {
-	color: $background-orange;
 }
 
 .verticalLine {
@@ -311,11 +375,6 @@ form {
 	margin-top: $length-10;
 }
 
-#logo {
-	margin: $length-20;
-	width: 200px;
-}
-
 @media (max-width: 770px) {
 	.mid {
 		width: 90%;
@@ -326,12 +385,12 @@ form {
 		border-left: $none;
 		font-size: 1.3em;
 	}
-	hr {
-		border: $none;
-		width: 95%;
-		height: 4px;
-		background-color: $background-orange;
-	}
+	// hr {
+	// 	border: $none;
+	// 	width: 95%;
+	// 	height: 4px;
+	// 	background-color: $background-orange;
+	// }
 }
 
 /*BUSINESS PROFILE PAGE*/
