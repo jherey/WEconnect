@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Review from './Review';
 import Spinner from '../Spinner';
 import { connect } from 'react-redux';
@@ -13,7 +14,6 @@ class ReviewList extends Component {
 			review: '',
 			errors: ''
 		}
-
 		this.onReviewChange = this.onReviewChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
@@ -45,6 +45,10 @@ class ReviewList extends Component {
 	render() {
 		const { reviews, isLoading, user, allUsers } = this.props;
 
+		const noReviews = (
+			<h5 className="details-margin">No reviews for this business</h5>
+		);
+
 		const reviewComponent = reviews.map(review => {
 			return (
 				<Review
@@ -60,18 +64,17 @@ class ReviewList extends Component {
 
 		return (
 			<div>
-				<h3 className="text-center rev">REVIEWS</h3>
-				{reviewComponent}
+				{reviews.length === 0 ? noReviews : reviewComponent}
 				{
 					user
 					?
-					<div className="text-center">
+					<div>
 						<button className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 							Add Review
 						</button>
 					</div>
 					:
-					null
+					<p><Link to="/signin">Sign In</Link> To Add Review</p>
 				}
 
 				<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
