@@ -26,7 +26,7 @@ class App extends Component {
 						<Route path="/" exact component={Home} />
 						<Route path="/signin" exact component={Signin} />
 						<Route path="/signup" exact component={Signup} />
-						<Route path="/all" exact component={AllBusinesses} />
+						<Route path="/businesses" exact component={AllBusinesses} />
 						<Route path="/register" exact component={authVerification(Register)} />
 						<Route path="/search" exact component={Search} />
 						<Route path="/dashboard" exact component={Dashboard} />
