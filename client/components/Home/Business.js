@@ -1,6 +1,7 @@
 import React from 'react';
 import TextTruncate from 'react-text-truncate';
 import { Link } from 'react-router-dom';
+import imageAvatar from '../../public/images/business-avatar.png';
 
 const Business = (props) => {
 	const { id, name, description, address, businessImage, location, category } = props;
@@ -9,7 +10,7 @@ const Business = (props) => {
 			<div className="avatar mx-auto white">
 				<img
 					className="rounded-circle mt-2"
-					src={businessImage}
+					src={businessImage.length === 0 ? imageAvatar : businessImage}
 					alt="BusinessLogo"
 					style={{width: '120px', height: '120px'}}
 				/>
