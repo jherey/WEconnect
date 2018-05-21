@@ -8,7 +8,7 @@ import { getAllBusinesses } from '../../actions/businessActions';
 
 class HomePage extends Component {
     componentWillMount() {
-      this.props.getAllBusinesses();
+        this.props.getAllBusinesses();
     }
 
     render() {

@@ -31,7 +31,7 @@ class SigninForm extends Component {
 						type: 'success',
 						text: 'Signed in successfully'
 					});
-					this.context.router.history.push('/');
+					this.context.router.history.push('/dashboard');
 				},
 				(err) => {
 					this.props.loading(false);

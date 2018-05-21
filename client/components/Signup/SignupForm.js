@@ -52,7 +52,7 @@ class SignupForm extends Component {
 						type: 'success',
 						text: 'Welcome! You signed up successfully!'
 					})
-					this.context.router.history.push('/');
+					this.context.router.history.push('/dashboard');
 				},
 				(err) => {
 					this.props.loading(false);
