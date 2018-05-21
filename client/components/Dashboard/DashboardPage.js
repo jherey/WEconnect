@@ -1,51 +1,234 @@
 import React, { Component } from 'react';
 import Business from '../Home/Business';
+import { Link } from 'react-router-dom';
 import Spinner from '../Spinner';
+import PropTypes from 'prop-types';
+import { storage } from '../firebase';
+import maleAvartar from '../../public/images/male-avatar.png';
+import femaleAvartar from '../../public/images/female-avatar.png';
 
 class DashboardPage extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			id: this.props.userId,
+			firstname: this.props.currentUser.firstname,
+			lastname: this.props.currentUser.lastname,
+			username: this.props.currentUser.username,
+			sex: this.props.currentUser.sex,
+			email: this.props.currentUser.email,
+			profilepic: this.props.currentUser.profilepic,
+			errors: ''
+		}
+
+		this.onChange = this.onChange.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
+	}
+
+	onChange(e) {
+		this.setState({
+			[e.target.name]: e.target.value
+		});
+	}
+
+	fileChange(e) {
+		this.setState({ profilepic: '' });
+		const uploadTask = storage.child(`userimage/${new Date().getTime()}`)
+			.put(e.target.files[0]);
+		uploadTask.on('state_changed', snapshot => {
+			const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+			this.props.setProgress(progress);
+		}, error => {
+			this.setState({ errors: err.message })
+		}, () => {
+			this.setState({ profilepic: uploadTask.snapshot.downloadURL });
+		});
+	}
+
+	onSubmit(e) {
+		e.preventDefault();
+		this.setState({ errors: '' });
+		document.getElementById("hidePopUpBtn").click();
+		this.props.updateUser(this.state)
+			.then(
+				() => {
+					this.props.addFlashMessage({
+						type: 'success',
+						text: 'Update successful!'
+					});
+					this.props.getAllUsers();
+					this.context.router.history.push('/dashboard');
+				},
+				(err) => {
+					this.props.loading(false);
+					this.setState({ errors: err.response.data.message });
+				}
+			);
+	}
+
 	render() {
+		const { errors, firstname, lastname, username, email, sex } = this.state;
+		const { isLoading, currentUser, uploadProgress } = this.props;		
+		
 		const noBusiness = (
-			<h5>You don't own any business</h5>
+			<div className="col-lg-3 col-md-6 py-2">
+				<h5>You don't own a business</h5>
+			</div>
 		);
 
 		const businessComponent = this.props.businessList.map((business) => {
 			return (
-				<div className="col-lg-3 col-md-6 py-2">
-				<Business
-					key={business.id}
-					id={business.id}
-					name={business.businessName}
-					description={business.businessInfo}
-					businessImage={business.businessImage}
-					address={business.address}
-					location={business.location}
-					category={business.category}
-				/>
+				<div className="col-lg-4 col-md-6 py-2">
+					<Business
+						key={business.id}
+						id={business.id}
+						name={business.businessName}
+						description={business.businessInfo}
+						businessImage={business.businessImage}
+						address={business.address}
+						location={business.location}
+						category={business.category}
+					/>
 				</div>
 			);
 		});
 
-		const { isLoading, profilepic } = this.props;
+		let image;
+		if (this.props.currentUser.profilepic) {
+			image = currentUser.profilepic
+		} else if (this.props.currentUser.sex == 'male') {
+			image = maleAvartar
+		} else {
+			image = femaleAvartar
+		}
 
 		if (isLoading) { return <Spinner />; }
 
 		return (
-			<div className="container">
-				<div className="row">
-					<div className="col-lg-3">
-						<img
-							className="mt-2"
-							src={profilepic}
-							alt="UserImage"
-							style={{ width: '200px', height: '200px' }}
-						/>
-					</div>
+			<div className="businesses">
+			<h5>Welcome {currentUser.username}</h5>
+				<div className="container list">
+					<div className="row">
+						<div className="col-lg-3 col-md-6">
+							<div className="row userImage">
+								<img
+									className="mt-2 user"
+									src={image}
+									alt="UserImage"
+									border-radius= '50%'
+									style={{ width: '200px', height: '200px' }}
+								/>
+							</div><br />
+							<div className="text-center">
+								<Link className="btn btn-primary" to="/register">Register a Business</Link> <br /><br />
+								<button className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+									Edit User Details
+								</button>
+							</div>
+						</div>
+						<div className="col-lg-9">
+							<div className="row">
+								{businessComponent.length === 0 ? noBusiness : businessComponent}
+							</div>
+						</div>
 
-					{businessComponent.length === 0 ? noBusiness : businessComponent}
+						<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div className="modal-dialog" role="document">
+								<div className="modal-content userDetails">
+									<div className="modal-header">
+										<h5 className="modal-title" id="exampleModalLabel">Edit User Profile</h5>
+										<button id="hidePopUpBtn" type="button" className="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<form onSubmit={this.onSubmit}>
+										<div className="form-group row">
+											<div className="col-sm-6">
+												<label>First Name</label>
+												<input
+													value={firstname}
+													onChange={this.onChange}
+													type="text"
+													name="firstname"
+													className="form-control"
+												/>
+											</div>
+											<div className="col-sm-6">
+												<label>Last Name</label>
+												<input
+													value={lastname}
+													onChange={this.onChange}
+													type="text"
+													name="lastname"
+													className="form-control"
+												/>
+											</div>
+										</div>
+										<div className="form-group row">
+											<div className="col-sm-6">
+											<label className='control-label'>Username</label>
+											<input
+												value={username}
+												onChange={this.onChange}
+												type="text"
+												name="username"
+												className="form-control"
+											/>
+											</div>
+											<div className="col-sm-6">
+												<label className='control-label'>Email</label>
+												<input
+													value={email}
+													onChange={this.onChange}
+													type="email"
+													name="email"
+													className="form-control"
+												/>
+											</div>
+										</div>
+										<div className="form-group row">
+											<div className="col-sm-6">
+											<label className='control-label'>Sex</label>
+											<select
+												className='form-control'
+												name='sex'
+												onChange={this.onChange}
+												value={sex}
+											>
+												<option value='' disabled>Choose</option>
+												<option value='male'>Male</option>
+												<option value='female'>Female</option>
+											</select>
+											</div>
+											<div className="col-sm-6">
+											<label className='control-label'>Profile Picture</label><br/>
+											<input
+												type="file"
+												onChange={this.fileChange.bind(this)}
+											/>
+											<progress value={uploadProgress} max="100" />
+											</div>
+										</div>
+										<button
+											id="updateButton"
+											disabled={isLoading}
+											className="btn btn-orange btn-lg"
+										>
+											Update Details
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		);
 	}
+}
+
+DashboardPage.contextTypes = {
+	router: PropTypes.object.isRequired
 }
 
 export default DashboardPage;
