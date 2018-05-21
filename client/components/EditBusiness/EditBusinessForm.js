@@ -71,123 +71,253 @@ class EditBusinessForm extends Component {
 		if (isLoading) { return <Spinner />; }
 
 		return (
-			<div className="signin">
-				<div className="login-form col-md-4 offset-md-4">
-					<h1 className="title">Edit Business</h1>
-					<form onSubmit={this.onSubmit}>
-						<div>
-							<label className='control-label'>Business Name</label>
-							<input
-								type="text"
-								value={businessName}
-								onChange={this.onChange}
-								className="form-control"
-								name="businessName"
-							/>
-							{errors === 'Business name is required' && <div className='alert alert-danger'>{errors}</div>}
-							{errors === 'A business with this name exists!' && <div className='alert alert-danger'>{errors}</div>}
-						</div>
-						<div>
-							<label className='control-label'>Description</label>
-							<textarea
-								className="form-control"
-								rows="4"
-								name="businessInfo"
-								value={businessInfo}
-								onChange={this.onChange}
-							>
-							</textarea>
-						</div>
-						<div>
-							<label className='control-label'>Website</label>
-							<input
-								type="text"
-								className="form-control"
-								value={website}
-								onChange={this.onChange}
-								name="website"
-							/>
-						</div>
-						<div>
-							<label className='control-label'>Email</label>
-							<input
-								type="email"
-								className="form-control"
-								value={email}
-								onChange={this.onChange}
-								name="email"
-							/>
-							{errors === 'Email is required' && <div className='alert alert-danger'>{errors}</div>}
-						</div>
-						<div>
-							<label className='control-label'>Category</label>
-							<select
-								className="form-control"
-								name='category'
-								onChange={this.onChange}
-								value={category}
-							>
-								<option value='' disabled>Select category</option>
-								<option value='technology'>Technology</option>
-								<option value='news'>News</option>
-								<option value='fashion'>Fashion</option>
-								<option value='transport'>Transport</option>
-								<option value='entertainment'>Entertainment</option>
-								<option value='others'>Others</option>
-							</select>
-							{errors === 'Category is required' && <div className='alert alert-danger'>{errors}</div>}
-						</div>
-						<div>
-							<label className='control-label'>Address</label>
-							<input
-								type="text"
-								className="form-control"
-								value={address}
-								onChange={this.onChange}
-								name="address"
-							/>
-						</div>
-						<div>
-							<label className='control-label'>Country</label>
-							<select
-								className="form-control"
-								name='location'
-								onChange={this.onChange}
-								value={location}
-							>
-								<option value='' disabled>Choose your country</option>
-								<option value='nigeria'>Nigeria</option>
-								<option value='uganda'>Uganda</option>
-								<option value='kenya'>Kenya</option>
-								<option value='ghana'>Ghana</option>
-							</select>
-							{errors === 'Location is required' && <div className='alert alert-danger'>{errors}</div>}
-						</div>
-						<div>
-							<label htmlFor="exampleInputFile">Company Logo</label>
-							<input
-								type="file"
-								onChange={this.fileChange.bind(this)}
-							/>
-							<progress value={uploadProgress} max="100" />
-						</div>
-						<div align="center">
-							<button
-								type="submit"
-								className="btn btn-primary btn-lg"
-							>
-								Update
-							</button>
-							{
-								errors === 'Oops! You cannot update this business' &&
-								<div style={{marginTop: '30px'}}>
-									<span className='alert alert-danger'>{errors}</span>
+			<div className="form-signup">
+				<div className="signup-form container py-5">
+					<h1 className="text-center" style={{'color': 'white'}}>Edit Business Details</h1>
+					<div className="row">
+						<div className="col-md-10 mx-auto">
+							{errors === 'Username already exists' && <div className='alert alert-danger'>{errors}</div>}
+							{errors === 'Email address taken' && <div className='alert alert-danger'>{errors}</div>}
+							<form onSubmit={this.onSubmit}>
+								<div className="form-group row">
+									<div className="col-sm-6">
+										<label>Business Name</label>
+										<input
+											type="text"
+											value={businessName}
+											onChange={this.onChange}
+											className="form-control"
+											name="businessName"
+										/>
+										{errors === 'Business name is required' && <div className='alert alert-danger'>{errors}</div>}
+										{errors === 'A business with this name exist' && <div className='alert alert-danger'>{errors}</div>}
+									</div>
+									<div className="col-sm-6">
+										<label>Description</label>
+						 				<textarea
+											className="form-control"
+											rows="3"
+											name="businessInfo"
+											value={businessInfo}
+											onChange={this.onChange}
+										>
+										</textarea>
+									</div>
 								</div>
-							}
+								<div className="form-group row">
+									<div className="col-sm-6">
+										<label>Website</label>
+										<input
+											type="text"
+											className="form-control"
+											value={website}
+											onChange={this.onChange}
+											name="website"
+										/>
+									</div>
+									<div className="col-sm-6">
+										<label>Email</label>
+						 				<input
+											type="email"
+											className="form-control"
+											value={email}
+											onChange={this.onChange}
+											name="email"
+										/>
+										{errors === 'Email is required' && <div className='alert alert-danger'>{errors}</div>}
+									</div>
+								</div>
+								<div className="form-group row">
+									<div className="col-sm-6">
+										<label>Category</label>
+						 				<select
+											className="form-control"
+											name='category'
+											onChange={this.onChange}
+											value={category}
+										>
+											<option value='' disabled>Select category</option>
+											<option value='technology'>Technology</option>
+											<option value='news'>News</option>
+											<option value='fashion'>Fashion</option>
+											<option value='transport'>Transport</option>
+											<option value='entertainment'>Entertainment</option>
+											<option value='others'>Others</option>
+										</select>
+										{errors === 'Category is required' && <div className='alert alert-danger'>{errors}</div>}
+									</div>
+									<div className="col-sm-6">
+										<label className='control-label'>Address</label>
+						 				<input
+											type="text"
+											className="form-control"
+											value={address}
+											onChange={this.onChange}
+											name="address"
+										/>
+									</div>
+								</div>
+								<div className="form-group row">
+									<div className="col-sm-6">
+										<label className='control-label'>Country</label>
+						 				<select
+											className="form-control"
+											name='location'
+											onChange={this.onChange}
+											value={location}
+										>
+											<option value='' disabled>Choose your country</option>
+											<option value='nigeria'>Nigeria</option>
+											<option value='uganda'>Uganda</option>
+											<option value='kenya'>Kenya</option>
+											<option value='ghana'>Ghana</option>
+										</select>
+										{errors === 'Location is required' && <div className='alert alert-danger'>{errors}</div>}
+									</div>
+									<div className="col-sm-6">
+										<label className='control-label'>Company Logo</label>
+										<input
+											type="file"
+											onChange={this.fileChange.bind(this)}
+										/>
+										<progress value={uploadProgress} max="100" />
+									</div>
+								</div>
+								<button
+									id="submitButton"
+									disabled={isLoading}
+									className="btn btn-orange btn-lg"
+								>
+									Update
+								</button>
+								{
+									errors === 'Oops! You cannot update this business' &&
+									<div style={{marginTop: '30px'}}>
+										<span className='alert alert-danger'>{errors}</span>
+									</div>
+								}
+							</form>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
+			// <div className="signin">
+			// 	<div className="login-form col-md-4 offset-md-4">
+			// 		<h1 className="title">Edit Business</h1>
+			// 		<form onSubmit={this.onSubmit}>
+			// 			<div>
+			// 				<label className='control-label'>Business Name</label>
+			// 				<input
+			// 					type="text"
+			// 					value={businessName}
+			// 					onChange={this.onChange}
+			// 					className="form-control"
+			// 					name="businessName"
+			// 				/>
+			// 				{errors === 'Business name is required' && <div className='alert alert-danger'>{errors}</div>}
+			// 				{errors === 'A business with this name exists!' && <div className='alert alert-danger'>{errors}</div>}
+			// 			</div>
+			// 			<div>
+			// 				<label className='control-label'>Description</label>
+			// 				<textarea
+			// 					className="form-control"
+			// 					rows="4"
+			// 					name="businessInfo"
+			// 					value={businessInfo}
+			// 					onChange={this.onChange}
+			// 				>
+			// 				</textarea>
+			// 			</div>
+			// 			<div>
+			// 				<label className='control-label'>Website</label>
+			// 				<input
+			// 					type="text"
+			// 					className="form-control"
+			// 					value={website}
+			// 					onChange={this.onChange}
+			// 					name="website"
+			// 				/>
+			// 			</div>
+			// 			<div>
+			// 				<label className='control-label'>Email</label>
+			// 				<input
+			// 					type="email"
+			// 					className="form-control"
+			// 					value={email}
+			// 					onChange={this.onChange}
+			// 					name="email"
+			// 				/>
+			// 				{errors === 'Email is required' && <div className='alert alert-danger'>{errors}</div>}
+			// 			</div>
+			// 			<div>
+			// 				<label className='control-label'>Category</label>
+			// 				<select
+			// 					className="form-control"
+			// 					name='category'
+			// 					onChange={this.onChange}
+			// 					value={category}
+			// 				>
+			// 					<option value='' disabled>Select category</option>
+			// 					<option value='technology'>Technology</option>
+			// 					<option value='news'>News</option>
+			// 					<option value='fashion'>Fashion</option>
+			// 					<option value='transport'>Transport</option>
+			// 					<option value='entertainment'>Entertainment</option>
+			// 					<option value='others'>Others</option>
+			// 				</select>
+			// 				{errors === 'Category is required' && <div className='alert alert-danger'>{errors}</div>}
+			// 			</div>
+			// 			<div>
+			// 				<label className='control-label'>Address</label>
+			// 				<input
+			// 					type="text"
+			// 					className="form-control"
+			// 					value={address}
+			// 					onChange={this.onChange}
+			// 					name="address"
+			// 				/>
+			// 			</div>
+			// 			<div>
+			// 				<label className='control-label'>Country</label>
+			// 				<select
+			// 					className="form-control"
+			// 					name='location'
+			// 					onChange={this.onChange}
+			// 					value={location}
+			// 				>
+			// 					<option value='' disabled>Choose your country</option>
+			// 					<option value='nigeria'>Nigeria</option>
+			// 					<option value='uganda'>Uganda</option>
+			// 					<option value='kenya'>Kenya</option>
+			// 					<option value='ghana'>Ghana</option>
+			// 				</select>
+			// 				{errors === 'Location is required' && <div className='alert alert-danger'>{errors}</div>}
+			// 			</div>
+			// 			<div>
+			// 				<label htmlFor="exampleInputFile">Company Logo</label>
+			// 				<input
+			// 					type="file"
+			// 					onChange={this.fileChange.bind(this)}
+			// 				/>
+			// 				<progress value={uploadProgress} max="100" />
+			// 			</div>
+			// 			<div align="center">
+			// 				<button
+			// 					type="submit"
+			// 					className="btn btn-primary btn-lg"
+			// 				>
+			// 					Update
+			// 				</button>
+			// 				{
+			// 					errors === 'Oops! You cannot update this business' &&
+			// 					<div style={{marginTop: '30px'}}>
+			// 						<span className='alert alert-danger'>{errors}</span>
+			// 					</div>
+			// 				}
+			// 			</div>
+			// 		</form>
+			// 	</div>
+			// </div>
 		);
 	}
 }
