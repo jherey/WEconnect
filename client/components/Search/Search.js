@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class Search extends Component {
 	render() {
 		return (
-			<div id='allbusiness'>
+			<div className="businesses">
 				<SearchPage searchResults={this.props.searchResults} />
 			</div>
 		);

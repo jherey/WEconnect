@@ -19,30 +19,35 @@ $static: static;
 $left: left;
 $center: center;
 $border-box: border-box;
-
 body {
 	font-family: $font;
 	height: $height;
+	background-color: #f2f6f7;
 }
 
 /* NAVBAR */
+
 /* change the background color */
+
 .navbar-custom {
-    background-color: $background-blue;
+	background-color: $background-blue;
 }
 
 /* change the brand and text color */
+
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
 	color: $background-orange;
 }
 
 /* change the link color */
+
 .navbar-custom .navbar-nav .nav-link {
 	color: $background-white;
 }
 
 /* change the color of active or hovered links */
+
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
 	color: $background-orange;
@@ -67,13 +72,14 @@ footer {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
 	p {
 		margin: 0;
 	}
 }
 /* FOOTER END */
-
-/* SEARCH PAGE */
 
 /* INDEX PAGE CONTENT */
 .hero-image {
@@ -109,7 +115,6 @@ footer {
 	.catchphrase {
 		text-align: center;
 		font-style: $italic;
-		// padding: 200px;
 		h3 {
 			font-size: 1.2em;
 			color: $background-orange;
@@ -175,14 +180,11 @@ footer {
 }
 
 /* MEDIA QUERIES */
-
 @media (max-width: 900px) {
-	#content > * {
+	#content>* {
 		padding: 6px;
 	}
 }
-
-/* INDEX PAGE CONTENT END */
 
 /* SIGN IN/SIGNUP */
 .form-signup {
@@ -209,7 +211,6 @@ footer {
 	.form-signup {
 		height: 1000px;
 	}
-
 	.form-signin {
 		height: 597px;
 	}
@@ -218,7 +219,7 @@ footer {
 .signup-form {
 	border-radius: 5px;
 	opacity: 0.7;
-	background-color: #001f3f!important;
+	background-color: #001f3f !important;
 }
 
 label {
@@ -228,7 +229,7 @@ label {
 .login-form {
 	border-radius: 5px;
 	opacity: 0.7;
-	background-color: #001f3f!important;
+	background-color: #001f3f !important;
 }
 
 #signup-link {
@@ -243,10 +244,9 @@ label {
 }
 
 @media (min-width: 1200px) {
-  .signup-form {
-    width: 850px;
+	.signup-form {
+		width: 850px;
 	}
-	
 	.login-form {
 		width: 600px;
 	}
@@ -259,8 +259,10 @@ label {
 	width: 120px;
 	margin-top: 5px
 }
+
 /* SIGN IN/SIGNUP END */
 
+/* BUSSINESS REGISTRATION PAGE */
 .form-group,
 .form-check {
 	margin: 25px $zero;
@@ -293,6 +295,20 @@ form {
 }
 /* END BUSSINESS REGISTRATION PAGE */
 
+.allBusinesses {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.userImage {
+	display: flex;
+	justify-content: center;
+}
+
+.user {
+	border-radius: 8px;
+}
+
 /* BUSINESS PROFILE PAGE */
 .profile {
 	margin: 10px;
@@ -303,7 +319,11 @@ form {
 #businessImage {
 	width: 500px;
 	display: block;
-	margin: 0 auto ;
+	margin: 0 auto;
+}
+
+#review-createdTime {
+	font-size: 10px;
 }
 
 .businessName {
@@ -332,6 +352,9 @@ form {
 	margin: 15px;
 }
 
+.userDetails {
+	background-color: $background-blue;
+}
 
 .rev {
 	color: $background-orange;
@@ -371,6 +394,14 @@ form {
 	font-size: 1.15em;
 }
 
+#updateButton {
+	text-align: $center;
+	margin: auto;
+	display: block;
+	width: 170px;
+	margin-top: 5px
+}
+
 #write {
 	margin-top: $length-10;
 }
@@ -385,12 +416,6 @@ form {
 		border-left: $none;
 		font-size: 1.3em;
 	}
-	// hr {
-	// 	border: $none;
-	// 	width: 95%;
-	// 	height: 4px;
-	// 	background-color: $background-orange;
-	// }
 }
 
 /*BUSINESS PROFILE PAGE*/
