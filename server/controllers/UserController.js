@@ -75,8 +75,7 @@ const Users = {
       .then((user) => {
         const userDetails = {
           id: user.id,
-          username: user.username,
-          profilepic: user.profilepic
+          username: user.username
         };
         // Assign token to user for six hours
         const token = jwt.sign(userDetails, secret, { expiresIn: '6h' });
@@ -108,8 +107,7 @@ const Users = {
         if (user && bcrypt.compareSync(password, user.password)) {
           const userData = {
             id: user.id,
-            username: user.username,
-            profilepic: user.profilepic
+            username: user.username
           };
           // Assign token to user for six hours
           const token = jwt.sign(userData, secret, { expiresIn: '6h' });
@@ -138,18 +136,10 @@ const Users = {
       profilepic,
       sex,
       username,
-      email,
-      password,
-      confirmPassword
+      email
     } = req.body;
     const { userId } = req.params;
     const { authData } = req;
-    if (password !== confirmPassword) {
-      return res.status(400).json({
-        message: 'Passwords do not match',
-        error: true
-      });
-    }
     // Check if user exist
     User.findOne({
       where: {
@@ -188,7 +178,7 @@ const Users = {
                 sex,
                 username,
                 email,
-                password: hashSync(password, 10)
+                password: authorizedUser.password
               })
               // Success message
               .then(updatedUser => res.status(200).json({
@@ -200,7 +190,36 @@ const Users = {
                 .json({ message: error.errors[0].message }));
           });
       });
-  }
+  },
+
+  getAUser: (req, res) => {
+    const { userId } = req.params;
+    User
+      // FInd one user by the userId from the url
+      .findById(userId)
+      .then((user) => {
+        // If no user found
+        if (!user) {
+          return res.status(404).send({
+            message: 'No User Found!',
+          });
+        }
+        // User found!
+        const userData = {
+          id: user.id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          username: user.username,
+          sex: user.sex,
+          email: user.email,
+          profilepic: user.profilepic
+        };
+        return res.status(200).json({
+          message: 'User Found',
+          userData,
+        });
+      });
+  },
 };
 
 export default Users;

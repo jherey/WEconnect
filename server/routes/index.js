@@ -12,6 +12,7 @@ const router = express.Router();
 // Destructure middleware
 const { userSignUp } = userValidator;
 const { userLogin } = userValidator;
+const { userUpdateChecker } = userValidator;
 const { createBusinessValidator } = businessValidator;
 const { query } = businessValidator;
 const { tokenVerification } = verifyToken;
@@ -22,6 +23,7 @@ const { getAllUsers } = Users;
 const { registerUsers } = Users;
 const { loginUser } = Users;
 const { updateUser } = Users;
+const { getAUser } = Users;
 const { registerBusiness } = Business;
 const { updateBusiness } = Business;
 const { removeBusiness } = Business;
@@ -37,7 +39,9 @@ router
 router
   .post('/auth/login', userLogin, loginUser);
 router
-  .put('/auth/:userId', userSignUp, tokenVerification, updateUser);
+  .put('/auth/:userId', userUpdateChecker, idChecker, tokenVerification, updateUser);
+router
+  .get('/auth/:userId', idChecker, getAUser);
 
 // Business endpoints
 router
