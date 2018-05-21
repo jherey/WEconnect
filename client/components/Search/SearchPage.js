@@ -11,17 +11,24 @@ class SearchPage extends Component {
 
 		const searchComponent = searchResults.map((business, i) => {
 			return (
+				<div className="col-lg-3 col-md-6 py-2">
 				<Business
 					key={business.id}
 					id={business.id}
 					name={business.businessName}
+					description={business.businessInfo}
+					businessImage={business.businessImage}
+					address={business.address}
+					location={business.location}
+					category={business.category}
 				/>
+				</div>
 			);
 		});
 
 		return (
-			<div className="container search">
-				<div className="row text-center">
+			<div className="container list">
+				<div className="row">
 					{this.props.searchResults.length === 0 ? noSearchResults : searchComponent}
 				</div>
 			</div>

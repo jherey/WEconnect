@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getAllBusinesses } from '../../actions/businessActions';
 
 class AllBusinesses extends Component {
-	componentDidMount() {
+	componentWillMount() {
 		this.props.getAllBusinesses();
 	}
 
