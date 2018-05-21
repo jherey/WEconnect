@@ -55,6 +55,7 @@ class ReviewList extends Component {
 					key={review.id}
 					username={review.username}
 					review={review.review}
+					createdAt={review.createdAt}
 					allUsers={allUsers}
 				/>
 			);

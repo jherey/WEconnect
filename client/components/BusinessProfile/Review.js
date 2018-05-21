@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
-const Review = ({ username, review, allUsers }) => {
+const Review = ({ username, review, createdAt, allUsers }) => {
 	const profile = allUsers.filter(user => {
 		return username === user.username;
 	});
@@ -19,6 +20,7 @@ const Review = ({ username, review, allUsers }) => {
 			<div className="col-lg-11">
 				<p><strong>{username}</strong></p>
 				<p>{review}</p>
+				<p id="review-createdTime">{moment(createdAt).format('Do MMMM YYYY HH:mm')}</p>
 			</div>
 			<hr />
 		</div>
