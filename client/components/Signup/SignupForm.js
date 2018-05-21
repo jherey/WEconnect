@@ -16,7 +16,6 @@ class SignupForm extends Component {
 			profilepic: '',
 			password: '',
 			confirmPassword: '',
-			errors: ''
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -56,7 +55,10 @@ class SignupForm extends Component {
 				},
 				(err) => {
 					this.props.loading(false);
-					this.setState({ errors: err.response.data.message });
+					this.props.addFlashMessage({
+						type: 'error',
+						text: err.response.data.message
+					});
 				}
 			);
 	}
@@ -73,8 +75,6 @@ class SignupForm extends Component {
 					<h1 className="text-center" style={{'color': 'white'}}>Sign Up</h1>
 					<div className="row">
 						<div className="col-md-10 mx-auto">
-							{errors === 'Username already exists' && <div className='alert alert-danger'>{errors}</div>}
-							{errors === 'Email address taken' && <div className='alert alert-danger'>{errors}</div>}
 							<form onSubmit={this.onSubmit}>
 								<div className="form-group row">
 									<div className="col-sm-6">
@@ -86,7 +86,6 @@ class SignupForm extends Component {
 											name="firstname"
 											className="form-control"
 										/>
-										{errors === 'Firstname is required' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 									<div className="col-sm-6">
 										<label>Last Name</label>
@@ -97,20 +96,18 @@ class SignupForm extends Component {
 											name="lastname"
 											className="form-control"
 										/>
-										{errors === 'Lastname is required' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 								</div>
 								<div className="form-group row">
 									<div className="col-sm-6">
-									<label className='control-label'>Username</label>
-									<input
-										value={username}
-										onChange={this.onChange}
-										type="text"
-										name="username"
-										className="form-control"
-									/>
-									{errors === 'Username is required' && <div className='alert alert-danger'>{errors}</div>}
+										<label className='control-label'>Username</label>
+										<input
+											value={username}
+											onChange={this.onChange}
+											type="text"
+											name="username"
+											className="form-control"
+										/>
 									</div>
 									<div className="col-sm-6">
 										<label className='control-label'>Email</label>
@@ -121,7 +118,6 @@ class SignupForm extends Component {
 											name="email"
 											className="form-control"
 										/>
-										{errors === 'Email is required' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 								</div>
 								<div className="form-group row">
@@ -134,8 +130,6 @@ class SignupForm extends Component {
 											name="password"
 											className="form-control"
 										/>
-										{errors === 'Password is required' && <div className='alert alert-danger'>{errors}</div>}
-										{errors === 'Minimum password length is 5 characters' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 									<div className="col-sm-6">
 										<label className='control-label'>Confirm Password</label>
@@ -146,31 +140,29 @@ class SignupForm extends Component {
 											name="confirmPassword"
 											className="form-control"
 										/>
-										{errors === 'Confirm password field is required' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 								</div>
 								<div className="form-group row">
 									<div className="col-sm-6">
-									<label className='control-label'>Sex</label>
-									<select
-										className='form-control'
-										name='sex'
-										onChange={this.onChange}
-										value={sex}
-									>
-										<option value='' disabled>Choose</option>
-										<option value='male'>Male</option>
-										<option value='female'>Female</option>
-									</select>
-									{errors === 'Sex is required' && <div className='alert alert-danger'>{errors}</div>}
+										<label className='control-label'>Sex</label>
+										<select
+											className='form-control'
+											name='sex'
+											onChange={this.onChange}
+											value={sex}
+										>
+											<option value='' disabled>Choose</option>
+											<option value='male'>Male</option>
+											<option value='female'>Female</option>
+										</select>
 									</div>
 									<div className="col-sm-6">
-									<label className='control-label'>Profile Picture</label><br/>
-									<input
-										type="file"
-										onChange={this.fileChange.bind(this)}
-									/>
-									<progress value={uploadProgress} max="100" />
+										<label className='control-label'>Profile Picture</label><br/>
+										<input
+											type="file"
+											onChange={this.fileChange.bind(this)}
+										/>
+										<progress value={uploadProgress} max="100" />
 									</div>
 								</div>
 								<button

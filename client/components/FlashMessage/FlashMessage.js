@@ -8,6 +8,9 @@ class FlashMessage extends Component {
 		if (type === 'success') {
 			this.refs.container.success(text)
 		}
+		if (type === 'error') {
+			this.refs.container.error(text)
+		}
 	}
 
 	render() {

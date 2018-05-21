@@ -9,7 +9,6 @@ class SigninForm extends Component {
 		this.state = {
 			username: '',
 			password: '',
-			errors: ''
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -35,7 +34,10 @@ class SigninForm extends Component {
 				},
 				(err) => {
 					this.props.loading(false);
-					this.setState({ errors: err.response.data.message });
+					this.props.addFlashMessage({
+						type: 'error',
+						text: err.response.data.message
+					});
 				}
 			);
 	}
@@ -52,7 +54,6 @@ class SigninForm extends Component {
 					<h1 className="text-center" style={{'color': 'white'}}>Sign In</h1>
 					<div className="row">
 						<div className="col-md-10 mx-auto">
-							{errors === 'Username/Password Incorrect' && <div className='alert alert-danger'>{errors}</div>}
 							<form onSubmit={this.onSubmit}>
 								<div className="form-group row">
 									<div className="col-sm-12">
@@ -64,7 +65,6 @@ class SigninForm extends Component {
 											name="username"
 											className="form-control"
 										/>
-										{errors === 'Username is required' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 								</div>
 								<div className="form-group row">
