@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import flashMessages from './reducer-flashMessages';
 import authUser from './reducer-user';
 import businesses from './reducer-businesses';
+import currentUser from './currentUser';
 import currentBusiness from './reducer-currentBusiness';
 import reviews from './reducer-reviews';
 import searchResults from './reducer-search';
@@ -12,6 +13,7 @@ import allUsers from './reducer-allUsers';
 const allReducers = combineReducers({
   allUsers,
   flashMessages,
+  currentUser,
   authUser,
   uploadProgress,
   businesses,

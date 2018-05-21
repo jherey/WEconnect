@@ -15,11 +15,11 @@ export default function businesses(state = [], action = {}) {
       ];
 
     case 'UPDATE_BUSINESS':
-      return state.map((item) => {
-        if (item.id === action.updatedBusiness) {
+      return state.map((business) => {
+        if (business.id === action.updatedBusiness.id) {
           return action.business;
         }
-        return item;
+        return business;
       });
 
     case 'DELETE_BUSINESS':
