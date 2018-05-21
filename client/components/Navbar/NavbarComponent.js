@@ -41,7 +41,7 @@ class NavbarComponent extends Component {
 		const authUserLinks = (
 			<ul className="navbar-nav">
 				<li className="nav-item">
-					<Link className="nav-link" to="/register">Register a Business</Link>
+					<Link className="nav-link" to="/businesses">Businesses</Link>
 				</li>
 				<li className="nav-item">
 					<Link className="nav-link" to="/dashboard">Dashboard</Link>
@@ -54,6 +54,9 @@ class NavbarComponent extends Component {
 
 		const guestLinks = (
 			<ul className="navbar-nav">
+				<li className="nav-item">
+					<Link className="nav-link" to="/businesses">Businesses</Link>
+				</li>
 				<li className="nav-item">
 					<Link className="nav-link" to="/signin">Sign In</Link>
 				</li>
