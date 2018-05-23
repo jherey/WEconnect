@@ -26,7 +26,7 @@ class BusinessProfile extends Component {
 		} = this.props;
 
 		return (
-			<div>
+			<div className="paddingBottom">
 				<BusinessProfilePage
 					id={id}
 					getAllUsers={getAllUsers}

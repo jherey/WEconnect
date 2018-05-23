@@ -32,7 +32,10 @@ class BusinessProfilePage extends Component {
 				},
 				(err) => {
 					this.props.loading(false);
-					this.setState({ errors: err.response.data.message });
+					this.props.addFlashMessage({
+						type: 'error',
+						text: err.response.data.message
+					});
 				}
 			);
 	}
@@ -44,8 +47,8 @@ class BusinessProfilePage extends Component {
 		if (isLoading) { return <Spinner />; }
 
 		return (
-			<div className="container">
-				<div className="profile">
+			<div className="businesses">
+				<div className="container list">
 					<img id="businessImage" src={currentBusiness.businessImage} alt="Business Image" />
 					<h1 className="businessName">{currentBusiness.businessName}</h1>
 					<div className="details">
