@@ -29,7 +29,7 @@ class App extends Component {
 						<Route path="/businesses" exact component={AllBusinesses} />
 						<Route path="/register" exact component={authVerification(Register)} />
 						<Route path="/search" exact component={Search} />
-						<Route path="/dashboard" exact component={Dashboard} />
+						<Route path="/dashboard" exact component={authVerification(Dashboard)} />
 						<Route path={"/:id"} exact component={BusinessProfile} />
 						<Route path={"/:id/edit"} exact component={authVerification(EditBusiness)} />
 					</Switch>
