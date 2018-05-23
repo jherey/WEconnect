@@ -33,7 +33,8 @@ class Dashboard extends Component {
 		});
 
 		return (
-			<DashboardPage
+			<div className="paddingBottom">
+				<DashboardPage
 				userId={userId}
 				businessList={userBusiness}
 				isLoading={isLoading}
@@ -45,6 +46,7 @@ class Dashboard extends Component {
 				setProgress={setProgress}
 				getAllUsers={getAllUsers}
 			/>
+			</div>
 		);
 	}
 }

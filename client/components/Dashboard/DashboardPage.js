@@ -12,17 +12,29 @@ class DashboardPage extends Component {
 		super(props);
 		this.state = {
 			id: this.props.userId,
-			firstname: this.props.currentUser.firstname,
-			lastname: this.props.currentUser.lastname,
-			username: this.props.currentUser.username,
-			sex: this.props.currentUser.sex,
-			email: this.props.currentUser.email,
-			profilepic: this.props.currentUser.profilepic,
+			firstname: '',
+			lastname: '',
+			username: '',
+			sex: '',
+			email: '',
+			profilepic: '',
 			errors: ''
 		}
 
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		const { firstname, lastname, username, sex, email, profilepic } = nextProps.currentUser;
+		this.setState({
+			firstname: firstname,
+			lastname: lastname,
+			username: username,
+			sex: sex,
+			email: email,
+			profilepic: profilepic
+		})
 	}
 
 	onChange(e) {
