@@ -71,7 +71,7 @@ class NavbarComponent extends Component {
 		if (isLoading) { return <Spinner />; }
 
 		return (
-			<nav className="navbar navbar-custom navbar-expand-lg">
+			<nav className="navbar navbar-custom sticky-top navbar-expand-lg">
 				<Link className="navbar-brand ml-5" to="/">WeConnect</Link>
 				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 					<span className="navbar-toggler-icon"></span>

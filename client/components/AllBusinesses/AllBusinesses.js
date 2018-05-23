@@ -12,8 +12,10 @@ class AllBusinesses extends Component {
 		const { businesses, isLoading } = this.props;
 
 		return (
-			<div id='allbusiness'>
-				<AllBusinessList businesses={businesses} isLoading={isLoading} />
+			<div className="paddingBottom">
+				<div id='allbusiness'>
+					<AllBusinessList businesses={businesses} isLoading={isLoading} />
+				</div>
 			</div>
 		);
 	}

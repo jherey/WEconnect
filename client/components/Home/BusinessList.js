@@ -32,13 +32,6 @@ const BusinessList = ({ businesses }) => {
 			<div className="row">
 				{businesses.length === 0 ? noBusiness : businessComponent}
 			</div>
-			{businesses.length < 8 ?
-				null
-				:
-				<div className="row justify-content-end d-flex">
-					<Link to="/all">View all Businesses...</Link>
-				</div>
-			}
 		</div>
 	);
 }

@@ -17,7 +17,7 @@ class HomePage extends Component {
         if (isLoading) { return <Spinner />; }
 
         return (
-            <div>
+            <div className="paddingBottom">
                 <HeroImage />
                 <div className="businesses">
 									<BusinessList businesses={businesses} />
