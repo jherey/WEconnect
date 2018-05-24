@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addFlashMessage } from '../actions/flashMessages';
+import { signout } from '../actions/userActions';
+import addFlashMessage from '../actions/flashMessages';
+import decodeToken from './decodeToken';
 
 export default function(AuthenticatedComponent) {
 	class AuthVerification extends Component {
@@ -13,11 +15,19 @@ export default function(AuthenticatedComponent) {
 				});
 				this.context.router.history.push('/signin');
 			}
+			if (!decodeToken()) {
+				this.props.addFlashMessage({
+					type: 'error',
+					text: 'Session expired, please signin again'
+				});
+				this.props.signout();
+				this.context.router.history.push('/signin');
+			}
 		}
 
 		componentWillUpdate(nextProps) {
 			if (!nextProps.isAuthenticated) {
-				this.context.router.history.push('/');
+				this.context.router.history.push('/signin');
 			}
 		}
 
@@ -38,5 +48,5 @@ export default function(AuthenticatedComponent) {
 		};
 	}
 
-	return connect(mapStateToProps, { addFlashMessage })(AuthVerification);
+	return connect(mapStateToProps, { addFlashMessage, signout })(AuthVerification);
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 /**
  * @description - Sets token to headers
  * @param {*} token
- * @returns {Object} token
+ * @returns {string} token
  */
 export default function setAuthToken(token) {
   if (token) {
