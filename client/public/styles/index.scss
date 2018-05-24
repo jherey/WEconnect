@@ -33,6 +33,11 @@ body {
 	background-color: $background-blue;
 }
 
+/* Change hamburger color to white */
+#hamburger {
+	background-color: $background-white;
+}
+
 /* change the brand and text color */
 
 .navbar-custom .navbar-brand,
@@ -120,6 +125,14 @@ footer {
 			color: $background-orange;
 		}
 	}
+}
+
+.paddingBottom {
+	padding-bottom: 47px;
+}
+
+.reviewButton {
+	margin-bottom: 10px;
 }
 
 .businesses {
@@ -266,10 +279,6 @@ label {
 .form-group,
 .form-check {
 	margin: 25px $zero;
-}
-
-.form-control {
-	border-radius: $zero;
 }
 
 form {
