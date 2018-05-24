@@ -54,6 +54,7 @@ const reviewModel = (sequelize, DataTypes) => {
 
     Review.belongsTo(models.User, {
       foreignKey: 'userId',
+      as: 'reviewer'
     });
   };
   return Review;
