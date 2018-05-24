@@ -5,8 +5,31 @@ const Businesses = models.Business;
 
 const businessValidator = {
   query: (req, res, next) => {
-    const { location, category } = req.query;
-    if (location || category) {
+    const { name, location, category } = req.query;
+    if (name || location || category) {
+      // If there's a name query string
+      if (name) {
+        Businesses
+          // Find by name
+          .findAll({
+            where: {
+              businessName: { $iLike: `%${name}%` }
+            }
+          })
+          .then((business) => {
+            // If no businesses found, return error
+            if (business.length < 1) {
+              return res.status(404).json({
+                message: 'No business with this name!',
+              });
+            }
+            // If business found, return business found
+            return res.status(200).json({
+              message: 'Business Found!',
+              business
+            });
+          });
+      }
       // If there's a location query string
       if (location) {
         Businesses
@@ -52,7 +75,7 @@ const businessValidator = {
             });
           });
       }
-    } else if (!location || !category) {
+    } else if (!name || !location || !category) {
       return next();
     }
   },
@@ -60,15 +83,20 @@ const businessValidator = {
   createBusinessValidator: (req, res, next) => {
     req.check('businessName', 'Business name is required').notEmpty();
     req.check('email', 'Email is required').notEmpty();
+    req.check('businessInfo', 'Description is required').notEmpty();
+    req
+      .check('businessInfo', 'Description should be more than 30 words')
+      .isLength({ min: 30 });
     req.check('email', 'Email is not valid').isEmail();
     req.check('category', 'Category is required').notEmpty();
     req.check('location', 'Location is required').notEmpty();
 
     const errors = req.validationErrors();
+    const validationErrors = [];
     if (errors) {
+      errors.map(err => validationErrors.push(err.msg));
       return res.status(400).json({
-        message: errors[0].msg,
-        error: true
+        errors: validationErrors
       });
     }
     return next();

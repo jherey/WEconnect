@@ -16,7 +16,7 @@ class EditBusinessForm extends Component {
 			location: this.props.currentBusiness.location,
 			website: this.props.currentBusiness.website,
 			businessImage: this.props.currentBusiness.businessImage,
-			errors: ''
+			errors: []
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -59,7 +59,15 @@ class EditBusinessForm extends Component {
 			},
 			(err) => {
 				this.props.loading(false);
-				this.setState({ errors: err.response.data.message });
+				this.setState({ error: err.response.data.errors });
+				if (this.state.error) {
+					this.state.error.map(err => {
+						this.props.addFlashMessage({
+							type: 'error',
+							text: err
+						});
+					})
+				}
 			}
 		);
 	}

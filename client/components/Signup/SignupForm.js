@@ -16,6 +16,7 @@ class SignupForm extends Component {
 			profilepic: '',
 			password: '',
 			confirmPassword: '',
+			error: []
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -55,10 +56,15 @@ class SignupForm extends Component {
 				},
 				(err) => {
 					this.props.loading(false);
-					this.props.addFlashMessage({
-						type: 'error',
-						text: err.response.data.message
-					});
+					this.setState({ error: err.response.data.errors })
+					if (this.state.error) {
+						this.state.error.map(err => {
+							this.props.addFlashMessage({
+								type: 'error',
+								text: err
+							});
+						})
+					}
 				}
 			);
 	}

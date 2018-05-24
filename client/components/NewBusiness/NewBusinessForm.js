@@ -15,7 +15,7 @@ class NewBusinessForm extends Component {
 			location: '',
 			businessImage: '',
 			website: '',
-			errors: ''
+			errors: []
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -54,7 +54,15 @@ class NewBusinessForm extends Component {
 			},
 			(err) => {
 				this.props.loading(false);
-				this.setState({ errors: err.response.data.message });
+				this.setState({ error: err.response.data.errors });
+				if (this.state.error) {
+					this.state.error.map(err => {
+						this.props.addFlashMessage({
+							type: 'error',
+							text: err
+						});
+					})
+				}
 			}
 		);
 	}

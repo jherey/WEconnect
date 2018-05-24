@@ -120,7 +120,7 @@ const Users = {
         // Details mismatch
         return res.status(400)
           .json({
-            message: 'Username/Password Incorrect'
+            errors: ['Username/Password Incorrect']
           });
       })
       .catch(error => res.status(400)
@@ -211,8 +211,8 @@ const Users = {
           lastname: user.lastname,
           username: user.username,
           sex: user.sex,
-          email: user.email,
-          profilepic: user.profilepic
+          profilepic: user.profilepic,
+          createdAt: user.createdAt
         };
         return res.status(200).json({
           message: 'User Found',
