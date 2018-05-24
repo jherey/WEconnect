@@ -14,7 +14,6 @@ class BusinessProfilePage extends Component {
 
 	componentWillMount() {
 		this.props.fetchBusiness(this.props.id);
-		this.props.getAllUsers();
 		this.props.fetchReviews(this.props.id);
 	}
 
@@ -141,7 +140,7 @@ class BusinessProfilePage extends Component {
 						</div>
 						<h3 className="business">Reviews</h3>
 						<hr />
-						<ReviewList reviews={reviews} id={id} allUsers={allUsers} />
+						<ReviewList reviews={reviews} id={id} />
 					</div>
 				</div>
 			</div>
