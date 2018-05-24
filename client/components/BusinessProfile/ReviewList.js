@@ -17,7 +17,7 @@ class ReviewList extends Component {
 		this.onReviewChange = this.onReviewChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
-
+	
 	onReviewChange(e) {
 		this.setState({ review: e.target.value })
 	}
@@ -37,13 +37,16 @@ class ReviewList extends Component {
 				},
 				(err) => {
 					this.props.loading(false);
-					this.setState({ errors: err.response.data.message });
+					this.props.addFlashMessage({
+						type: 'error',
+						text: err.response.data.message
+					});
 				}
 			);
 	}
 
 	render() {
-		const { reviews, isLoading, user, allUsers } = this.props;
+		const { reviews, isLoading, user } = this.props;
 
 		const noReviews = (
 			<h5 className="details-margin">No reviews for this business</h5>
@@ -56,7 +59,7 @@ class ReviewList extends Component {
 					username={review.username}
 					review={review.review}
 					createdAt={review.createdAt}
-					allUsers={allUsers}
+					image={review.reviewer.profilepic}
 				/>
 			);
 		});
@@ -70,8 +73,8 @@ class ReviewList extends Component {
 					user
 					?
 					<div>
-						<button className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-							Add Review
+						<button className="btn btn-primary reviewButton" data-toggle="modal" data-target="#exampleModal">
+							Write Review
 						</button>
 					</div>
 					:
