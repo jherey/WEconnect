@@ -56,7 +56,7 @@ export const signinUser = userData => (dispatch) => {
  */
 export function oneUser(user) {
   return {
-    type: 'CURRENT_USER',
+    type: "CURRENT_USER",
     user
   };
 }
@@ -111,7 +111,6 @@ export const updateUser = updatedUserDetails => (dispatch) => {
       dispatch(isLoading(false));
       dispatch(oneUser(res.data.updatedUser));
       getOneUser(`${updatedUserDetails.id}`);
-      getAllUsers();
     });
 };
 

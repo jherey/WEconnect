@@ -3,11 +3,8 @@ import isLoading from './loading';
 
 /**
  * @description - Set progress value
- *
  * @export { Function } - Set Upload Progress
- *
  * @param { number } progress - Upload status
- *
  * @returns { Number } - Action
  */
 export function setProgress(progress) {
@@ -19,11 +16,8 @@ export function setProgress(progress) {
 
 /**
  * @description - Add new business
- *
  * @export { Function } - Add business to store
- *
  * @param {*} business
- *
  * @returns { Business } - Action
  */
 export function addBusiness(business) {
@@ -35,15 +29,14 @@ export function addBusiness(business) {
 
 /**
  * @export { Function } - Create new business
- *
  * @param {*} businessData
- *
  * @returns {Object} business
  */
 export const createBusiness = businessData => (dispatch) => {
   dispatch(isLoading(true));
   return axios.post('api/v1/businesses', businessData)
     .then((res) => {
+      console.log(res);
       dispatch(isLoading(false));
       dispatch(addBusiness(res.data.business));
     });
@@ -51,11 +44,8 @@ export const createBusiness = businessData => (dispatch) => {
 
 /**
  * @description - Gets one business
- *
  * @export { Function } - Get business from store
- *
  * @param {*} business
- *
  * @returns { Business } - Action
  */
 export function getOneBusiness(business) {
@@ -67,16 +57,13 @@ export function getOneBusiness(business) {
 
 /**
  * @description - Add new business
- *
  * @export { Function } - Add business to store
- *
  * @param {*} id
- *
  * @returns { Business } - Action
  */
 export const fetchBusiness = id => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.get(`http://localhost:8000/api/v1/businesses/${id}`)
+  return axios.get(`/api/v1/businesses/${id}`)
     .then((business) => {
       dispatch(isLoading(false));
       dispatch(getOneBusiness(business.data.business));
@@ -88,9 +75,7 @@ export const fetchBusiness = id => (dispatch) => {
 
 /**
  * @description - Updates a business
- *
  * @param {*} updatedBusiness
- *
  * @returns { updatedBusiness } - Action
  */
 export function businessUpdated(updatedBusiness) {
@@ -102,14 +87,12 @@ export function businessUpdated(updatedBusiness) {
 
 /**
  * @description - Updates a business
- *
  * @param {*} updatedBusinessData
- *
  * @returns { Business } - Action
  */
 export const updateBusiness = updatedBusinessData => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.put(`http://localhost:8000/api/v1/businesses/${updatedBusinessData.id}`, updatedBusinessData)
+  return axios.put(`/api/v1/businesses/${updatedBusinessData.id}`, updatedBusinessData)
     .then((res) => {
       dispatch(isLoading(false));
       dispatch(businessUpdated(res.data.updatedBusiness));
@@ -118,9 +101,7 @@ export const updateBusiness = updatedBusinessData => (dispatch) => {
 
 /**
  * @description - Action to update a business
- *
  * @param {*} businessId
- *
  * @returns { BusinessId } - Action
  */
 export function businessDeleted(businessId) {
@@ -132,14 +113,12 @@ export function businessDeleted(businessId) {
 
 /**
  * @description - Deletes a business
- *
  * @param {*} id
- *
  * @returns { BusinessId } - Action
  */
 export const deleteBusiness = id => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.delete(`http://localhost:8000/api/v1/businesses/${id}`)
+  return axios.delete(`/api/v1/businesses/${id}`)
     .then(() => {
       dispatch(isLoading(false));
       dispatch(businessDeleted(id));
@@ -148,9 +127,7 @@ export const deleteBusiness = id => (dispatch) => {
 
 /**
  * @description - Updates store with all businesses
- *
  * @param {*} businesses
- *
  * @returns { Businesses } - Action
  */
 export function allBusinesses(businesses) {
@@ -162,12 +139,12 @@ export function allBusinesses(businesses) {
 
 /**
  * @description - Gets all businesses
- *
+ * @param {*} pageNum
  * @returns { Businesses } - Action
  */
-export const getAllBusinesses = () => (dispatch) => {
+export const getAllBusinesses = pageNum => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.get('api/v1/businesses')
+  return axios.get(`api/v1/businesses?pageNum=${pageNum}`)
     .then((businesses) => {
       dispatch(isLoading(false));
       dispatch(allBusinesses(businesses.data.allBusinesses));
@@ -178,10 +155,29 @@ export const getAllBusinesses = () => (dispatch) => {
 };
 
 /**
- * @description - Updates store with search results
- *
+ * @description - Updates store with all businesses
  * @param {*} businesses
- *
+ * @returns { Businesses } - Action
+ */
+export function userBusinesses(businesses) {
+  return {
+    type: 'USER_BUSINESSES',
+    businesses
+  };
+}
+
+export const getAUserBusiness = userId => (dispatch) => {
+  dispatch(isLoading(true));
+  return axios.get(`/api/v1/${userId}/businesses`)
+    .then((businesses) => {
+      dispatch(isLoading(false));
+      dispatch(userBusinesses(businesses.data.businesses));
+    });
+};
+
+/**
+ * @description - Updates store with search results
+ * @param {*} businesses
  * @returns { Businesses } - Action
  */
 export function businessFound(businesses) {
@@ -193,17 +189,15 @@ export function businessFound(businesses) {
 
 /**
  * @description - Search results
- *
  * @param {*} searchWord
  * @param {*} type
- *
  * @returns { BusinessesFound } - Action
  */
 export const search = (searchWord, type) => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.get(`http://localhost:8000/api/v1/businesses?${type}=${searchWord}`)
-    .then((foundBusiness) => {
+  return axios.get(`/api/v1/businesses?${type}=${searchWord}`)
+    .then((response) => {
       dispatch(isLoading(false));
-      dispatch(businessFound(foundBusiness.data.business));
+      dispatch(businessFound(response.data));
     });
 };

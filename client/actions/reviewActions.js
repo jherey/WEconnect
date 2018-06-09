@@ -59,9 +59,5 @@ export function postReview(review) {
  */
 export const addReview = (id, review) => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.post(`http://localhost:8000/api/v1/businesses/${id}/reviews`, review)
-    .then((res) => {
-      dispatch(isLoading(false));
-      dispatch(postReview(res.data.createdReview));
-    });
+  return axios.post(`http://localhost:8000/api/v1/businesses/${id}/reviews`, review);
 };
