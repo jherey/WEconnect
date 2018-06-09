@@ -6,7 +6,6 @@ import { getAllBusinesses } from '../../actions/businessActions';
 import addFlashMessage from '../../actions/flashMessages';
 import loading from '../../actions/loading';
 import { setProgress } from '../../actions/businessActions';
-import { getAllUsers } from '../../actions/userActions';
 
 class Dashboard extends Component {
 	componentWillMount() {
@@ -24,8 +23,7 @@ class Dashboard extends Component {
 			updateUser,
 			addFlashMessage,
 			loading,
-			setProgress,
-			getAllUsers
+			setProgress
 		} = this.props;
 
 		const userBusiness = businesses.filter(business => {
@@ -35,17 +33,16 @@ class Dashboard extends Component {
 		return (
 			<div className="paddingBottom">
 				<DashboardPage
-				userId={userId}
-				businessList={userBusiness}
-				isLoading={isLoading}
-				currentUser={currentUser}
-				uploadProgress={uploadProgress}
-				updateUser={updateUser}
-				addFlashMessage={addFlashMessage}
-				loading={loading}
-				setProgress={setProgress}
-				getAllUsers={getAllUsers}
-			/>
+					userId={userId}
+					businessList={userBusiness}
+					isLoading={isLoading}
+					currentUser={currentUser}
+					uploadProgress={uploadProgress}
+					updateUser={updateUser}
+					addFlashMessage={addFlashMessage}
+					loading={loading}
+					setProgress={setProgress}
+				/>
 			</div>
 		);
 	}
@@ -61,4 +58,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { getOneUser, getAllBusinesses, updateUser, addFlashMessage, loading, setProgress, getAllUsers })(Dashboard);
+export default connect(mapStateToProps, { getOneUser, getAllBusinesses, updateUser, addFlashMessage, loading, setProgress })(Dashboard);

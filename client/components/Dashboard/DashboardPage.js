@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Spinner from '../Spinner';
 import PropTypes from 'prop-types';
 import { storage } from '../firebase';
+import moment from 'moment';
 import maleAvartar from '../../public/images/male-avatar.png';
 import femaleAvartar from '../../public/images/female-avatar.png';
 
@@ -68,7 +69,6 @@ class DashboardPage extends Component {
 						type: 'success',
 						text: 'Update successful!'
 					});
-					this.props.getAllUsers();
 					this.context.router.history.push('/dashboard');
 				},
 				(err) => {
@@ -132,6 +132,7 @@ class DashboardPage extends Component {
 								/>
 							</div><br />
 							<div className="text-center">
+								<p>Joined {moment(currentUser.createdAt).format('Do MMMM YYYY')}</p>
 								<Link className="btn btn-primary" to="/register">Register a Business</Link> <br /><br />
 								<button className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 									Edit User Details

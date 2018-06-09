@@ -30,7 +30,18 @@ const businessModel = (sequelize, DataTypes) => {
       allowNull: false
     },
     businessInfo: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Business Name is Required!',
+        },
+        len: {
+          args: [30],
+          msg: 'Business description should be longer than 30 words',
+        },
+      },
     },
     email: {
       type: DataTypes.STRING,

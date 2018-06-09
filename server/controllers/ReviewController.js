@@ -5,6 +5,7 @@ import models from '../models/index';
 const Reviews = models.Review;
 // Business model
 const Businesses = models.Business;
+const Users = models.User;
 
 const Review = {
   // Method to register a new user
@@ -54,7 +55,12 @@ const Review = {
       .findAll({
         where: {
           businessId
-        }
+        },
+        include: [{
+          model: Users,
+          as: 'reviewer',
+          attributes: ['profilepic']
+        }]
       })
       .then((reviews) => {
         // If no reviews found

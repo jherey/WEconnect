@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 class Search extends Component {
 	render() {
 		return (
-			<div className="businesses">
-				<SearchPage searchResults={this.props.searchResults} />
+			<div className="paddingBottom">
+				<div className="businesses">
+					<SearchPage searchResults={this.props.searchResults} />
+				</div>
 			</div>
 		);
 	}

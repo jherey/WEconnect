@@ -9,6 +9,7 @@ class SigninForm extends Component {
 		this.state = {
 			username: '',
 			password: '',
+			error: []
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -34,10 +35,15 @@ class SigninForm extends Component {
 				},
 				(err) => {
 					this.props.loading(false);
-					this.props.addFlashMessage({
-						type: 'error',
-						text: err.response.data.message
-					});
+					this.setState({ error: err.response.data.errors });
+					if (this.state.error) {
+						this.state.error.map(err => {
+							this.props.addFlashMessage({
+								type: 'error',
+								text: err
+							});
+						})
+					}
 				}
 			);
 	}
@@ -77,8 +83,6 @@ class SigninForm extends Component {
 											name="password"
 											className="form-control"
 										/>
-										{errors === 'Password is required' && <div className='alert alert-danger'>{errors}</div>}
-										{errors === 'Minimum password length is 5 characters' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 								</div>
 								<div className="form-group row">
@@ -98,49 +102,6 @@ class SigninForm extends Component {
 					</div>
 				</div>
 			</div>
-			// <div className="form">
-			// 	<h1 className="text-center" style={{'color': 'white'}}>Sign In</h1>
-			// 	<div className="login-form col-md-4 offset-md-4">
-					
-			// 		{errors === 'Username/Password Incorrect' && <div className='alert alert-danger'>{errors}</div>}
-			// 		<form onSubmit={this.onSubmit}>
-			// 			<div>
-			// 				<label>Username</label>
-			// 				<input
-			// 					value={username}
-			// 					onChange={this.onChange}
-			// 					type="text"
-			// 					name="username"
-			// 					className="form-control"
-			// 				/>
-			// 				{errors === 'Username is required' && <div className='alert alert-danger'>{errors}</div>}
-			// 			</div>
-			// 			<div>
-			// 				<label>Password</label>
-			// 				<input
-			// 					value={password}
-			// 					onChange={this.onChange}
-			// 					type="password"
-			// 					name="password"
-			// 					className="form-control"
-			// 				/>
-			// 				{errors === 'Password is required' && <div className='alert alert-danger'>{errors}</div>}
-			// 				{errors === 'Minimum password length is 5 characters' && <div className='alert alert-danger'>{errors}</div>}
-			// 			</div>
-			// 			<div>
-			// 				<button
-			// 					id="signup"
-			// 					className="btn btn-orange btn-lg"
-			// 					disabled={isLoading}
-			// 				>
-			// 					Login
-			// 				</button>
-			// 			</div>
-			// 		</form>
-			// 	</div>
-			// 	<br />
-			// 	<br />
-			// </div>
 		);
 	}
 }

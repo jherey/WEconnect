@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import image from "../../public/images/connect.jpg";
 
 const HeroImage = () => {
 	return (

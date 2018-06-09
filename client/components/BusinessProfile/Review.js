@@ -2,17 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-const Review = ({ username, review, createdAt, allUsers }) => {
-	const profile = allUsers.filter(user => {
-		return username === user.username;
-	});
-
+const Review = ({ username, review, createdAt, image }) => {
 	return (
 		<div className="row">
 			<div className="col-lg-1 text-center">
 				<img
 					className="rounded-circle mt-2"
-					src={profile[0].profilepic}
+					src={image}
 					alt="UserImage"
 					style={{ width: '60px', height: '60px' }}
 				/>
