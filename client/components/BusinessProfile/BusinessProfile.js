@@ -16,7 +16,6 @@ class BusinessProfile extends Component {
 			deleteBusiness,
 			addFlashMessage,
 			fetchReviews,
-			reviews,
 			loading,
 			userId,
 			isLoading
@@ -32,7 +31,6 @@ class BusinessProfile extends Component {
 					addFlashMessage={addFlashMessage}
 					deleteBusiness={deleteBusiness}
 					fetchReviews={fetchReviews}
-					reviews={reviews}
 					userId={userId}
 					isLoading={isLoading}
 				/>
@@ -43,16 +41,13 @@ class BusinessProfile extends Component {
 
 /**
  * @description - Maps the redux state to the component props
- * 
  * @param {Object} state - Application state
- *  
  * @returns {Object} - Selected state
  */
 function mapStateToProps(state) {
 	return {
 		userId: state.authUser.user.id,
 		currentBusiness: state.currentBusiness,
-		reviews: state.reviews,
 		isLoading: state.isLoading
 	}
 }

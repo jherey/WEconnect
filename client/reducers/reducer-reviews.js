@@ -11,12 +11,6 @@ export default function (state = [], action = {}) {
     case 'GET_REVIEWS':
       return action.reviews;
 
-    case 'POST_REVIEW':
-      return [
-        ...state,
-        action.review
-      ];
-
     default:
       return state;
   }

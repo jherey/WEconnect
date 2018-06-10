@@ -14,8 +14,8 @@ const userValidator = {
 
     const errors = req.validationErrors();
     const validationErrors = [];
-    errors.map(err => validationErrors.push(err.msg));
     if (errors) {
+      errors.map(err => validationErrors.push(err.msg));
       return res.status(400).json({
         errors: validationErrors
       });

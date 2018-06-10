@@ -3,9 +3,7 @@ import isLoading from './loading';
 
 /**
  * @description - Updates reviews store
- *
  * @param {*} reviews
- *
  * @returns { reviews } - Action
  */
 export function getReview(reviews) {
@@ -17,9 +15,7 @@ export function getReview(reviews) {
 
 /**
  * @description - Gets all reviews for a business
- *
  * @param {*} id
- *
  * @returns { reviews } - Action
  */
 export const fetchReviews = id => (dispatch) => {
@@ -36,9 +32,7 @@ export const fetchReviews = id => (dispatch) => {
 
 /**
  * @description - Adds review to store
- *
  * @param {*} review
- *
  * @returns { review } - Action
  */
 export function postReview(review) {
@@ -50,11 +44,8 @@ export function postReview(review) {
 
 /**
  * @description - Posts a new review
- *
  * @param {*} id
- *
  * @param {*} review
- *
  * @returns { review } - Action
  */
 export const addReview = (id, review) => (dispatch) => {

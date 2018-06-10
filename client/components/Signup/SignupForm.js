@@ -16,7 +16,8 @@ class SignupForm extends Component {
 			profilepic: '',
 			password: '',
 			confirmPassword: '',
-			error: []
+			error: [],
+			uploading: false
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -29,7 +30,10 @@ class SignupForm extends Component {
 	}
 
 	fileChange(e) {
-		this.setState({ profilepic: '' });
+		this.setState({
+			profilepic: '',
+			uploading: true
+		});
 		const uploadTask = storage.child(`userimage/${new Date().getTime()}`)
 			.put(e.target.files[0]);
 		uploadTask.on('state_changed', snapshot => {
@@ -38,16 +42,20 @@ class SignupForm extends Component {
 		}, error => {
 			this.setState({ errors: err.message })
 		}, () => {
-			this.setState({ profilepic: uploadTask.snapshot.downloadURL });
+			this.setState({
+				profilepic: uploadTask.snapshot.downloadURL,
+				uploading: false
+			});
 		});
 	}
 
 	onSubmit(e) {
 		e.preventDefault();
-		this.setState({ errors: '' });
+		this.setState({ errors: [] });
 		this.props.signupUser(this.state)
 			.then(
 				() => {
+					this.props.setProgress(0);					
 					this.props.addFlashMessage({
 						type: 'success',
 						text: 'Welcome! You signed up successfully!'
@@ -70,7 +78,7 @@ class SignupForm extends Component {
 	}
 
 	render() {
-		const { errors, firstname, lastname, username, email, password, confirmPassword, sex } = this.state;
+		const { errors, firstname, lastname, username, email, password, confirmPassword, sex, uploading } = this.state;
 		const { isLoading, uploadProgress } = this.props;
 
 		if (isLoading) { return <Spinner />; }
@@ -173,7 +181,7 @@ class SignupForm extends Component {
 								</div>
 								<button
 									id="submitButton"
-									disabled={isLoading}
+									disabled={uploading}
 									className="btn btn-orange btn-lg"
 								>
 									Sign Up

@@ -28,6 +28,8 @@ const { registerBusiness } = Business;
 const { updateBusiness } = Business;
 const { removeBusiness } = Business;
 const { getBusiness } = Business;
+const { getAUserBusiness } = Business;
+const { getAllBusinesses } = Business;
 const { addReview } = Review;
 const { getAllReviews } = Review;
 
@@ -39,7 +41,7 @@ router
 router
   .post('/auth/login', userLogin, loginUser);
 router
-  .put('/auth/:userId', userUpdateChecker, idChecker, tokenVerification, updateUser);
+  .put('/auth/:userId', idChecker, tokenVerification, userUpdateChecker, updateUser);
 router
   .get('/auth/:userId', idChecker, getAUser);
 
@@ -59,7 +61,9 @@ router
 router
   .get('/businesses/:businessId', idChecker, getBusiness);
 router
-  .get('/businesses', query, Business.getAllBusinesses);
+  .get('/:userId/businesses', idChecker, getAUserBusiness);
+router
+  .get('/businesses', query, getAllBusinesses);
 
 // Review endpoints
 router

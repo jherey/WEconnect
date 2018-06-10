@@ -8,8 +8,7 @@ class NavbarComponent extends Component {
 		super();
 		this.state = {
 			keyword: '',
-			type: '',
-			errors: ''
+			type: ''
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -23,15 +22,16 @@ class NavbarComponent extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		this.setState({ errors: '' });
 		this.props.search(this.state.keyword, this.state.type).then(
 			() => {
 				this.context.router.history.push('/search');
 			},
 			(err) => {
 				this.props.loading(false);
-				this.setState({ errors: err.response.data.message });
-				this.context.router.history.push('/search');
+				this.props.addFlashMessage({
+					type: 'error',
+					text: err.response.data.message
+				});
 			}
 		)
 	}

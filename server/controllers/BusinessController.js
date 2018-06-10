@@ -2,6 +2,7 @@ import models from '../models/index';
 
 // Business model
 const Businesses = models.Business;
+const Users = models.User;
 
 const Business = {
   // Method to register business
@@ -179,23 +180,78 @@ const Business = {
       });
   },
 
-  getAllBusinesses: (req, res) => {
+  getAUserBusiness: (req, res) => {
+    const { userId } = req.params;
     Businesses
-      // Find all businesses
-      .all()
+      // Find all businesses owned by a user
+      .findAll({
+        where: {
+          userId
+        }
+      })
+      // Promise returned
+      .then((businesses) => {
+        // No business found
+        if (!businesses) {
+          return res.status(404).json({
+            message: 'No Business Found!'
+          });
+        }
+        // Return businesses found
+        return res.status(200).json({
+          message: 'Businesses Found',
+          businesses
+        });
+      });
+  },
+
+  getAllBusinesses: (req, res) => {
+    const { pageNum } = req.query;
+    const limit = 8;
+    let offset;
+    const pageNumber = Number(pageNum);
+    if (pageNumber === 1) {
+      offset = 0;
+    } else {
+      offset = limit * (pageNumber - 1);
+    }
+    Businesses
+    // Find all businesses
+      .findAndCountAll({
+      // order: [['DESC']],
+        order: [['createdAt']],
+        include: [
+          {
+            model: Users,
+            attributes: ['username']
+          }
+        ],
+        limit,
+        offset
+      })
       // Promise returned
       .then((allBusinesses) => {
+        const pages = Math.ceil(allBusinesses.count / limit);
         // If no business found
-        if (!allBusinesses) {
+        if (allBusinesses.count < 0) {
           return res.status(404).send({
             message: 'Business Not Found!',
           });
+        } else if (pageNumber > pages) {
+          return res.status(404).send({
+            message: 'No business found for this page'
+          });
         }
         // Business(es) found!
-        return res.status(200).json({
+        return res.status(200).send({
           message: 'Businesses found!',
-          allBusinesses
+          allBusinesses,
+          count: allBusinesses.count,
+          page: pages
         });
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 };

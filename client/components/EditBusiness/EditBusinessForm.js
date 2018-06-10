@@ -22,9 +22,9 @@ class EditBusinessForm extends Component {
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 
-	componentWillMount() {
-		this.props.fetchBusiness(this.props.id);
-	}
+	// componentWillMount() {
+	// 	this.props.fetchBusiness(this.props.id);
+	// }
 
 	onChange(e) {
 		this.setState({

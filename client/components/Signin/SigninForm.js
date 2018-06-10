@@ -23,7 +23,7 @@ class SigninForm extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		this.setState({ errors: '' });
+		this.setState({ errors: [] });
 		this.props.signinUser(this.state)
 			.then(
 				() => {

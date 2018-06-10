@@ -7,7 +7,10 @@ class Search extends Component {
 		return (
 			<div className="paddingBottom">
 				<div className="businesses">
-					<SearchPage searchResults={this.props.searchResults} />
+					<SearchPage
+						searchResults={this.props.searchResults}
+						searchWord={this.props.searchWord}
+					/>
 				</div>
 			</div>
 		);
@@ -16,7 +19,8 @@ class Search extends Component {
 
 function mapStateToProps(state) {
 	return {
-		searchResults: state.searchResults
+		searchResults: state.searchResults.business,
+		searchWord: state.searchResults.searchWord
 	}
 }
 

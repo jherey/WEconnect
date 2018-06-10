@@ -20,13 +20,15 @@ const businessValidator = {
             // If no businesses found, return error
             if (business.length < 1) {
               return res.status(404).json({
-                message: 'No business with this name!',
+                message: 'No business found!',
+                searchWord: name
               });
             }
             // If business found, return business found
             return res.status(200).json({
               message: 'Business Found!',
-              business
+              business,
+              searchWord: name
             });
           });
       }
@@ -43,13 +45,15 @@ const businessValidator = {
             // If no businesses found, return error
             if (business.length < 1) {
               return res.status(404).json({
-                message: 'No business found for this location!',
+                message: 'No business found!',
+                searchWord: location
               });
             }
             // If business found, return business found
             return res.status(200).json({
               message: 'Business Found!',
-              business
+              business,
+              searchWord: location
             });
           });
       }
@@ -65,13 +69,15 @@ const businessValidator = {
             // If no businesses found, return error
             if (business.length < 1) {
               return res.status(404).json({
-                message: 'No business found for this category!',
+                message: 'No business found!',
+                searchWord: category
               });
             }
             // If business found, return business found
             return res.status(200).json({
               message: 'Business Found!',
-              business
+              business,
+              searchWord: category
             });
           });
       }

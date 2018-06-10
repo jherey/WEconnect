@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DashboardPage from './DashboardPage';
 import { connect } from 'react-redux';
 import { getOneUser, updateUser } from '../../actions/userActions';
-import { getAllBusinesses } from '../../actions/businessActions';
+import { getAUserBusiness } from '../../actions/businessActions';
 import addFlashMessage from '../../actions/flashMessages';
 import loading from '../../actions/loading';
 import { setProgress } from '../../actions/businessActions';
@@ -10,7 +10,7 @@ import { setProgress } from '../../actions/businessActions';
 class Dashboard extends Component {
 	componentWillMount() {
 		this.props.getOneUser(this.props.userId);
-		this.props.getAllBusinesses();
+		this.props.getAUserBusiness(this.props.userId);
 	}
 
 	render() {
@@ -26,15 +26,11 @@ class Dashboard extends Component {
 			setProgress
 		} = this.props;
 
-		const userBusiness = businesses.filter(business => {
-			return business.userId === userId;
-		});
-
 		return (
 			<div className="paddingBottom">
 				<DashboardPage
 					userId={userId}
-					businessList={userBusiness}
+					businessList={businesses}
 					isLoading={isLoading}
 					currentUser={currentUser}
 					uploadProgress={uploadProgress}
@@ -51,11 +47,11 @@ class Dashboard extends Component {
 function mapStateToProps(state) {
 	return {
 		userId: state.authUser.user.id,
-		businesses: state.businesses,
+		businesses: state.userBusinesses,
 		currentUser: state.currentUser,
 		isLoading: state.isLoading,
 		uploadProgress: state.uploadProgress
 	}
 }
 
-export default connect(mapStateToProps, { getOneUser, getAllBusinesses, updateUser, addFlashMessage, loading, setProgress })(Dashboard);
+export default connect(mapStateToProps, { getOneUser, getAUserBusiness, updateUser, addFlashMessage, loading, setProgress })(Dashboard);

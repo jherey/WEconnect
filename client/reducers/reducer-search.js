@@ -6,7 +6,7 @@
  *
  * @returns { search } - State
  */
-export default function (state = [], action = {}) {
+export default function (state = {}, action = {}) {
   switch (action.type) {
     case 'FOUND_BUSINESSES':
       return action.businesses;

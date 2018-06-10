@@ -33,15 +33,14 @@ const verifyToken = {
             id: authData.id
           }
         })
-        .then((user) => {
+        .then(() =>
           // Token is valid but user does not exist
-          if (!user) {
-            return res.status(401).send({
-              message: 'No such user',
-            });
-          }
-          return next();
-        });
+          // if (!user) {
+          //   return res.status(401).send({
+          //     message: 'No such user',
+          //   });
+          // }
+          next());
     });
   }
 };

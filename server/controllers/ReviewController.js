@@ -11,11 +11,17 @@ const Review = {
   // Method to register a new user
   addReview: (req, res) => {
     const { businessId } = req.params;
-    const { review } = req.body;
+    const { review, star } = req.body;
     const { authData } = req;
     if (review.trim() === '') {
       return res.status(400).json({
         message: 'Please write a review',
+        error: true
+      });
+    }
+    if (star === '') {
+      return res.status(400).json({
+        message: "Please give a rating",
         error: true
       });
     }
@@ -36,6 +42,7 @@ const Review = {
             review,
             userId: authData.id,
             businessId,
+            star,
             username: decoded.username
           })
           // Successfully added
@@ -59,7 +66,7 @@ const Review = {
         include: [{
           model: Users,
           as: 'reviewer',
-          attributes: ['profilepic']
+          attributes: ['profilepic', 'sex']
         }]
       })
       .then((reviews) => {

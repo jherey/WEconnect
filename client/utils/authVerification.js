@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { signout } from '../actions/userActions';
 import addFlashMessage from '../actions/flashMessages';
 import decodeToken from './decodeToken';
+import isLoading from '../actions/loading';
 
 export default function(AuthenticatedComponent) {
 	class AuthVerification extends Component {
@@ -21,12 +22,7 @@ export default function(AuthenticatedComponent) {
 					text: 'Session expired, please signin again'
 				});
 				this.props.signout();
-				this.context.router.history.push('/signin');
-			}
-		}
-
-		componentWillUpdate(nextProps) {
-			if (!nextProps.isAuthenticated) {
+				// this.props.isLoading(false);
 				this.context.router.history.push('/signin');
 			}
 		}
@@ -48,5 +44,5 @@ export default function(AuthenticatedComponent) {
 		};
 	}
 
-	return connect(mapStateToProps, { addFlashMessage, signout })(AuthVerification);
+	return connect(mapStateToProps, { addFlashMessage, signout, isLoading })(AuthVerification);
 }

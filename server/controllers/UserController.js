@@ -58,7 +58,7 @@ const Users = {
     }
     if (password !== confirmPassword) {
       return res.status(400).json({
-        message: 'Passwords do not match',
+        errors: ['Passwords do not match'],
         error: true
       });
     }
@@ -164,7 +164,7 @@ const Users = {
           .then((authorizedUser) => {
             // Different user tries to update the user details
             if (!authorizedUser) {
-              return res.status(404).json({
+              return res.status(400).json({
                 message: 'Oops! You cannot update this user details',
                 error: true
               });

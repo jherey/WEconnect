@@ -7,30 +7,30 @@ import HeroImage from './HeroImage';
 import { getAllBusinesses } from '../../actions/businessActions';
 
 class HomePage extends Component {
-    componentWillMount() {
-        this.props.getAllBusinesses();
-    }
+	componentWillMount() {
+		this.props.getAllBusinesses(1);
+	}
 
-    render() {
-        const { businesses, isLoading } = this.props;
+	render() {
+		const { businesses, isLoading } = this.props;
 
-        if (isLoading) { return <Spinner />; }
+		if (isLoading) { return <Spinner />; }
 
-        return (
-            <div className="paddingBottom">
-                <HeroImage />
-                <div className="businesses">
-									<BusinessList businesses={businesses} />
-                </div>
-            </div>
-        );
-    }
+		return (
+			<div className="paddingBottom">
+				<HeroImage />
+				<div className="businesses">
+					<BusinessList businesses={businesses} />
+				</div>
+			</div>
+		);
+	}
 }
 
 function mapStateToProps(state) {
     return {
-        businesses: state.businesses,
-        isLoading: state.isLoading
+			businesses: state.businesses.businesses,
+			isLoading: state.isLoading
     }
 }
 
