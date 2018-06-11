@@ -45,8 +45,6 @@ class BusinessProfilePage extends Component {
 		const { currentBusiness, id, reviews, userId, isLoading } = this.props;
 		const { errors } = this.state;
 
-		// if (isLoading) { return <Spinner />; }
-
 		return (
 			<div className="businesses">
 				<div className="container list">
