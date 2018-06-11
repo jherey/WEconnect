@@ -8,8 +8,7 @@ class NavbarComponent extends Component {
 		super();
 		this.state = {
 			keyword: '',
-			type: '',
-			errors: ''
+			type: ''
 		}
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -23,14 +22,16 @@ class NavbarComponent extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		this.setState({ errors: '' });
 		this.props.search(this.state.keyword, this.state.type).then(
 			() => {
 				this.context.router.history.push('/search');
 			},
 			(err) => {
 				this.props.loading(false);
-				this.setState({ errors: err.response.data.message });
+				this.props.addFlashMessage({
+					type: 'error',
+					text: err.response.data.message
+				});
 			}
 		)
 	}
@@ -71,16 +72,16 @@ class NavbarComponent extends Component {
 		if (isLoading) { return <Spinner />; }
 
 		return (
-			<nav className="navbar navbar-custom sticky-top navbar-expand-lg">
+			<nav className="navbar navbar-custom sticky-top navbar-light navbar-expand-lg">
 				<Link className="navbar-brand ml-5" to="/">WeConnect</Link>
-				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<button className="navbar-toggler" type="button" data-toggle="collapse" id="hamburger" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 					<span className="navbar-toggler-icon"></span>
 				</button>
 				<div id="navbarNavDropdown" className="navbar-collapse collapse">
 					<ul className="navbar-nav mx-auto">
 						<li className="nav-item">
 							<form onSubmit={this.onSubmit}>
-								<div className="input-group mr-3" id="content">
+								<div className="form-group mr-3" id="content">
 									<input
 										value={this.state.keyword}
 										onChange={this.onChange}
@@ -88,8 +89,7 @@ class NavbarComponent extends Component {
 										type="text"
 										size="40"
 										className="form-control"
-										placeholder="Search by location or category"
-										aria-describedby="btnGroupAddon"
+										placeholder="I am looking for..."
 									/>
 									<select
 										className='form-control'
@@ -97,7 +97,8 @@ class NavbarComponent extends Component {
 										onChange={this.onChange}
 										value={this.state.type}
 									>
-										<option value='' disabled>Choose...</option>
+										<option value='' disabled>by name, location or category</option>
+										<option value='name'>Name</option>
 										<option value='location'>Location</option>
 										<option value='category'>Category</option>
 									</select>

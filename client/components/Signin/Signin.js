@@ -6,6 +6,9 @@ import loading from '../../actions/loading';
 import addFlashMessage from '../../actions/flashMessages';
 
 class Signin extends Component {
+	componentWillMount() {
+		this.props.loading(false);
+	}
 	render() {
 		const { signinUser, addFlashMessage, isLoading, loading } = this.props;
 		return (

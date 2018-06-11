@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test npm run migrate && nyc mocha --exit --timeout 15000 ./server/test/**/*.js --compilers js:babel-core/register",
+    "test": "NODE_ENV=test npm run migrate && nyc mocha --exit --timeout 25000 ./server/test/**/*.js --compilers js:babel-core/register",
     "babel-node": "babel-node index --presets=env",
     "startDev": "nodemon --exec npm run babel-node -- index",
     "start-dev": "nodemon --watch server --exec babel-node index.js",
@@ -48,6 +48,7 @@
     "pg-hstore": "^2.3.2",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
+    "react-paginate": "^5.2.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-text-truncate": "^0.13.1",

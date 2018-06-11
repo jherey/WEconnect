@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Spinner from '../Spinner';
 import PropTypes from 'prop-types';
 import { storage } from '../firebase';
+import moment from 'moment';
 import maleAvartar from '../../public/images/male-avatar.png';
 import femaleAvartar from '../../public/images/female-avatar.png';
 
@@ -18,7 +19,8 @@ class DashboardPage extends Component {
 			sex: '',
 			email: '',
 			profilepic: '',
-			errors: ''
+			errors: '',
+			uploading: false
 		}
 
 		this.onChange = this.onChange.bind(this);
@@ -44,7 +46,10 @@ class DashboardPage extends Component {
 	}
 
 	fileChange(e) {
-		this.setState({ profilepic: '' });
+		this.setState({
+			profilepic: '',
+			uploading: true
+		});
 		const uploadTask = storage.child(`userimage/${new Date().getTime()}`)
 			.put(e.target.files[0]);
 		uploadTask.on('state_changed', snapshot => {
@@ -53,7 +58,10 @@ class DashboardPage extends Component {
 		}, error => {
 			this.setState({ errors: err.message })
 		}, () => {
-			this.setState({ profilepic: uploadTask.snapshot.downloadURL });
+			this.setState({
+				profilepic: uploadTask.snapshot.downloadURL,
+				uploading: false
+			});
 		});
 	}
 
@@ -64,11 +72,11 @@ class DashboardPage extends Component {
 		this.props.updateUser(this.state)
 			.then(
 				() => {
+					this.props.setProgress(0);					
 					this.props.addFlashMessage({
 						type: 'success',
 						text: 'Update successful!'
 					});
-					this.props.getAllUsers();
 					this.context.router.history.push('/dashboard');
 				},
 				(err) => {
@@ -79,7 +87,7 @@ class DashboardPage extends Component {
 	}
 
 	render() {
-		const { errors, firstname, lastname, username, email, sex } = this.state;
+		const { errors, firstname, lastname, username, email, sex, uploading } = this.state;
 		const { isLoading, currentUser, uploadProgress } = this.props;		
 		
 		const noBusiness = (
@@ -90,9 +98,8 @@ class DashboardPage extends Component {
 
 		const businessComponent = this.props.businessList.map((business) => {
 			return (
-				<div className="col-lg-4 col-md-6 py-2">
+				<div className="col-lg-4 col-md-6 py-2" key={business.id}>
 					<Business
-						key={business.id}
 						id={business.id}
 						name={business.businessName}
 						description={business.businessInfo}
@@ -100,6 +107,7 @@ class DashboardPage extends Component {
 						address={business.address}
 						location={business.location}
 						category={business.category}
+						user={currentUser.username}
 					/>
 				</div>
 			);
@@ -132,6 +140,7 @@ class DashboardPage extends Component {
 								/>
 							</div><br />
 							<div className="text-center">
+								<p>Joined {moment(currentUser.createdAt).format('Do MMMM YYYY')}</p>
 								<Link className="btn btn-primary" to="/register">Register a Business</Link> <br /><br />
 								<button className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 									Edit User Details
@@ -223,7 +232,7 @@ class DashboardPage extends Component {
 										</div>
 										<button
 											id="updateButton"
-											disabled={isLoading}
+											disabled={uploading}
 											className="btn btn-orange btn-lg"
 										>
 											Update Details

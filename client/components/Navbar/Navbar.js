@@ -4,6 +4,7 @@ import loading from '../../actions/loading';
 import { connect } from 'react-redux';
 import { signout } from '../../actions/userActions';
 import { search } from '../../actions/businessActions';
+import addFlashMessage from '../../actions/flashMessages';
 
 class Navbar extends Component {
 	signout(e) {
@@ -12,7 +13,7 @@ class Navbar extends Component {
 	}
 
 	render() {
-		const { authUser, signout, search, isLoading, loading } = this.props;
+		const { authUser, signout, search, isLoading, loading, addFlashMessage } = this.props;
 		return (
 			<NavbarComponent
 				loading={loading}
@@ -20,6 +21,7 @@ class Navbar extends Component {
 				signout={signout}
 				search={search}
 				isLoading={isLoading}
+				addFlashMessage={addFlashMessage}
 			/>
 		);
 	}
@@ -33,4 +35,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { signout, search, loading })(Navbar);
+export default connect(mapStateToProps, { signout, search, loading, addFlashMessage })(Navbar);

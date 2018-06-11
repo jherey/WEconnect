@@ -5,16 +5,23 @@ import models from '../models/index';
 const Reviews = models.Review;
 // Business model
 const Businesses = models.Business;
+const Users = models.User;
 
 const Review = {
   // Method to register a new user
   addReview: (req, res) => {
     const { businessId } = req.params;
-    const { review } = req.body;
+    const { review, star } = req.body;
     const { authData } = req;
     if (review.trim() === '') {
       return res.status(400).json({
         message: 'Please write a review',
+        error: true
+      });
+    }
+    if (star === '') {
+      return res.status(400).json({
+        message: "Please give a rating",
         error: true
       });
     }
@@ -35,6 +42,7 @@ const Review = {
             review,
             userId: authData.id,
             businessId,
+            star,
             username: decoded.username
           })
           // Successfully added
@@ -54,7 +62,12 @@ const Review = {
       .findAll({
         where: {
           businessId
-        }
+        },
+        include: [{
+          model: Users,
+          as: 'reviewer',
+          attributes: ['profilepic', 'sex']
+        }]
       })
       .then((reviews) => {
         // If no reviews found

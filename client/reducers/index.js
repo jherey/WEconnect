@@ -6,12 +6,11 @@ import currentUser from './currentUser';
 import currentBusiness from './reducer-currentBusiness';
 import reviews from './reducer-reviews';
 import searchResults from './reducer-search';
+import userBusinesses from './userBusinesses';
 import isLoading from './reducer-loading';
 import uploadProgress from './reducer-uploadProgress';
-import allUsers from './reducer-allUsers';
 
 const allReducers = combineReducers({
-  allUsers,
   flashMessages,
   currentUser,
   authUser,
@@ -19,6 +18,7 @@ const allReducers = combineReducers({
   businesses,
   currentBusiness,
   reviews,
+  userBusinesses,
   searchResults,
   isLoading
 });

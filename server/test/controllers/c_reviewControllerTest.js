@@ -27,6 +27,7 @@ describe('REVIEWS', () => {
       const business = {
         businessName: 'shoprite',
         businessImage: 'shoprite.jpg',
+        businessInfo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
         category: 'Sales',
         website: 'www.shoprite.com',
         email: 'shoprite@gmail.com',
@@ -44,26 +45,23 @@ describe('REVIEWS', () => {
         });
     });
 
-    it(
-      'it should not add a review for a business that doesn\'t exist',
-      (done) => {
-        // HTTP POST -> DON'T ADD A REVIEW FOR A BUSINESS
-        const review = {
-          userId: 1,
-          review: 'good company, I like them'
-        };
-        chai.request(app)
-          .post('/api/v1/businesses/11/reviews')
-          .set('Authorization', loginToken)
-          .send(review)
-          .end((err, res) => {
-            expect(res.body).to.be.a('object');
-            expect(res.body).to.have.property('message');
-            expect(res.status).to.equal(404);
-            done();
-          });
-      }
-    );
+    it('it should not add a review for a business that doesn\'t exist', (done) => {
+      // HTTP POST -> DON'T ADD A REVIEW FOR A BUSINESS
+      const review = {
+        userId: 1,
+        review: 'good company, I like them'
+      };
+      chai.request(app)
+        .post('/api/v1/businesses/11/reviews')
+        .set('Authorization', loginToken)
+        .send(review)
+        .end((err, res) => {
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('message');
+          expect(res.status).to.equal(404);
+          done();
+        });
+    });
 
     it('it should not add a review for a business if token unmatch', (done) => {
       // HTTP POST -> DON'T ADD A REVIEW FOR A BUSINESS
@@ -84,11 +82,52 @@ describe('REVIEWS', () => {
         });
     });
 
+    it('it should not add a review for a business if no rating', (done) => {
+      // HTTP POST -> ADD A REVIEW FOR A BUSINESS
+      const review = {
+        userId: 1,
+        review: 'good company, I like them',
+        star: ''
+      };
+      chai.request(app)
+        .post('/api/v1/businesses/2/reviews')
+        .set('Authorization', loginToken)
+        .send(review)
+        .end((err, res) => {
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('message')
+            .eql('Please give a rating');
+          expect(res.status).to.equal(400);
+          done();
+        });
+    });
+
+    it('it should not add a review for a business if review is empty', (done) => {
+      // HTTP POST -> ADD A REVIEW FOR A BUSINESS
+      const review = {
+        userId: 1,
+        review: '  ',
+        star: 3
+      };
+      chai.request(app)
+        .post('/api/v1/businesses/2/reviews')
+        .set('Authorization', loginToken)
+        .send(review)
+        .end((err, res) => {
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('message')
+            .eql('Please write a review');
+          expect(res.status).to.equal(400);
+          done();
+        });
+    });
+
     it('it should add a review for a business', (done) => {
       // HTTP POST -> ADD A REVIEW FOR A BUSINESS
       const review = {
         userId: 1,
-        review: 'good company, I like them'
+        review: 'good company, I like them',
+        star: 3
       };
       chai.request(app)
         .post('/api/v1/businesses/2/reviews')
@@ -104,20 +143,17 @@ describe('REVIEWS', () => {
   });
 
   describe('GET REQUESTS', () => {
-    it(
-      'it should not GET reviews for a business that doesn\'t exist',
-      (done) => {
-        // HTTP GET -> NO REVIEWS FOR WRONG BUSINESS
-        chai.request(app)
-          .get('/api/v1/businesses/8/reviews')
-          .end((err, res) => {
-            expect(res.body).to.be.a('object');
-            expect(res.body).to.have.property('message');
-            expect(res.status).to.equal(200);
-            done();
-          });
-      }
-    );
+    it('it should not GET reviews for a business that doesn\'t exist', (done) => {
+      // HTTP GET -> NO REVIEWS FOR WRONG BUSINESS
+      chai.request(app)
+        .get('/api/v1/businesses/8/reviews')
+        .end((err, res) => {
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('message');
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
 
     it('it should GET all reviews for a business', (done) => {
       // HTTP GET -> RETURN ALL REVIEWS FOR A BUSINESS

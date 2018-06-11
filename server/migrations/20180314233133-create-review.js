@@ -22,6 +22,11 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    star: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: { min: 1, max: 5 }
+    },
     businessId: {
       type: Sequelize.INTEGER,
       onDelete: 'CASCADE',

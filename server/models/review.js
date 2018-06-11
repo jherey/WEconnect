@@ -29,6 +29,11 @@ const reviewModel = (sequelize, DataTypes) => {
         },
       },
     },
+    star: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: { min: 1, max: 5 }
+    },
     businessId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -54,6 +59,7 @@ const reviewModel = (sequelize, DataTypes) => {
 
     Review.belongsTo(models.User, {
       foreignKey: 'userId',
+      as: 'reviewer'
     });
   };
   return Review;

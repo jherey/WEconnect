@@ -34,9 +34,9 @@ describe('This test describes the business', () => {
       .post('/api/v1/businesses')
       .send(business)
       .end((err, res) => {
-        expect(res.body).to.have.property('message')
-          .eql('Business name is required');
-        expect(res.body).to.have.property('error');
+        expect(res.body.errors[0]).to.eql('Business name is required');
+        expect(res.body.errors[1]).to.eql('Description is required');
+        expect(res.body.errors[2]).to.eql('Description should be more than 30 words');
         expect(res.status).to.equal(400);
         done();
       });
@@ -54,9 +54,9 @@ describe('This test describes the business', () => {
       .post('/api/v1/businesses')
       .send(business)
       .end((err, res) => {
-        expect(res.body).to.have.property('message')
-          .eql('Category is required');
-        expect(res.body).to.have.property('error');
+        expect(res.body.errors[0]).to.eql('Description is required');
+        expect(res.body.errors[1]).to.eql('Description should be more than 30 words');
+        expect(res.body.errors[2]).to.eql('Category is required');
         expect(res.status).to.equal(400);
         done();
       });
@@ -74,8 +74,9 @@ describe('This test describes the business', () => {
       .post('/api/v1/businesses')
       .send(business)
       .end((err, res) => {
-        expect(res.body).to.have.property('message')
-          .eql('Location is required');
+        expect(res.body.errors[0]).to.eql('Description is required');
+        expect(res.body.errors[1]).to.eql('Description should be more than 30 words');
+        expect(res.body.errors[2]).to.eql('Location is required');
         expect(res.status).to.equal(400);
         done();
       });
@@ -86,6 +87,7 @@ describe('This test describes the business', () => {
     const business = {
       businessName: 'shoprite',
       businessImage: 'shoprite.jpg',
+      businessInfo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
       category: 'Sales',
       website: 'www.shoprite.com',
       email: 'shoprite@gmail.com',
@@ -108,6 +110,7 @@ describe('This test describes the business', () => {
     const business = {
       businessName: 'shoprite',
       businessImage: 'shoprite.jpg',
+      businessInfo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
       category: 'Sales',
       website: 'www.shoprite.com',
       email: 'shoprite@gmail.com',
@@ -130,6 +133,7 @@ describe('This test describes the business', () => {
     const business = {
       businessName: 'shoprite',
       businessImage: 'shoprite.jpg',
+      businessInfo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
       category: 'Sales',
       website: 'www.shoprite.com',
       email: 'shoprite@gmail.com',
@@ -151,10 +155,36 @@ describe('This test describes the business', () => {
     * Test the /GET requests
   */
   describe('/GET REQUESTS', () => {
-    it('it should GET all the businesses', (done) => {
+    it('it should get a user business', (done) => {
       // HTTP GET -> RETURN ALL BUSINESSES
       chai.request(app)
-        .get('/api/v1/businesses')
+        .get('/api/v1/1/businesses')
+        .end((err, res) => {
+          expect(res.body)
+            .and.to.have.property('message')
+            .eql('Businesses Found');
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+
+    it('it should not get businesses if page does not exist', (done) => {
+      // HTTP GET -> RETURN ALL BUSINESSES
+      chai.request(app)
+        .get('/api/v1/businesses?pageNum=5')
+        .end((err, res) => {
+          expect(res.body)
+            .and.to.have.property('message')
+            .eql('No business found for this page');
+          expect(res.status).to.equal(404);
+          done();
+        });
+    });
+
+    it('it should GET all businesses', (done) => {
+      // HTTP GET -> RETURN ALL BUSINESSES
+      chai.request(app)
+        .get('/api/v1/businesses?pageNum=1')
         .end((err, res) => {
           expect(res.body)
             .to.be.an.instanceof(Object)
@@ -210,26 +240,26 @@ describe('This test describes the business', () => {
     * Test the /PUT requests
   */
   describe('/PUT REQUESTS', () => {
-    it('it should not update a business if name exists', (done) => {
-      // HTTP PUT -> DON'T UPDATE A BUSINESS
-      chai.request(app)
-        .put('/api/v1/businesses/20')
-        .set('Authorization', authToken)
-        .send({
-          businessName: 'shoprite',
-          businessImage: 'shoprite.jpg',
-          category: 'Sales',
-          website: 'www.shoprite.com',
-          email: 'shoprite@gmail.com',
-          location: 'Nigeria'
-        })
-        .end((err, res) => {
-          expect(res.body).to.have.property('message')
-            .eql('A business with this name exists!');
-          expect(res.status).to.equal(400);
-          done();
-        });
-    });
+    // it('it should not update a business if name exists', (done) => {
+    //   // HTTP PUT -> DON'T UPDATE A BUSINESS
+    //   chai.request(app)
+    //     .put('/api/v1/businesses/20')
+    //     .set('Authorization', authToken)
+    //     .send({
+    //       businessName: 'shoprite',
+    //       businessImage: 'shoprite.jpg',
+    //       category: 'Sales',
+    //       website: 'www.shoprite.com',
+    //       email: 'shoprite@gmail.com',
+    //       location: 'Nigeria'
+    //     })
+    //     .end((err, res) => {
+    //       expect(res.body).to.have.property('message')
+    //         .eql('A business with this name exists!');
+    //       expect(res.status).to.equal(400);
+    //       done();
+    //     });
+    // });
 
     it('it should not update a business if user is not logged in', (done) => {
       // HTTP PUT -> DON'T UPDATE A BUSINESS
@@ -240,6 +270,7 @@ describe('This test describes the business', () => {
         .send({
           businessName: 'shoprite',
           businessImage: 'shoprite.jpg',
+          businessInfo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
           category: 'Sales',
           website: 'www.shoprite.com',
           email: 'shoprite@gmail.com',
@@ -261,6 +292,7 @@ describe('This test describes the business', () => {
         .send({
           businessName: 'shoprite supermarket',
           businessImage: 'shoprite.jpg',
+          businessInfo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
           category: 'Sales',
           website: 'www.shopritesupermarket.com',
           email: 'shoprite@gmail.com',

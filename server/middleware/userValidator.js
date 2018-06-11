@@ -13,9 +13,11 @@ const userValidator = {
     req.check('sex', 'Sex is required').notEmpty();
 
     const errors = req.validationErrors();
+    const validationErrors = [];
     if (errors) {
+      errors.map(err => validationErrors.push(err.msg));
       return res.status(400).json({
-        message: errors[0].msg
+        errors: validationErrors
       });
     }
     return next();
@@ -46,9 +48,11 @@ const userValidator = {
       .isLength({ min: 5 });
 
     const errors = req.validationErrors();
+    const validationErrors = [];
     if (errors) {
+      errors.map(err => validationErrors.push(err.msg));
       return res.status(400).json({
-        message: errors[0].msg
+        errors: validationErrors
       });
     }
     return next();

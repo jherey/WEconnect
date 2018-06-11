@@ -58,7 +58,7 @@ const Users = {
     }
     if (password !== confirmPassword) {
       return res.status(400).json({
-        message: 'Passwords do not match',
+        errors: ['Passwords do not match'],
         error: true
       });
     }
@@ -120,7 +120,7 @@ const Users = {
         // Details mismatch
         return res.status(400)
           .json({
-            message: 'Username/Password Incorrect'
+            errors: ['Username/Password Incorrect']
           });
       })
       .catch(error => res.status(400)
@@ -164,7 +164,7 @@ const Users = {
           .then((authorizedUser) => {
             // Different user tries to update the user details
             if (!authorizedUser) {
-              return res.status(404).json({
+              return res.status(400).json({
                 message: 'Oops! You cannot update this user details',
                 error: true
               });
@@ -211,8 +211,8 @@ const Users = {
           lastname: user.lastname,
           username: user.username,
           sex: user.sex,
-          email: user.email,
-          profilepic: user.profilepic
+          profilepic: user.profilepic,
+          createdAt: user.createdAt
         };
         return res.status(200).json({
           message: 'User Found',
