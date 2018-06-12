@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signinUser } from '../../actions/userActions';
-import SigninForm from './SigninForm';
+import SigninForm from './SigninForm.jsx';
 import loading from '../../actions/loading';
 import addFlashMessage from '../../actions/flashMessages';
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Business from '../Home/Business';
+import Business from '../Home/Business.jsx';
 
 class SearchPage extends Component {
 	render() {

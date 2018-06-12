@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import SignupForm from './SignupForm';
+import SignupForm from './SignupForm.jsx';
 import { signupUser } from '../../actions/userActions';
 import { setProgress } from '../../actions/businessActions';
 import loading from '../../actions/loading';

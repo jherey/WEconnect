@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { storage } from '../firebase';
-import Spinner from '../Spinner';
+import Spinner from '../Spinner/index.jsx';
 
 class EditBusinessForm extends Component {
 	constructor(props) {

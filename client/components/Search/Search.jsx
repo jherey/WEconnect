@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SearchPage from './SearchPage';
+import SearchPage from './SearchPage.jsx';
 import { connect } from 'react-redux';
 
 class Search extends Component {

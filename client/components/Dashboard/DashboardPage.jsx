@@ -1,103 +1,142 @@
 import React, { Component } from 'react';
-import Business from '../Home/Business';
 import { Link } from 'react-router-dom';
-import Spinner from '../Spinner';
 import PropTypes from 'prop-types';
-import { storage } from '../firebase';
 import moment from 'moment';
+import Business from '../Home/Business.jsx';
+import Spinner from '../Spinner/index.jsx';
+import { storage } from '../firebase';
 import maleAvartar from '../../public/images/male-avatar.png';
 import femaleAvartar from '../../public/images/female-avatar.png';
 
+/**
+ * @description User dashboard page component
+ * @export {Object}
+ * @class  DashboardPage
+ * @extends {Component}
+ */
 class DashboardPage extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			id: this.props.userId,
-			firstname: '',
-			lastname: '',
-			username: '',
-			sex: '',
-			email: '',
-			profilepic: '',
-			errors: '',
-			uploading: false
-		}
+/**
+* @description Creates an instance of DashboardPage
+* @param {object} props
+* @memberof DashboardPage
+*/
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: this.props.userId,
+      firstname: '',
+      lastname: '',
+      username: '',
+      sex: '',
+      email: '',
+      profilepic: '',
+      errors: '',
+      uploading: false
+    };
 
-		this.onChange = this.onChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-	}
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
-	componentWillReceiveProps(nextProps) {
-		const { firstname, lastname, username, sex, email, profilepic } = nextProps.currentUser;
-		this.setState({
-			firstname: firstname,
-			lastname: lastname,
-			username: username,
-			sex: sex,
-			email: email,
-			profilepic: profilepic
-		})
-	}
+  /**
+   * @return {null} null
+   * @param {object} nextProps
+   * @memberof Recipe
+   */
+  componentWillReceiveProps(nextProps) {
+    const {
+      firstname, lastname, username, sex, email, profilepic
+    } = nextProps.currentUser;
+    this.setState({
+      firstname,
+      lastname,
+      username,
+      sex,
+      email,
+      profilepic
+    });
+  }
 
-	onChange(e) {
-		this.setState({
-			[e.target.name]: e.target.value
-		});
-	}
+  /**
+*
+* @returns {null} null
+* @param {event} event
+* @memberof BusinessProfilePage
+*/
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
 
-	fileChange(e) {
-		this.setState({
-			profilepic: '',
-			uploading: true
-		});
-		const uploadTask = storage.child(`userimage/${new Date().getTime()}`)
-			.put(e.target.files[0]);
-		uploadTask.on('state_changed', snapshot => {
-			const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-			this.props.setProgress(progress);
-		}, error => {
-			this.setState({ errors: err.message })
-		}, () => {
-			this.setState({
-				profilepic: uploadTask.snapshot.downloadURL,
-				uploading: false
-			});
-		});
-	}
+  /**
+*
+* @returns {null} null
+* @param {event} event
+* @memberof BusinessProfilePage
+*/
+  fileChange(event) {
+    this.setState({
+      profilepic: '',
+      uploading: true
+    });
+    const uploadTask = storage.child(`userimage/${new Date().getTime()}`)
+      .put(event.target.files[0]);
+    uploadTask.on('state_changed', (snapshot) => {
+      const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      this.props.setProgress(progress);
+    }, (error) => {
+      this.setState({ errors: error.message });
+    }, () => {
+      this.setState({
+        profilepic: uploadTask.snapshot.downloadURL,
+        uploading: false
+      });
+    });
+  }
 
-	onSubmit(e) {
-		e.preventDefault();
-		this.setState({ errors: '' });
-		document.getElementById("hidePopUpBtn").click();
-		this.props.updateUser(this.state)
-			.then(
-				() => {
-					this.props.setProgress(0);					
-					this.props.addFlashMessage({
-						type: 'success',
-						text: 'Update successful!'
-					});
-					this.context.router.history.push('/dashboard');
-				},
-				(err) => {
-					this.props.loading(false);
-					this.setState({ errors: err.response.data.message });
-				}
-			);
-	}
+  /**
+ * @description submits form
+ * @param {event} event
+ * @returns {null} null
+ * @memberof DashboardPage
+ */
+  onSubmit(event) {
+    event.preventDefault();
+    this.setState({ errors: '' });
+    document.getElementById('hidePopUpBtn').click();
+    this.props.updateUser(this.state)
+      .then(
+        () => {
+          this.props.setProgress(0);
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'Update successful!'
+          });
+          this.context.router.history.push('/dashboard');
+        },
+        (err) => {
+          this.props.loading(false);
+          this.setState({ errors: err.response.data.message });
+        }
+      );
+  }
 
-	render() {
-		const { errors, firstname, lastname, username, email, sex, uploading } = this.state;
-		const { isLoading, currentUser, uploadProgress } = this.props;		
-		
-		const noBusiness = (
+  /**
+   * @memberof DashboardPage
+   * @return {ReactElement} markup
+   */
+  render() {
+    const {
+      firstname, lastname, username, email, sex, uploading
+    } = this.state;
+    const { isLoading, currentUser, uploadProgress } = this.props;
+
+    const noBusiness = (
 			<div className="col-lg-3 col-md-6 py-2">
-				<h5>You don't own a business</h5>
+				<h5>You do not own a business</h5>
 			</div>
-		);
+    );
 
-		const businessComponent = this.props.businessList.map((business) => {
-			return (
+    const businessComponent = this.props.businessList.map(business => (
 				<div className="col-lg-4 col-md-6 py-2" key={business.id}>
 					<Business
 						id={business.id}
@@ -110,21 +149,20 @@ class DashboardPage extends Component {
 						user={currentUser.username}
 					/>
 				</div>
-			);
-		});
+    ));
 
-		let image;
-		if (this.props.currentUser.profilepic) {
-			image = currentUser.profilepic
-		} else if (this.props.currentUser.sex == 'male') {
-			image = maleAvartar
-		} else {
-			image = femaleAvartar
-		}
+    let image;
+    if (this.props.currentUser.profilepic) {
+      image = currentUser.profilepic;
+    } else if (this.props.currentUser.sex == 'male') {
+      image = maleAvartar;
+    } else {
+      image = femaleAvartar;
+    }
 
-		if (isLoading) { return <Spinner />; }
+    if (isLoading) { return <Spinner />; }
 
-		return (
+    return (
 			<div className="businesses">
 			<h5>Welcome {currentUser.username}</h5>
 				<div className="container list">
@@ -244,12 +282,24 @@ class DashboardPage extends Component {
 					</div>
 				</div>
 			</div>
-		);
-	}
+    );
+  }
 }
 
 DashboardPage.contextTypes = {
-	router: PropTypes.object.isRequired
-}
+  router: PropTypes.object.isRequired
+};
+
+DashboardPage.propTypes = {
+  userId: PropTypes.number,
+  setProgress: PropTypes.func.isRequired,
+  updateUser: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
+  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  uploadProgress: PropTypes.number,
+  currentUser: PropTypes.object.isRequired,
+  businessList: PropTypes.array
+};
 
 export default DashboardPage;
