@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const HeroImage = () => {
-	return (
+const HeroImage = () => (
 		<div className="hero-image">
 			<div className="row">
 				<div className="col-lg-12">
@@ -11,7 +10,6 @@ const HeroImage = () => {
 				</div>
 			</div>
 		</div>
-	);
-}
+);
 
 export default HeroImage;

@@ -1,92 +1,123 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { storage } from '../firebase';
-import Spinner from '../Spinner';
+import Spinner from '../Spinner/index.jsx';
 
+/**
+ * @description Signin form component
+ * @export {Object}
+ * @class  SignupForm
+ * @extends {Component}
+ */
 class SignupForm extends Component {
-	constructor() {
-		super();
-		this.state = {
-			firstname: '',
-			lastname: '',
-			username: '',
-			sex: '',
-			email: '',
-			profilepic: '',
-			password: '',
-			confirmPassword: '',
-			error: [],
-			uploading: false
-		}
-		this.onChange = this.onChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-	}
+/**
+* @description Creates an instance of signup form
+* @param {object} props
+* @memberof SignupForm
+*/
+  constructor() {
+    super();
+    this.state = {
+      firstname: '',
+      lastname: '',
+      username: '',
+      sex: '',
+      email: '',
+      profilepic: '',
+      password: '',
+      confirmPassword: '',
+      error: [],
+      uploading: false
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
-	onChange(e) {
-		this.setState({
-			[e.target.name]: e.target.value
-		});
-	}
+  /**
+* @returns {null} null
+* @param {event} event
+* @memberof BusinessProfilePage
+*/
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
 
-	fileChange(e) {
-		this.setState({
-			profilepic: '',
-			uploading: true
-		});
-		const uploadTask = storage.child(`userimage/${new Date().getTime()}`)
-			.put(e.target.files[0]);
-		uploadTask.on('state_changed', snapshot => {
-			const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-			this.props.setProgress(progress);
-		}, error => {
-			this.setState({ errors: err.message })
-		}, () => {
-			this.setState({
-				profilepic: uploadTask.snapshot.downloadURL,
-				uploading: false
-			});
-		});
-	}
+  /**
+* @returns {null} null
+* @param {event} event
+* @memberof BusinessProfilePage
+*/
+  fileChange(event) {
+    this.setState({
+      profilepic: '',
+      uploading: true
+    });
+    const uploadTask = storage.child(`userimage/${new Date().getTime()}`)
+      .put(event.target.files[0]);
+    uploadTask.on('state_changed', (snapshot) => {
+      const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      this.props.setProgress(progress);
+    }, (error) => {
+      this.setState({ errors: error.message });
+    }, () => {
+      this.setState({
+        profilepic: uploadTask.snapshot.downloadURL,
+        uploading: false
+      });
+    });
+  }
 
-	onSubmit(e) {
-		e.preventDefault();
-		this.setState({ errors: [] });
-		this.props.signupUser(this.state)
-			.then(
-				() => {
-					this.props.setProgress(0);					
-					this.props.addFlashMessage({
-						type: 'success',
-						text: 'Welcome! You signed up successfully!'
-					})
-					this.context.router.history.push('/dashboard');
-				},
-				(err) => {
-					this.props.loading(false);
-					this.setState({ error: err.response.data.errors })
-					if (this.state.error) {
-						this.state.error.map(err => {
-							this.props.addFlashMessage({
-								type: 'error',
-								text: err
-							});
-						})
-					}
-				}
-			);
-	}
+  /**
+ * @description submits form
+ * @param {event} event
+ * @returns {null} null
+ * @memberof SigninForm
+ */
+  onSubmit(event) {
+    event.preventDefault();
+    this.setState({ errors: [] });
+    this.props.signupUser(this.state)
+      .then(
+        () => {
+          this.props.setProgress(0);
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'Welcome! You signed up successfully!'
+          });
+          this.context.router.history.push('/dashboard');
+        },
+        (err) => {
+          this.props.loading(false);
+          this.setState({ error: err.response.data.errors });
+          if (this.state.error) {
+            this.state.error.map((err) => {
+              this.props.addFlashMessage({
+                type: 'error',
+                text: err
+              });
+            });
+          }
+        }
+      );
+  }
 
-	render() {
-		const { errors, firstname, lastname, username, email, password, confirmPassword, sex, uploading } = this.state;
-		const { isLoading, uploadProgress } = this.props;
+  /**
+   * @memberof SigninForm
+   * @return {ReactElement} markup
+   */
+  render() {
+    const {
+      firstname, lastname, username, email, password, confirmPassword, sex, uploading
+    } = this.state;
+    const { isLoading, uploadProgress } = this.props;
 
-		if (isLoading) { return <Spinner />; }
+    if (isLoading) { return <Spinner />; }
 
-		return (
+    return (
 			<div className="form-signup">
 				<div className="signup-form container py-5">
-					<h1 className="text-center" style={{'color': 'white'}}>Sign Up</h1>
+					<h1 className="text-center" style={{ color: 'white' }}>Sign Up</h1>
 					<div className="row">
 						<div className="col-md-10 mx-auto">
 							<form onSubmit={this.onSubmit}>
@@ -192,12 +223,21 @@ class SignupForm extends Component {
 					</div>
 				</div>
 			</div>
-		);
-	}
+    );
+  }
 }
 
 SignupForm.contextTypes = {
-	router: PropTypes.object.isRequired
-}
+  router: PropTypes.object.isRequired
+};
+
+SignupForm.propTypes = {
+  addFlashMessage: PropTypes.func.isRequired,
+  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  uploadProgress: PropTypes.number,
+  signupUser: PropTypes.func.isRequired,
+  setProgress: PropTypes.func
+};
 
 export default SignupForm;
