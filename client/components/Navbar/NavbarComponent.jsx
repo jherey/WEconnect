@@ -1,45 +1,68 @@
 import React, { Component } from 'react';
-import Spinner from '../Spinner';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Spinner from '../Spinner/index.jsx';
 
+/**
+ * @description Navbar component
+ * @export {Object}
+ * @class  NavbarComponent
+ * @extends {Component}
+ */
 class NavbarComponent extends Component {
-	constructor() {
-		super();
-		this.state = {
-			keyword: '',
-			type: ''
-		}
-		this.onChange = this.onChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-	}
+  /**
+* @description Creates an instance of Navbar component page
+* @param {object} props
+* @memberof NavbarComponent
+*/
+  constructor() {
+    super();
+    this.state = {
+      keyword: '',
+      type: ''
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
-	onChange(e) {
-		this.setState({
-			[e.target.name]: e.target.value
-		});
-	}
+  /**
+* @returns {null} null
+* @param {event} event
+* @memberof NavbarComponent
+*/
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
 
-	onSubmit(e) {
-		e.preventDefault();
-		this.props.search(this.state.keyword, this.state.type).then(
-			() => {
-				this.context.router.history.push('/search');
-			},
-			(err) => {
-				this.props.loading(false);
-				this.props.addFlashMessage({
-					type: 'error',
-					text: err.response.data.message
-				});
-			}
-		)
-	}
+  /**
+* @returns {null} null
+* @param {event} event
+* @memberof Navbar
+*/
+  onSubmit(event) {
+    event.preventDefault();
+    this.props.search(this.state.keyword, this.state.type).then(
+      () => {
+        this.context.router.history.push('/search');
+      },
+      (err) => {
+        this.props.loading(false);
+        this.props.addFlashMessage({
+          type: 'error',
+          text: err.response.data.message
+        });
+      }
+    );
+  }
 
-	render() {
-		const { isAuthenticated } = this.props.authUser;
+  /**
+   * @memberof Navbar
+   * @return {ReactElement} markup
+   */
+  render() {
+    const { isAuthenticated } = this.props.authUser;
 
-		const authUserLinks = (
+    const authUserLinks = (
 			<ul className="navbar-nav">
 				<li className="nav-item">
 					<Link className="nav-link" to="/businesses">Businesses</Link>
@@ -51,9 +74,9 @@ class NavbarComponent extends Component {
 					<Link className="nav-link" to="/" onClick={this.props.signout}>Sign out</Link>
 				</li>
 			</ul>
-		);
+    );
 
-		const guestLinks = (
+    const guestLinks = (
 			<ul className="navbar-nav">
 				<li className="nav-item">
 					<Link className="nav-link" to="/businesses">Businesses</Link>
@@ -65,13 +88,13 @@ class NavbarComponent extends Component {
 					<Link className="nav-link" to="/signup">Sign Up</Link>
 				</li>
 			</ul>
-		);
+    );
 
-		const { isLoading } = this.props;
+    const { isLoading } = this.props;
 
-		if (isLoading) { return <Spinner />; }
+    if (isLoading) { return <Spinner />; }
 
-		return (
+    return (
 			<nav className="navbar navbar-custom sticky-top navbar-light navbar-expand-lg">
 				<Link className="navbar-brand ml-5" to="/">WeConnect</Link>
 				<button className="navbar-toggler" type="button" data-toggle="collapse" id="hamburger" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,12 +133,22 @@ class NavbarComponent extends Component {
 					{isAuthenticated ? authUserLinks : guestLinks}
 				</div>
 			</nav>
-		);
-	}
+    );
+  }
 }
 
 NavbarComponent.contextTypes = {
-	router: PropTypes.object.isRequired
-}
+  router: PropTypes.object.isRequired
+};
+
+NavbarComponent.propTypes = {
+  search: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  addFlashMessage: PropTypes.func.isRequired,
+  signout: PropTypes.func,
+  loading: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  authUser: PropTypes.object
+};
 
 export default NavbarComponent;
