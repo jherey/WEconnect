@@ -154,7 +154,7 @@ class DashboardPage extends Component {
     let image;
     if (this.props.currentUser.profilepic) {
       image = currentUser.profilepic;
-    } else if (this.props.currentUser.sex == 'male') {
+    } else if (this.props.currentUser.sex === 'male') {
       image = maleAvartar;
     } else {
       image = femaleAvartar;

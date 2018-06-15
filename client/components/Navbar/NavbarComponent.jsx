@@ -25,7 +25,7 @@ class NavbarComponent extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-	 /**
+  /**
 * @returns {null} null
 * @param {event} event
 * @memberof NavbarComponent
@@ -142,7 +142,13 @@ NavbarComponent.contextTypes = {
 };
 
 NavbarComponent.propTypes = {
-  search: PropTypes.func.isRequired
+  search: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  addFlashMessage: PropTypes.func.isRequired,
+  signout: PropTypes.func,
+  loading: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  authUser: PropTypes.object
 };
 
 export default NavbarComponent;

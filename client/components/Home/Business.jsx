@@ -13,7 +13,7 @@ const Business = (props) => {
 			<div className="avatar mx-auto white">
 				<img
 					className="rounded-circle mt-2"
-					src={businessImage == '' ? imageAvatar : businessImage}
+					src={businessImage === '' ? imageAvatar : businessImage}
 					alt="BusinessLogo"
 					style={{ width: '120px', height: '120px' }}
 				/>

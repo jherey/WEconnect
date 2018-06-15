@@ -10,7 +10,7 @@ const BusinessList = ({ businesses }) => {
       return (
 				<div className="col-lg-3 col-md-6 py-2" key={business.id}>
 					<Business
-	 					id={business.id}
+						id={business.id}
 						name={business.businessName}
 						description={business.businessInfo}
 						businessImage={business.businessImage}

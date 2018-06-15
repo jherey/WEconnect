@@ -74,6 +74,7 @@ Dashboard.propTypes = {
   currentUser: PropTypes.object.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   businesses: PropTypes.array.isRequired,
+  uploadProgress: PropTypes.number,
   isLoading: PropTypes.bool,
   loading: PropTypes.func.isRequired,
   setProgress: PropTypes.func.isRequired,

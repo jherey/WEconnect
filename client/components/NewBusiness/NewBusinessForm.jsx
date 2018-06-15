@@ -33,7 +33,7 @@ class NewBusinessForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-	 /**
+  /**
 * @returns {null} null
 * @param {event} event
 * @memberof NewBusinessForm
@@ -135,7 +135,7 @@ class NewBusinessForm extends Component {
 									</div>
 									<div className="col-sm-6">
 										<label>Description</label>
-						 				<textarea
+										<textarea
 											className="form-control"
 											rows="3"
 											name="businessInfo"
@@ -158,7 +158,7 @@ class NewBusinessForm extends Component {
 									</div>
 									<div className="col-sm-6">
 										<label>Email</label>
-						 				<input
+										<input
 											type="email"
 											className="form-control"
 											value={email}
@@ -171,7 +171,7 @@ class NewBusinessForm extends Component {
 								<div className="form-group row">
 									<div className="col-sm-6">
 										<label>Category</label>
-						 				<select
+										<select
 											className="form-control"
 											name='category'
 											onChange={this.onChange}
@@ -189,7 +189,7 @@ class NewBusinessForm extends Component {
 									</div>
 									<div className="col-sm-6">
 										<label className='control-label'>Address</label>
-						 				<input
+										<input
 											type="text"
 											className="form-control"
 											value={address}
@@ -201,7 +201,7 @@ class NewBusinessForm extends Component {
 								<div className="form-group row">
 									<div className="col-sm-6">
 										<label className='control-label'>Country</label>
-						 				<select
+										<select
 											className="form-control"
 											name='location'
 											onChange={this.onChange}

@@ -1,63 +1,87 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Spinner from '../Spinner/index.jsx';
 
+/**
+ * @description Signin form component
+ * @export {Object}
+ * @class  SigninForm
+ * @extends {Component}
+ */
 class SigninForm extends Component {
-	constructor() {
-		super();
-		this.state = {
-			username: '',
-			password: '',
-			error: []
-		}
-		this.onChange = this.onChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-	}
+  /**
+* @description Creates an instance of signin form
+* @param {object} props
+* @memberof SigninForm
+*/
+  constructor() {
+    super();
+    this.state = {
+      username: '',
+      password: '',
+      error: []
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
-	onChange(e) {
-		this.setState({
-			[e.target.name]: e.target.value
-		});
-	}
+  /**
+* @returns {null} null
+* @param {event} event
+* @memberof SigninForm
+*/
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
 
-	onSubmit(e) {
-		e.preventDefault();
-		this.setState({ errors: [] });
-		this.props.signinUser(this.state)
-			.then(
-				() => {
-					this.props.addFlashMessage({
-						type: 'success',
-						text: 'Signed in successfully'
-					});
-					this.context.router.history.push('/dashboard');
-				},
-				(err) => {
-					this.props.loading(false);
-					this.setState({ error: err.response.data.errors });
-					if (this.state.error) {
-						this.state.error.map(err => {
-							this.props.addFlashMessage({
-								type: 'error',
-								text: err
-							});
-						})
-					}
-				}
-			);
-	}
+  /**
+ * @description submits form
+ * @param {event} event
+ * @returns {null} null
+ * @memberof SigninForm
+ */
+  onSubmit(event) {
+    event.preventDefault();
+    this.setState({ errors: [] });
+    this.props.signinUser(this.state)
+      .then(
+        () => {
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'Signed in successfully'
+          });
+          this.context.router.history.push('/dashboard');
+        },
+        (err) => {
+          this.props.loading(false);
+          this.setState({ error: err.response.data.errors });
+          if (this.state.error) {
+            this.state.error.map((err) => {
+              this.props.addFlashMessage({
+                type: 'error',
+                text: err
+              });
+            });
+          }
+        }
+      );
+  }
 
-	render() {
-		const { username, password, errors } = this.state;
-		const { isLoading } = this.props;
+  /**
+   * @memberof SigninForm
+   * @return {ReactElement} markup
+   */
+  render() {
+    const { username, password } = this.state;
+    const { isLoading } = this.props;
 
-		if(isLoading) { return <Spinner />; }
+    if (isLoading) { return <Spinner />; }
 
-		return (
+    return (
 			<div className="form-signin">
 				<div className="login-form container py-5">
-					<h1 className="text-center" style={{'color': 'white'}}>Sign In</h1>
+					<h1 className="text-center" style={{ color: 'white' }}>Sign In</h1>
 					<div className="row">
 						<div className="col-md-10 mx-auto">
 							<form onSubmit={this.onSubmit}>
@@ -102,12 +126,20 @@ class SigninForm extends Component {
 					</div>
 				</div>
 			</div>
-		);
-	}
+    );
+  }
 }
 
 SigninForm.contextTypes = {
-	router: PropTypes.object.isRequired
-}
+  router: PropTypes.object.isRequired
+};
+
+SigninForm.propTypes = {
+  signinUser: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  loading: PropTypes.func.isRequired,
+
+};
 
 export default SigninForm;

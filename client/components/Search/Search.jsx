@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
-import SearchPage from './SearchPage.jsx';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import SearchPage from './SearchPage.jsx';
 
+/**
+ * @description Search component
+ * @export {Object}
+ * @class  Search
+ * @extends {Component}
+ */
 class Search extends Component {
-	render() {
-		return (
+  /**
+   * @memberof Search
+   * @return {ReactElement} markup
+   */
+  render() {
+    return (
 			<div className="paddingBottom">
 				<div className="businesses">
 					<SearchPage
@@ -13,15 +24,18 @@ class Search extends Component {
 					/>
 				</div>
 			</div>
-		);
-	}
+    );
+  }
 }
 
-function mapStateToProps(state) {
-	return {
-		searchResults: state.searchResults.business,
-		searchWord: state.searchResults.searchWord
-	}
-}
+const mapStateToProps = state => ({
+  searchResults: state.searchResults.business,
+  searchWord: state.searchResults.searchWord
+});
+
+Search.propTypes = {
+  searchResults: PropTypes.array.isRequired,
+  searchWord: PropTypes.string.isRequired
+};
 
 export default connect(mapStateToProps)(Search);

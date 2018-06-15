@@ -50,18 +50,11 @@ class BusinessProfile extends Component {
   }
 }
 
-/**
- * @description - Maps the redux state to the component props
- * @param {Object} state - Application state
- * @returns {Object} - Selected state
- */
-function mapStateToProps(state) {
-  return {
-    userId: state.authUser.user.id,
-    currentBusiness: state.currentBusiness,
-    isLoading: state.isLoading
-  };
-}
+const mapStateToProps = state => ({
+  userId: state.authUser.user.id,
+  currentBusiness: state.currentBusiness,
+  isLoading: state.isLoading
+});
 
 BusinessProfile.propTypes = {
   match: PropTypes.object.isRequired,

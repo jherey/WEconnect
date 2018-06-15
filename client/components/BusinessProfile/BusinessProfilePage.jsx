@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReviewList from './ReviewList.jsx';
-import Spinner from '../Spinner/index.jsx';
+// import Spinner from '../Spinner/index.jsx';
 import imageAvatar from '../../public/images/business-avatar.png';
 
 /**
@@ -40,6 +40,7 @@ class BusinessProfilePage extends Component {
 * @memberof BusinessProfilePage
 */
   onClick(event) {
+    event.preventDefault();
     this.setState({ errors: '' });
     document.getElementById('deleteBtn').click();
     this.props.deleteBusiness(this.props.id)
@@ -173,6 +174,7 @@ BusinessProfilePage.contextTypes = {
 BusinessProfilePage.propTypes = {
   currentBusiness: PropTypes.object.isRequired,
   fetchBusiness: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   deleteBusiness: PropTypes.func.isRequired,
   loading: PropTypes.func.isRequired,

@@ -14,7 +14,7 @@ import addFlashMessage from '../../actions/flashMessages';
  * @extends {Component}
  */
 class Navbar extends Component {
-	 /**
+  /**
 * @returns {null} null
 * @param {event} event
 * @memberof Navbar

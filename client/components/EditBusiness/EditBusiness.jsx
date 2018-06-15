@@ -71,6 +71,7 @@ EditBusiness.propTypes = {
   currentBusiness: PropTypes.object.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   deleteBusiness: PropTypes.func,
+  setProgress: PropTypes.func,
   loading: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   uploadProgress: PropTypes.number
