@@ -82,12 +82,10 @@ class EditBusinessForm extends Component {
         this.props.loading(false);
         this.setState({ error: err.response.data.errors });
         if (this.state.error) {
-          this.state.error.map((err) => {
-            this.props.addFlashMessage({
-              type: 'error',
-              text: err
-            });
-          });
+          this.state.error.map(err => this.props.addFlashMessage({
+            type: 'error',
+            text: err
+          }));
         }
       }
     );
@@ -102,8 +100,6 @@ class EditBusinessForm extends Component {
     const {
       businessName, email, category, location, address, businessInfo, website, errors
     } = this.state;
-
-    if (isLoading) { return <Spinner />; }
 
     return (
 			<div className="form-signup">
@@ -218,13 +214,18 @@ class EditBusinessForm extends Component {
 										<progress value={uploadProgress} max="100" />
 									</div>
 								</div>
-								<button
-									id="submitButton"
-									disabled={isLoading}
-									className="btn btn-orange btn-lg"
-								>
-									Update
-								</button>
+								{isLoading
+									? <div style={{ textAlign: 'center' }}>
+											<Spinner />
+										</div>
+									: <button
+											id="submitButton"
+											className="btn btn-orange btn-lg"
+											disabled={isLoading}
+										>
+											Update
+										</button>
+								}
 								{
 									errors === 'Oops! You cannot update this business' &&
 									<div style={{ marginTop: '30px' }}>

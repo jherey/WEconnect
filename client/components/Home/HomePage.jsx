@@ -29,13 +29,16 @@ class HomePage extends Component {
   render() {
     const { businesses, isLoading } = this.props;
 
-    if (isLoading) { return <Spinner />; }
-
     return (
 			<div className="paddingBottom">
 				<HeroImage />
 				<div className="businesses">
-					<BusinessList businesses={businesses} />
+          {isLoading
+            ?
+            <div style={{ marginTop: '10%', textAlign: 'center' }}>
+              <Spinner />
+            </div>
+            : <BusinessList businesses={businesses} />}
 				</div>
 			</div>
     );

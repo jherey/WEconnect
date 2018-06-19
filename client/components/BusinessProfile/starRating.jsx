@@ -5,7 +5,7 @@ const rating = (star) => {
   for (let i = 0; i < star; i += 1) {
     starRating.push(i);
   }
-  return starRating.map((star, i) => <i key={i} className="fa fa-star" />);
+  return starRating.map((stars, i) => <i key={i} className="fa fa-star" />);
 };
 
 export default rating;

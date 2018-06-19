@@ -29,28 +29,19 @@ class EditBusiness extends Component {
    */
   render() {
     const { id } = this.props.match.params;
-    const {
-      currentBusiness,
-      fetchBusiness,
-      updateBusiness,
-      setProgress,
-      addFlashMessage,
-      isLoading,
-      loading,
-      uploadProgress
-    } = this.props;
+    const { getCurrentBusiness, isLoading, uploadProgress } = this.props;
 
     return (
 			<div>
 				<EditBusinessForm
-					loading={loading}
+					loading={this.props.loading}
 					id={id}
-					currentBusiness={currentBusiness}
-					fetchBusiness={fetchBusiness}
-					updateBusiness={updateBusiness}
-					addFlashMessage={addFlashMessage}
+					currentBusiness={getCurrentBusiness}
+					fetchBusiness={this.props.fetchBusiness}
+					updateBusiness={this.props.updateBusiness}
+					addFlashMessage={this.props.addFlashMessage}
 					isLoading={isLoading}
-					setProgress={setProgress}
+					setProgress={this.props.setProgress}
 					uploadProgress={uploadProgress}
 				/>
 			</div>
@@ -59,7 +50,7 @@ class EditBusiness extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentBusiness: state.currentBusiness,
+  getCurrentBusiness: state.currentBusiness,
   isLoading: state.isLoading,
   uploadProgress: state.uploadProgress
 });
@@ -68,7 +59,7 @@ EditBusiness.propTypes = {
   match: PropTypes.object.isRequired,
   fetchBusiness: PropTypes.func.isRequired,
   updateBusiness: PropTypes.func.isRequired,
-  currentBusiness: PropTypes.object.isRequired,
+  getCurrentBusiness: PropTypes.object.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   deleteBusiness: PropTypes.func,
   setProgress: PropTypes.func,

@@ -27,16 +27,13 @@ class Signin extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const {
-      signinUser, addFlashMessage, isLoading, loading
-    } = this.props;
     return (
 			<div>
 				<SigninForm
-					loading={loading}
-					signinUser={signinUser}
-					addFlashMessage={addFlashMessage}
-					isLoading={isLoading}
+					loading={this.props.loading}
+					signinUser={this.props.signinUser}
+					addFlashMessage={this.props.addFlashMessage}
+					isLoading={this.props.isLoading}
 				/>
 			</div>
     );

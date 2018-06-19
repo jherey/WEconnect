@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { ToastContainer } from 'react-toastr';
 import { connect } from 'react-redux';
 
+let container;
 /**
  * @description Flash message component
  * @export {Object}
@@ -11,17 +12,19 @@ import { connect } from 'react-redux';
  */
 class FlashMessage extends Component {
   /**
-   * @return {null} null
+   * @return {object} JSX object
    * @param {nextProps} nextProps
    * @memberof FlashMessage
    */
   componentWillReceiveProps(nextProps) {
     const { type, text } = nextProps.message;
+
     if (type === 'success') {
-      this.refs.container.success(text);
+      container.success(text);
     }
+
     if (type === 'error') {
-      this.refs.container.error(text);
+      container.error(text);
     }
   }
 
@@ -33,7 +36,7 @@ class FlashMessage extends Component {
     return (
 		<div className="container">
 			<ToastContainer
-				ref='container'
+				ref={ref => container = ref}
 				className="toast-top-right"
 			/>
 		</div>

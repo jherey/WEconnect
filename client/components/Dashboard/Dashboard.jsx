@@ -10,7 +10,7 @@ import { setProgress, getAUserBusiness } from '../../actions/businessActions';
 /**
  * @description User dashboard component
  * @export {Object}
- * @class  Dashboard
+ * @class Dashboard
  * @extends {Component}
  */
 class Dashboard extends Component {
@@ -35,10 +35,6 @@ class Dashboard extends Component {
       isLoading,
       currentUser,
       uploadProgress,
-      updateUser,
-      addFlashMessage,
-      loading,
-      setProgress
     } = this.props;
 
     return (
@@ -49,10 +45,10 @@ class Dashboard extends Component {
 					isLoading={isLoading}
 					currentUser={currentUser}
 					uploadProgress={uploadProgress}
-					updateUser={updateUser}
-					addFlashMessage={addFlashMessage}
-					loading={loading}
-					setProgress={setProgress}
+					updateUser={this.props.updateUser}
+					addFlashMessage={this.props.addFlashMessage}
+					loading={this.props.loading}
+					setProgress={this.props.setProgress}
 				/>
 			</div>
     );

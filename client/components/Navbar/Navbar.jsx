@@ -29,17 +29,15 @@ class Navbar extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const {
-      authUser, signout, search, isLoading, loading, addFlashMessage
-    } = this.props;
+    const { authUser, isLoading } = this.props;
     return (
 			<NavbarComponent
-				loading={loading}
+				loading={this.props.loading}
 				authUser={authUser}
-				signout={signout}
-				search={search}
+				signout={this.props.signout}
+				search={this.props.search}
 				isLoading={isLoading}
-				addFlashMessage={addFlashMessage}
+				addFlashMessage={this.props.addFlashMessage}
 			/>
     );
   }

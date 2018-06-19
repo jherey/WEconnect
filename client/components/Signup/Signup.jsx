@@ -19,18 +19,15 @@ class Signup extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const {
-      signupUser, addFlashMessage, isLoading, setProgress, uploadProgress, loading
-    } = this.props;
     return (
 			<div>
 				<SignupForm
-					loading={loading}
-					signupUser={signupUser}
-					addFlashMessage={addFlashMessage}
-					isLoading={isLoading}
-					setProgress={setProgress}
-					uploadProgress={uploadProgress}
+					loading={this.props.loading}
+					signupUser={this.props.signupUser}
+					addFlashMessage={this.props.addFlashMessage}
+					isLoading={this.props.isLoading}
+					setProgress={this.props.setProgress}
+					uploadProgress={this.props.uploadProgress}
 				/>
 			</div>
     );

@@ -91,12 +91,10 @@ class SignupForm extends Component {
           this.props.loading(false);
           this.setState({ error: err.response.data.errors });
           if (this.state.error) {
-            this.state.error.map((err) => {
-              this.props.addFlashMessage({
-                type: 'error',
-                text: err
-              });
-            });
+            this.state.error.map(err => this.props.addFlashMessage({
+              type: 'error',
+              text: err
+            }));
           }
         }
       );
@@ -111,8 +109,6 @@ class SignupForm extends Component {
       firstname, lastname, username, email, password, confirmPassword, sex, uploading
     } = this.state;
     const { isLoading, uploadProgress } = this.props;
-
-    if (isLoading) { return <Spinner />; }
 
     return (
 			<div className="form-signup">
@@ -210,13 +206,18 @@ class SignupForm extends Component {
 										<progress value={uploadProgress} max="100" />
 									</div>
 								</div>
-								<button
-									id="submitButton"
-									disabled={uploading}
-									className="btn btn-orange btn-lg"
-								>
-									Sign Up
-								</button>
+								{isLoading
+									? <div style={{ textAlign: 'center' }}>
+											<Spinner />
+										</div>
+									: <button
+											id="submitButton"
+											className="btn btn-orange btn-lg"
+											disabled={uploading}
+										>
+											Sign Up
+										</button>
+								}
 								<p id="signup-link">Already have an account?<span><Link to="/signin"> Sign In</Link></span></p>
 							</form>
 						</div>
