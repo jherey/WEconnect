@@ -88,12 +88,10 @@ class NewBusinessForm extends Component {
         this.props.loading(false);
         this.setState({ error: err.response.data.errors });
         if (this.state.error) {
-          this.state.error.map((err) => {
-            this.props.addFlashMessage({
-              type: 'error',
-              text: err
-            });
-          });
+          this.state.error.map(err => this.props.addFlashMessage({
+            type: 'error',
+            text: err
+          }));
         }
       }
     );

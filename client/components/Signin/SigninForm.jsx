@@ -57,12 +57,10 @@ class SigninForm extends Component {
           this.props.loading(false);
           this.setState({ error: err.response.data.errors });
           if (this.state.error) {
-            this.state.error.map((err) => {
-              this.props.addFlashMessage({
-                type: 'error',
-                text: err
-              });
-            });
+            this.state.error.map(err => this.props.addFlashMessage({
+              type: 'error',
+              text: err
+            }));
           }
         }
       );
@@ -118,7 +116,7 @@ class SigninForm extends Component {
 										>
 											Login
 										</button>
-										<p id="signin-link">Don't have an account?<span><Link to="/signup"> Sign Up</Link></span></p>
+										<p id="signin-link">Do not have an account?<span><Link to="/signup"> Sign Up</Link></span></p>
 									</div>
 								</div>
 							</form>

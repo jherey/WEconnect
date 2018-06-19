@@ -21,29 +21,19 @@ class BusinessProfile extends Component {
    */
   render() {
     const { id } = this.props.match.params;
-    const {
-      fetchBusiness,
-      currentBusiness,
-      deleteBusiness,
-      addFlashMessage,
-      fetchReviews,
-      loading,
-      userId,
-      isLoading
-    } = this.props;
 
     return (
 			<div className="paddingBottom">
 				<BusinessProfilePage
 					id={id}
-					loading={loading}
-					fetchBusiness={fetchBusiness}
-					currentBusiness={currentBusiness}
-					addFlashMessage={addFlashMessage}
-					deleteBusiness={deleteBusiness}
-					fetchReviews={fetchReviews}
-					userId={userId}
-					isLoading={isLoading}
+					loading={this.props.loading}
+					fetchBusiness={this.props.fetchBusiness}
+					currentBusiness={this.props.currentBusiness}
+					addFlashMessage={this.props.addFlashMessage}
+					deleteBusiness={this.props.deleteBusiness}
+					fetchReviews={this.props.fetchReviews}
+					userId={this.props.userId}
+					isLoading={this.props.isLoading}
 				/>
 			</div>
     );

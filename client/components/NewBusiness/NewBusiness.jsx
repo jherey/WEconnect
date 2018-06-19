@@ -18,17 +18,15 @@ class NewBusiness extends Component {
 	* @return {ReactElement} markup
 	*/
   render() {
-    const {
-      createBusiness, addFlashMessage, isLoading, setProgress, uploadProgress, loading
-    } = this.props;
+    const { isLoading, uploadProgress } = this.props;
     return (
 			<div>
 				<NewBusinessForm
-					loading={loading}
-					createBusiness={createBusiness}
-					addFlashMessage={addFlashMessage}
+					loading={this.props.loading}
+					createBusiness={this.props.createBusiness}
+					addFlashMessage={this.props.addFlashMessage}
 					isLoading={isLoading}
-					setProgress={setProgress}
+					setProgress={this.props.setProgress}
 					uploadProgress={uploadProgress}
 				/>
 			</div>
