@@ -25,7 +25,7 @@ const AllBusinessList = ({ businesses, isLoading }) => {
 
   return (
 		<div className="businesses">
-			<div className="container list allBusinesses">
+			<div className="container allBusinesses">
 				<div className="row">
 					{businesses.length === 0 ? noBusiness : businessComponent}
 				</div>
