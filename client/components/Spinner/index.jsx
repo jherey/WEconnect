@@ -2,7 +2,7 @@ import React from 'react';
 import puff from './puff.svg';
 
 const Spinner = () =>
-	<div style={{ marginTop: '50%', textAlign: 'center' }}>
+	<div>
 		<img src={puff} />
 	</div>;
 

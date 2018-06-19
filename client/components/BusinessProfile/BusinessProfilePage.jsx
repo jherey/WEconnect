@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReviewList from './ReviewList.jsx';
-// import Spinner from '../Spinner/index.jsx';
+import Spinner from '../Spinner/index.jsx';
 import imageAvatar from '../../public/images/business-avatar.png';
 
 /**
@@ -67,7 +67,17 @@ class BusinessProfilePage extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { currentBusiness, id, userId } = this.props;
+    const {
+      currentBusiness, id, userId, isLoading
+    } = this.props;
+
+    if (isLoading) {
+      return (
+				<div style={{ marginTop: '10%', textAlign: 'center' }}>
+					<Spinner />
+				</div>
+      );
+    }
 
     return (
 			<div className="businesses">

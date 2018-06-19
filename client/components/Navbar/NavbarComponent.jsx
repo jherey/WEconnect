@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Spinner from '../Spinner/index.jsx';
 
 /**
  * @description Navbar component
@@ -90,10 +89,6 @@ class NavbarComponent extends Component {
 			</ul>
     );
 
-    const { isLoading } = this.props;
-
-    if (isLoading) { return <Spinner />; }
-
     return (
 			<nav className="navbar navbar-custom sticky-top navbar-light navbar-expand-lg">
 				<Link className="navbar-brand ml-5" to="/">WeConnect</Link>
@@ -143,7 +138,6 @@ NavbarComponent.contextTypes = {
 
 NavbarComponent.propTypes = {
   search: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
   addFlashMessage: PropTypes.func.isRequired,
   signout: PropTypes.func,
   loading: PropTypes.func.isRequired,

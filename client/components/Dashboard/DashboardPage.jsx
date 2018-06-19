@@ -160,7 +160,13 @@ class DashboardPage extends Component {
       image = femaleAvartar;
     }
 
-    if (isLoading) { return <Spinner />; }
+    if (isLoading) {
+      return (
+				<div style={{ marginTop: '15%', textAlign: 'center' }}>
+					<Spinner />
+				</div>
+      );
+    }
 
     return (
 			<div className="businesses">
