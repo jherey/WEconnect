@@ -37,7 +37,7 @@ class SignupForm extends Component {
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof BusinessProfilePage
+* @memberof SignupForm
 */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -46,7 +46,7 @@ class SignupForm extends Component {
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof BusinessProfilePage
+* @memberof SignupForm
 */
   fileChange(event) {
     this.setState({

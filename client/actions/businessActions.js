@@ -34,7 +34,7 @@ export function addBusiness(business) {
  */
 export const createBusiness = businessData => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.post('api/v1/businesses', businessData)
+  return axios.post('/api/v1/businesses', businessData)
     .then((res) => {
       dispatch(isLoading(false));
       dispatch(addBusiness(res.data.business));
@@ -62,7 +62,7 @@ export function getOneBusiness(business) {
  */
 export const fetchBusiness = id => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.get(`http://localhost:8000/api/v1/businesses/${id}`)
+  return axios.get(`/api/v1/businesses/${id}`)
     .then((business) => {
       dispatch(isLoading(false));
       dispatch(getOneBusiness(business.data.business));
@@ -91,10 +91,9 @@ export function businessUpdated(updatedBusiness) {
  */
 export const updateBusiness = updatedBusinessData => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.put(`http://localhost:8000/api/v1/businesses/${updatedBusinessData.id}`, updatedBusinessData)
-    .then((res) => {
+  return axios.put(`/api/v1/businesses/${updatedBusinessData.id}`, updatedBusinessData)
+    .then(() => {
       dispatch(isLoading(false));
-      dispatch(businessUpdated(res.data.updatedBusiness));
     });
 };
 
@@ -117,7 +116,7 @@ export function businessDeleted(businessId) {
  */
 export const deleteBusiness = id => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.delete(`http://localhost:8000/api/v1/businesses/${id}`)
+  return axios.delete(`/api/v1/businesses/${id}`)
     .then(() => {
       dispatch(isLoading(false));
       dispatch(businessDeleted(id));
@@ -143,7 +142,7 @@ export function allBusinesses(businesses) {
  */
 export const getAllBusinesses = pageNum => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.get(`api/v1/businesses?pageNum=${pageNum}`)
+  return axios.get(`/api/v1/businesses?pageNum=${pageNum}`)
     .then((businesses) => {
       dispatch(isLoading(false));
       dispatch(allBusinesses(businesses.data.allBusinesses));

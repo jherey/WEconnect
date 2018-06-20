@@ -65,30 +65,31 @@ class EditBusinessForm extends Component {
  * @description submits form
  * @param {event} event
  * @returns {null} null
- * @memberof SigninForm
+ * @memberof EditBusinessForm
  */
   onSubmit(event) {
     event.preventDefault();
-    this.setState({ errors: '' });
-    this.props.updateBusiness(this.state).then(
-      () => {
-        this.props.addFlashMessage({
-          type: 'success',
-          text: 'Business updated successfully'
-        });
-        this.context.router.history.push(`/${this.props.currentBusiness.id}`);
-      },
-      (err) => {
-        this.props.loading(false);
-        this.setState({ error: err.response.data.errors });
-        if (this.state.error) {
-          this.state.error.map(err => this.props.addFlashMessage({
-            type: 'error',
-            text: err
-          }));
+    this.setState({ errors: [] });
+    this.props.updateBusiness(this.state)
+      .then(
+        () => {
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'Business updated successfully'
+          });
+          this.context.router.history.push(`/${this.props.currentBusiness.id}`);
+        },
+        (err) => {
+          this.props.loading(false);
+          this.setState({ errors: err.response.data.errors });
+          if (this.state.errors) {
+            this.state.errors.map(err => this.props.addFlashMessage({
+              type: 'error',
+              text: err
+            }));
+          }
         }
-      }
-    );
+      );
   }
 
   /**

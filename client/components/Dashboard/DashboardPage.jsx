@@ -41,7 +41,7 @@ class DashboardPage extends Component {
   /**
    * @return {null} null
    * @param {object} nextProps
-   * @memberof Recipe
+   * @memberof DashboardPage
    */
   componentWillReceiveProps(nextProps) {
     const {
@@ -61,7 +61,7 @@ class DashboardPage extends Component {
 *
 * @returns {null} null
 * @param {event} event
-* @memberof BusinessProfilePage
+* @memberof DashboardPage
 */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -71,7 +71,7 @@ class DashboardPage extends Component {
 *
 * @returns {null} null
 * @param {event} event
-* @memberof BusinessProfilePage
+* @memberof DashboardPage
 */
   fileChange(event) {
     this.setState({

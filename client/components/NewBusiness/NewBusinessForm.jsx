@@ -13,7 +13,7 @@ class NewBusinessForm extends Component {
   /**
 * @description Creates an instance of Business Profile Page
 * @param {object} props
-* @memberof BusinessProfilePage
+* @memberof NewBusinessForm
 */
   constructor() {
     super();

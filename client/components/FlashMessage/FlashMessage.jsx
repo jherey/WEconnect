@@ -36,7 +36,7 @@ class FlashMessage extends Component {
     return (
 		<div className="container">
 			<ToastContainer
-				ref={ref => container = ref}
+        ref={(ref) => { return container = ref; }}
 				className="toast-top-right"
 			/>
 		</div>
