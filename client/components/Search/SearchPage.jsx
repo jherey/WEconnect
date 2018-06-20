@@ -34,7 +34,7 @@ class SearchPage extends Component {
     ));
 
     return (
-			<div className="container list">
+			<div className="container">
 				<h3 className="text-center">Search results for {`"${this.props.searchWord}"`}</h3>
 				<div className="row">
 					{this.props.searchResults.length === 0 ? noSearchResults : searchComponent}
