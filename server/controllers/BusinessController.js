@@ -1,8 +1,9 @@
 import models from '../models/index';
 
+// Users model
+const Users = models.User;
 // Business model
 const Businesses = models.Business;
-const Users = models.User;
 
 const Business = {
   // Method to register business

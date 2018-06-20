@@ -1,5 +1,7 @@
 import models from '../models/index';
 
+// Users model
+const Users = models.User;
 // Business model
 const Businesses = models.Business;
 
@@ -14,7 +16,13 @@ const businessValidator = {
           .findAll({
             where: {
               businessName: { $iLike: `%${name}%` }
-            }
+            },
+            include: [
+              {
+                model: Users,
+                attributes: ['username']
+              }
+            ]
           })
           .then((business) => {
             // If no businesses found, return error
@@ -39,7 +47,13 @@ const businessValidator = {
           .findAll({
             where: {
               location: { $iLike: `%${location}%` }
-            }
+            },
+            include: [
+              {
+                model: Users,
+                attributes: ['username']
+              }
+            ]
           })
           .then((business) => {
             // If no businesses found, return error
@@ -63,7 +77,13 @@ const businessValidator = {
           .findAll({
             where: {
               category: { $iLike: `%${category}%` }
-            }
+            },
+            include: [
+              {
+                model: Users,
+                attributes: ['username']
+              }
+            ]
           })
           .then((business) => {
             // If no businesses found, return error

@@ -28,6 +28,7 @@ class SearchPage extends Component {
 					address={business.address}
 					location={business.location}
 					category={business.category}
+					user={business.User.username}
 				/>
 			</div>
     ));
