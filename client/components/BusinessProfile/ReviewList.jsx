@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Review from './Review.jsx';
 import loading from '../../actions/loading';
-import Spinner from '../Spinner/index.jsx';
 import addFlashMessage from '../../actions/flashMessages';
 import { fetchReviews, addReview } from '../../actions/reviewActions';
 
@@ -72,7 +71,7 @@ class ReviewList extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { reviews, isLoading } = this.props;
+    const { reviews } = this.props;
 
     const noReviews = (<h5 className="details-margin">No reviews for this business</h5>);
 
@@ -81,8 +80,6 @@ class ReviewList extends Component {
 				<Review review={review} />
 			</div>
     ));
-
-    if (isLoading) { return <Spinner />; }
 
     return (
 			<div>

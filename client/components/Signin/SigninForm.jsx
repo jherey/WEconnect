@@ -74,7 +74,7 @@ class SigninForm extends Component {
     const { username, password } = this.state;
     const { isLoading } = this.props;
 
-    if (isLoading) { return <Spinner />; }
+    // if (isLoading) { return <Spinner />; }
 
     return (
 			<div className="form-signin">
@@ -109,13 +109,15 @@ class SigninForm extends Component {
 								</div>
 								<div className="form-group row">
 									<div className="col-sm-12">
-										<button
-											id="signup"
-											className="btn btn-orange btn-lg"
-											disabled={isLoading}
-										>
-											Login
-										</button>
+                    {isLoading
+                      ? <Spinner />
+                      : <button
+                          id="signup"
+                          className="btn btn-orange btn-lg"
+                          disabled={isLoading}
+                        >
+                          Login
+                        </button>}
 										<p id="signin-link">Do not have an account?<span><Link to="/signup"> Sign Up</Link></span></p>
 									</div>
 								</div>

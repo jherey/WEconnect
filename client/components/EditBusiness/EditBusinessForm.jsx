@@ -102,8 +102,6 @@ class EditBusinessForm extends Component {
       businessName, email, category, location, address, businessInfo, website, errors
     } = this.state;
 
-    if (isLoading) { return <Spinner />; }
-
     return (
 			<div className="form-signup">
 				<div className="signup-form container py-5">
@@ -217,13 +215,18 @@ class EditBusinessForm extends Component {
 										<progress value={uploadProgress} max="100" />
 									</div>
 								</div>
-								<button
-									id="submitButton"
-									disabled={isLoading}
-									className="btn btn-orange btn-lg"
-								>
-									Update
-								</button>
+								{isLoading
+									? <div style={{ textAlign: 'center' }}>
+											<Spinner />
+										</div>
+									: <button
+											id="submitButton"
+											className="btn btn-orange btn-lg"
+											disabled={isLoading}
+										>
+											Update
+										</button>
+								}
 								{
 									errors === 'Oops! You cannot update this business' &&
 									<div style={{ marginTop: '30px' }}>
