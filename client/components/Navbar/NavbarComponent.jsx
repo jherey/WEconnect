@@ -37,7 +37,7 @@ class NavbarComponent extends Component {
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof Navbar
+* @memberof NavbarComponent
 */
   onSubmit(event) {
     event.preventDefault();
@@ -56,7 +56,7 @@ class NavbarComponent extends Component {
   }
 
   /**
-   * @memberof Navbar
+   * @memberof NavbarComponent
    * @return {ReactElement} markup
    */
   render() {
