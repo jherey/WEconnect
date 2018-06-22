@@ -40,7 +40,7 @@ const Business = {
       }))
       .catch(error => res.status(400)
         .json({
-          message: error.errors[0].message
+          errors: [error.errors[0].message]
         }));
   },
 
@@ -251,7 +251,9 @@ const Business = {
         });
       })
       .catch((err) => {
-        console.log(err);
+        return res.status(400).json({
+          error: err
+        });
       });
   }
 };

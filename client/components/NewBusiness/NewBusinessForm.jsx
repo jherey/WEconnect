@@ -86,9 +86,9 @@ class NewBusinessForm extends Component {
       },
       (err) => {
         this.props.loading(false);
-        this.setState({ error: err.response.data.errors });
-        if (this.state.error) {
-          this.state.error.map(err => this.props.addFlashMessage({
+        this.setState({ errors: err.response.data.errors });
+        if (this.state.errors) {
+          this.state.errors.map(err => this.props.addFlashMessage({
             type: 'error',
             text: err
           }));
