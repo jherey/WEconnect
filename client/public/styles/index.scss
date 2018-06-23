@@ -319,63 +319,29 @@ form {
 }
 
 /* BUSINESS PROFILE PAGE */
-.page-link {
-	position: relative;
-	display: block;
-	padding: .5rem .75rem;
-	margin-left: -1px;
-	line-height: 1.25;
-	color: $background-orange;
-	background-color: #fff;
-	border: 1px solid #ddd;
-	cursor: pointer;
-}
+// .page-link {
+// 	position: relative;
+// 	display: block;
+// 	padding: .5rem .75rem;
+// 	margin-left: -1px;
+// 	line-height: 1.25;
+// 	color: $background-orange;
+// 	background-color: #fff;
+// 	border: 1px solid #ddd;
+// 	cursor: pointer;
+// }
 
-.page-link:focus, .page-link:hover {
-	color: #000000;
-	text-decoration: none;
-	background-color: #e9ecef;
-	border-color: #ddd;
-}
-  
-.pagination li {
-	position: relative;
-	display: block;
-	padding: .5rem .75rem;
-	margin: auto 0;
-	line-height: 1.25;
-	color: gray;
-	background-color: $background-orange;
-	border: 1px solid #ddd;
-	cursor: pointer;
-}
-  
-.pagination li.active {
-	background-color: $background-blue !important;
-	a {
-			outline: none !important;
-	}
-}
-  
-.pagination li a {
-	color: #fff !important;
-}
-  
-.pagination {
-	display: -ms-flexbox;
-	display: flex;
-	padding-left: 0;
-	list-style: none;
-	border-radius: .25rem;
-	margin-top: 25px;
-}
+// .page-link:focus, .page-link:hover {
+// 	color: #000000;
+// 	text-decoration: none;
+// 	background-color: #e9ecef;
+// 	border-color: #ddd;
+// }
 
 .fontColor {
 	color: #b1a8a8;
 }
 
-
-  
 .profile {
 	margin: 10px;
 	background-color: #F4F6F7;
@@ -508,10 +474,42 @@ form {
 		margin-top: $zero;
 		text-align: $center;
 	}
+	
 	.verticalLine {
 		border-left: $none;
 		font-size: 1.3em;
 	}
 }
-
 /*BUSINESS PROFILE PAGE*/
+
+/* PAGINATION */
+.paginate li {
+	position: relative;
+	display: block;
+	padding: .5rem .75rem;
+	margin: auto 0;
+	line-height: 1.25;
+	background-color: $background-orange;
+	border: 1px solid #ddd;
+	cursor: pointer;
+}
+  
+.paginate li.active {
+	background-color: $background-blue !important;
+	a {
+		outline: none !important;
+	}
+}
+  
+.paginate li a {
+	color: #fff !important;
+}
+  
+.paginate {
+	display: -ms-flexbox;
+	display: flex;
+	padding-left: 0;
+	list-style: none;
+	border-radius: .25rem;
+	margin-top: 25px;
+}
