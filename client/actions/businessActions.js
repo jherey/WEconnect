@@ -36,8 +36,8 @@ export const createBusiness = businessData => (dispatch) => {
   dispatch(isLoading(true));
   return axios.post('/api/v1/businesses', businessData)
     .then((res) => {
-      dispatch(isLoading(false));
       dispatch(addBusiness(res.data.business));
+      dispatch(isLoading(false));
     });
 };
 
@@ -64,25 +64,25 @@ export const fetchBusiness = id => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses/${id}`)
     .then((business) => {
-      dispatch(isLoading(false));
       dispatch(getOneBusiness(business.data.business));
+      dispatch(isLoading(false));
     })
     .catch(() => {
       dispatch(isLoading(false));
     });
 };
 
-/**
- * @description - Updates a business
- * @param {*} updatedBusiness
- * @returns { updatedBusiness } - Action
- */
-export function businessUpdated(updatedBusiness) {
-  return {
-    type: 'UPDATE_BUSINESS',
-    updatedBusiness
-  };
-}
+// /**
+//  * @description - Updates a business
+//  * @param {*} updatedBusiness
+//  * @returns { updatedBusiness } - Action
+//  */
+// export function businessUpdated(updatedBusiness) {
+//   return {
+//     type: 'UPDATE_BUSINESS',
+//     updatedBusiness
+//   };
+// }
 
 /**
  * @description - Updates a business
@@ -97,17 +97,17 @@ export const updateBusiness = updatedBusinessData => (dispatch) => {
     });
 };
 
-/**
- * @description - Action to update a business
- * @param {*} businessId
- * @returns { BusinessId } - Action
- */
-export function businessDeleted(businessId) {
-  return {
-    type: 'DELETE_BUSINESS',
-    businessId
-  };
-}
+// /**
+//  * @description - Action to update a business
+//  * @param {*} businessId
+//  * @returns { BusinessId } - Action
+//  */
+// export function businessDeleted(businessId) {
+//   return {
+//     type: 'DELETE_BUSINESS',
+//     businessId
+//   };
+// }
 
 /**
  * @description - Deletes a business
@@ -119,7 +119,6 @@ export const deleteBusiness = id => (dispatch) => {
   return axios.delete(`/api/v1/businesses/${id}`)
     .then(() => {
       dispatch(isLoading(false));
-      dispatch(businessDeleted(id));
     });
 };
 
@@ -144,8 +143,8 @@ export const getAllBusinesses = pageNum => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses?pageNum=${pageNum}`)
     .then((businesses) => {
-      dispatch(isLoading(false));
       dispatch(allBusinesses(businesses.data.allBusinesses));
+      dispatch(isLoading(false));
     })
     .catch(() => {
       dispatch(isLoading(false));

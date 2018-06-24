@@ -15,7 +15,7 @@
     "heroku-postbuild": "NODE_ENV=production && npm run build",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls",
-    "client-test": "jest"
+    "test:client": "jest"
   },
   "repository": {
     "type": "git",
@@ -72,6 +72,7 @@
   },
   "jest": {
     "collectCoverage": true,
+    "testEnvironment": "node",
     "setupFiles": [
       "<rootDir>/testSetup.js"
     ]
@@ -79,7 +80,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.2",
-    "babel-jest": "^22.4.3",
+    "babel-jest": "^22.4.4",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
