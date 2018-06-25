@@ -216,11 +216,11 @@ const Business = {
     } else {
       offset = limit * (pageNumber - 1);
     }
+    const currentPage = parseInt(pageNum, 10);
     Businesses
     // Find all businesses
       .findAndCountAll({
-      // order: [['DESC']],
-        order: [['createdAt']],
+        order: [['updatedAt', 'DESC']],
         include: [
           {
             model: Users,
@@ -243,19 +243,22 @@ const Business = {
             message: 'No business found for this page'
           });
         }
-        // Business(es) found!
-        return res.status(200).send({
-          message: 'Businesses found!',
+        const businessDetails = {
           allBusinesses,
-          count: allBusinesses.count,
-          page: pages
-        });
+          pageDetails: {
+            count: allBusinesses.count,
+            totalPages: pages,
+            currentPage
+          }
+        };
+        // Business(es) found!
+        return res.status(200).json(Object.assign({
+          message: 'Businesses found!'
+        }, businessDetails));
       })
-      .catch((err) => {
-        return res.status(400).json({
-          error: err
-        });
-      });
+      .catch(err => res.status(400).json({
+        error: err
+      }));
   }
 };
 

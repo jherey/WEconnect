@@ -38,10 +38,7 @@ export default function businesses(state = initialState, action = {}) {
       return state.filter(business => business.id !== action.businessId);
 
     case 'SET_BUSINESSES':
-      return {
-        businesses: action.businesses.rows,
-        count: action.businesses.count
-      };
+      return { ...state, businesses: action.businesses };
 
     default:
       return state;

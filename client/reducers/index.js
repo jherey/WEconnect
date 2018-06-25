@@ -8,6 +8,7 @@ import reviews from './reducer-reviews';
 import searchResults from './reducer-search';
 import userBusinesses from './userBusinesses';
 import isLoading from './reducer-loading';
+import paginate from './pagination';
 import uploadProgress from './reducer-uploadProgress';
 
 const allReducers = combineReducers({
@@ -16,6 +17,7 @@ const allReducers = combineReducers({
   authUser,
   uploadProgress,
   businesses,
+  paginate,
   currentBusiness,
   reviews,
   userBusinesses,

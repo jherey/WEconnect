@@ -36,8 +36,8 @@ export const createBusiness = businessData => (dispatch) => {
   dispatch(isLoading(true));
   return axios.post('/api/v1/businesses', businessData)
     .then((res) => {
-      dispatch(isLoading(false));
       dispatch(addBusiness(res.data.business));
+      dispatch(isLoading(false));
     });
 };
 
@@ -64,8 +64,8 @@ export const fetchBusiness = id => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses/${id}`)
     .then((business) => {
-      dispatch(isLoading(false));
       dispatch(getOneBusiness(business.data.business));
+      dispatch(isLoading(false));
     })
     .catch(() => {
       dispatch(isLoading(false));
@@ -119,7 +119,6 @@ export const deleteBusiness = id => (dispatch) => {
   return axios.delete(`/api/v1/businesses/${id}`)
     .then(() => {
       dispatch(isLoading(false));
-      dispatch(businessDeleted(id));
     });
 };
 
@@ -136,21 +135,35 @@ export function allBusinesses(businesses) {
 }
 
 /**
+ * @description - Updates store with page details
+ * @param {*} pageDetails
+ * @returns { Object } - Action
+ */
+export function gaginationDetails(pageDetails) {
+  return {
+    type: 'SET_PAGINATION',
+    pageDetails
+  };
+}
+
+/**
  * @description - Gets all businesses
  * @param {*} pageNum
  * @returns { Businesses } - Action
  */
-export const getAllBusinesses = pageNum => (dispatch) => {
-  dispatch(isLoading(true));
-  return axios.get(`/api/v1/businesses?pageNum=${pageNum}`)
-    .then((businesses) => {
-      dispatch(isLoading(false));
-      dispatch(allBusinesses(businesses.data.allBusinesses));
-    })
-    .catch(() => {
-      dispatch(isLoading(false));
-    });
-};
+export const getAllBusinesses = pageNum =>
+  (dispatch) => {
+    dispatch(isLoading(true));
+    return axios.get(`/api/v1/businesses?pageNum=${pageNum}`)
+      .then((businesses) => {
+        dispatch(allBusinesses(businesses.data.allBusinesses.rows));
+        dispatch(gaginationDetails(businesses.data.pageDetails));
+        dispatch(isLoading(false));
+      })
+      .catch(() => {
+        dispatch(isLoading(false));
+      });
+  };
 
 /**
  * @description - Updates store with all businesses
@@ -173,8 +186,8 @@ export const getAUserBusiness = userId => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/${userId}/businesses`)
     .then((businesses) => {
-      dispatch(isLoading(false));
       dispatch(userBusinesses(businesses.data.businesses));
+      dispatch(isLoading(false));
     });
 };
 
@@ -200,7 +213,7 @@ export const search = (searchWord, type) => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses?${type}=${searchWord}`)
     .then((foundBusiness) => {
-      dispatch(isLoading(false));
       dispatch(businessFound(foundBusiness.data));
+      dispatch(isLoading(false));
     });
 };
