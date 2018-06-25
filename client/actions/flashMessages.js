@@ -1,3 +1,5 @@
+import { ADD_FLASH_MESSAGE } from './types';
+
 /**
  * @description - Display flash message
  *
@@ -6,7 +8,7 @@
  * @returns {Object} type, message
  */
 const addFlashMessage = message => ({
-  type: 'ADD_FLASH_MESSAGE',
+  type: ADD_FLASH_MESSAGE,
   message
 });
 

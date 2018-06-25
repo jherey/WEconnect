@@ -29,8 +29,8 @@ class Search extends Component {
 }
 
 const mapStateToProps = state => ({
-  searchResults: state.searchResults.business,
-  searchWord: state.searchResults.searchWord
+  searchResults: state.businesses.searchResults.business,
+  searchWord: state.businesses.searchResults.searchWord
 });
 
 Search.propTypes = {

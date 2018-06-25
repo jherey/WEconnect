@@ -1,5 +1,13 @@
 import axios from 'axios';
-import isLoading from './loading';
+import { isLoading } from './userActions';
+import {
+  SET_PROGRESS,
+  ADD_BUSINESS,
+  GET_BUSINESSES,
+  USER_BUSINESSES,
+  FOUND_BUSINESSES,
+  CURRENT_BUSINESS
+} from './types';
 
 /**
  * @description - Set progress value
@@ -9,7 +17,7 @@ import isLoading from './loading';
  */
 export function setProgress(progress) {
   return {
-    type: 'SET_PROGRESS',
+    type: SET_PROGRESS,
     progress
   };
 }
@@ -22,7 +30,7 @@ export function setProgress(progress) {
  */
 export function addBusiness(business) {
   return {
-    type: 'ADD_BUSINESS',
+    type: ADD_BUSINESS,
     business
   };
 }
@@ -36,8 +44,8 @@ export const createBusiness = businessData => (dispatch) => {
   dispatch(isLoading(true));
   return axios.post('/api/v1/businesses', businessData)
     .then((res) => {
-      dispatch(isLoading(false));
       dispatch(addBusiness(res.data.business));
+      dispatch(isLoading(false));
     });
 };
 
@@ -49,7 +57,7 @@ export const createBusiness = businessData => (dispatch) => {
  */
 export function getOneBusiness(business) {
   return {
-    type: 'ONE_BUSINESS',
+    type: CURRENT_BUSINESS,
     business
   };
 }
@@ -64,25 +72,13 @@ export const fetchBusiness = id => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses/${id}`)
     .then((business) => {
-      dispatch(isLoading(false));
       dispatch(getOneBusiness(business.data.business));
+      dispatch(isLoading(false));
     })
     .catch(() => {
       dispatch(isLoading(false));
     });
 };
-
-/**
- * @description - Updates a business
- * @param {*} updatedBusiness
- * @returns { updatedBusiness } - Action
- */
-export function businessUpdated(updatedBusiness) {
-  return {
-    type: 'UPDATE_BUSINESS',
-    updatedBusiness
-  };
-}
 
 /**
  * @description - Updates a business
@@ -98,18 +94,6 @@ export const updateBusiness = updatedBusinessData => (dispatch) => {
 };
 
 /**
- * @description - Action to update a business
- * @param {*} businessId
- * @returns { BusinessId } - Action
- */
-export function businessDeleted(businessId) {
-  return {
-    type: 'DELETE_BUSINESS',
-    businessId
-  };
-}
-
-/**
  * @description - Deletes a business
  * @param {*} id
  * @returns { BusinessId } - Action
@@ -119,7 +103,6 @@ export const deleteBusiness = id => (dispatch) => {
   return axios.delete(`/api/v1/businesses/${id}`)
     .then(() => {
       dispatch(isLoading(false));
-      dispatch(businessDeleted(id));
     });
 };
 
@@ -130,22 +113,22 @@ export const deleteBusiness = id => (dispatch) => {
  */
 export function allBusinesses(businesses) {
   return {
-    type: 'SET_BUSINESSES',
+    type: GET_BUSINESSES,
     businesses
   };
 }
 
 /**
- * @description - Gets all businesses
+ * @description - Gets businesses by page
  * @param {*} pageNum
  * @returns { Businesses } - Action
  */
-export const getAllBusinesses = pageNum => (dispatch) => {
+export const getBusinessesByPage = pageNum => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses?pageNum=${pageNum}`)
     .then((businesses) => {
+      dispatch(allBusinesses(businesses.data.allBusinesses.rows));
       dispatch(isLoading(false));
-      dispatch(allBusinesses(businesses.data.allBusinesses));
     })
     .catch(() => {
       dispatch(isLoading(false));
@@ -159,7 +142,7 @@ export const getAllBusinesses = pageNum => (dispatch) => {
  */
 export function userBusinesses(businesses) {
   return {
-    type: 'USER_BUSINESSES',
+    type: USER_BUSINESSES,
     businesses
   };
 }
@@ -172,9 +155,9 @@ export function userBusinesses(businesses) {
 export const getAUserBusiness = userId => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/${userId}/businesses`)
-    .then((businesses) => {
+    .then((response) => {
+      dispatch(userBusinesses(response.data.businesses));
       dispatch(isLoading(false));
-      dispatch(userBusinesses(businesses.data.businesses));
     });
 };
 
@@ -185,7 +168,7 @@ export const getAUserBusiness = userId => (dispatch) => {
  */
 export function businessFound(businesses) {
   return {
-    type: 'FOUND_BUSINESSES',
+    type: FOUND_BUSINESSES,
     businesses
   };
 }
@@ -199,8 +182,8 @@ export function businessFound(businesses) {
 export const search = (searchWord, type) => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses?${type}=${searchWord}`)
-    .then((foundBusiness) => {
+    .then((response) => {
+      dispatch(businessFound(response.data));
       dispatch(isLoading(false));
-      dispatch(businessFound(foundBusiness.data));
     });
 };

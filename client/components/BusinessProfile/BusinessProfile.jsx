@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { fetchBusiness, currentBusiness, deleteBusiness } from '../../actions/businessActions';
 import { fetchReviews } from '../../actions/reviewActions';
 import addFlashMessage from '../../actions/flashMessages';
-import loading from '../../actions/loading';
+import { isLoading } from '../../actions/userActions';
 import BusinessProfilePage from './BusinessProfilePage.jsx';
 
 /**
@@ -42,8 +42,8 @@ class BusinessProfile extends Component {
 
 const mapStateToProps = state => ({
   userId: state.authUser.user.id,
-  currentBusiness: state.currentBusiness,
-  isLoading: state.isLoading
+  currentBusiness: state.businesses.currentBusiness,
+  loading: state.authUser.isLoading
 });
 
 BusinessProfile.propTypes = {
@@ -53,12 +53,12 @@ BusinessProfile.propTypes = {
   deleteBusiness: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   fetchReviews: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
   userId: PropTypes.number,
-  isLoading: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default withRouter(connect(mapStateToProps, {
-  fetchBusiness, currentBusiness, loading, addFlashMessage, deleteBusiness, fetchReviews
+  fetchBusiness, currentBusiness, isLoading, addFlashMessage, deleteBusiness, fetchReviews
 })(BusinessProfile));
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Review from './Review.jsx';
-import loading from '../../actions/loading';
+import { isLoading } from '../../actions/userActions';
 import addFlashMessage from '../../actions/flashMessages';
 import { fetchReviews, addReview } from '../../actions/reviewActions';
 
@@ -57,7 +57,7 @@ class ReviewList extends Component {
           });
         },
         (err) => {
-          this.props.loading(false);
+          this.props.isLoading(false);
           this.props.addFlashMessage({
             type: 'error',
             text: err.response.data.message
@@ -128,9 +128,9 @@ class ReviewList extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.isLoading,
+  isLoading: state.authUser.isLoading,
   user: state.authUser.isAuthenticated,
-  reviews: state.reviews
+  reviews: state.reviews.reviews
 });
 
 ReviewList.propTypes = {
@@ -138,11 +138,11 @@ ReviewList.propTypes = {
   fetchReviews: PropTypes.func.isRequired,
   id: PropTypes.string,
   addFlashMessage: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
-  loading: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  isLoading: PropTypes.func.isRequired,
   reviews: PropTypes.array
 };
 
 export default connect(mapStateToProps, {
-  fetchReviews, addReview, addFlashMessage, loading
+  fetchReviews, addReview, addFlashMessage, isLoading
 })(ReviewList);

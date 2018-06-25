@@ -42,7 +42,6 @@ class BusinessProfilePage extends Component {
   onClick(event) {
     event.preventDefault();
     this.setState({ errors: '' });
-    document.getElementById('deleteBtn').click();
     this.props.deleteBusiness(this.props.id)
       .then(
         () => {
@@ -50,10 +49,11 @@ class BusinessProfilePage extends Component {
             type: 'success',
             text: 'Business deleted successfully'
           });
+          document.getElementById('deleteBtn').click();
           this.context.router.history.push('/');
         },
         (err) => {
-          this.props.loading(false);
+          this.props.isLoading(false);
           this.props.addFlashMessage({
             type: 'error',
             text: err.response.data.message
@@ -68,10 +68,10 @@ class BusinessProfilePage extends Component {
    */
   render() {
     const {
-      currentBusiness, id, userId, isLoading
+      currentBusiness, id, userId, loading
     } = this.props;
 
-    if (isLoading) {
+    if (loading) {
       return (
 				<div style={{ marginTop: '10%', textAlign: 'center' }}>
 					<Spinner />
@@ -187,10 +187,10 @@ BusinessProfilePage.propTypes = {
   id: PropTypes.string.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   deleteBusiness: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
   fetchReviews: PropTypes.func.isRequired,
   userId: PropTypes.number,
-  isLoading: PropTypes.bool
+  loading: PropTypes.bool
 };
 
 export default BusinessProfilePage;

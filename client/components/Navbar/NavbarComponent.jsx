@@ -45,7 +45,7 @@ class NavbarComponent extends Component {
         this.context.router.history.push('/search');
       },
       (err) => {
-        this.props.loading(false);
+        this.props.isLoading(false);
         this.props.addFlashMessage({
           type: 'error',
           text: err.response.data.message
@@ -140,7 +140,7 @@ NavbarComponent.propTypes = {
   search: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   signout: PropTypes.func,
-  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
   authUser: PropTypes.object
 };

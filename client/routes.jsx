@@ -15,9 +15,18 @@ import FlashMessage from './components/FlashMessage/FlashMessage.jsx';
 import authVerification from './utils/authVerification';
 import styles from './public/styles/index.scss';
 
+/**
+ * @description Routes component
+ * @class App
+ * @extends {Component}
+ */
 class App extends Component {
-	render() {
-		return (
+  /**
+   * @memberof App
+   * @return {ReactElement} markup
+   */
+  render() {
+    return (
 			<BrowserRouter>
 				<div>
 					<Navbar />
@@ -30,14 +39,14 @@ class App extends Component {
 						<Route path="/register" exact component={authVerification(Register)} />
 						<Route path="/search" exact component={Search} />
 						<Route path="/dashboard" exact component={authVerification(Dashboard)} />
-						<Route path={"/:id"} exact component={BusinessProfile} />
-						<Route path={"/:id/edit"} exact component={authVerification(EditBusiness)} />
+						<Route path={'/:id'} exact component={BusinessProfile} />
+						<Route path={'/:id/edit'} exact component={authVerification(EditBusiness)} />
 					</Switch>
 					<Footer />
 				</div>
 			</BrowserRouter>
-		);
-	}
+    );
+  }
 }
 
 export default App;

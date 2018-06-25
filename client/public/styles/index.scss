@@ -140,6 +140,15 @@ footer {
 	padding: $length-10;
 }
 
+.dashboard {
+	min-height: 400px;
+}
+
+.noBusiness {
+	margin-top: 20%;
+	font-size: 24px;
+}
+
 .list {
 	border: 1px solid #dbe0e1;
 	background-color: $background-white;

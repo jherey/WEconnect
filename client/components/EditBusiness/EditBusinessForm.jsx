@@ -80,7 +80,7 @@ class EditBusinessForm extends Component {
           this.context.router.history.push(`/${this.props.currentBusiness.id}`);
         },
         (err) => {
-          this.props.loading(false);
+          this.props.isLoading(false);
           this.setState({ errors: err.response.data.errors });
           if (this.state.errors) {
             this.state.errors.map(err => this.props.addFlashMessage({
@@ -97,7 +97,7 @@ class EditBusinessForm extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { isLoading, uploadProgress } = this.props;
+    const { loading, uploadProgress } = this.props;
     const {
       businessName, email, category, location, address, businessInfo, website, errors
     } = this.state;
@@ -108,8 +108,6 @@ class EditBusinessForm extends Component {
 					<h1 className="text-center" style={{ color: 'white' }}>Edit Business Details</h1>
 					<div className="row">
 						<div className="col-md-10 mx-auto">
-							{errors === 'Username already exists' && <div className='alert alert-danger'>{errors}</div>}
-							{errors === 'Email address taken' && <div className='alert alert-danger'>{errors}</div>}
 							<form onSubmit={this.onSubmit}>
 								<div className="form-group row">
 									<div className="col-sm-6">
@@ -121,8 +119,6 @@ class EditBusinessForm extends Component {
 											className="form-control"
 											name="businessName"
 										/>
-										{errors === 'Business name is required' && <div className='alert alert-danger'>{errors}</div>}
-										{errors === 'A business with this name exist' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 									<div className="col-sm-6">
 										<label>Description</label>
@@ -156,7 +152,6 @@ class EditBusinessForm extends Component {
 											onChange={this.onChange}
 											name="email"
 										/>
-										{errors === 'Email is required' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 								</div>
 								<div className="form-group row">
@@ -176,7 +171,6 @@ class EditBusinessForm extends Component {
 											<option value='entertainment'>Entertainment</option>
 											<option value='others'>Others</option>
 										</select>
-										{errors === 'Category is required' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 									<div className="col-sm-6">
 										<label className='control-label'>Address</label>
@@ -204,7 +198,6 @@ class EditBusinessForm extends Component {
 											<option value='kenya'>Kenya</option>
 											<option value='ghana'>Ghana</option>
 										</select>
-										{errors === 'Location is required' && <div className='alert alert-danger'>{errors}</div>}
 									</div>
 									<div className="col-sm-6">
 										<label className='control-label'>Company Logo</label>
@@ -215,23 +208,17 @@ class EditBusinessForm extends Component {
 										<progress value={uploadProgress} max="100" />
 									</div>
 								</div>
-								{isLoading
+								{loading
 									? <div style={{ textAlign: 'center' }}>
 											<Spinner />
 										</div>
 									: <button
 											id="submitButton"
 											className="btn btn-orange btn-lg"
-											disabled={isLoading}
+											disabled={loading}
 										>
 											Update
 										</button>
-								}
-								{
-									errors === 'Oops! You cannot update this business' &&
-									<div style={{ marginTop: '30px' }}>
-										<span className='alert alert-danger'>{errors}</span>
-									</div>
 								}
 							</form>
 						</div>
@@ -250,8 +237,8 @@ EditBusinessForm.propTypes = {
   currentBusiness: PropTypes.object.isRequired,
   updateBusiness: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
   uploadProgress: PropTypes.number,
   setProgress: PropTypes.func
 };

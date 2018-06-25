@@ -54,7 +54,7 @@ class SigninForm extends Component {
           this.context.router.history.push('/dashboard');
         },
         (err) => {
-          this.props.loading(false);
+          this.props.isLoading(false);
           this.setState({ errors: err.response.data.errors });
           if (this.state.errors) {
             this.state.errors.map(err => this.props.addFlashMessage({
@@ -72,9 +72,7 @@ class SigninForm extends Component {
    */
   render() {
     const { username, password } = this.state;
-    const { isLoading } = this.props;
-
-    // if (isLoading) { return <Spinner />; }
+    const { loading } = this.props;
 
     return (
 			<div className="form-signin">
@@ -109,12 +107,12 @@ class SigninForm extends Component {
 								</div>
 								<div className="form-group row">
 									<div className="col-sm-12">
-                    {isLoading
+                    {loading
                       ? <Spinner />
                       : <button
                           id="signup"
                           className="btn btn-orange btn-lg"
-                          disabled={isLoading}
+                          disabled={loading}
                         >
                           Login
                         </button>}
@@ -137,8 +135,8 @@ SigninForm.contextTypes = {
 SigninForm.propTypes = {
   signinUser: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
-  loading: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  isLoading: PropTypes.func.isRequired,
 
 };
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactPagination from 'react-paginate';
 import AllBusinessList from './AllBusinessList.jsx';
-import { getAllBusinesses } from '../../actions/businessActions';
+import { getBusinessesByPage } from '../../actions/businessActions';
 
 /**
  * @description All businesses component
@@ -31,7 +31,7 @@ class AllBusinesses extends Component {
    * @memberof AllBusinesses
    */
   componentWillMount() {
-    this.props.getAllBusinesses(this.state.activePage);
+    this.props.getBusinessesByPage(this.state.activePage);
   }
 
   /**
@@ -40,7 +40,7 @@ class AllBusinesses extends Component {
 * @return {null} no return or void
 */
   handlePageChange(page) {
-    this.props.getAllBusinesses(page.selected + 1);
+    this.props.getBusinessesByPage(page.selected + 1);
   }
 
   /**
@@ -101,10 +101,10 @@ const mapStateToProps = state => ({
 });
 
 AllBusinesses.propTypes = {
-  getAllBusinesses: PropTypes.func.isRequired,
+  getBusinessesByPage: PropTypes.func.isRequired,
   count: PropTypes.number,
   businesses: PropTypes.array.isRequired,
   isLoading: PropTypes.bool
 };
 
-export default connect(mapStateToProps, { getAllBusinesses })(AllBusinesses);
+export default connect(mapStateToProps, { getBusinessesByPage })(AllBusinesses);

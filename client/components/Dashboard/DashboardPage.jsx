@@ -30,7 +30,7 @@ class DashboardPage extends Component {
       sex: '',
       email: '',
       profilepic: '',
-      errors: '',
+      errors: [],
       uploading: false
     };
 
@@ -102,7 +102,6 @@ class DashboardPage extends Component {
   onSubmit(event) {
     event.preventDefault();
     this.setState({ errors: '' });
-    document.getElementById('hidePopUpBtn').click();
     this.props.updateUser(this.state)
       .then(
         () => {
@@ -111,11 +110,18 @@ class DashboardPage extends Component {
             type: 'success',
             text: 'Update successful!'
           });
+          document.getElementById('hidePopUpBtn').click();
           this.context.router.history.push('/dashboard');
         },
         (err) => {
           this.props.loading(false);
-          this.setState({ errors: err.response.data.message });
+          this.setState({ errors: err.response.data.errors });
+          if (this.state.errors) {
+            this.state.errors.map(err => this.props.addFlashMessage({
+              type: 'error',
+              text: err
+            }));
+          }
         }
       );
   }
@@ -128,11 +134,11 @@ class DashboardPage extends Component {
     const {
       firstname, lastname, username, email, sex, uploading
     } = this.state;
-    const { isLoading, currentUser, uploadProgress } = this.props;
+    const { currentUser, uploadProgress } = this.props;
 
     const noBusiness = (
-			<div className="col-lg-3 col-md-6 py-2">
-				<h5>You do not own a business</h5>
+			<div className="col-lg-12 text-center py-2 noBusiness">
+				<h5>No business created yet!</h5>
 			</div>
     );
 
@@ -160,7 +166,7 @@ class DashboardPage extends Component {
       image = femaleAvartar;
     }
 
-    if (isLoading) {
+    if (this.props.loading) {
       return (
 				<div style={{ marginTop: '15%', textAlign: 'center' }}>
 					<Spinner />
@@ -172,7 +178,7 @@ class DashboardPage extends Component {
 			<div className="businesses">
 			<h5>Welcome {currentUser.username}</h5>
 				<div className="container list">
-					<div className="row">
+					<div className="row dashboard">
 						<div className="col-lg-3 col-md-6">
 							<div className="row userImage">
 								<img
@@ -301,8 +307,8 @@ DashboardPage.propTypes = {
   setProgress: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
   uploadProgress: PropTypes.number,
   currentUser: PropTypes.object.isRequired,
   businessList: PropTypes.array

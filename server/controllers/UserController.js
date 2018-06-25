@@ -75,7 +75,12 @@ const Users = {
       .then((user) => {
         const userDetails = {
           id: user.id,
-          username: user.username
+          firstname: user.firstname,
+          lastname: user.lastname,
+          username: user.username,
+          sex: user.sex,
+          profilepic: user.profilepic,
+          createdAt: user.createdAt
         };
         // Assign token to user for six hours
         const token = jwt.sign(userDetails, secret, { expiresIn: '6h' });
@@ -107,7 +112,12 @@ const Users = {
         if (user && bcrypt.compareSync(password, user.password)) {
           const userData = {
             id: user.id,
-            username: user.username
+            firstname: user.firstname,
+            lastname: user.lastname,
+            username: user.username,
+            sex: user.sex,
+            profilepic: user.profilepic,
+            createdAt: user.createdAt
           };
           // Assign token to user for six hours
           const token = jwt.sign(userData, secret, { expiresIn: '6h' });
@@ -187,7 +197,9 @@ const Users = {
               }))
               // Catch errors
               .catch(error => res.status(400)
-                .json({ message: error.errors[0].message }));
+                .json({
+                  errors: [error.errors[0].message]
+                }));
           });
       });
   },

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import NewBusinessForm from './NewBusinessForm.jsx';
 import { createBusiness, setProgress } from '../../actions/businessActions';
-import loading from '../../actions/loading';
+import { isLoading } from '../../actions/userActions';
 import addFlashMessage from '../../actions/flashMessages';
 
 /**
@@ -18,14 +18,14 @@ class NewBusiness extends Component {
 	* @return {ReactElement} markup
 	*/
   render() {
-    const { isLoading, uploadProgress } = this.props;
+    const { uploadProgress } = this.props;
     return (
 			<div>
 				<NewBusinessForm
 					loading={this.props.loading}
 					createBusiness={this.props.createBusiness}
 					addFlashMessage={this.props.addFlashMessage}
-					isLoading={isLoading}
+					isLoading={this.props.isLoading}
 					setProgress={this.props.setProgress}
 					uploadProgress={uploadProgress}
 				/>
@@ -35,19 +35,19 @@ class NewBusiness extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.isLoading,
-  uploadProgress: state.uploadProgress
+  loading: state.authUser.isLoading,
+  uploadProgress: state.authUser.uploadProgress
 });
 
 NewBusiness.propTypes = {
   createBusiness: PropTypes.func,
-  isLoading: PropTypes.bool,
+  loading: PropTypes.bool,
   addFlashMessage: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
   uploadProgress: PropTypes.number,
   setProgress: PropTypes.func
 };
 
 export default connect(mapStateToProps, {
-  createBusiness, addFlashMessage, setProgress, loading
+  createBusiness, addFlashMessage, setProgress, isLoading
 })(NewBusiness);
