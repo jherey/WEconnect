@@ -222,6 +222,7 @@ const Users = {
           firstname: user.firstname,
           lastname: user.lastname,
           username: user.username,
+          email: user.email,
           sex: user.sex,
           profilepic: user.profilepic,
           createdAt: user.createdAt

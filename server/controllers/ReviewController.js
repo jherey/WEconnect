@@ -5,13 +5,14 @@ import models from '../models/index';
 const Reviews = models.Review;
 // Business model
 const Businesses = models.Business;
+// User model
 const Users = models.User;
 
 const Review = {
   // Method to register a new user
   addReview: (req, res) => {
     const { businessId } = req.params;
-    const { review, star } = req.body;
+    const { review, starRating } = req.body;
     const { authData } = req;
     if (review.trim() === '') {
       return res.status(400).json({
@@ -19,9 +20,9 @@ const Review = {
         error: true
       });
     }
-    if (star === '') {
+    if (starRating < 1) {
       return res.status(400).json({
-        message: "Please give a rating",
+        message: 'Please give a valid rating',
         error: true
       });
     }
@@ -31,7 +32,7 @@ const Review = {
       .findById(businessId)
       .then((business) => {
         // If no business found, return error
-        if (business === null) {
+        if (!business) {
           return res.status(404).json({
             message: 'Business does not exist'
           });
@@ -42,16 +43,19 @@ const Review = {
             review,
             userId: authData.id,
             businessId,
-            star,
+            star: starRating,
             username: decoded.username
           })
           // Successfully added
-          .then((createdReview) => {
-            return res.status(201).json({
-              message: 'Review successfully added',
-              createdReview
-            });
-          });
+          .then(createdReview => res.status(201).json({
+            message: 'Review successfully added',
+            createdReview
+          }))
+          // Error catch
+          .catch(error => res.status(500).json({
+            message: 'Internal Server Error',
+            error
+          }));
       });
   },
 
@@ -74,13 +78,17 @@ const Review = {
         if (!reviews.length) {
           return res.status(200).send({
             message: 'No reviews for this business!',
-            reviews: []
+            reviews: [],
+            averageRating: 0
           });
         }
+        const average = reviews.reduce((total, review) => total + review.star, 0) / reviews.length;
+        const rating = Math.round(average);
         // If reviews found
         return res.status(200).json({
           message: 'Reviews Found!',
-          reviews
+          reviews,
+          averageRating: rating || 0
         });
       });
   }

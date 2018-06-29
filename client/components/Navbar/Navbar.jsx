@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import NavbarComponent from './NavbarComponent.jsx';
-// import loading from '../../actions/loading';
 import { signout, isLoading } from '../../actions/userActions';
 import { search } from '../../actions/businessActions';
 import addFlashMessage from '../../actions/flashMessages';
@@ -32,7 +31,6 @@ class Navbar extends Component {
     const { authUser } = this.props;
     return (
 			<NavbarComponent
-				// loading={this.props.loading}
 				authUser={authUser}
 				signout={this.props.signout}
 				search={this.props.search}

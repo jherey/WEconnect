@@ -28,7 +28,8 @@ class BusinessProfile extends Component {
 					id={id}
 					loading={this.props.loading}
 					fetchBusiness={this.props.fetchBusiness}
-					currentBusiness={this.props.currentBusiness}
+          currentBusiness={this.props.currentBusiness}
+          averageRating={this.props.averageRating}
 					addFlashMessage={this.props.addFlashMessage}
 					deleteBusiness={this.props.deleteBusiness}
 					fetchReviews={this.props.fetchReviews}
@@ -43,6 +44,7 @@ class BusinessProfile extends Component {
 const mapStateToProps = state => ({
   userId: state.authUser.user.id,
   currentBusiness: state.businesses.currentBusiness,
+  averageRating: state.businesses.averageRating,
   loading: state.authUser.isLoading
 });
 
@@ -50,6 +52,7 @@ BusinessProfile.propTypes = {
   match: PropTypes.object.isRequired,
   fetchBusiness: PropTypes.func.isRequired,
   currentBusiness: PropTypes.object.isRequired,
+  averageRating: PropTypes.number,
   deleteBusiness: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   fetchReviews: PropTypes.func.isRequired,

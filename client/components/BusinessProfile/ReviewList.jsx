@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import StarRatingComponent from 'react-star-rating-component';
 import Review from './Review.jsx';
 import { isLoading } from '../../actions/userActions';
 import addFlashMessage from '../../actions/flashMessages';
@@ -22,11 +24,12 @@ class ReviewList extends Component {
     super();
     this.state = {
       review: '',
-      star: '',
+      starRating: 0,
       errors: ''
     };
     this.onReviewChange = this.onReviewChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onStarClick = this.onStarClick.bind(this);
   }
 
   /**
@@ -40,6 +43,16 @@ class ReviewList extends Component {
   }
 
   /**
+ * @description handles changes in review fields
+ * @param {nextValue} nextValue
+ * @returns {null} null
+ * @memberof ReviewList
+ */
+  onStarClick(nextValue) {
+    this.setState({ starRating: nextValue });
+  }
+
+  /**
 * @returns {null} null
 * @param {event} event
 * @memberof ReviewList
@@ -47,6 +60,12 @@ class ReviewList extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ errors: '' });
+    if (this.state.review.trim() === '' || this.state.starRating < 1) {
+      return this.props.addFlashMessage({
+        type: 'error',
+        text: 'Please type a review and give a rating'
+      });
+    }
     this.props.addReview(this.props.id, this.state)
       .then(
         () => {
@@ -71,21 +90,22 @@ class ReviewList extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { reviews } = this.props;
+    const { reviews, user } = this.props;
 
     const noReviews = (<h5 className="details-margin">No reviews for this business</h5>);
 
     const reviewComponent = reviews.map(review => (
 			<div className="container" key={review.id}>
 				<Review review={review} />
+        <hr />
 			</div>
     ));
 
     return (
 			<div>
 				<form onSubmit={this.handleSubmit}>
-					<div className="row">
-						<div className="col-lg-9">
+					{/* <div> */}
+						<div>
 							<textarea
 								placeholder="Write your review here!"
 								className="form-control"
@@ -95,33 +115,28 @@ class ReviewList extends Component {
 							>
 							</textarea>
 						</div>
-						<div className="col-lg-3">
-							<fieldset
-								className="starRating"
-								value={this.state.rating}
-								onChange={this.onReviewChange}
-								>
-								<label htmlFor="5" />
-								<input type="radio" id="5" name="star" value={5} />
-								<label htmlFor="4" />
-								<input type="radio" id="4" name="star" value={4} />
-								<label htmlFor="3" />
-								<input type="radio" id="3" name="star" value={3} />
-								<label htmlFor="2" />
-								<input type="radio" id="2" name="star" value={2} />
-								<label htmlFor="1" />
-								<input type="radio" id="1" name="star" value={1} />
-							</fieldset>
-						</div>
-					</div><br />
+            <div style={{ fontSize: 25 }}>
+              <StarRatingComponent
+                name='rate1'
+                starCount={5}
+                value={this.state.starRating}
+                onStarClick={this.onStarClick}
+                starColor='#fd654d'
+              />
+            </div>
+					{/* </div> */}
 					<button className="btn btn-primary" type="submit" >
 						Post Review
-					</button><br/>
+					</button>
 				</form>
 
 				<h3 className="business">Reviews</h3>
 				<hr />
-				{reviews.length === 0 ? noReviews : reviewComponent}
+        {reviews.length === 0 ? noReviews : reviewComponent}
+        {
+          !user ?
+					<p><Link to="/signin">Sign In</Link> to review this business<span></span></p>
+          : null }
 			</div>
     );
   }
@@ -137,6 +152,7 @@ ReviewList.propTypes = {
   addReview: PropTypes.func.isRequired,
   fetchReviews: PropTypes.func.isRequired,
   id: PropTypes.string,
+  user: PropTypes.bool.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   isLoading: PropTypes.func.isRequired,

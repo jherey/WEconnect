@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { isLoading } from './userActions';
-import { GET_REVIEWS, POST_REVIEW } from './types';
+import { AVERAGE_RATING, GET_REVIEWS, POST_REVIEW } from './types';
 
 /**
  * @description - Updates reviews store
@@ -15,6 +15,18 @@ export function getReview(reviews) {
 }
 
 /**
+ * @description - Updates store with all businesses
+ * @param {*} ratings
+ * @returns { Businesses } - Action
+ */
+export function averageRating(ratings) {
+  return {
+    type: AVERAGE_RATING,
+    ratings
+  };
+}
+
+/**
  * @description - Gets all reviews for a business
  * @param {*} id
  * @returns { reviews } - Action
@@ -23,6 +35,7 @@ export const fetchReviews = id => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses/${id}/reviews`)
     .then((review) => {
+      dispatch(averageRating(review.data.averageRating));
       dispatch(getReview(review.data.reviews));
       dispatch(isLoading(false));
     })

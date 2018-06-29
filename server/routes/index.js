@@ -14,7 +14,6 @@ const { userSignUp } = userValidator;
 const { userLogin } = userValidator;
 const { userUpdateChecker } = userValidator;
 const { createBusinessValidator } = businessValidator;
-const { query } = businessValidator;
 const { tokenVerification } = verifyToken;
 const { idChecker } = paramsChecker;
 
@@ -63,7 +62,7 @@ router
 router
   .get('/:userId/businesses', idChecker, getAUserBusiness);
 router
-  .get('/businesses', query, getAllBusinesses);
+  .get('/businesses', getAllBusinesses);
 
 // Review endpoints
 router

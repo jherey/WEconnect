@@ -33,12 +33,15 @@ class HomePage extends Component {
 			<div className="paddingBottom">
 				<HeroImage />
 				<div className="businesses">
-          {isLoading
+          {
+            isLoading
             ?
             <div style={{ marginTop: '10%', textAlign: 'center' }}>
               <Spinner />
             </div>
-            : <BusinessList businesses={businesses} />}
+            :
+            <BusinessList businesses={businesses} />
+          }
 				</div>
 			</div>
     );
@@ -47,7 +50,7 @@ class HomePage extends Component {
 
 const mapStateToProps = state => ({
   businesses: state.businesses.businesses,
-  isLoading: state.isLoading
+  isLoading: state.authUser.isLoading
 });
 
 HomePage.propTypes = {

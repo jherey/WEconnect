@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { storage } from '../firebase';
 import Spinner from '../Spinner/index.jsx';
 
@@ -97,9 +98,9 @@ class EditBusinessForm extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { loading, uploadProgress } = this.props;
+    const { loading, uploadProgress, id } = this.props;
     const {
-      businessName, email, category, location, address, businessInfo, website, errors
+      businessName, email, category, location, address, businessInfo, website
     } = this.state;
 
     return (
@@ -212,13 +213,15 @@ class EditBusinessForm extends Component {
 									? <div style={{ textAlign: 'center' }}>
 											<Spinner />
 										</div>
-									: <button
-											id="submitButton"
-											className="btn btn-orange btn-lg"
-											disabled={loading}
-										>
-											Update
-										</button>
+									: (<div id="submitButton">
+											<button
+												className="btn btn-orange btn-lg mr-2"
+												disabled={loading}
+											>
+												Update
+											</button>
+											<Link to={`/${id}`} className="btn btn-primary btn-lg"> Cancel</Link>
+										</div>)
 								}
 							</form>
 						</div>
@@ -240,6 +243,7 @@ EditBusinessForm.propTypes = {
   isLoading: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   uploadProgress: PropTypes.number,
+  id: PropTypes.number,
   setProgress: PropTypes.func
 };
 

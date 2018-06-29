@@ -27,6 +27,15 @@ class SigninForm extends Component {
   }
 
   /**
+* @description Checks loading state
+* @param {any} props
+* @returns {null} null
+*/
+  componentWillMount() {
+    this.props.isLoading(false);
+  }
+
+  /**
 * @returns {null} null
 * @param {event} event
 * @memberof SigninForm

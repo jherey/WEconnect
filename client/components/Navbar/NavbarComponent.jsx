@@ -18,7 +18,8 @@ class NavbarComponent extends Component {
     super();
     this.state = {
       keyword: '',
-      type: ''
+      type: '',
+      errors: []
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -40,7 +41,13 @@ class NavbarComponent extends Component {
 */
   onSubmit(event) {
     event.preventDefault();
-    this.props.search(this.state.keyword, this.state.type).then(
+    if (this.state.keyword.trim() === '' || this.state.type.trim() === '') {
+      return this.props.addFlashMessage({
+        type: 'error',
+        text: 'Please type a search query and select a type'
+      });
+    }
+    this.props.search(this.state.keyword, this.state.type, 1).then(
       () => {
         this.context.router.history.push('/search');
       },

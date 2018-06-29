@@ -20,6 +20,7 @@ class EditBusiness extends Component {
 * @returns {null} null
 */
   componentWillMount() {
+    console.log(this.props.match.params.id);
     this.props.fetchBusiness(this.props.match.params.id);
   }
 
@@ -33,17 +34,20 @@ class EditBusiness extends Component {
 
     return (
 			<div>
-				<EditBusinessForm
-					loading={this.props.loading}
-					id={id}
-					currentBusiness={getCurrentBusiness}
-					fetchBusiness={this.props.fetchBusiness}
-					updateBusiness={this.props.updateBusiness}
-					addFlashMessage={this.props.addFlashMessage}
-					isLoading={this.props.isLoading}
-					setProgress={this.props.setProgress}
-					uploadProgress={uploadProgress}
-				/>
+				{
+          getCurrentBusiness ?
+            (<EditBusinessForm
+              loading={this.props.loading}
+              id={id}
+              currentBusiness={getCurrentBusiness}
+              fetchBusiness={this.props.fetchBusiness}
+              updateBusiness={this.props.updateBusiness}
+              addFlashMessage={this.props.addFlashMessage}
+              isLoading={this.props.isLoading}
+              setProgress={this.props.setProgress}
+              uploadProgress={uploadProgress}
+            />) : ('loading')
+        }
 			</div>
     );
   }

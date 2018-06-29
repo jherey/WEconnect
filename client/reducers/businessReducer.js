@@ -1,9 +1,11 @@
 import {
   ADD_BUSINESS,
   GET_BUSINESSES,
+  AVERAGE_RATING,
   USER_BUSINESSES,
   FOUND_BUSINESSES,
-  CURRENT_BUSINESS
+  CURRENT_BUSINESS,
+  SET_PAGINATION
 } from '../actions/types';
 
 /**
@@ -14,11 +16,12 @@ import {
  */
 
 const initialState = {
+  averageRating: 0,
   businesses: [],
   userBusiness: [],
   currentBusiness: {},
-  searchResults: [],
-  count: 0,
+  searchResults: {},
+  pageDetails: {}
 };
 
 /**
@@ -42,6 +45,12 @@ export default function businesses(state = initialState, action = {}) {
         businesses: action.businesses
       };
 
+    case AVERAGE_RATING:
+      return {
+        ...state,
+        averageRating: action.ratings
+      };
+
     case USER_BUSINESSES:
       return {
         ...state,
@@ -51,13 +60,19 @@ export default function businesses(state = initialState, action = {}) {
     case FOUND_BUSINESSES:
       return {
         ...state,
-        searchResults: action.businesses
+        searchResults: action.searchResponse
       };
 
     case CURRENT_BUSINESS:
       return {
         ...state,
         currentBusiness: action.business
+      };
+
+    case SET_PAGINATION:
+      return {
+        ...state,
+        pageDetails: action.pageDetails
       };
 
     default:

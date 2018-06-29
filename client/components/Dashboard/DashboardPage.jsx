@@ -101,7 +101,8 @@ class DashboardPage extends Component {
  */
   onSubmit(event) {
     event.preventDefault();
-    this.setState({ errors: '' });
+    this.setState({ errors: [] });
+    document.getElementById('hidePopUpBtn').click();
     this.props.updateUser(this.state)
       .then(
         () => {
@@ -110,11 +111,8 @@ class DashboardPage extends Component {
             type: 'success',
             text: 'Update successful!'
           });
-          document.getElementById('hidePopUpBtn').click();
-          this.context.router.history.push('/dashboard');
         },
         (err) => {
-          this.props.loading(false);
           this.setState({ errors: err.response.data.errors });
           if (this.state.errors) {
             this.state.errors.map(err => this.props.addFlashMessage({
@@ -122,6 +120,8 @@ class DashboardPage extends Component {
               text: err
             }));
           }
+          this.props.isLoading(false);
+          $('#exampleModal').modal();
         }
       );
   }
@@ -134,7 +134,7 @@ class DashboardPage extends Component {
     const {
       firstname, lastname, username, email, sex, uploading
     } = this.state;
-    const { currentUser, uploadProgress } = this.props;
+    const { currentUser, uploadProgress, loading } = this.props;
 
     const noBusiness = (
 			<div className="col-lg-12 text-center py-2 noBusiness">
@@ -143,18 +143,18 @@ class DashboardPage extends Component {
     );
 
     const businessComponent = this.props.businessList.map(business => (
-				<div className="col-lg-4 col-md-6 py-2" key={business.id}>
-					<Business
-						id={business.id}
-						name={business.businessName}
-						description={business.businessInfo}
-						businessImage={business.businessImage}
-						address={business.address}
-						location={business.location}
-						category={business.category}
-						user={currentUser.username}
-					/>
-				</div>
+			<div className="col-lg-4 col-md-6 py-2" key={business.id}>
+				<Business
+					id={business.id}
+					name={business.businessName}
+					description={business.businessInfo}
+					businessImage={business.businessImage}
+					address={business.address}
+					location={business.location}
+					category={business.category}
+					user={currentUser.username}
+				/>
+			</div>
     ));
 
     let image;
@@ -282,7 +282,7 @@ class DashboardPage extends Component {
 										</div>
 										<button
 											id="updateButton"
-											disabled={uploading}
+											disabled={loading || uploading}
 											className="btn btn-orange btn-lg"
 										>
 											Update Details
