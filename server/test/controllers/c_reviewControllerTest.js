@@ -87,7 +87,7 @@ describe('REVIEWS', () => {
       const review = {
         userId: 1,
         review: 'good company, I like them',
-        star: ''
+        starRating: ''
       };
       chai.request(app)
         .post('/api/v1/businesses/2/reviews')
@@ -96,7 +96,7 @@ describe('REVIEWS', () => {
         .end((err, res) => {
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('message')
-            .eql('Please give a rating');
+            .eql('Please give a valid rating');
           expect(res.status).to.equal(400);
           done();
         });
@@ -107,7 +107,7 @@ describe('REVIEWS', () => {
       const review = {
         userId: 1,
         review: '  ',
-        star: 3
+        starRating: 3
       };
       chai.request(app)
         .post('/api/v1/businesses/2/reviews')
@@ -127,7 +127,7 @@ describe('REVIEWS', () => {
       const review = {
         userId: 1,
         review: 'good company, I like them',
-        star: 3
+        starRating: 3
       };
       chai.request(app)
         .post('/api/v1/businesses/2/reviews')
