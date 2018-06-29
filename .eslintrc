@@ -9,7 +9,8 @@
 	},
 	"globals" : {
 		"localStorage": true,
-		"document": true
+		"document": true,
+		"$": true
 	},
 	"rules": {
 		"one-var": 0,

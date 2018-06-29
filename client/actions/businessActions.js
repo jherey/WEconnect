@@ -1,5 +1,14 @@
 import axios from 'axios';
-import isLoading from './loading';
+import { isLoading } from './userActions';
+import {
+  SET_PROGRESS,
+  ADD_BUSINESS,
+  GET_BUSINESSES,
+  USER_BUSINESSES,
+  FOUND_BUSINESSES,
+  CURRENT_BUSINESS,
+  SET_PAGINATION
+} from './types';
 
 /**
  * @description - Set progress value
@@ -9,7 +18,7 @@ import isLoading from './loading';
  */
 export function setProgress(progress) {
   return {
-    type: 'SET_PROGRESS',
+    type: SET_PROGRESS,
     progress
   };
 }
@@ -22,7 +31,7 @@ export function setProgress(progress) {
  */
 export function addBusiness(business) {
   return {
-    type: 'ADD_BUSINESS',
+    type: ADD_BUSINESS,
     business
   };
 }
@@ -49,7 +58,7 @@ export const createBusiness = businessData => (dispatch) => {
  */
 export function getOneBusiness(business) {
   return {
-    type: 'ONE_BUSINESS',
+    type: CURRENT_BUSINESS,
     business
   };
 }
@@ -74,18 +83,6 @@ export const fetchBusiness = id => (dispatch) => {
 
 /**
  * @description - Updates a business
- * @param {*} updatedBusiness
- * @returns { updatedBusiness } - Action
- */
-export function businessUpdated(updatedBusiness) {
-  return {
-    type: 'UPDATE_BUSINESS',
-    updatedBusiness
-  };
-}
-
-/**
- * @description - Updates a business
  * @param {*} updatedBusinessData
  * @returns { Business } - Action
  */
@@ -96,18 +93,6 @@ export const updateBusiness = updatedBusinessData => (dispatch) => {
       dispatch(isLoading(false));
     });
 };
-
-/**
- * @description - Action to update a business
- * @param {*} businessId
- * @returns { BusinessId } - Action
- */
-export function businessDeleted(businessId) {
-  return {
-    type: 'DELETE_BUSINESS',
-    businessId
-  };
-}
 
 /**
  * @description - Deletes a business
@@ -129,41 +114,40 @@ export const deleteBusiness = id => (dispatch) => {
  */
 export function allBusinesses(businesses) {
   return {
-    type: 'SET_BUSINESSES',
+    type: GET_BUSINESSES,
     businesses
   };
 }
 
 /**
- * @description - Updates store with page details
+ *  @description - Updates store with page details
  * @param {*} pageDetails
  * @returns { Object } - Action
  */
-export function gaginationDetails(pageDetails) {
+export function paginationDetails(pageDetails) {
   return {
-    type: 'SET_PAGINATION',
+    type: SET_PAGINATION,
     pageDetails
   };
 }
 
 /**
- * @description - Gets all businesses
- * @param {*} pageNum
+ * @description - Gets businesses by page
+ * @param {*} pageNumber
  * @returns { Businesses } - Action
  */
-export const getAllBusinesses = pageNum =>
-  (dispatch) => {
-    dispatch(isLoading(true));
-    return axios.get(`/api/v1/businesses?pageNum=${pageNum}`)
-      .then((businesses) => {
-        dispatch(allBusinesses(businesses.data.allBusinesses.rows));
-        dispatch(gaginationDetails(businesses.data.pageDetails));
-        dispatch(isLoading(false));
-      })
-      .catch(() => {
-        dispatch(isLoading(false));
-      });
-  };
+export const getBusinessesByPage = pageNumber => (dispatch) => {
+  dispatch(isLoading(true));
+  return axios.get(`/api/v1/businesses?pageNum=${pageNumber}`)
+    .then((businesses) => {
+      dispatch(allBusinesses(businesses.data.allBusinesses.rows));
+      dispatch(paginationDetails(businesses.data.pageDetails));
+      dispatch(isLoading(false));
+    })
+    .catch(() => {
+      dispatch(isLoading(false));
+    });
+};
 
 /**
  * @description - Updates store with all businesses
@@ -172,7 +156,7 @@ export const getAllBusinesses = pageNum =>
  */
 export function userBusinesses(businesses) {
   return {
-    type: 'USER_BUSINESSES',
+    type: USER_BUSINESSES,
     businesses
   };
 }
@@ -185,21 +169,21 @@ export function userBusinesses(businesses) {
 export const getAUserBusiness = userId => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/${userId}/businesses`)
-    .then((businesses) => {
-      dispatch(userBusinesses(businesses.data.businesses));
+    .then((response) => {
+      dispatch(userBusinesses(response.data.businesses));
       dispatch(isLoading(false));
     });
 };
 
 /**
  * @description - Updates store with search results
- * @param {*} businesses
+ * @param {*} searchResponse
  * @returns { Businesses } - Action
  */
-export function businessFound(businesses) {
+export function businessFound(searchResponse) {
   return {
-    type: 'FOUND_BUSINESSES',
-    businesses
+    type: FOUND_BUSINESSES,
+    searchResponse
   };
 }
 
@@ -207,13 +191,14 @@ export function businessFound(businesses) {
  * @description - Search results
  * @param {*} searchWord
  * @param {*} type
+ * @param {*} pageNum
  * @returns { BusinessesFound } - Action
  */
-export const search = (searchWord, type) => (dispatch) => {
+export const search = (searchWord, type, pageNum) => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.get(`/api/v1/businesses?${type}=${searchWord}`)
-    .then((foundBusiness) => {
-      dispatch(businessFound(foundBusiness.data));
+  return axios.get(`/api/v1/businesses?${type}=${searchWord}&pageNum=${pageNum}`)
+    .then((response) => {
+      dispatch(businessFound(response.data));
       dispatch(isLoading(false));
     });
 };

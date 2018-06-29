@@ -225,11 +225,11 @@ describe('This test describes the business', () => {
     it('it should GET all business with the specified category', (done) => {
       // HTTP GET -> RETURN ALL BUSINESS WITH THE SPECIFIED CATEGORY
       chai.request(app)
-        .get('/api/v1/businesses?category=sales')
+        .get('/api/v1/businesses?category=sales&pageNum=1')
         .end((err, res) => {
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('message')
-            .eql('Business Found!');
+            .eql('Businesses found!');
           expect(res.status).to.equal(200);
           done();
         });

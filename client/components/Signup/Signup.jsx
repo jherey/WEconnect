@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SignupForm from './SignupForm.jsx';
-import { signupUser } from '../../actions/userActions';
+import { signupUser, isLoading } from '../../actions/userActions';
 import { setProgress } from '../../actions/businessActions';
-import loading from '../../actions/loading';
 import addFlashMessage from '../../actions/flashMessages';
 
 /**
@@ -35,19 +34,19 @@ class Signup extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.isLoading,
-  uploadProgress: state.uploadProgress
+  loading: state.authUser.isLoading,
+  uploadProgress: state.authUser.uploadProgress
 });
 
 Signup.propTypes = {
-  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   uploadProgress: PropTypes.number,
   setProgress: PropTypes.func,
-  isLoading: PropTypes.bool,
+  loading: PropTypes.bool,
   signupUser: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, {
-  signupUser, addFlashMessage, setProgress, loading
+  signupUser, addFlashMessage, setProgress, isLoading
 })(Signup);

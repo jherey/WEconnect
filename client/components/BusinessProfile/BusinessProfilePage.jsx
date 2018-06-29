@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import StarRatingComponent from 'react-star-rating-component';
 import ReviewList from './ReviewList.jsx';
 import Spinner from '../Spinner/index.jsx';
 import imageAvatar from '../../public/images/business-avatar.png';
@@ -53,7 +54,7 @@ class BusinessProfilePage extends Component {
           this.context.router.history.push('/');
         },
         (err) => {
-          this.props.loading(false);
+          this.props.isLoading(false);
           this.props.addFlashMessage({
             type: 'error',
             text: err.response.data.message
@@ -68,10 +69,10 @@ class BusinessProfilePage extends Component {
    */
   render() {
     const {
-      currentBusiness, id, userId, isLoading
+      currentBusiness, id, userId, loading, averageRating
     } = this.props;
 
-    if (isLoading) {
+    if (loading) {
       return (
 				<div style={{ marginTop: '10%', textAlign: 'center' }}>
 					<Spinner />
@@ -91,6 +92,17 @@ class BusinessProfilePage extends Component {
 						<div className="row">
 							{currentBusiness.businessInfo}
 						</div><br/>
+						{
+							averageRating > 0 ?
+							<div style={{ fontSize: 25 }}>
+								<StarRatingComponent
+									name='rate1'
+									starCount={5}
+									value={averageRating}
+									starColor="#fd654d"
+								/>
+							</div> : null
+						}
 						<div className="row">
 							<div className="col-md-7">
 								<div className="mr-3 address">
@@ -118,14 +130,18 @@ class BusinessProfilePage extends Component {
 									<h5>{currentBusiness.category}</h5>
 								</div>
 							</div>
-							<div className="col-md-5">
-								<div className="mr-3 address">
-									<i className="fa fa-globe fa-lg"></i>
+							{
+								currentBusiness.website ?
+									<div className="col-md-5">
+										<div className="mr-3 address">
+											<i className="fa fa-globe fa-lg"></i>
+										</div>
+										<div className="address">
+											<h5>{currentBusiness.website}</h5>
+										</div>
 								</div>
-								<div className="address">
-									<h5>{currentBusiness.website}</h5>
-								</div>
-							</div>
+								: null
+							}
 						</div>
 						{
 							currentBusiness.userId === userId
@@ -184,13 +200,14 @@ BusinessProfilePage.contextTypes = {
 BusinessProfilePage.propTypes = {
   currentBusiness: PropTypes.object.isRequired,
   fetchBusiness: PropTypes.func.isRequired,
+  averageRating: PropTypes.number,
   id: PropTypes.string.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   deleteBusiness: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
   fetchReviews: PropTypes.func.isRequired,
   userId: PropTypes.number,
-  isLoading: PropTypes.bool
+  loading: PropTypes.bool
 };
 
 export default BusinessProfilePage;

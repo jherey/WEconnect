@@ -1,5 +1,6 @@
 import axios from 'axios';
-import isLoading from './loading';
+import { isLoading } from './userActions';
+import { AVERAGE_RATING, GET_REVIEWS, POST_REVIEW } from './types';
 
 /**
  * @description - Updates reviews store
@@ -8,8 +9,20 @@ import isLoading from './loading';
  */
 export function getReview(reviews) {
   return {
-    type: 'GET_REVIEWS',
+    type: GET_REVIEWS,
     reviews
+  };
+}
+
+/**
+ * @description - Updates store with all businesses
+ * @param {*} ratings
+ * @returns { Businesses } - Action
+ */
+export function averageRating(ratings) {
+  return {
+    type: AVERAGE_RATING,
+    ratings
   };
 }
 
@@ -20,10 +33,11 @@ export function getReview(reviews) {
  */
 export const fetchReviews = id => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.get(`http://localhost:8000/api/v1/businesses/${id}/reviews`)
+  return axios.get(`/api/v1/businesses/${id}/reviews`)
     .then((review) => {
-      dispatch(isLoading(false));
+      dispatch(averageRating(review.data.averageRating));
       dispatch(getReview(review.data.reviews));
+      dispatch(isLoading(false));
     })
     .catch(() => {
       dispatch(isLoading(false));
@@ -37,7 +51,7 @@ export const fetchReviews = id => (dispatch) => {
  */
 export function postReview(review) {
   return {
-    type: 'POST_REVIEW',
+    type: POST_REVIEW,
     review
   };
 }
@@ -50,9 +64,9 @@ export function postReview(review) {
  */
 export const addReview = (id, review) => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.post(`http://localhost:8000/api/v1/businesses/${id}/reviews`, review)
+  return axios.post(`/api/v1/businesses/${id}/reviews`, review)
     .then((res) => {
-      dispatch(isLoading(false));
       dispatch(postReview(res.data.createdReview));
+      dispatch(isLoading(false));
     });
 };

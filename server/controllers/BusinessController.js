@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import models from '../models/index';
 
 // Users model
@@ -206,27 +207,49 @@ const Business = {
       });
   },
 
-  getAllBusinesses: (req, res) => {
-    const { pageNum } = req.query;
-    const limit = 8;
-    let offset;
-    const pageNumber = Number(pageNum);
-    if (pageNumber === 1) {
-      offset = 0;
-    } else {
-      offset = limit * (pageNumber - 1);
+  searchQuery: (req) => {
+    const { name, location, category } = req.query;
+
+    const searchParams = {};
+
+    if (name) {
+      searchParams.businessName = { [Op.iLike]: `%${name}%` };
     }
+    if (location) {
+      searchParams.location = { [Op.iLike]: `%${location}%` };
+    }
+    if (category) {
+      searchParams.category = { [Op.iLike]: `%${category}%` };
+    }
+
+    let searchDetails;
+    if (Object.keys(searchParams).length < 1) {
+      searchDetails = {};
+    } else {
+      searchDetails = { where: { [Op.or]: searchParams } };
+    }
+    return searchDetails;
+  },
+
+  getAllBusinesses: (req, res) => {
+    const search = Business.searchQuery(req);
+
+    const { pageNum } = req.query || 1;
+    const limit = 8;
+    const pageNumber = Number(pageNum);
+    const offset = limit * (pageNumber - 1);
     const currentPage = parseInt(pageNum, 10);
     Businesses
     // Find all businesses
       .findAndCountAll({
-        order: [['updatedAt', 'DESC']],
+        ...search,
         include: [
           {
             model: Users,
             attributes: ['username']
           }
         ],
+        order: [['updatedAt', 'DESC']],
         limit,
         offset
       })
@@ -243,8 +266,21 @@ const Business = {
             message: 'No business found for this page'
           });
         }
+        const { name, location, category } = req.query;
+        let type;
+        if (req.query.name) {
+          type = 'name';
+        }
+        if (req.query.location) {
+          type = 'location';
+        }
+        if (req.query.category) {
+          type = 'category';
+        }
         const businessDetails = {
           allBusinesses,
+          searchWord: name || location || category || null,
+          searchType: type || null,
           pageDetails: {
             count: allBusinesses.count,
             totalPages: pages,

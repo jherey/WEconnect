@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ReactPagination from 'react-paginate';
 import Spinner from '../Spinner/index.jsx';
 import AllBusinessList from './AllBusinessList.jsx';
-import { getAllBusinesses } from '../../actions/businessActions';
+import { getBusinessesByPage } from '../../actions/businessActions';
 
 /**
  * @description All businesses component
@@ -32,7 +32,8 @@ class AllBusinesses extends Component {
    * @memberof AllBusinesses
    */
   componentWillMount() {
-    this.props.getAllBusinesses(this.state.activePage);
+    const activePage = 1;
+    this.props.getBusinessesByPage(activePage);
   }
 
   /**
@@ -41,7 +42,7 @@ class AllBusinesses extends Component {
 * @return {null} no return or void
 */
   onPageChange(page) {
-    this.props.getAllBusinesses(page.selected + 1);
+    this.props.getBusinessesByPage(page.selected + 1);
   }
 
   /**
@@ -61,7 +62,6 @@ class AllBusinesses extends Component {
           pageCount={this.props.paginate.totalPages}
           marginPagesDisplayed={this.props.paginate.currentPage}
           pageRangeDisplayed={8}
-          initialPage={this.props.paginate.count}
           onPageChange={this.onPageChange}
           containerClassName={'paginate justify-content-center'}
           subContainerClassName={'pages paginate'}
@@ -88,9 +88,9 @@ class AllBusinesses extends Component {
           :
           <div id='allbusiness'>
             <AllBusinessList businesses={businesses} isLoading={isLoading} />
+            { this.props.paginate.count > 8 ? this.renderPagination(0) : null }
           </div>
         }
-				{this.renderPagination(0)}
 			</div>
     );
   }
@@ -99,11 +99,11 @@ class AllBusinesses extends Component {
 const mapStateToProps = state => ({
   businesses: state.businesses.businesses,
   isLoading: state.isLoading,
-  paginate: state.paginate
+  paginate: state.businesses.pageDetails
 });
 
 AllBusinesses.propTypes = {
-  getAllBusinesses: PropTypes.func.isRequired,
+  getBusinessesByPage: PropTypes.func.isRequired,
   count: PropTypes.number,
   businesses: PropTypes.array,
   isLoading: PropTypes.bool,
@@ -112,4 +112,4 @@ AllBusinesses.propTypes = {
   paginate: PropTypes.object
 };
 
-export default connect(mapStateToProps, { getAllBusinesses })(AllBusinesses);
+export default connect(mapStateToProps, { getBusinessesByPage })(AllBusinesses);

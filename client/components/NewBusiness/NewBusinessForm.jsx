@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { storage } from '../firebase';
 import Spinner from '../Spinner/index.jsx';
 
@@ -82,10 +83,10 @@ class NewBusinessForm extends Component {
           type: 'success',
           text: 'Business registered successfully'
         });
-        this.context.router.history.push('/');
+        this.context.router.history.push(`${this.props.newBusinessId}`);
       },
       (err) => {
-        this.props.loading(false);
+        this.props.isLoading(false);
         this.setState({ errors: err.response.data.errors });
         if (this.state.errors) {
           this.state.errors.map(err => this.props.addFlashMessage({
@@ -105,9 +106,9 @@ class NewBusinessForm extends Component {
     const {
       businessName, email, category, location, address, businessInfo, website, errors, uploading
     } = this.state;
-    const { isLoading, uploadProgress } = this.props;
+    const { loading, uploadProgress } = this.props;
 
-    if (isLoading) { return <Spinner />; }
+    if (loading) { return <Spinner />; }
 
     return (
 			<div className="form-signup">
@@ -245,11 +246,16 @@ NewBusinessForm.contextTypes = {
 NewBusinessForm.propTypes = {
   createBusiness: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
   uploadProgress: PropTypes.number,
-  isLoading: PropTypes.bool,
+  loading: PropTypes.bool,
   currentBusiness: PropTypes.object,
   setProgress: PropTypes.func,
+  newBusinessId: PropTypes.number
 };
 
-export default NewBusinessForm;
+const mapStateToProps = state => ({
+  newBusinessId: state.businesses.currentBusiness.id,
+});
+
+export default connect(mapStateToProps, null)(NewBusinessForm);

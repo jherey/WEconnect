@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DashboardPage from './DashboardPage.jsx';
-import { getOneUser, updateUser } from '../../actions/userActions';
+import { getOneUser, updateUser, isLoading } from '../../actions/userActions';
 import addFlashMessage from '../../actions/flashMessages';
-import loading from '../../actions/loading';
 import { setProgress, getAUserBusiness } from '../../actions/businessActions';
 
 /**
@@ -32,7 +31,6 @@ class Dashboard extends Component {
     const {
       userId,
       businesses,
-      isLoading,
       currentUser,
       uploadProgress,
     } = this.props;
@@ -42,7 +40,7 @@ class Dashboard extends Component {
 				<DashboardPage
 					userId={userId}
 					businessList={businesses}
-					isLoading={isLoading}
+					isLoading={this.props.isLoading}
 					currentUser={currentUser}
 					uploadProgress={uploadProgress}
 					updateUser={this.props.updateUser}
@@ -57,10 +55,10 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => ({
   userId: state.authUser.user.id,
-  businesses: state.userBusinesses,
-  currentUser: state.currentUser,
-  isLoading: state.isLoading,
-  uploadProgress: state.uploadProgress
+  currentUser: state.authUser.user,
+  businesses: state.businesses.userBusiness,
+  loading: state.authUser.isLoading,
+  uploadProgress: state.authUser.uploadProgress
 });
 
 Dashboard.propTypes = {
@@ -71,12 +69,12 @@ Dashboard.propTypes = {
   addFlashMessage: PropTypes.func.isRequired,
   businesses: PropTypes.array.isRequired,
   uploadProgress: PropTypes.number,
-  isLoading: PropTypes.bool,
-  loading: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  isLoading: PropTypes.func.isRequired,
   setProgress: PropTypes.func.isRequired,
   getAUserBusiness: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, {
-  getOneUser, getAUserBusiness, updateUser, addFlashMessage, loading, setProgress
+  getOneUser, getAUserBusiness, updateUser, addFlashMessage, isLoading, setProgress
 })(Dashboard);
