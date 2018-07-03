@@ -16,7 +16,11 @@ class SearchPage extends Component {
   render() {
     const { searchResults } = this.props;
 
-    const noSearchResults = (<h5>No business found</h5>);
+    const noSearchResults = (
+			<div className="query text-center">
+				<h2>No business found</h2>
+			</div>
+    );
 
     const searchComponent = searchResults.map(business => (
 			<div className="col-lg-3 col-md-6 py-2" key={business.id}>

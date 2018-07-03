@@ -10,9 +10,7 @@ import paramsChecker from '../middleware/paramsChecker';
 const router = express.Router();
 
 // Destructure middleware
-const { userSignUp } = userValidator;
-const { userLogin } = userValidator;
-const { userUpdateChecker } = userValidator;
+const { userSignUp, userLogin, userUpdateChecker } = userValidator;
 const { createBusinessValidator } = businessValidator;
 const { tokenVerification } = verifyToken;
 const { idChecker } = paramsChecker;
