@@ -9,6 +9,7 @@
     "startDev": "nodemon --exec npm run babel-node -- index",
     "start-dev": "nodemon --watch server --exec babel-node index.js",
     "start": "babel-node index",
+    "production-db-migrate": "sequelize db:migrate:undo:all --env production && sequelize db:migrate --env production",
     "unmigrate": "node ./node_modules/sequelize-cli/lib/sequelize db:migrate:undo:all --env test",
     "migrate": "npm run unmigrate && node ./node_modules/sequelize-cli/lib/sequelize db:migrate --env test",
     "build": "webpack --progress --config ./webpack.prod.js",

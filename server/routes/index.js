@@ -32,7 +32,7 @@ const {
 router
   .get('/auth/users', getAllUsers);
 router
-  .post('/auth/signupbus', userSignUp, registerUsers);
+  .post('/auth/signup', userSignUp, registerUsers);
 router
   .post('/auth/login', userLogin, loginUser);
 router
