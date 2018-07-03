@@ -51,12 +51,9 @@ class NavbarComponent extends Component {
       () => {
         this.context.router.history.push('/search');
       },
-      (err) => {
+      () => {
         this.props.isLoading(false);
-        this.props.addFlashMessage({
-          type: 'error',
-          text: err.response.data.message
-        });
+        this.context.router.history.push('/search');
       }
     );
   }

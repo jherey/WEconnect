@@ -100,7 +100,6 @@ export const editReview = (businessId, reviewId, review) => (dispatch) => {
   dispatch(isLoading(true));
   return axios.put(`/api/v1/businesses/${businessId}/reviews/${reviewId}`, review)
     .then(() => {
-      // dispatch(edirReviewResponse(res.data.createdReview));
       dispatch(isLoading(false));
     });
 };

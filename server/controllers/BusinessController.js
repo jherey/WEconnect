@@ -261,10 +261,6 @@ const Business = {
           return res.status(404).send({
             message: 'Business Not Found!',
           });
-        } else if (pageNumber > pages) {
-          return res.status(404).send({
-            message: 'No business found for this page'
-          });
         }
         const { name, location, category } = req.query;
         let type;

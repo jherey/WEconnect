@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import StarRatingComponent from 'react-star-rating-component';
 import Review from './Review.jsx';
 import { isLoading } from '../../actions/userActions';
-// import addFlashMessage from '../../actions/flashMessages';
-// import { fetchReviews, addReview } from '../../actions/reviewActions';
 
 /**
  * @description Review list component
@@ -53,11 +50,8 @@ const mapStateToProps = state => ({
 });
 
 ReviewList.propTypes = {
-  // addReview: PropTypes.func.isRequired,
-  // fetchReviews: PropTypes.func.isRequired,
   id: PropTypes.string,
   user: PropTypes.object.isRequired,
-  // addFlashMessage: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   isLoading: PropTypes.func.isRequired,
   reviews: PropTypes.array
