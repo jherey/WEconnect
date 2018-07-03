@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { isLoading } from './userActions';
-import { AVERAGE_RATING, GET_REVIEWS, POST_REVIEW } from './types';
+import {
+  AVERAGE_RATING,
+  GET_REVIEWS,
+  POST_REVIEW,
+  EDIT_REVIEW,
+  DELETE_REVIEW
+} from './types';
 
 /**
  * @description - Updates reviews store
@@ -67,6 +73,61 @@ export const addReview = (id, review) => (dispatch) => {
   return axios.post(`/api/v1/businesses/${id}/reviews`, review)
     .then((res) => {
       dispatch(postReview(res.data.createdReview));
+      dispatch(isLoading(false));
+    });
+};
+
+/**
+ * @description - Adds review to store
+ * @param {*} review
+ * @returns { review } - Action
+ */
+export function edirReviewResponse(review) {
+  return {
+    type: EDIT_REVIEW,
+    review
+  };
+}
+
+/**
+ * @description - Posts a new review
+ * @param {*} businessId
+ * @param {*} reviewId
+ * @param {*} review
+ * @returns { review } - Action
+ */
+export const editReview = (businessId, reviewId, review) => (dispatch) => {
+  dispatch(isLoading(true));
+  return axios.put(`/api/v1/businesses/${businessId}/reviews/${reviewId}`, review)
+    .then(() => {
+      // dispatch(edirReviewResponse(res.data.createdReview));
+      dispatch(isLoading(false));
+    });
+};
+
+/**
+ * @description - Deletes review from store
+ * @param {reviewId} reviewId
+ * @returns { reviewId } - Action
+ */
+export function reviewDeleted(reviewId) {
+  return {
+    type: DELETE_REVIEW,
+    reviewId
+  };
+}
+
+/**
+ * @description - Deletes a new review
+ * @param {*} businessId
+ * @param {*} reviewId
+ * @returns { deletedReviewId } - Action
+ */
+export const deleteReview = (businessId, reviewId) => (dispatch) => {
+  dispatch(isLoading(true));
+  return axios.delete(`/api/v1/businesses/${businessId}/reviews/${reviewId}`)
+    .then(() => {
+      dispatch(reviewDeleted(reviewId));
       dispatch(isLoading(false));
     });
 };

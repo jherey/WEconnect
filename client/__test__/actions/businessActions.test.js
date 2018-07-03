@@ -1,8 +1,9 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
-import fetchMock from 'fetch-mock';
+// import fetchMock from 'fetch-mock';
 import expect from 'expect';
+import { ADD_BUSINESS, CURRENT_BUSINESS } from '../../actions/types';
 import {
   createBusiness,
   fetchBusiness
@@ -21,7 +22,7 @@ describe('Business actions', () => {
     beforeEach(() => moxios.install());
     afterEach(() => moxios.uninstall());
     it('Then it should dispatch an action to add business', () => {
-      fetchMock.post(
+      moxios.stubRequest(
         '/api/v1/businesses',
         {
           status: 201,
@@ -32,7 +33,7 @@ describe('Business actions', () => {
         }
       );
       const expectedAction = {
-        type: 'ADD_BUSINESS',
+        type: ADD_BUSINESS,
         businessData
       };
       const store = mockStore({});
@@ -46,7 +47,7 @@ describe('Business actions', () => {
 
   describe('When I call the get business action', () => {
     it('Then it should dispatch an action to get a business', () => {
-      fetchMock.post(
+      moxios.stubRequest(
         '/api/v1/businesses/1',
         {
           status: 200,
@@ -57,7 +58,7 @@ describe('Business actions', () => {
         }
       );
       const expectedAction = {
-        type: 'ONE_BUSINESS',
+        type: CURRENT_BUSINESS,
         businessData
       };
       const store = mockStore({});
