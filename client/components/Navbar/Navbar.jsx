@@ -52,7 +52,6 @@ Navbar.propTypes = {
   addFlashMessage: PropTypes.func.isRequired,
   isLoading: PropTypes.func,
   search: PropTypes.func.isRequired,
-  // loading: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, {

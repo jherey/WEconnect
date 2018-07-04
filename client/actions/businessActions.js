@@ -200,5 +200,9 @@ export const search = (searchWord, type, pageNum) => (dispatch) => {
     .then((response) => {
       dispatch(businessFound(response.data));
       dispatch(isLoading(false));
+    })
+    .catch((error) => {
+      dispatch(businessFound(error.response.data));
+      dispatch(isLoading(false));
     });
 };

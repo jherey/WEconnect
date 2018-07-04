@@ -10,27 +10,21 @@ import paramsChecker from '../middleware/paramsChecker';
 const router = express.Router();
 
 // Destructure middleware
-const { userSignUp } = userValidator;
-const { userLogin } = userValidator;
-const { userUpdateChecker } = userValidator;
+const { userSignUp, userLogin, userUpdateChecker } = userValidator;
 const { createBusinessValidator } = businessValidator;
 const { tokenVerification } = verifyToken;
 const { idChecker } = paramsChecker;
 
 // Destructure controllers
-const { getAllUsers } = Users;
-const { registerUsers } = Users;
-const { loginUser } = Users;
-const { updateUser } = Users;
-const { getAUser } = Users;
-const { registerBusiness } = Business;
-const { updateBusiness } = Business;
-const { removeBusiness } = Business;
-const { getBusiness } = Business;
-const { getAUserBusiness } = Business;
-const { getAllBusinesses } = Business;
-const { addReview } = Review;
-const { getAllReviews } = Review;
+const {
+  getAllUsers, registerUsers, loginUser, updateUser, getAUser
+} = Users;
+const {
+  registerBusiness, updateBusiness, removeBusiness, getBusiness, getAUserBusiness, getAllBusinesses
+} = Business;
+const {
+  addReview, getAllReviews, deleteReview, editReview
+} = Review;
 
 // Users endpoints
 router
@@ -69,5 +63,9 @@ router
   .post('/businesses/:businessId/reviews', idChecker, tokenVerification, addReview);
 router
   .get('/businesses/:businessId/reviews', idChecker, getAllReviews);
+router
+  .put('/businesses/:businessId/reviews/:reviewId', idChecker, tokenVerification, editReview);
+router
+  .delete('/businesses/:businessId/reviews/:reviewId', idChecker, tokenVerification, deleteReview);
 
 export default router;

@@ -1,4 +1,4 @@
-import { GET_REVIEWS, POST_REVIEW } from '../actions/types';
+import { GET_REVIEWS, POST_REVIEW, DELETE_REVIEW } from '../actions/types';
 
 const initialState = {
   reviews: [],
@@ -25,6 +25,12 @@ export default function (state = initialState, action = {}) {
       return {
         ...state,
         review: [...state.reviews, action.review]
+      };
+    
+    case DELETE_REVIEW:
+      return {
+        ...state,
+        reviews: state.reviews.filter(review => review.id !== action.reviewId)
       };
 
     default:

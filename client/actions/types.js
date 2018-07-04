@@ -12,3 +12,5 @@ export const POST_REVIEW = 'POST_REVIEW';
 export const SET_API_STATUS = 'SET_API_STATUS';
 export const ADD_FLASH_MESSAGE = 'ADD_FLASH_MESSAGE';
 export const SET_PAGINATION = 'SET_PAGINATION';
+export const EDIT_REVIEW = 'EDIT_REVIEW';
+export const DELETE_REVIEW = 'DELETE_REVIEW';

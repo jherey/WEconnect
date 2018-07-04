@@ -47,18 +47,9 @@ class NavbarComponent extends Component {
         text: 'Please type a search query and select a type'
       });
     }
-    this.props.search(this.state.keyword, this.state.type, 1).then(
-      () => {
-        this.context.router.history.push('/search');
-      },
-      (err) => {
-        this.props.isLoading(false);
-        this.props.addFlashMessage({
-          type: 'error',
-          text: err.response.data.message
-        });
-      }
-    );
+    this.props.search(this.state.keyword, this.state.type, 1).then(() => {
+      this.context.router.history.push('/search');
+    });
   }
 
   /**

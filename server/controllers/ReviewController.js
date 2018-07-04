@@ -37,7 +37,7 @@ const Review = {
             message: 'Business does not exist'
           });
         }
-        Reviews
+        return Reviews
           // Add a new review
           .create({
             review,
@@ -61,7 +61,7 @@ const Review = {
 
   getAllReviews: (req, res) => {
     const { businessId } = req.params;
-    Reviews
+    return Reviews
       // Find all reviews of a business
       .findAll({
         where: {
@@ -90,6 +90,104 @@ const Review = {
           reviews,
           averageRating: rating || 0
         });
+      });
+  },
+
+  editReview: (req, res) => {
+    const { businessId, reviewId } = req.params;
+    const { editedReview, editedStarRating } = req.body;
+    const { authData } = req;
+    Reviews
+      // Check if review exists
+      .findOne({
+        where: {
+          id: reviewId
+        }
+      })
+      .then((oneReview) => {
+        // No review found
+        if (!oneReview) {
+          return res.status(404).json({
+            message: 'Review does not exist!',
+            error: true
+          });
+        }
+      });
+    return Reviews
+      .findOne({
+        where: {
+          id: reviewId,
+          userId: authData.id,
+          businessId
+        }
+      })
+      .then((oneReview) => {
+        if (!oneReview) {
+          return res.status(404).json({
+            message: 'You cannot edit this review',
+            error: true
+          });
+        }
+        oneReview
+          // Edit review only if authorized
+          .update({
+            review: editedReview,
+            star: editedStarRating
+          })
+          // Response on success
+          .then(() => res.status(200).json({
+            message: 'Review successfully edited!'
+          }))
+          // Response on failure
+          .catch(error => res.status(400)
+            .json(error.errors[0].message));
+      });
+  },
+
+  deleteReview: (req, res) => {
+    const { businessId, reviewId } = req.params;
+    const { authData } = req;
+    Reviews
+      // Check if review exists
+      .findOne({
+        where: {
+          id: reviewId
+        }
+      })
+      .then((review) => {
+        // No review found
+        if (!review) {
+          return res.status(404).json({
+            message: 'Review does not exist!',
+            error: true
+          });
+        }
+      });
+    return Reviews
+      .findOne({
+        where: {
+          id: reviewId,
+          userId: authData.id,
+          businessId
+        }
+      })
+      .then((review) => {
+        if (!review) {
+          return res.status(404).json({
+            message: 'You cannot delete this review',
+            error: true
+          });
+        }
+        review
+          // Delete review only if authorized
+          .destroy()
+          // Response on success
+          .then(() => res.status(200).json({
+            message: 'Review successfully deleted!',
+          }))
+          // Response on failure
+          .catch(error => res.status(400)
+            .json(error.errors[0].message));
       });
   }
 };

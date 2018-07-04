@@ -175,7 +175,7 @@ describe('This test describes the business', () => {
         .end((err, res) => {
           expect(res.body)
             .and.to.have.property('message')
-            .eql('No business found for this page');
+            .eql('No business found');
           expect(res.status).to.equal(404);
           done();
         });
