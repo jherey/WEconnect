@@ -139,7 +139,7 @@ class Review extends Component {
 			</div>
 			<div className="col-lg-11 col-md-10 separator">
 				<strong className="mr-2">{review.username}</strong><br />
-				<div id={review.id}>
+				<div>
 					<div className="d-flex justify-content-between">
 						<p className="mb-0">{review.review}</p>
 						{
@@ -186,6 +186,7 @@ class Review extends Component {
 							value={review.star}
 							starColor="#fd654d"
 						/>
+						{review.id}
 						{moment(review.createdAt).fromNow()}
 					</div>
 				</div>

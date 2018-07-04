@@ -37,7 +37,7 @@ const Review = {
             message: 'Business does not exist'
           });
         }
-        Reviews
+        return Reviews
           // Add a new review
           .create({
             review,
@@ -61,7 +61,7 @@ const Review = {
 
   getAllReviews: (req, res) => {
     const { businessId } = req.params;
-    Reviews
+    return Reviews
       // Find all reviews of a business
       .findAll({
         where: {
@@ -113,7 +113,7 @@ const Review = {
           });
         }
       });
-    Reviews
+    return Reviews
       .findOne({
         where: {
           id: reviewId,
@@ -163,7 +163,7 @@ const Review = {
           });
         }
       });
-    Reviews
+    return Reviews
       .findOne({
         where: {
           id: reviewId,

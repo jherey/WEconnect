@@ -26,7 +26,7 @@ describe('MIDDLEWARE TESTS', () => {
         .get('/api/v1/businesses?location=usa&pageNum=1')
         .end((err, res) => {
           expect(res.body).to.have.property('message')
-            .eql('No business found for this page');
+            .eql('No business found');
           expect(res.status).to.equal(404);
           done();
         });
@@ -62,7 +62,7 @@ describe('MIDDLEWARE TESTS', () => {
         .get('/api/v1/businesses?category=fashion&pageNum=1')
         .end((err, res) => {
           expect(res.body).to.have.property('message')
-            .eql('No business found for this page');
+            .eql('No business found');
           expect(res.status).to.equal(404);
           done();
         });

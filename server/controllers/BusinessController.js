@@ -239,6 +239,7 @@ const Business = {
     const pageNumber = Number(pageNum);
     const offset = limit * (pageNumber - 1);
     const currentPage = parseInt(pageNum, 10);
+    const { name, location, category } = req.query;
     Businesses
     // Find all businesses
       .findAndCountAll({
@@ -261,8 +262,18 @@ const Business = {
           return res.status(404).send({
             message: 'Business Not Found!',
           });
+        } else if (pageNumber > pages) {
+          return res.status(404).send({
+            message: 'No business found',
+            allBusinesses,
+            searchWord: name || location || category || null,
+            pageDetails: {
+              count: allBusinesses.count,
+              totalPages: pages,
+              currentPage
+            }
+          });
         }
-        const { name, location, category } = req.query;
         let type;
         if (req.query.name) {
           type = 'name';
