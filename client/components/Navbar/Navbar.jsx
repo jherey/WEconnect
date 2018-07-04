@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import NavbarComponent from './NavbarComponent.jsx';
-import loading from '../../actions/loading';
-import { signout } from '../../actions/userActions';
+import { signout, isLoading } from '../../actions/userActions';
 import { search } from '../../actions/businessActions';
 import addFlashMessage from '../../actions/flashMessages';
 
@@ -29,10 +28,9 @@ class Navbar extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { authUser, isLoading } = this.props;
+    const { authUser } = this.props;
     return (
 			<NavbarComponent
-				loading={this.props.loading}
 				authUser={authUser}
 				signout={this.props.signout}
 				search={this.props.search}
@@ -45,18 +43,17 @@ class Navbar extends Component {
 
 const mapStateToProps = state => ({
   authUser: state.authUser,
-  isLoading: state.isLoading
+  isLoading: state.authUser.isLoading
 });
 
 Navbar.propTypes = {
   signout: PropTypes.func.isRequired,
   authUser: PropTypes.object.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.func,
   search: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, {
-  signout, search, loading, addFlashMessage
+  signout, search, isLoading, addFlashMessage
 })(Navbar);

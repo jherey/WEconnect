@@ -5,7 +5,7 @@ import app from '../../../index';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-let loginToken;
+let loginToken, secondLoginToken;
 
 describe('REVIEWS', () => {
   before((done) => {
@@ -18,6 +18,20 @@ describe('REVIEWS', () => {
       .send(userDetails)
       .end((err, res) => {
         loginToken = res.body.token;
+        done();
+      });
+  });
+
+  before((done) => {
+    const userDetails = {
+      username: 'olufayo',
+      password: 'jeremiaholufayo'
+    };
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(userDetails)
+      .end((err, res) => {
+        secondLoginToken = res.body.token;
         done();
       });
   });
@@ -87,7 +101,7 @@ describe('REVIEWS', () => {
       const review = {
         userId: 1,
         review: 'good company, I like them',
-        star: ''
+        starRating: ''
       };
       chai.request(app)
         .post('/api/v1/businesses/2/reviews')
@@ -96,7 +110,7 @@ describe('REVIEWS', () => {
         .end((err, res) => {
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('message')
-            .eql('Please give a rating');
+            .eql('Please give a valid rating');
           expect(res.status).to.equal(400);
           done();
         });
@@ -107,7 +121,7 @@ describe('REVIEWS', () => {
       const review = {
         userId: 1,
         review: '  ',
-        star: 3
+        starRating: 3
       };
       chai.request(app)
         .post('/api/v1/businesses/2/reviews')
@@ -125,9 +139,8 @@ describe('REVIEWS', () => {
     it('it should add a review for a business', (done) => {
       // HTTP POST -> ADD A REVIEW FOR A BUSINESS
       const review = {
-        userId: 1,
         review: 'good company, I like them',
-        star: 3
+        starRating: 3
       };
       chai.request(app)
         .post('/api/v1/businesses/2/reviews')
@@ -137,6 +150,88 @@ describe('REVIEWS', () => {
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('message');
           expect(res.status).to.equal(201);
+          done();
+        });
+    });
+
+    it('it should add a review for a business', (done) => {
+      // HTTP POST -> ADD A REVIEW FOR A BUSINESS
+      const review = {
+        review: 'second review',
+        starRating: 5
+      };
+      chai.request(app)
+        .post('/api/v1/businesses/2/reviews')
+        .set('Authorization', loginToken)
+        .send(review)
+        .end((err, res) => {
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('message');
+          expect(res.status).to.equal(201);
+          done();
+        });
+    });
+  });
+
+  describe('PUT REQUESTS', () => {
+    it('should not edit a review if not authenticated', (done) => {
+      chai.request(app)
+        .put('/api/v1/businesses/1/reviews/1')
+        .end((err, res) => {
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('message').to.eql('Kindly sign in');
+          expect(res.status).to.equal(403);
+          done();
+        });
+    });
+
+    it('should not edit a review with wrong token', (done) => {
+      const wrongToken = `${loginToken}gftsg`;
+      chai.request(app)
+        .put('/api/v1/businesses/1/reviews/1')
+        .set('Authorization', wrongToken)
+        .end((err, res) => {
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('message').to.eql('Kindly sign in');
+          expect(res.status).to.equal(403);
+          done();
+        });
+    });
+
+    it('should not edit a review for non-created user', (done) => {
+      // HTTP POST -> ADD A REVIEW FOR A BUSINESS
+      const review = {
+        // userId: 1,
+        editedReview: 'I like them so so much',
+        editedStarRating: 5
+      };
+      chai.request(app)
+        .put('/api/v1/businesses/1/reviews/1')
+        .set('Authorization', loginToken)
+        .send(review)
+        .end((err, res) => {
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('message').to.eql('You cannot edit this review');
+          expect(res.status).to.equal(404);
+          done();
+        });
+    });
+
+    it('should edit a review for right user', (done) => {
+      // HTTP POST -> ADD A REVIEW FOR A BUSINESS
+      const review = {
+        // userId: 1,
+        editedReview: 'I like them so so much',
+        editedStarRating: 5
+      };
+      chai.request(app)
+        .put('/api/v1/businesses/2/reviews/1')
+        .set('Authorization', loginToken)
+        .send(review)
+        .end((err, res) => {
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('message').to.eql('Review successfully edited!');
+          expect(res.status).to.equal(200);
           done();
         });
     });
@@ -160,11 +255,44 @@ describe('REVIEWS', () => {
       chai.request(app)
         .get('/api/v1/businesses/2/reviews')
         .end((err, res) => {
+          console.log(res.body, '------------------');
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('message');
           expect(res.status).to.equal(200);
           done();
         });
     });
+  });
+
+  describe('DELETE REQUESTS', () => {
+    it('should not delete a review if id is not a number', (done) => {
+      // HTTP DELETE -> DON'T DELETE A REVIEW
+      const wrongToken = `${loginToken}gftsg`;
+      chai.request(app)
+        .delete('/api/v1/businesses/1a/reviews/1')
+        .set('Authorization', wrongToken)
+        .end((err, res) => {
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('message')
+            .eql('ID can only be a number');
+          expect(res.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  it('should not delete a review if user is not authenticated', (done) => {
+    // HTTP DELETE -> DON'T DELETE A REVIEW
+    const wrongToken = `${loginToken}gftsg`;
+    chai.request(app)
+      .delete('/api/v1/businesses/2/reviews/1')
+      .set('Authorization', wrongToken)
+      .end((err, res) => {
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('message')
+          .eql('Kindly sign in');
+        expect(res.status).to.equal(403);
+        done();
+      });
   });
 });

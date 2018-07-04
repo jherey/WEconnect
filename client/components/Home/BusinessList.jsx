@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Business from './Business.jsx';
 
 const BusinessList = ({ businesses }) => {
-  const noBusiness = (<h5>There are no businesses yet</h5>);
+  const noBusiness = (<h5 className="none">There are no businesses yet</h5>);
 
-  const businessComponent = businesses.reverse().map((business, i) => {
+  const businessComponent = businesses.map((business, i) => {
     if (i < 8) {
       return (
 				<div className="col-lg-3 col-md-6 py-2" key={business.id}>

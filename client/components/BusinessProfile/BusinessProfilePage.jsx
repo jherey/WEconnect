@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import StarRatingComponent from 'react-star-rating-component';
 import ReviewList from './ReviewList.jsx';
 import Spinner from '../Spinner/index.jsx';
+import addFlashMessage from '../../actions/flashMessages';
+import { fetchReviews, addReview } from '../../actions/reviewActions';
 import imageAvatar from '../../public/images/business-avatar.png';
 
 /**
@@ -20,8 +24,13 @@ class BusinessProfilePage extends Component {
   constructor() {
     super();
     this.state = {
+      review: '',
+      starRating: 0,
       errors: ''
     };
+    this.onReviewChange = this.onReviewChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onStarClick = this.onStarClick.bind(this);
   }
 
   /**
@@ -32,6 +41,60 @@ class BusinessProfilePage extends Component {
   componentWillMount() {
     this.props.fetchBusiness(this.props.id);
     this.props.fetchReviews(this.props.id);
+  }
+
+  /**
+ * @description handles changes in review fields
+ * @param {event} event
+ * @returns {null} null
+ * @memberof ReviewList
+ */
+  onReviewChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  /**
+ * @description handles changes in review fields
+ * @param {nextValue} nextValue
+ * @returns {null} null
+ * @memberof ReviewList
+ */
+  onStarClick(nextValue) {
+    this.setState({ starRating: nextValue });
+  }
+
+  /**
+* @returns {null} null
+* @param {event} event
+* @memberof ReviewList
+*/
+  handleSubmit(event) {
+    event.preventDefault();
+    this.setState({ errors: '' });
+    if (this.state.review.trim() === '' || this.state.starRating < 1) {
+      return this.props.addFlashMessage({
+        type: 'error',
+        text: 'Please type a review and give a rating'
+      });
+    }
+    this.props.addReview(this.props.id, this.state)
+      .then(
+        () => {
+          this.props.fetchReviews(this.props.id);
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'Review posted'
+          });
+          this.setState({ starRating: 0 });
+        },
+        (err) => {
+          this.props.isLoading(false);
+          this.props.addFlashMessage({
+            type: 'error',
+            text: err.response.data.message
+          });
+        }
+      );
   }
 
   /**
@@ -53,7 +116,7 @@ class BusinessProfilePage extends Component {
           this.context.router.history.push('/');
         },
         (err) => {
-          this.props.loading(false);
+          this.props.isLoading(false);
           this.props.addFlashMessage({
             type: 'error',
             text: err.response.data.message
@@ -68,10 +131,10 @@ class BusinessProfilePage extends Component {
    */
   render() {
     const {
-      currentBusiness, id, userId, isLoading
+      currentBusiness, id, userId, loading, averageRating
     } = this.props;
 
-    if (isLoading) {
+    if (loading) {
       return (
 				<div style={{ marginTop: '10%', textAlign: 'center' }}>
 					<Spinner />
@@ -91,6 +154,17 @@ class BusinessProfilePage extends Component {
 						<div className="row">
 							{currentBusiness.businessInfo}
 						</div><br/>
+						{
+							averageRating > 0 ?
+							<div style={{ fontSize: 25 }}>
+								<StarRatingComponent
+									name='rate1'
+									starCount={5}
+									value={averageRating}
+									starColor="#fd654d"
+								/>
+							</div> : null
+						}
 						<div className="row">
 							<div className="col-md-7">
 								<div className="mr-3 address">
@@ -118,14 +192,18 @@ class BusinessProfilePage extends Component {
 									<h5>{currentBusiness.category}</h5>
 								</div>
 							</div>
-							<div className="col-md-5">
-								<div className="mr-3 address">
-									<i className="fa fa-globe fa-lg"></i>
+							{
+								currentBusiness.website ?
+									<div className="col-md-5">
+										<div className="mr-3 address">
+											<i className="fa fa-globe fa-lg"></i>
+										</div>
+										<div className="address">
+											<h5>{currentBusiness.website}</h5>
+										</div>
 								</div>
-								<div className="address">
-									<h5>{currentBusiness.website}</h5>
-								</div>
-							</div>
+								: null
+							}
 						</div>
 						{
 							currentBusiness.userId === userId
@@ -140,6 +218,32 @@ class BusinessProfilePage extends Component {
 						}
 						<br /><br />
 						<hr />
+
+						{/* Form to post review */}
+						<form onSubmit={this.handleSubmit}>
+							<div>
+								<textarea
+									placeholder="Write your review here!"
+									className="form-control"
+									onChange={this.onReviewChange}
+									name='review'
+									rows="4"
+								>
+								</textarea>
+							</div>
+							<div style={{ fontSize: 25 }}>
+								<StarRatingComponent
+									name='rate1'
+									starCount={5}
+									value={this.state.starRating}
+									onStarClick={this.onStarClick}
+									starColor='#fd654d'
+								/>
+							</div>
+							<button className="btn btn-primary" type="submit" >
+								Post Review
+							</button>
+						</form>
 
 						<ReviewList id={id} />
 					</div>
@@ -184,13 +288,15 @@ BusinessProfilePage.contextTypes = {
 BusinessProfilePage.propTypes = {
   currentBusiness: PropTypes.object.isRequired,
   fetchBusiness: PropTypes.func.isRequired,
+  addReview: PropTypes.func.isRequired,
+  averageRating: PropTypes.number,
   id: PropTypes.string.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   deleteBusiness: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
   fetchReviews: PropTypes.func.isRequired,
   userId: PropTypes.number,
-  isLoading: PropTypes.bool
+  loading: PropTypes.bool
 };
 
-export default BusinessProfilePage;
+export default connect(null, { addFlashMessage, fetchReviews, addReview })(BusinessProfilePage);

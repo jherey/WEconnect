@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { fetchBusiness, currentBusiness, deleteBusiness } from '../../actions/businessActions';
 import { fetchReviews } from '../../actions/reviewActions';
 import addFlashMessage from '../../actions/flashMessages';
-import loading from '../../actions/loading';
+import { isLoading } from '../../actions/userActions';
 import BusinessProfilePage from './BusinessProfilePage.jsx';
 
 /**
@@ -28,7 +28,8 @@ class BusinessProfile extends Component {
 					id={id}
 					loading={this.props.loading}
 					fetchBusiness={this.props.fetchBusiness}
-					currentBusiness={this.props.currentBusiness}
+          currentBusiness={this.props.currentBusiness}
+          averageRating={this.props.averageRating}
 					addFlashMessage={this.props.addFlashMessage}
 					deleteBusiness={this.props.deleteBusiness}
 					fetchReviews={this.props.fetchReviews}
@@ -42,23 +43,25 @@ class BusinessProfile extends Component {
 
 const mapStateToProps = state => ({
   userId: state.authUser.user.id,
-  currentBusiness: state.currentBusiness,
-  isLoading: state.isLoading
+  currentBusiness: state.businesses.currentBusiness,
+  averageRating: state.businesses.averageRating,
+  loading: state.authUser.isLoading
 });
 
 BusinessProfile.propTypes = {
   match: PropTypes.object.isRequired,
   fetchBusiness: PropTypes.func.isRequired,
   currentBusiness: PropTypes.object.isRequired,
+  averageRating: PropTypes.number,
   deleteBusiness: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   fetchReviews: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
   userId: PropTypes.number,
-  isLoading: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default withRouter(connect(mapStateToProps, {
-  fetchBusiness, currentBusiness, loading, addFlashMessage, deleteBusiness, fetchReviews
+  fetchBusiness, currentBusiness, isLoading, addFlashMessage, deleteBusiness, fetchReviews
 })(BusinessProfile));
 

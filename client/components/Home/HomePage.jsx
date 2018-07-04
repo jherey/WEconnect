@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import BusinessList from './BusinessList.jsx';
 import Spinner from '../Spinner/index.jsx';
 import HeroImage from './HeroImage.jsx';
-import { getAllBusinesses } from '../../actions/businessActions';
+import { getBusinessesByPage } from '../../actions/businessActions';
 
 /**
  * @description Home page component
@@ -19,7 +19,7 @@ class HomePage extends Component {
 * @returns {null} null
 */
   componentWillMount() {
-    this.props.getAllBusinesses(1);
+    this.props.getBusinessesByPage(1);
   }
 
   /**
@@ -33,12 +33,15 @@ class HomePage extends Component {
 			<div className="paddingBottom">
 				<HeroImage />
 				<div className="businesses">
-          {isLoading
+          {
+            isLoading
             ?
             <div style={{ marginTop: '10%', textAlign: 'center' }}>
               <Spinner />
             </div>
-            : <BusinessList businesses={businesses} />}
+            :
+            <BusinessList businesses={businesses} />
+          }
 				</div>
 			</div>
     );
@@ -47,13 +50,13 @@ class HomePage extends Component {
 
 const mapStateToProps = state => ({
   businesses: state.businesses.businesses,
-  isLoading: state.isLoading
+  isLoading: state.authUser.isLoading
 });
 
 HomePage.propTypes = {
-  getAllBusinesses: PropTypes.func.isRequired,
+  getBusinessesByPage: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   businesses: PropTypes.array,
 };
 
-export default connect(mapStateToProps, { getAllBusinesses })(HomePage);
+export default connect(mapStateToProps, { getBusinessesByPage })(HomePage);

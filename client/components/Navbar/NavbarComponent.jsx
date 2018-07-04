@@ -18,7 +18,8 @@ class NavbarComponent extends Component {
     super();
     this.state = {
       keyword: '',
-      type: ''
+      type: '',
+      errors: []
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -40,18 +41,15 @@ class NavbarComponent extends Component {
 */
   onSubmit(event) {
     event.preventDefault();
-    this.props.search(this.state.keyword, this.state.type).then(
-      () => {
-        this.context.router.history.push('/search');
-      },
-      (err) => {
-        this.props.loading(false);
-        this.props.addFlashMessage({
-          type: 'error',
-          text: err.response.data.message
-        });
-      }
-    );
+    if (this.state.keyword.trim() === '' || this.state.type.trim() === '') {
+      return this.props.addFlashMessage({
+        type: 'error',
+        text: 'Please type a search query and select a type'
+      });
+    }
+    this.props.search(this.state.keyword, this.state.type, 1).then(() => {
+      this.context.router.history.push('/search');
+    });
   }
 
   /**
@@ -140,7 +138,7 @@ NavbarComponent.propTypes = {
   search: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   signout: PropTypes.func,
-  loading: PropTypes.func.isRequired,
+  isLoading: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
   authUser: PropTypes.object
 };

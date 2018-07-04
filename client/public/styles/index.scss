@@ -1,6 +1,6 @@
 $zero: 0;
 $font: Helvetica, sans-serif;
-$height: 100%;
+$height: 100vh;
 $background-blue: #1B4F72;
 $background-orange: #fd654d;
 $background-white: white;
@@ -104,13 +104,15 @@ footer {
 }
 
 .catchphrase {
+	background-color: #1B4F72;
 	text-align: center;
 	font-style: $italic;
-	padding: 200px;
-	h3 {
-		font-size: 30px;
-		color: $background-orange;
-	}
+	opacity: 0.7;
+	padding: 8px;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #fd654d;
 }
 
 @media only screen and (max-width: 700px) {
@@ -138,6 +140,15 @@ footer {
 .businesses {
 	background-color: #f2f6f7;
 	padding: $length-10;
+}
+
+.dashboard {
+	min-height: 400px;
+}
+
+.noBusiness {
+	margin-top: 20%;
+	font-size: 24px;
 }
 
 .list {
@@ -190,6 +201,14 @@ footer {
 .btn-orange {
 	background-color: $background-orange;
 	color: $background-white;
+}
+
+.none {
+	max-width: 500px;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10px;
 }
 
 /* MEDIA QUERIES */
@@ -269,7 +288,7 @@ label {
 	text-align: $center;
 	margin: auto;
 	display: block;
-	width: 120px;
+	width: 300px;
 	margin-top: 5px
 }
 
@@ -306,7 +325,6 @@ form {
 
 .allBusinesses {
 	margin-top: 10px;
-	// margin-bottom: 10px;
 }
 
 .userImage {
@@ -319,63 +337,10 @@ form {
 }
 
 /* BUSINESS PROFILE PAGE */
-.page-link {
-	position: relative;
-	display: block;
-	padding: .5rem .75rem;
-	margin-left: -1px;
-	line-height: 1.25;
-	color: $background-orange;
-	background-color: #fff;
-	border: 1px solid #ddd;
-	cursor: pointer;
-}
-
-.page-link:focus, .page-link:hover {
-	color: #000000;
-	text-decoration: none;
-	background-color: #e9ecef;
-	border-color: #ddd;
-}
-  
-.pagination li {
-	position: relative;
-	display: block;
-	padding: .5rem .75rem;
-	margin: auto 0;
-	line-height: 1.25;
-	color: gray;
-	background-color: $background-orange;
-	border: 1px solid #ddd;
-	cursor: pointer;
-}
-  
-.pagination li.active {
-	background-color: $background-blue !important;
-	a {
-			outline: none !important;
-	}
-}
-  
-.pagination li a {
-	color: #fff !important;
-}
-  
-.pagination {
-	display: -ms-flexbox;
-	display: flex;
-	padding-left: 0;
-	list-style: none;
-	border-radius: .25rem;
-	margin-top: 25px;
-}
-
 .fontColor {
 	color: #b1a8a8;
 }
 
-
-  
 .profile {
 	margin: 10px;
 	background-color: #F4F6F7;
@@ -390,7 +355,7 @@ form {
 }
 
 #review-createdTime {
-	font-size: 10px;
+	float: left;
 }
 
 .businessName {
@@ -473,33 +438,33 @@ form {
 	margin-top: $length-10;
 }
 
-.starRating > input { 
-	display: none; 
-}
-
-.starRating > label:before { 
-	margin: 5px;
-	font-size: 1.25em;
-	font-family: FontAwesome;
+.star-component {
 	display: inline-block;
-	content: "\f005";
+	position: relative;
 }
 
-.starRating > label { 
-	color: #ddd;
+.hide {
+	display: none;
 }
 
-.starRating > input:checked ~ label, 
-.starRating:not(:checked) > label:hover, 
-.starRating:not(:checked) > label:hover ~ label { color: #fd654d;  } 
+.edit {
+	color: #007bff;
+}
 
-.starRating > input:checked + label:hover, 
-.starRating > input:checked ~ label:hover,
-.starRating > label:hover ~ input:checked ~ label, 
-.starRating > input:checked ~ label:hover ~ label { color: #fd654d;  }
+.delete {
+	color: red;
+}
 
-.fa-star{
-	color: #fd654d;
+.hideText {
+	visibility: hidden;
+}
+
+.edit:hover .hideText {
+	visibility: visible;
+}
+
+.delete:hover .hideText {
+	visibility: visible;
 }
 
 @media (max-width: 770px) {
@@ -508,10 +473,55 @@ form {
 		margin-top: $zero;
 		text-align: $center;
 	}
+	
 	.verticalLine {
 		border-left: $none;
 		font-size: 1.3em;
 	}
 }
-
 /*BUSINESS PROFILE PAGE*/
+
+/* PAGINATION */
+.paginate li {
+	position: relative;
+	display: block;
+	padding: .5rem .75rem;
+	margin: auto 0;
+	line-height: 1.25;
+	background-color: $background-orange;
+	border: 1px solid #ddd;
+	cursor: pointer;
+}
+  
+.paginate li.active {
+	background-color: $background-blue !important;
+	a {
+		outline: none !important;
+	}
+}
+  
+.paginate li a {
+	color: #fff !important;
+}
+  
+.paginate {
+	display: -ms-flexbox;
+	display: flex;
+	padding-left: 0;
+	list-style: none;
+	border-radius: .25rem;
+	margin-top: 25px;
+}
+
+/* SEARCH PAGE */
+.query {
+	font-size: 1.5em;
+	color: $background-blue;
+	position: absolute;
+	width: 100%;
+	max-width: 400px;
+	transform: translate(-50%, -50%);
+	top: 50%;
+	left: 50%;
+}
+/* END SEARCH PAGE */

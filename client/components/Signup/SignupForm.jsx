@@ -88,7 +88,7 @@ class SignupForm extends Component {
           this.context.router.history.push('/dashboard');
         },
         (err) => {
-          this.props.loading(false);
+          this.props.isLoading(false);
           this.setState({ errors: err.response.data.errors });
           if (this.state.errors) {
             this.state.errors.map(err => this.props.addFlashMessage({
@@ -108,7 +108,7 @@ class SignupForm extends Component {
     const {
       firstname, lastname, username, email, password, confirmPassword, sex, uploading
     } = this.state;
-    const { isLoading, uploadProgress } = this.props;
+    const { loading, uploadProgress } = this.props;
 
     return (
 			<div className="form-signup">
@@ -206,7 +206,7 @@ class SignupForm extends Component {
 										<progress value={uploadProgress} max="100" />
 									</div>
 								</div>
-								{isLoading
+								{loading
 									? <div style={{ textAlign: 'center' }}>
 											<Spinner />
 										</div>
@@ -234,8 +234,8 @@ SignupForm.contextTypes = {
 
 SignupForm.propTypes = {
   addFlashMessage: PropTypes.func.isRequired,
-  loading: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
   uploadProgress: PropTypes.number,
   signupUser: PropTypes.func.isRequired,
   setProgress: PropTypes.func

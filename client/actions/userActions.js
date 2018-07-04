@@ -1,7 +1,20 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import setAuthToken from '../utils/setAuthToken';
-import isLoading from './loading';
+import { SET_CURRENT_USER, EDIT_USER, SET_API_STATUS } from './types';
+
+
+/**
+ * @description - Updates loading status
+ * @param { Boolean } status
+ * @returns { status } - Action
+ */
+export function isLoading(status) {
+  return {
+    type: SET_API_STATUS,
+    status
+  };
+}
 
 /**
  * @description - Sets current user in store
@@ -10,7 +23,7 @@ import isLoading from './loading';
  */
 export function setCurrentUser(user) {
   return {
-    type: 'SET_CURRENT_USER',
+    type: SET_CURRENT_USER,
     user
   };
 }
@@ -24,11 +37,11 @@ export const signupUser = userData => (dispatch) => {
   dispatch(isLoading(true));
   return axios.post('api/v1/auth/signup', userData)
     .then((res) => {
-      dispatch(isLoading(false));
       const { token } = res.data;
       localStorage.setItem('token', token);
       setAuthToken(token);
       dispatch(setCurrentUser(jwt.decode(token)));
+      dispatch(isLoading(false));
     });
 };
 
@@ -41,11 +54,11 @@ export const signinUser = userData => (dispatch) => {
   dispatch(isLoading(true));
   return axios.post('api/v1/auth/login', userData)
     .then((res) => {
-      dispatch(isLoading(false));
       const { token } = res.data;
       localStorage.setItem('token', token);
       setAuthToken(token);
       dispatch(setCurrentUser(jwt.decode(token)));
+      dispatch(isLoading(false));
     });
 };
 
@@ -54,9 +67,9 @@ export const signinUser = userData => (dispatch) => {
  * @param {*} user
  * @returns {Object} user
  */
-export function oneUser(user) {
+export function editUser(user) {
   return {
-    type: 'CURRENT_USER',
+    type: EDIT_USER,
     user
   };
 }
@@ -68,36 +81,8 @@ export function oneUser(user) {
  */
 export const getOneUser = id => dispatch => axios.get(`api/v1/auth/${id}`)
   .then((res) => {
-    dispatch(oneUser(res.data.userData));
+    dispatch(editUser(res.data.userData));
   });
-
-/**
- * @description - Action to update store with users
- * @param {*} users
- * @returns { users } - Action
- */
-export function allUsers(users) {
-  return {
-    type: 'ALL_USERS',
-    users
-  };
-}
-
-/**
- * @description - Get all users
- * @returns {Object} all users
- */
-export const getAllUsers = () => (dispatch) => {
-  dispatch(isLoading(true));
-  return axios.get('api/v1/auth/users')
-    .then((res) => {
-      dispatch(isLoading(false));
-      dispatch(allUsers(res.data.allUsers));
-    })
-    .catch(() => {
-      dispatch(isLoading(false));
-    });
-};
 
 /**
  * @description - Updates a business
@@ -106,12 +91,10 @@ export const getAllUsers = () => (dispatch) => {
  */
 export const updateUser = updatedUserDetails => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.put(`http://localhost:8000/api/v1/auth/${updatedUserDetails.id}`, updatedUserDetails)
+  return axios.put(`/api/v1/auth/${updatedUserDetails.id}`, updatedUserDetails)
     .then((res) => {
+      dispatch(editUser(res.data.updatedUser));
       dispatch(isLoading(false));
-      dispatch(oneUser(res.data.updatedUser));
-      getOneUser(`${updatedUserDetails.id}`);
-      getAllUsers();
     });
 };
 

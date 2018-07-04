@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Business from '../Home/Business.jsx';
-import Spinner from '../Spinner/index.jsx';
 
-const AllBusinessList = ({ businesses, isLoading }) => {
-  const noBusiness = (<h5>There are no businesses yet</h5>);
+const AllBusinessList = ({ businesses }) => {
+  const noBusiness = (<h5 className="query">There are no businesses yet</h5>);
 
   const businessComponent = businesses.map(business => (
 		<div className="col-lg-3 col-md-6 py-2" key={business.id}>
@@ -21,8 +20,6 @@ const AllBusinessList = ({ businesses, isLoading }) => {
 		</div>
   ));
 
-  if (isLoading) { return <Spinner />; }
-
   return (
 		<div className="businesses">
 			<div className="container allBusinesses">
@@ -35,8 +32,7 @@ const AllBusinessList = ({ businesses, isLoading }) => {
 };
 
 AllBusinessList.propTypes = {
-  businesses: PropTypes.array.isRequired,
-  isLoading: PropTypes.bool
+  businesses: PropTypes.array.isRequired
 };
 
 export default AllBusinessList;

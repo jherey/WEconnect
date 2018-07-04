@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import EditBusinessForm from './EditBusinessForm.jsx';
-import loading from '../../actions/loading';
+import { isLoading } from '../../actions/userActions';
 import { updateBusiness, fetchBusiness, currentBusiness, setProgress } from '../../actions/businessActions';
 import addFlashMessage from '../../actions/flashMessages';
 
@@ -20,6 +20,7 @@ class EditBusiness extends Component {
 * @returns {null} null
 */
   componentWillMount() {
+    console.log(this.props.match.params.id);
     this.props.fetchBusiness(this.props.match.params.id);
   }
 
@@ -29,30 +30,33 @@ class EditBusiness extends Component {
    */
   render() {
     const { id } = this.props.match.params;
-    const { getCurrentBusiness, isLoading, uploadProgress } = this.props;
+    const { getCurrentBusiness, uploadProgress } = this.props;
 
     return (
 			<div>
-				<EditBusinessForm
-					loading={this.props.loading}
-					id={id}
-					currentBusiness={getCurrentBusiness}
-					fetchBusiness={this.props.fetchBusiness}
-					updateBusiness={this.props.updateBusiness}
-					addFlashMessage={this.props.addFlashMessage}
-					isLoading={isLoading}
-					setProgress={this.props.setProgress}
-					uploadProgress={uploadProgress}
-				/>
+				{
+          getCurrentBusiness ?
+            (<EditBusinessForm
+              loading={this.props.loading}
+              id={id}
+              currentBusiness={getCurrentBusiness}
+              fetchBusiness={this.props.fetchBusiness}
+              updateBusiness={this.props.updateBusiness}
+              addFlashMessage={this.props.addFlashMessage}
+              isLoading={this.props.isLoading}
+              setProgress={this.props.setProgress}
+              uploadProgress={uploadProgress}
+            />) : ('loading')
+        }
 			</div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  getCurrentBusiness: state.currentBusiness,
-  isLoading: state.isLoading,
-  uploadProgress: state.uploadProgress
+  getCurrentBusiness: state.businesses.currentBusiness,
+  loading: state.authUser.isLoading,
+  uploadProgress: state.authUser.uploadProgress
 });
 
 EditBusiness.propTypes = {
@@ -63,11 +67,11 @@ EditBusiness.propTypes = {
   addFlashMessage: PropTypes.func.isRequired,
   deleteBusiness: PropTypes.func,
   setProgress: PropTypes.func,
-  loading: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
   uploadProgress: PropTypes.number
 };
 
 export default withRouter(connect(mapStateToProps, {
-  currentBusiness, updateBusiness, fetchBusiness, addFlashMessage, loading, setProgress
+  currentBusiness, updateBusiness, fetchBusiness, addFlashMessage, isLoading, setProgress
 })(EditBusiness));
