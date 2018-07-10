@@ -199,6 +199,6 @@ export const updateUser = updatedUserDetails => (dispatch) => {
  */
 export const signout = () => (dispatch) => {
   localStorage.removeItem('token');
-  setAuthToken(false);
+  setAuthToken();
   dispatch(setCurrentUser({}));
 };

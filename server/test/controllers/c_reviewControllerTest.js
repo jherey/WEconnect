@@ -230,7 +230,7 @@ describe('REVIEWS', () => {
         .send(review)
         .end((err, res) => {
           expect(res.body).to.be.a('object');
-          expect(res.body).to.have.property('message').to.eql('Review successfully edited!');
+          expect(res.body).to.have.property('message').to.eql('Review update successful');
           expect(res.status).to.equal(200);
           done();
         });
