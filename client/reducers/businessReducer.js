@@ -5,7 +5,13 @@ import {
   USER_BUSINESSES,
   FOUND_BUSINESSES,
   CURRENT_BUSINESS,
-  SET_PAGINATION
+  SET_PAGINATION,
+  BUSINESS_IMAGE_UPLOAD,
+  BUSINESS_IMAGE_ERROR_UPLOAD,
+  UPDATE_SUCCESS,
+  UPDATE_ERROR,
+  CREATE_BUSINESS_FAILED,
+  DELETE_SUCCESS
 } from '../actions/types';
 
 /**
@@ -20,8 +26,15 @@ const initialState = {
   businesses: [],
   userBusiness: [],
   currentBusiness: {},
+  createBusinessErrors: [],
   searchResults: {},
-  pageDetails: {}
+  pageDetails: {},
+  imageUrl: '',
+  imageUploadError: '',
+  uploadSuccess: '',
+  updateErrors: [],
+  updateSuccess: '',
+  deleteSuccess: ''
 };
 
 /**
@@ -39,10 +52,40 @@ export default function businesses(state = initialState, action = {}) {
         currentBusiness: action.business
       };
 
+    case CREATE_BUSINESS_FAILED:
+      return {
+        ...state,
+        createBusinessErrors: action.errors
+      };
+
     case GET_BUSINESSES:
       return {
         ...state,
         businesses: action.businesses
+      };
+
+    case BUSINESS_IMAGE_UPLOAD:
+      return {
+        ...state,
+        imageUrl: action.url
+      };
+
+    case BUSINESS_IMAGE_ERROR_UPLOAD:
+      return {
+        ...state,
+        imageUploadError: action.error
+      };
+
+    case UPDATE_SUCCESS:
+      return {
+        ...state,
+        updateSuccess: action.success
+      };
+
+    case UPDATE_ERROR:
+      return {
+        ...state,
+        updateErrors: action.errors
       };
 
     case AVERAGE_RATING:
@@ -73,6 +116,12 @@ export default function businesses(state = initialState, action = {}) {
       return {
         ...state,
         pageDetails: action.pageDetails
+      };
+
+    case DELETE_SUCCESS:
+      return {
+        ...state,
+        deleteSuccess: action.message
       };
 
     default:

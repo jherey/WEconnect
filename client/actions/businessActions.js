@@ -7,7 +7,13 @@ import {
   USER_BUSINESSES,
   FOUND_BUSINESSES,
   CURRENT_BUSINESS,
-  SET_PAGINATION
+  SET_PAGINATION,
+  BUSINESS_IMAGE_UPLOAD,
+  BUSINESS_IMAGE_ERROR_UPLOAD,
+  UPDATE_SUCCESS,
+  UPDATE_ERROR,
+  CREATE_BUSINESS_FAILED,
+  DELETE_SUCCESS
 } from './types';
 
 /**
@@ -24,6 +30,52 @@ export function setProgress(progress) {
 }
 
 /**
+ * @description - Sets one user in store
+ * @param {*} url
+ * @returns {Object} user
+ */
+export function businessImageUpload(url) {
+  return {
+    type: BUSINESS_IMAGE_UPLOAD,
+    url
+  };
+}
+
+/**
+ * @description - Sets one user in store
+ * @param {*} error
+ * @returns {Object} user
+ */
+export function businessImageUploadError(error) {
+  return {
+    type: BUSINESS_IMAGE_ERROR_UPLOAD,
+    error
+  };
+}
+
+/**
+ * @description - Sets one user in store
+ * @param {*} image
+ * @returns {Object} user
+ */
+export const imageUpload = image => (dispatch) => {
+  const data = new FormData();
+  data.append('file', image);
+  data.append('upload_preset', 'ugio7gfd');
+  delete axios.defaults.headers.common.Authorization;
+  return axios.post('https://api.cloudinary.com/v1_1/diiceprhy/image/upload', data)
+    .then((response) => {
+      const { token } = localStorage;
+      axios.defaults.headers.common.Authorization = token;
+      const cloudImageUrl = response.data.secure_url;
+      dispatch(businessImageUpload(cloudImageUrl));
+    })
+    .catch(() => {
+      dispatch(businessImageUploadError('Image upload failed, try again!'));
+    });
+};
+
+/**
  * @description - Add new business
  * @export { Function } - Add business to store
  * @param {*} business
@@ -37,15 +89,38 @@ export function addBusiness(business) {
 }
 
 /**
+ * @description - Add new business
+ * @export { Function } - Add business to store
+ * @param {*} errors
+ * @returns { Business } - Action
+ */
+export function createBusinessError(errors) {
+  return {
+    type: CREATE_BUSINESS_FAILED,
+    errors
+  };
+}
+
+/**
  * @export { Function } - Create new business
  * @param {*} businessData
+ * @param {*} props
  * @returns {Object} business
  */
-export const createBusiness = businessData => (dispatch) => {
+export const createBusiness = (businessData, props) => (dispatch) => {
   dispatch(isLoading(true));
   return axios.post('/api/v1/businesses', businessData)
     .then((res) => {
-      dispatch(addBusiness(res.data.business));
+      const { business } = res.data;
+      dispatch(addBusiness(business));
+      toastr.success('Business registered successfully');
+      props.history.push(`/${business.id}`);
+      dispatch(isLoading(false));
+    })
+    .catch((err) => {
+      const { errors } = err.response.data;
+      dispatch(createBusinessError(errors));
+      errors.map(error => toastr.error(error));
       dispatch(isLoading(false));
     });
 };
@@ -72,14 +147,40 @@ export function getOneBusiness(business) {
 export const fetchBusiness = id => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses/${id}`)
-    .then((business) => {
-      dispatch(getOneBusiness(business.data.business));
+    .then((res) => {
+      dispatch(getOneBusiness(res.data.business));
       dispatch(isLoading(false));
     })
     .catch(() => {
       dispatch(isLoading(false));
     });
 };
+
+/**
+ * @description - Gets one business
+ * @export { Function } - Get business from store
+ * @param {*} success
+ * @returns { Business } - Action
+ */
+export function updateBusinessSuccess(success) {
+  return {
+    type: UPDATE_SUCCESS,
+    success
+  };
+}
+
+/**
+ * @description - Gets one business
+ * @export { Function } - Get business from store
+ * @param {*} errors
+ * @returns { Business } - Action
+ */
+export function updateBusinessError(errors) {
+  return {
+    type: UPDATE_ERROR,
+    errors
+  };
+}
 
 /**
  * @description - Updates a business
@@ -89,10 +190,31 @@ export const fetchBusiness = id => (dispatch) => {
 export const updateBusiness = updatedBusinessData => (dispatch) => {
   dispatch(isLoading(true));
   return axios.put(`/api/v1/businesses/${updatedBusinessData.id}`, updatedBusinessData)
-    .then(() => {
+    .then((res) => {
+      dispatch(updateBusinessSuccess(res.data.message));
+      toastr.success('Business updated successfully!');
+      dispatch(isLoading(false));
+    })
+    .catch((err) => {
+      const { errors } = err.response.data;
+      dispatch(updateBusinessError(errors));
+      errors.map(error => toastr.error(error));
       dispatch(isLoading(false));
     });
 };
+
+/**
+ * @description - Gets one business
+ * @export { Function } - Get business from store
+ * @param {*} message
+ * @returns { Business } - Action
+ */
+export function deleteBusinessSuccess(message) {
+  return {
+    type: DELETE_SUCCESS,
+    message
+  };
+}
 
 /**
  * @description - Deletes a business
@@ -102,7 +224,12 @@ export const updateBusiness = updatedBusinessData => (dispatch) => {
 export const deleteBusiness = id => (dispatch) => {
   dispatch(isLoading(true));
   return axios.delete(`/api/v1/businesses/${id}`)
-    .then(() => {
+    .then((res) => {
+      dispatch(deleteBusinessSuccess(res.data.message));
+      dispatch(isLoading(false));
+    })
+    .catch(() => {
+      toastr.err('Business delete failed!');
       dispatch(isLoading(false));
     });
 };
@@ -139,9 +266,9 @@ export function paginationDetails(pageDetails) {
 export const getBusinessesByPage = pageNumber => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses?pageNum=${pageNumber}`)
-    .then((businesses) => {
-      dispatch(allBusinesses(businesses.data.allBusinesses.rows));
-      dispatch(paginationDetails(businesses.data.pageDetails));
+    .then((res) => {
+      dispatch(allBusinesses(res.data.allBusinesses.rows));
+      dispatch(paginationDetails(res.data.pageDetails));
       dispatch(isLoading(false));
     })
     .catch(() => {

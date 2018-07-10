@@ -1,9 +1,7 @@
 import React from 'react';
-import puff from './puff.svg';
 
+// Spinner loader
 const Spinner = () =>
-	<div>
-		<img src={puff} />
-	</div>;
+	<div className="loader" />;
 
 export default Spinner;

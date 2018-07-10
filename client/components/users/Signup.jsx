@@ -14,10 +14,11 @@ class Signup extends Component {
   /**
 * @description Creates an instance of signup form
 * @param {object} props
-* @memberof SignupForm
+* @memberof Signup
 */
   constructor() {
     super();
+    // Initial state
     this.state = {
       firstname: '',
       lastname: '',
@@ -30,6 +31,7 @@ class Signup extends Component {
       errors: [],
       uploading: false
     };
+    // Bind functions
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
@@ -38,32 +40,37 @@ class Signup extends Component {
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof SignupForm
+* @memberof Signup
 */
   onChange(event) {
+    // Sets state of input fields to inputed values
     this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
    * @return {null} null
    * @param {object} nextProps
-   * @memberof SignupForm
+   * @memberof Signup
    */
   componentWillReceiveProps(nextProps) {
-    if (nextProps.authUser.imageUrl) {
-      this.setState({ profilepic: nextProps.authUser.imageUrl });
+    const { imageUrl } = nextProps.authUser;
+    if (imageUrl) {
+      // Set state of profilepic to uploaded image url
+      this.setState({ profilepic: imageUrl });
     }
   }
 
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof SignupForm
+* @memberof Signup
 */
   uploadImage(event) {
     this.setState({ profilepic: '', uploading: true });
     const image = event.target.files[0];
+    // Action to upload an image
     this.props.imageUpload(image).then(() => {
+      // Sets state of uploading to false after uploading image
       this.setState({ uploading: false });
     });
   }
@@ -76,16 +83,8 @@ class Signup extends Component {
  */
   onSubmit(event) {
     event.preventDefault();
-    this.props.signupUser(this.state).then(() => {
-      const { authUser } = this.props;
-      const { username } = this.state;
-      if (authUser.isAuthenticated) {
-        toastr.success(`Welcome ${username}! Signed up successfully!`);
-        this.context.router.history.push('/dashboard');
-      } else {
-        authUser.errors.map(err => toastr.error(err));
-      }
-    });
+    // Action to signup a user
+    this.props.signupUser(this.state, this.props);
   }
 
   /**
@@ -95,6 +94,7 @@ class Signup extends Component {
   render() {
     return (
 			<div>
+        {/* Render signup form */}
 				<SignupForm
           authUser={this.props.authUser}
           uploadImage={this.uploadImage}

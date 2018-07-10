@@ -104,16 +104,16 @@ const Review = {
           id: reviewId
         }
       })
-      .then((oneReview) => {
+      .then((review) => {
         // No review found
-        if (!oneReview) {
+        if (!review) {
           return res.status(404).json({
             message: 'Review does not exist!',
             error: true
           });
         }
       });
-    return Reviews
+    Reviews
       .findOne({
         where: {
           id: reviewId,
@@ -121,22 +121,23 @@ const Review = {
           businessId
         }
       })
-      .then((oneReview) => {
-        if (!oneReview) {
+      .then((foundReview) => {
+        if (!foundReview) {
           return res.status(404).json({
             message: 'You cannot edit this review',
             error: true
           });
         }
-        oneReview
+        foundReview
           // Edit review only if authorized
           .update({
             review: editedReview,
             star: editedStarRating
           })
           // Response on success
-          .then(() => res.status(200).json({
-            message: 'Review successfully edited!'
+          .then(updatedReview => res.status(200).json({
+            message: 'Review update successful',
+            updatedReview
           }))
           // Response on failure
           .catch(error => res.status(400)

@@ -11,11 +11,11 @@ import Business from '../common/Business.jsx';
  * @class  Search
  * @extends {Component}
  */
-class Search extends Component {
+class SearchPage extends Component {
   /**
-* @description Creates an instance of AllBusinesses
+* @description Creates an instance of SearchPage
 * @param {object} props
-* @memberof AllBusinesses
+* @memberof SearchPage
 */
   constructor(props) {
     super(props);
@@ -24,7 +24,7 @@ class Search extends Component {
 
   /**
 * @description - get all busineses in pages
-* @param  {object} page the event for the content field
+* @param  {object} page - the event for the content field
 * @return {null} no return or void
 */
   onPageChange(page) {
@@ -36,10 +36,11 @@ class Search extends Component {
 * @description handles pagination
 * @param {count} count
 * @returns {pages} pageNumbers
-* @memberof AllBusinesses
+* @memberof SearchPage
 */
   renderPagination() {
     return (
+      // Pagination component
       <ReactPagination
         previousLabel={'previous'}
         nextLabel={'next'}
@@ -57,12 +58,14 @@ class Search extends Component {
   }
 
   /**
-   * @memberof Search
+   * @memberof SearchPage
    * @return {ReactElement} markup
    */
   render() {
+    // Destructure props
     const { allBusinesses, searchWord } = this.props.searchResults;
 
+    // No business found
     if (allBusinesses === undefined) {
       return (<div className="query">Please enter a search query</div>);
     }
@@ -73,6 +76,7 @@ class Search extends Component {
 			</div>
     );
 
+    // Loop through search results and render a business
     const searchComponent = allBusinesses.rows.map(business => (
 			<div className="col-lg-3 col-md-6 py-2" key={business.id}>
 				<Business
@@ -93,11 +97,13 @@ class Search extends Component {
 				{
           <div className="businesses">
             <div className="container">
+              {/* Search text */}
               <h3 className="text-center">Search results for {`"${searchWord}"`}</h3>
               <div className="row">
                 {allBusinesses.rows.length === 0 ? noSearchResults : searchComponent}
               </div>
             </div>
+            {/* Render pagination */}
             { this.props.paginate.count > 8 ? this.renderPagination() : null }
           </div>
         }
@@ -106,13 +112,15 @@ class Search extends Component {
   }
 }
 
+// Map state to props
 const mapStateToProps = state => ({
   searchResults: state.businesses.searchResults,
   searchType: state.businesses.searchResults.searchType,
   paginate: state.businesses.searchResults.pageDetails
 });
 
-Search.propTypes = {
+// Proptypes for search page
+SearchPage.propTypes = {
   search: PropTypes.func,
   searchResults: PropTypes.object,
   searchType: PropTypes.string,
@@ -120,4 +128,4 @@ Search.propTypes = {
   searchAction: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { searchAction: search })(Search);
+export default connect(mapStateToProps, { searchAction: search })(SearchPage);

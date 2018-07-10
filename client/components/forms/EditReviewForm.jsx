@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StarRatingComponent from 'react-star-rating-component';
 
+// Edit review component
 const EditReviewForm = ({
+  // Destructure props
   onReviewChange, submitEditedReview, onEditStarClick, formDetails
 }) => (
   <div>
@@ -27,6 +29,7 @@ const EditReviewForm = ({
           starColor='#fd654d'
         />
       </div>
+      {/* Submit button to edit a review */}
       <button className="btn btn-primary mr-2" type="submit">
         Edit Review
       </button>
@@ -34,6 +37,7 @@ const EditReviewForm = ({
   </div>
 );
 
+// Edit review proptypes
 EditReviewForm.propTypes = {
   review: PropTypes.object.isRequired,
   star: PropTypes.number,

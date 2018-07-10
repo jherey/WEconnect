@@ -142,13 +142,17 @@ footer {
 	padding: $length-10;
 }
 
-.dashboard {
-	min-height: 400px;
-}
+// .noBusiness {
+// 	min-height: 400px;
+// }
 
-.noBusiness {
-	margin-top: 20%;
+#no-business {
+	margin-top: 10%;
 	font-size: 24px;
+	width: 450px;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 .list {
@@ -327,13 +331,21 @@ form {
 	margin-top: 10px;
 }
 
-.userImage {
-	display: flex;
-	justify-content: center;
+.textcase {
+	text-transform: capitalize;
 }
 
 .user {
 	border-radius: 8px;
+}
+
+.user-profile {
+	margin-top: 15px;
+	margin-bottom: 25px;
+}
+
+#user-profile-info {
+	margin-top: 13px !important;
 }
 
 /* BUSINESS PROFILE PAGE */
@@ -356,6 +368,10 @@ form {
 
 #review-createdTime {
 	float: left;
+}
+
+.dashboard {
+	margin-bottom: 5%;
 }
 
 .businessName {
@@ -525,3 +541,23 @@ form {
 	left: 50%;
 }
 /* END SEARCH PAGE */
+
+/* SPINNER */
+.loader {
+	border: 6px solid $background-blue;
+	border-top: 6px solid $background-orange;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	animation: spin 2s linear infinite;
+	position: absolute;
+	max-width: 120px;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	top: 50%;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}

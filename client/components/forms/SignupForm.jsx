@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Spinner from '../common/Spinner/index.jsx';
 
-const SignupForm = (props) => {
+const SignupForm = ({
+  authUser, uploadImage, onChange, onSubmit, formDetails
+}) => {
   const {
     firstname, lastname, username, email, password, confirmPassword, sex, uploading
-  } = props.formDetails;
-  const {
-    authUser, uploadImage, onChange, onSubmit
-  } = props;
+  } = formDetails;
 
   return (
+		// Return form
 		<div className="form-signup">
 			<div className="signup-form container py-5">
 				<h1 className="text-center" style={{ color: 'white' }}>Sign Up</h1>
@@ -111,18 +110,21 @@ const SignupForm = (props) => {
 									}
 								</div>
 							</div>
-							{authUser.isLoading
-								? <div style={{ textAlign: 'center' }}>
-										<Spinner />
-									</div>
-								: <button
-										id="submitButton"
-										className="btn btn-orange btn-lg"
-										disabled={uploading}
-									>
-										Sign Up
-									</button>
-							}
+							{/* Submit button */}
+							<div style={{ textAlign: 'center' }}>
+								<button
+									disabled={authUser.isLoading || uploading}
+									id="signup"
+									className="btn btn-orange btn-lg"
+								>
+									{
+										authUser.isLoading ?
+										<span>processing <i className="fa fa-spinner fa-spin"/></span>
+										: <span>Sign Up</span>
+									}
+								</button>
+							</div>
+							{/* Link to sign in page */}
 							<p id="signup-link">Already have an account?<span><Link to="/signin"> Sign In</Link></span></p>
 						</form>
 					</div>
@@ -132,6 +134,7 @@ const SignupForm = (props) => {
   );
 };
 
+// Proptypes for signup form
 SignupForm.propTypes = {
   authUser: PropTypes.object,
   formDetails: PropTypes.object.isRequired,

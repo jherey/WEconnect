@@ -15,8 +15,10 @@ const ReviewList = ({
   onReviewDelete,
   setToDeleteReview
 }) => {
+  // If no reviews
   const noReviews = (<h5 className="details-margin">No reviews for this business</h5>);
 
+  // Map through reviews and render a review
   const reviewComponent = reviews.map(review => (
     <div className="container" key={review.id}>
       <Review
@@ -39,9 +41,11 @@ const ReviewList = ({
     <div>
       <h3 className="business">Reviews</h3>
       <hr />
+      {/* Conditional rendering */}
       {reviews.length === 0 ? noReviews : reviewComponent}
       {
         !user.isAuthenticated ?
+        // Show link to signin if user is not logged in
         <p><Link to="/signin">Sign In</Link> to review this business<span></span></p>
         : null
       }
@@ -49,6 +53,7 @@ const ReviewList = ({
   );
 };
 
+// Prop types for reviewlist component
 ReviewList.propTypes = {
   id: PropTypes.number,
   user: PropTypes.object.isRequired,

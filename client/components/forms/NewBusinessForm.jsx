@@ -1,21 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Spinner from '../common/Spinner/index.jsx';
 
+// Form to register a new business
 const NewBusinessForm = (props) => {
+  // Destructure props
+  const {
+    authUser, uploadImage, onChange, onSubmit, formDetails
+  } = props;
+  // Destructure form details
   const {
     businessName, email, category, location, address, businessInfo, website, uploading
-  } = props.formDetails;
-  const {
-    authUser, uploadImage, onChange, onSubmit
-  } = props;
+  } = formDetails;
 
   return (
+		// Return form
 		<div className="form-signup">
 			<div className="signup-form container py-5">
 				<h1 className="text-center" style={{ color: 'white' }}>Register Business</h1>
 				<div className="row">
 					<div className="col-md-10 mx-auto">
+						{/* Submit form */}
 						<form onSubmit={onSubmit}>
 							<div className="form-group row">
 								<div className="col-sm-6">
@@ -120,18 +124,19 @@ const NewBusinessForm = (props) => {
 									}
 								</div>
 							</div>
-							{ authUser.isLoading
-							? <div style={{ textAlign: 'center' }}>
-									<Spinner />
-								</div>
-							: <button
-								id="submitButton"
-								disabled={uploading}
-								className="btn btn-orange btn-lg"
-							>
-								Register
-							</button>
-							}
+							<div style={{ textAlign: 'center' }}>
+								<button
+									disabled={authUser.isLoading || uploading}
+									id="signup"
+									className="btn btn-orange btn-lg"
+								>
+									{
+										authUser.isLoading ?
+										<span>processing <i className="fa fa-spinner fa-spin"/></span>
+										: <span>Register</span>
+									}
+								</button>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -140,6 +145,7 @@ const NewBusinessForm = (props) => {
   );
 };
 
+// New business form prop types
 NewBusinessForm.propTypes = {
   createBusiness: PropTypes.func.isRequired,
   formDetails: PropTypes.object.isRequired,

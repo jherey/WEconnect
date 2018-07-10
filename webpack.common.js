@@ -1,3 +1,5 @@
+import DotEnv from 'dotenv-webpack';
+
 const path = require('path');
 
 module.exports = {
@@ -37,4 +39,10 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new DotEnv({
+      path: './.env',
+      systemvars: true
+    })
+  ]
 };

@@ -17,10 +17,11 @@ class BusinessProfile extends Component {
   /**
 * @description Creates an instance of Business Profile Page
 * @param {object} props
-* @memberof BusinessProfilePage
+* @memberof BusinessProfile
 */
   constructor() {
     super();
+    // Business profile initial state
     this.state = {
       review: '',
       starRating: 0,
@@ -29,6 +30,7 @@ class BusinessProfile extends Component {
       editedStarRating: 0,
       editing: null
     };
+    // Bind functions
     this.onReviewChange = this.onReviewChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onStarClick = this.onStarClick.bind(this);
@@ -44,6 +46,7 @@ class BusinessProfile extends Component {
   /**
 * @description Fetches all businesses and reviews
 * @param {any} props
+* @memberof BusinessProfile
 * @returns {null} null
 */
   componentWillMount() {
@@ -55,9 +58,10 @@ class BusinessProfile extends Component {
   /**
   * @returns {null} null
   * @param {event} event
-  * @memberof EditBusinessForm
+  * @memberof BusinessProfile
   */
   onEditChange(event) {
+    // Sets state of input fields to inputed values
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -65,7 +69,7 @@ class BusinessProfile extends Component {
    * @description handles changes in review fields
    * @param {nextValue} nextValue
    * @returns {null} null
-   * @memberof ReviewList
+   * @memberof BusinessProfile
    */
   onEditStarClick(nextValue) {
     this.setState({ editedStarRating: nextValue });
@@ -74,7 +78,7 @@ class BusinessProfile extends Component {
   /**
   * @returns {null} null
   * @param {object} review
-  * @memberof Review
+  * @memberof BusinessProfile
   */
   switchEditReview(review) {
     if (review) {
@@ -90,9 +94,10 @@ class BusinessProfile extends Component {
 * @description handles changes in review fields
 * @param {event} event
 * @returns {null} null
-* @memberof ReviewList
+* @memberof BusinessProfile
 */
   onReviewChange(event) {
+    // Sets state of input fields to inputed values
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -100,7 +105,7 @@ class BusinessProfile extends Component {
 * @returns {id} id
 * @param {businessId} businessId
 * @param {reviewId} reviewId
-* @memberof Review
+* @memberof BusinessProfile
 */
   setToDeleteReview(businessId, reviewId) {
     currentBusinessId = businessId;
@@ -111,7 +116,7 @@ class BusinessProfile extends Component {
  * @description deletes a review
  * @param {event} event
  * @returns {null} null
- * @memberof ReviewList
+ * @memberof BusinessProfile
  */
   onReviewDelete() {
     const { deleteReviewAction } = this.props;
@@ -123,21 +128,22 @@ class BusinessProfile extends Component {
 * @description handles changes in review fields
 * @param {nextValue} nextValue
 * @returns {null} null
-* @memberof ReviewList
+* @memberof BusinessProfile
 */
   onStarClick(nextValue) {
+    // Sets state of starRating to new value
     this.setState({ starRating: nextValue });
   }
 
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof ReviewList
+* @memberof BusinessProfile
 */
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({ errors: '' });
-    if (this.state.review.trim() === '' || this.state.starRating < 1) {
+    const { review, starRating } = this.state;
+    if (review.trim() === '' || starRating < 1) {
       return toastr.error('Please type a review and give a rating');
     }
     const { profilepic, sex } = this.props.authUser.user;
@@ -150,7 +156,7 @@ class BusinessProfile extends Component {
   /**
 * @returns {null} null
 * @param {*} event
-* @memberof EditBusinessForm
+* @memberof BusinessProfile
 */
   submitEditedReview(event) {
     event.preventDefault();
@@ -169,7 +175,7 @@ class BusinessProfile extends Component {
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof BusinessProfilePage
+* @memberof BusinessProfile
 */
   onDelete(event) {
     event.preventDefault();
@@ -178,6 +184,7 @@ class BusinessProfile extends Component {
     this.props.deleteBusiness(this.props.currentBusiness.id).then(() => {
       const { deleteSuccess } = this.props.business;
       if (deleteSuccess !== '') {
+        toastr.success('Business deleted');
         this.context.router.history.push('/');
       }
     });
@@ -229,6 +236,7 @@ BusinessProfile.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
+// Prop types for business profile page
 BusinessProfile.propTypes = {
   business: PropTypes.object,
   authUser: PropTypes.object,

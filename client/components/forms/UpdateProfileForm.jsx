@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Spinner from '../common/Spinner/index.jsx';
 
-const UpdateProfileForm = (props) => {
+const UpdateProfileForm = ({
+  // Destructure props
+  authUser, uploadImage, onChange, onSubmit, formDetails
+}) => {
+  // Destructure form details
   const {
     firstname, lastname, username, email, sex, uploading
-  } = props.formDetails;
-  const {
-    authUser, uploadImage, onChange, onSubmit
-  } = props;
+  } = formDetails;
 
   return (
+    // Return form
     <div className="modal fade" id="editUserModal" tabIndex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div className="modal-dialog" role="document">
           <div className="modal-content userDetails">
@@ -92,18 +93,20 @@ const UpdateProfileForm = (props) => {
                   }
                 </div>
               </div>
-              { authUser.isLoading
-								? <div style={{ textAlign: 'center' }}>
-										<Spinner />
-									</div>
-								: <button
-                    id="updateButton"
-                    disabled={uploading}
-                    className="btn btn-orange btn-lg"
-                  >
-                    Update Details
-                  </button>
-              }
+              {/* Submit button */}
+              <div style={{ textAlign: 'center' }}>
+                <button
+                  disabled={authUser.isLoading || uploading}
+                  id="signup"
+                  className="btn btn-orange btn-lg"
+                >
+                  {
+                    authUser.isLoading ?
+                    <span>processing <i className="fa fa-spinner fa-spin"/></span>
+                    : <span>Update Profile</span>
+                  }
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -111,6 +114,7 @@ const UpdateProfileForm = (props) => {
   );
 };
 
+// Prop types for update profile form
 UpdateProfileForm.propTypes = {
   authUser: PropTypes.object,
   formDetails: PropTypes.object.isRequired,

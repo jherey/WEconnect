@@ -4,13 +4,16 @@ import TextTruncate from 'react-text-truncate';
 import { Link } from 'react-router-dom';
 import imageAvatar from '../../public/images/business-avatar.png';
 
+// Business component
 const Business = (props) => {
+  // Destructure props
   const {
     id, name, description, businessImage, category, user
   } = props;
   return (
 		<div className='card h-100'>
 			<div className="avatar mx-auto white">
+				{/* Business image */}
 				<img
 					className="rounded-circle mt-2"
 					src={businessImage === '' ? imageAvatar : businessImage}
@@ -19,15 +22,20 @@ const Business = (props) => {
 				/>
 			</div>
 			<div className='card-body'>
+				{/* Business name */}
 				<p className="category text-center"><strong>{name}</strong></p>
 				<hr />
+				{/* Business description */}
 				<TextTruncate
 					line={2}
 					text={description}
 				/>
 				<br />
+				{/* Business category */}
 				<p className="card-text">{category}</p>
+				{/* Business owner */}
 				<p className="fontColor"><small><em>Created by {user}</em></small></p>
+				{/* Link to business profile */}
 				<Link to={`/${id}`} className="btn btn-orange d-block mb-1">
 					View Profile
 				</Link>
@@ -36,6 +44,7 @@ const Business = (props) => {
   );
 };
 
+// Business prop types
 Business.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,

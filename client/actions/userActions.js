@@ -1,8 +1,15 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import setAuthToken from '../utils/setAuthToken';
-import { SET_CURRENT_USER, EDIT_USER, SET_API_STATUS } from './types';
-
+import {
+  SET_CURRENT_USER,
+  AUTH_ERROR,
+  EDIT_USER,
+  SET_API_STATUS,
+  IMAGE_UPLOAD,
+  IMAGE_ERROR_UPLOAD,
+  UPDATE_USER_FAILED
+} from './types';
 
 /**
  * @description - Updates loading status
@@ -29,18 +36,39 @@ export function setCurrentUser(user) {
 }
 
 /**
+ * @description - Sets current user in store
+ * @param {*} errors
+ * @returns {Object} user
+ */
+export function authError(errors) {
+  return {
+    type: AUTH_ERROR,
+    errors
+  };
+}
+
+/**
  * @description - Creates a new user
  * @param {*} userData
+ * @param {*} props
  * @returns { user } - Action
  */
-export const signupUser = userData => (dispatch) => {
+export const signupUser = (userData, props) => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.post('api/v1/auth/signup', userData)
+  return axios.post('/api/v1/auth/signup', userData)
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem('token', token);
       setAuthToken(token);
       dispatch(setCurrentUser(jwt.decode(token)));
+      toastr.success(`Welcome ${userData.username}! Signed up successfully!`);
+      props.history.push('/dashboard');
+      dispatch(isLoading(false));
+    })
+    .catch((err) => {
+      const { errors } = err.response.data;
+      dispatch(authError(errors));
+      errors.map(error => toastr.error(error));
       dispatch(isLoading(false));
     });
 };
@@ -48,19 +76,77 @@ export const signupUser = userData => (dispatch) => {
 /**
  * @description - Login a user
  * @param {*} userData
+ * @param {*} props
  * @returns {Object} loggedin user
  */
-export const signinUser = userData => (dispatch) => {
+export const signinUser = (userData, props) => (dispatch) => {
   dispatch(isLoading(true));
-  return axios.post('api/v1/auth/login', userData)
+  return axios.post('/api/v1/auth/login', userData)
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem('token', token);
       setAuthToken(token);
       dispatch(setCurrentUser(jwt.decode(token)));
+      toastr.success(`Welcome ${userData.username}! Signed in successfully!`);
+      props.history.push('/dashboard');
+      dispatch(isLoading(false));
+    })
+    .catch((err) => {
+      const { errors } = err.response.data;
+      dispatch(authError(errors));
+      errors.map(error => toastr.error(error));
       dispatch(isLoading(false));
     });
 };
+
+/**
+ * @description - Sets one user in store
+ * @param {*} url
+ * @returns {Object} user
+ */
+export function userImageUpload(url) {
+  return {
+    type: IMAGE_UPLOAD,
+    url
+  };
+}
+
+/**
+ * @description - Sets one user in store
+ * @param {*} error
+ * @returns {Object} user
+ */
+export function userImageUploadError(error) {
+  return {
+    type: IMAGE_ERROR_UPLOAD,
+    error
+  };
+}
+
+/**
+ * @description - Sets one user in store
+ * @param {*} image
+ * @returns {Object} user
+ */
+export const imageUpload = (image) => {
+  const { UPLOAD_PRESET } = process.env;
+  const CLOUD_API = process.env.CLOUDINARY_API;
+  const data = new FormData();
+  data.append('file', image);
+  data.append('upload_preset', UPLOAD_PRESET);
+  delete axios.defaults.headers.common.Authorization;
+  return dispatch => axios.post(CLOUD_API, data)
+    .then((response) => {
+      const { token } = localStorage;
+      axios.defaults.headers.common.Authorization = token;
+      const cloudImageUrl = response.data.secure_url;
+      dispatch(userImageUpload(cloudImageUrl));
+    })
+    .catch(() => {
+      dispatch(userImageUploadError('Image upload failed, try again!'));
+    });
+};
+
 
 /**
  * @description - Sets one user in store
@@ -75,14 +161,16 @@ export function editUser(user) {
 }
 
 /**
- * @description - Get one user
- * @param {*} id
- * @returns {Object} Found user
+ * @description - Sets one user in store
+ * @param {*} errors
+ * @returns {Object} user
  */
-export const getOneUser = id => dispatch => axios.get(`api/v1/auth/${id}`)
-  .then((res) => {
-    dispatch(editUser(res.data.userData));
-  });
+export function updateFailed(errors) {
+  return {
+    type: UPDATE_USER_FAILED,
+    errors
+  };
+}
 
 /**
  * @description - Updates a business
@@ -94,7 +182,14 @@ export const updateUser = updatedUserDetails => (dispatch) => {
   return axios.put(`/api/v1/auth/${updatedUserDetails.id}`, updatedUserDetails)
     .then((res) => {
       dispatch(editUser(res.data.updatedUser));
+      toastr.success('Update successful!');
       dispatch(isLoading(false));
+    })
+    .catch((err) => {
+      dispatch(updateFailed(err.response.data.errors));
+      dispatch(isLoading(false));
+      $('#editUserModal').modal();
+      err.response.data.errors.map(err => toastr.error(err));
     });
 };
 

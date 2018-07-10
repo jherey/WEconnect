@@ -105,7 +105,7 @@ const Business = {
               // Success message
               .then(updatedBusiness => res.status(200).json({
                 message: 'Business Update Successful',
-                updatedBusiness,
+                updatedBusiness
               }))
               // Catch errors
               .catch(error => res.status(400)

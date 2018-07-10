@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Spinner from '../common/Spinner/index.jsx';
 
-const EditBusinessForm = (props) => {
+// Form to edit a business
+const EditBusinessForm = ({
+  id, authUser, uploadImage, onChange, onSubmit, formDetails
+}) => {
+  // Destructure form details
   const {
     businessName, email, category, location, address, businessInfo, website, uploading
-  } = props.formDetails;
-  const {
-    id, authUser, uploadImage, onChange, onSubmit
-  } = props;
+  } = formDetails;
 
   return (
 		<div className="form-signup">
@@ -17,6 +17,7 @@ const EditBusinessForm = (props) => {
 				<h1 className="text-center" style={{ color: 'white' }}>Edit Business Details</h1>
 				<div className="row">
 					<div className="col-md-10 mx-auto">
+						{/* Submit form */}
 						<form onSubmit={onSubmit}>
 							<div className="form-group row">
 								<div className="col-sm-6">
@@ -121,20 +122,21 @@ const EditBusinessForm = (props) => {
 									}
 								</div>
 							</div>
-							{authUser.isLoading
-								? <div style={{ textAlign: 'center' }}>
-										<Spinner />
-									</div>
-								: (<div id="submitButton">
-										<button
-											className="btn btn-orange btn-lg mr-2"
-											disabled={uploading}
-										>
-											Update
-										</button>
-										<Link to={`/${id}`} className="btn btn-primary btn-lg"> Cancel</Link>
-									</div>)
-							}
+							<div style={{ textAlign: 'center' }}>
+								<button
+									disabled={authUser.isLoading || uploading}
+									id="signup"
+									className="btn btn-orange btn-lg mr-2"
+								>
+									{
+										authUser.isLoading ?
+										<span>processing <i className="fa fa-spinner fa-spin"/></span>
+										: <span>Update</span>
+									}
+								</button>
+								{/* Go to business profile page on cancel */}
+								<Link to={`/${id}`} className="btn btn-primary btn-lg"> Cancel</Link>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -147,6 +149,7 @@ EditBusinessForm.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
+// Edit business proptypes
 EditBusinessForm.propTypes = {
   currentBusiness: PropTypes.object,
   updateBusiness: PropTypes.func.isRequired,

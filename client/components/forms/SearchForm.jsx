@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SearchForm = (props) => {
-  const { keyword, type } = props.formDetails;
-  const { onChange, onSubmit } = props;
+const SearchForm = ({ onChange, onSubmit, formDetails }) => {
+  // Destructure form details
+  const { keyword, type } = formDetails;
 
   return (
+			// Return form
 			<form onSubmit={onSubmit}>
 				<div className="form-group mr-3" id="content">
 					<input
@@ -28,12 +29,14 @@ const SearchForm = (props) => {
 						<option value='location'>Location</option>
 						<option value='category'>Category</option>
 					</select>
+					{/* Button to search for businesses */}
 					<button type="submit" id="search" className="btn button">Search</button>
 				</div>
 			</form>
   );
 };
 
+// Prop types for search form
 SearchForm.propTypes = {
   formDetails: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,

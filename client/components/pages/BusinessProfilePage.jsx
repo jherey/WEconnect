@@ -4,32 +4,32 @@ import PropTypes from 'prop-types';
 import StarRatingComponent from 'react-star-rating-component';
 import ReviewList from '../pages/ReviewList.jsx';
 import NewReviewForm from '../forms/NewReviewForm.jsx';
-import Spinner from '../common/Spinner/index.jsx';
+import Spinner from '../common/Spinner.jsx';
 import imageAvatar from '../../public/images/business-avatar.png';
 
-const BusinessProfilePage = (props) => {
-  const {
-    currentBusiness,
-    id,
-    userId,
-    onStarClick,
-    handleSubmit,
-    averageRating,
-    authUser,
-    onDelete,
-    onReviewChange,
-    reviews,
-    editingReviewId,
-    switchEditReview,
-    setToDeleteReview,
-    onReviewDelete,
-    submitEditedReview,
-    onEditStarClick,
-    formDetails
-  } = props;
-
+const BusinessProfilePage = ({
+  // Destructure props
+  currentBusiness,
+  id,
+  userId,
+  onStarClick,
+  handleSubmit,
+  averageRating,
+  authUser,
+  onDelete,
+  onReviewChange,
+  reviews,
+  editingReviewId,
+  switchEditReview,
+  setToDeleteReview,
+  onReviewDelete,
+  submitEditedReview,
+  onEditStarClick,
+  formDetails
+}) => {
   const { starRating } = formDetails;
 
+  // If page is loading, display spinner
   if (authUser.isLoading) {
     return (
 			<div style={{ marginTop: '10%', textAlign: 'center' }}>
@@ -38,6 +38,7 @@ const BusinessProfilePage = (props) => {
     );
   }
 
+  // Destructure currentBusiness
   const {
     businessImage,
     businessName,
@@ -53,17 +54,20 @@ const BusinessProfilePage = (props) => {
 		<div className="businesses">
 			<div className="container list">
 				<img id="businessImage"
+					// Business image
 					src={!businessImage ? imageAvatar : businessImage}
 					alt="Business Image"
 				/><br/>
 				<h1 className="businessName">{businessName}</h1>
 				<div className="details"><br/>
 					<div className="row">
+						{/* Business description */}
 						{businessInfo}
 					</div><br/>
 					{
 						averageRating > 0 ?
 						<div style={{ fontSize: 25 }}>
+							{/* Rating component */}
 							<StarRatingComponent
 								name='rate1'
 								starCount={5}
@@ -78,6 +82,7 @@ const BusinessProfilePage = (props) => {
 								<i className="fa fa-map-marker fa-lg"></i>
 							</div>
 							<div className="address">
+								{/* Business address and location */}
 								<h5>{address} {location}</h5>
 							</div>
 						</div>
@@ -86,6 +91,7 @@ const BusinessProfilePage = (props) => {
 								<i className="fa fa-envelope fa-lg"></i>
 							</div>
 							<div className="address">
+								{/* Business email */}
 								<h5>{email}</h5>
 							</div>
 						</div>
@@ -96,11 +102,12 @@ const BusinessProfilePage = (props) => {
 								<i className="fa fa-sitemap fa-lg"></i>
 							</div>
 							<div className="address">
+								{/* Business category */}
 								<h5>{category}</h5>
 							</div>
 						</div>
 						{
-							currentBusiness.website ?
+							website ?
 								<div className="col-md-5">
 									<div className="mr-3 address">
 										<i className="fa fa-globe fa-lg"></i>
@@ -113,6 +120,7 @@ const BusinessProfilePage = (props) => {
 						}
 					</div>
 					{
+						// Display delete and edit button if user is owner of business
 						currentBusiness.userId === userId
 						?
 							<div style={{ display: 'inline-block', float: 'right' }}>
@@ -167,6 +175,7 @@ const BusinessProfilePage = (props) => {
 						</div>
 						<div className="modal-footer">
 							<button type="button" className="btn btn-secondary" data-dismiss="modal">No</button>
+							{/* Button to delete a business */}
 							<button
 								className="btn btn-danger"
 								onClick={onDelete}
@@ -185,6 +194,7 @@ BusinessProfilePage.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
+// Prop types for business profile page
 BusinessProfilePage.propTypes = {
   formDetails: PropTypes.object.isRequired,
   currentBusiness: PropTypes.object.isRequired,

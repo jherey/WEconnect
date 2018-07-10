@@ -14,10 +14,11 @@ class NewBusiness extends Component {
   /**
 * @description Creates an instance of Business Profile Page
 * @param {object} props
-* @memberof NewBusinessForm
+* @memberof NewBusiness
 */
   constructor() {
     super();
+    // Initial state
     this.state = {
       businessName: '',
       email: '',
@@ -30,6 +31,7 @@ class NewBusiness extends Component {
       errors: [],
       uploading: false
     };
+    // Bind functions
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
@@ -38,20 +40,22 @@ class NewBusiness extends Component {
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof NewBusinessForm
+* @memberof NewBusiness
 */
   onChange(event) {
+    // Sets state of input fields to inputed values
     this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof EditBusinessForm
+* @memberof NewBusiness
 */
   uploadImage(event) {
     this.setState({ businessImage: '', uploading: true });
     const image = event.target.files[0];
+    // Action to upload an image
     this.props.imageUpload(image).then(() => {
       this.setState({ uploading: false, businessImage: this.props.newBusinessImage });
     });
@@ -60,19 +64,12 @@ class NewBusiness extends Component {
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof NewBusinessForm
+* @memberof NewBusiness
 */
   onSubmit(event) {
     event.preventDefault();
-    this.props.createBusiness(this.state).then(() => {
-      const { createBusinessSuccess, createBusinessErrors } = this.props;
-      if (createBusinessSuccess.id) {
-        toastr.success('Business registered successfully');
-        this.context.router.history.push(`${this.props.newBusinessId}`);
-      } else {
-        createBusinessErrors.map(err => toastr.error(err));
-      }
-    });
+    // Action to register a new business
+    this.props.createBusiness(this.state, this.props);
   }
 
   /**
@@ -84,6 +81,7 @@ class NewBusiness extends Component {
 
     return (
 			<div>
+        {/* Render new business form */}
 				<NewBusinessForm
           authUser={authUser}
           formDetails={this.state}
@@ -99,10 +97,7 @@ class NewBusiness extends Component {
 
 const mapStateToProps = state => ({
   authUser: state.authUser,
-  newBusinessImage: state.businesses.imageUrl,
-  newBusinessId: state.businesses.currentBusiness.id,
-  createBusinessSuccess: state.businesses.currentBusiness,
-  createBusinessErrors: state.businesses.createBusinessErrors
+  newBusinessImage: state.businesses.imageUrl
 });
 
 NewBusiness.contextTypes = {
@@ -113,9 +108,6 @@ NewBusiness.propTypes = {
   createBusiness: PropTypes.func,
   imageUpload: PropTypes.func,
   authUser: PropTypes.object.isRequired,
-  createBusinessSuccess: PropTypes.object,
-  createBusinessErrors: PropTypes.array,
-  newBusinessId: PropTypes.number,
   newBusinessImage: PropTypes.string
 };
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BusinessList from './BusinessList.jsx';
-import Spinner from '../common/Spinner/index.jsx';
+import Spinner from '../common/Spinner.jsx';
 import { getBusinessesByPage } from '../../actions/businessActions';
 
 /**
@@ -18,6 +18,7 @@ class HomePage extends Component {
 * @returns {null} null
 */
   componentWillMount() {
+    // Action to get businesses
     this.props.getBusinessesByPage(1);
   }
 
@@ -26,6 +27,7 @@ class HomePage extends Component {
    * @return {ReactElement} markup
    */
   render() {
+    // Destructure props
     const { businesses, isLoading } = this.props;
 
     return (
@@ -37,10 +39,12 @@ class HomePage extends Component {
           {
             isLoading
             ?
+            // Display spinner
             <div style={{ marginTop: '10%', textAlign: 'center' }}>
               <Spinner />
             </div>
             :
+            // Render business list
             <BusinessList businesses={businesses} />
           }
 				</div>
@@ -54,6 +58,7 @@ const mapStateToProps = state => ({
   isLoading: state.authUser.isLoading
 });
 
+// Prop types for homepage
 HomePage.propTypes = {
   getBusinessesByPage: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,

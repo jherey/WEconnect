@@ -79,6 +79,7 @@ const Users = {
           lastname: user.lastname,
           username: user.username,
           sex: user.sex,
+          email: user.email,
           profilepic: user.profilepic,
           createdAt: user.createdAt
         };
@@ -116,6 +117,7 @@ const Users = {
             lastname: user.lastname,
             username: user.username,
             sex: user.sex,
+            email: user.email,
             profilepic: user.profilepic,
             createdAt: user.createdAt
           };

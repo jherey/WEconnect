@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Business from '../common/Business.jsx';
 import UserProfile from '../pages/UserProfile.jsx';
 import UpdateProfileForm from '../forms/UpdateProfileForm.jsx';
-import Spinner from '../common/Spinner/index.jsx';
+import Spinner from '../common/Spinner.jsx';
 import { imageUpload, updateUser } from '../../actions/userActions';
 import { getAUserBusiness } from '../../actions/businessActions';
 import maleAvartar from '../../public/images/male-avatar.png';
@@ -24,6 +24,7 @@ class DashboardPage extends Component {
 */
   constructor(props) {
     super(props);
+    // Dashboard page initial state
     this.state = {
       id: this.props.authUser.user.id,
       firstname: '',
@@ -35,6 +36,7 @@ class DashboardPage extends Component {
       errors: [],
       uploading: false
     };
+    // Binding functions
     this.uploadImage = this.uploadImage.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -46,12 +48,12 @@ class DashboardPage extends Component {
 * @returns {null} null
 */
   componentWillMount() {
-    const { authUser } = this.props;
-    this.props.getAUserBusiness(authUser.user.id);
+    const { user } = this.props.authUser;
+    this.props.getAUserBusiness(user.id);
   }
 
   /**
-   * @return {null} null
+   * @return {null} new state
    * @param {object} nextProps
    * @memberof DashboardPage
    */
@@ -76,20 +78,26 @@ class DashboardPage extends Component {
 * @memberof DashboardPage
 */
   onChange(event) {
+    // Sets state of input fields to inputed values
     this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof SignupForm
+* @memberof Dashboard
 */
   uploadImage(event) {
     this.setState({ profilepic: '', uploading: true });
     const image = event.target.files[0];
     this.props.imageUpload(image).then(() => {
       const { authUser } = this.props;
-      this.setState({ uploading: false, profilepic: authUser.imageUrl });
+      if (authUser.imageUploadError === '') {
+        this.setState({ uploading: false, profilepic: authUser.imageUrl });
+      } else {
+        this.setState({ uploading: false });
+        toastr.error('Image upload failed, try again!');
+      }
     });
   }
 
@@ -102,15 +110,7 @@ class DashboardPage extends Component {
   onSubmit(event) {
     event.preventDefault();
     document.getElementById('hidePopUpBtn').click();
-    this.props.updateUser(this.state).then(() => {
-      const { authUser } = this.props;
-      if (!authUser.updateUserError) {
-        toastr.success('Update successful!');
-      } else {
-        $('#editUserModal').modal();
-        authUser.updateUserError.map(err => toastr.error(err));
-      }
-    });
+    this.props.updateUser(this.state);
   }
 
   /**
@@ -118,14 +118,16 @@ class DashboardPage extends Component {
    * @return {ReactElement} markup
    */
   render() {
+    // Destructure props
     const { businessList, authUser } = this.props;
 
     const noBusiness = (
-			<div className="col-lg-12 text-center py-2 noBusiness">
-				<h5>No business created yet!</h5>
+			<div className="text-center py-2 noBusiness" id="no-business">
+				<h3>No business created yet!</h3>
 			</div>
     );
 
+    // Loop through businesses
     const businessComponent = businessList.map(business => (
 			<div className="col-lg-3 col-md-6 py-2" key={business.id}>
 				<Business
@@ -150,6 +152,7 @@ class DashboardPage extends Component {
       image = femaleAvartar;
     }
 
+    // If page is loading, show spinner loader
     if (authUser.isLoading) {
       return (
 				<div style={{ marginTop: '15%', textAlign: 'center' }}>
@@ -160,17 +163,19 @@ class DashboardPage extends Component {
 
     return (
 			<div className="businesses">
-        <h5>Welcome {authUser.user.username}</h5>
+        {/* User profile component */}
         <UserProfile
           currentUser={authUser.user}
           image={image}
         />
 				<div className="container">
-					<div className="row dashboard">
+					<div className="dashboard">
             <div className="row">
+              {/* Display businesses */}
               {businessComponent.length === 0 ? noBusiness : businessComponent}
             </div>
 
+            {/* Form to update user profile */}
 						<UpdateProfileForm
 							authUser={authUser}
 							uploadImage={this.uploadImage}

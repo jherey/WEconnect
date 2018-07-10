@@ -6,6 +6,7 @@ import SearchForm from '../forms/SearchForm.jsx';
 import { signout } from '../../actions/userActions';
 import { search } from '../../actions/businessActions';
 
+// Navbar Component
 /**
  * @description Navbar component
  * @export {Object}
@@ -14,12 +15,13 @@ import { search } from '../../actions/businessActions';
  */
 class Navbar extends Component {
   /**
-* @description Creates an instance of Navbar component page
+* @description Creates an instance of Navbar component
 * @param {object} props
-* @memberof NavbarComponent
+* @memberof Navbar
 */
   constructor() {
     super();
+    // Component state
     this.state = {
       keyword: '',
       type: '',
@@ -35,6 +37,7 @@ class Navbar extends Component {
 * @memberof NavbarComponent
 */
   onChange(event) {
+    // Set states on change
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -45,9 +48,11 @@ class Navbar extends Component {
 */
   onSubmit(event) {
     event.preventDefault();
+    // Return toast error if search fields is empty
     if (this.state.keyword.trim() === '' || this.state.type.trim() === '') {
       return toastr.error('Please type a search query and select a type');
     }
+    // Calls the search action
     this.props.search(this.state.keyword, this.state.type, 1).then(() => {
       this.context.router.history.push('/search');
     });
@@ -58,8 +63,10 @@ class Navbar extends Component {
    * @return {ReactElement} markup
    */
   render() {
+    // Destructure props
     const { authUser, signoutAction } = this.props;
 
+    // Authenticated links
     const authUserLinks = (
 			<ul className="navbar-nav">
 				<li className="nav-item">
@@ -74,6 +81,7 @@ class Navbar extends Component {
 			</ul>
     );
 
+    // Guest links
     const guestLinks = (
 			<ul className="navbar-nav">
 				<li className="nav-item">
@@ -97,6 +105,7 @@ class Navbar extends Component {
         <div id="navbarNavDropdown" className="navbar-collapse collapse">
           <ul className="navbar-nav mx-auto">
             <li className="nav-item">
+              {/* Form to serach for businesses */}
               <SearchForm
                 formDetails={this.state}
                 onChange={this.onChange}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { signinUser } from '../../actions/userActions';
+import { signinUser, isLoading } from '../../actions/userActions';
 import SigninForm from '../forms/SigninForm.jsx';
 
 /**
@@ -14,25 +14,37 @@ class Signin extends Component {
   /**
 * @description Creates an instance of signin form
 * @param {object} props
-* @memberof SigninForm
+* @memberof Signin
 */
   constructor() {
     super();
+    // Initial state
     this.state = {
       username: '',
       password: '',
       errors: []
     };
+    // Bind functions
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   /**
+* @description Creates an instance of signin form
+* @returns {null} Loading state
+* @memberof Signin
+*/
+  componentWillMount() {
+    this.props.isLoading(false);
+  }
+
+  /**
 * @returns {null} null
 * @param {event} event
-* @memberof SigninForm
+* @memberof Signin
 */
   onChange(event) {
+    // Sets state of input fields to inputed values
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -40,19 +52,12 @@ class Signin extends Component {
 * @description submits form
 * @param {event} event
 * @returns {null} null
-* @memberof SigninForm
+* @memberof Signin
 */
   onSubmit(event) {
     event.preventDefault();
-    this.props.signinUser(this.state).then(() => {
-      const { authUser } = this.props;
-      if (authUser.isAuthenticated) {
-        toastr.success('Signed in successfully');
-        this.context.router.history.push('/dashboard');
-      } else {
-        authUser.errors.map(err => toastr.error(err));
-      }
-    });
+    // Action to signin a user
+    this.props.signinUser(this.state, this.props);
   }
 
   /**
@@ -62,6 +67,7 @@ class Signin extends Component {
   render() {
     return (
 			<div>
+        {/* Render signin form */}
 				<SigninForm
           authUser={this.props.authUser}
           formDetails={this.state}
@@ -84,7 +90,8 @@ Signin.contextTypes = {
 
 Signin.propTypes = {
   signinUser: PropTypes.func.isRequired,
-  authUser: PropTypes.object
+  authUser: PropTypes.object,
+  isLoading: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { signinUser })(Signin);
+export default connect(mapStateToProps, { signinUser, isLoading })(Signin);

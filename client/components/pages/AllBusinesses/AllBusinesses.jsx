@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactPagination from 'react-paginate';
-import Spinner from '../../common/Spinner/index.jsx';
+import Spinner from '../../common/Spinner.jsx';
 import AllBusinessList from './AllBusinessList.jsx';
 import { getBusinessesByPage } from '../../../actions/businessActions';
 
@@ -77,12 +77,16 @@ class AllBusinesses extends Component {
         {
           isLoading
           ?
+          // Show spinner if loading is true
           <div style={{ marginTop: '10%', textAlign: 'center' }}>
             <Spinner />
           </div>
           :
+          // Display businesses if loading is false
           <div id='allbusiness'>
+            {/* Component that lists all businesses */}
             <AllBusinessList businesses={businesses} isLoading={isLoading} />
+            {/* Render pagination */}
             { this.props.paginate.count > 8 ? this.renderPagination() : null }
           </div>
         }
@@ -97,6 +101,7 @@ const mapStateToProps = state => ({
   paginate: state.businesses.pageDetails
 });
 
+// Prop types for all businesses
 AllBusinesses.propTypes = {
   getBusinessesByPage: PropTypes.func.isRequired,
   count: PropTypes.number,

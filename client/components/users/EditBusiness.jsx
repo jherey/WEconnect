@@ -14,7 +14,7 @@ class EditBusiness extends Component {
   /**
 * @description Creates an instance of edit business form
 * @param {object} props
-* @memberof EditBusinessForm
+* @memberof EditBusiness
 */
   constructor(props) {
     super(props);
@@ -34,6 +34,7 @@ class EditBusiness extends Component {
       errors: [],
       uploading: false
     };
+    // Bind functions
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
@@ -42,6 +43,7 @@ class EditBusiness extends Component {
   /**
 * @description Fetches all businesses and reviews
 * @param {any} props
+* @memberof EditBusiness
 * @returns {null} null
 */
   componentWillMount() {
@@ -51,7 +53,7 @@ class EditBusiness extends Component {
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof EditBusinessForm
+* @memberof EditBusiness
 */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -60,13 +62,20 @@ class EditBusiness extends Component {
   /**
 * @returns {null} null
 * @param {event} event
-* @memberof EditBusinessForm
+* @memberof EditBusiness
 */
   uploadImage(event) {
     this.setState({ businessImage: '', uploading: true });
     const image = event.target.files[0];
+    // Action to upload an image
     this.props.imageUpload(image).then(() => {
-      this.setState({ uploading: false, businessImage: this.props.newBusinessImage });
+      const { businesses, newBusinessImage } = this.props;
+      if (businesses.imageUploadError === '') {
+        this.setState({ uploading: false, businessImage: newBusinessImage });
+      } else {
+        this.setState({ uploading: false });
+        toastr.error('Image upload failed, try again!');
+      }
     });
   }
 
@@ -74,17 +83,16 @@ class EditBusiness extends Component {
 * @description submits form
 * @param {event} event
 * @returns {null} null
-* @memberof EditBusinessForm
+* @memberof EditBusiness
 */
   onSubmit(event) {
     event.preventDefault();
-    this.props.updateBusiness(this.state).then(() => {
-      const { business, currentBusiness } = this.props;
-      if (business.updateSuccess) {
-        toastr.success(business.updateSuccess);
-        this.context.router.history.push(`/${currentBusiness.id}`);
-      } else {
-        this.props.updateErrors.map(err => toastr.error(err));
+    // Action to update a business
+    this.props.updateBusiness(this.state, this.context).then(() => {
+      const { businesses, business } = this.props;
+      if (businesses.updateSuccess !== '') {
+        // Route user to business profile page
+        this.context.router.history.push(`/${business.id}`);
       }
     });
   }
@@ -94,11 +102,12 @@ class EditBusiness extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { id } = this.props.match.params;
-    const { authUser } = this.props;
+    const { authUser, match } = this.props;
+    const { id } = match.params;
 
     return (
 			<div>
+        {/* Render edit business form */}
         <EditBusinessForm
           id={id}
           authUser={authUser}
@@ -118,8 +127,14 @@ const mapStateToProps = state => ({
   authUser: state.authUser,
   business: state.businesses.currentBusiness,
   newBusinessImage: state.businesses.imageUrl,
-  updateErrors: state.businesses.updateErrors
+  updateErrors: state.businesses.updateErrors,
+  businesses: state.businesses
 });
+
+EditBusiness.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+
 
 EditBusiness.propTypes = {
   authUser: PropTypes.object.isRequired,
