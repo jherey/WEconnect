@@ -5,12 +5,15 @@
 	"env": {
 		"node": true,
 		"es6": true,
-		"mocha": true
+		"mocha": true,
+		"browser": true
 	},
 	"globals" : {
 		"localStorage": true,
 		"document": true,
-		"$": true
+		"$": true,
+		"toastr": true,
+		"jest": true
 	},
 	"rules": {
 		"one-var": 0,

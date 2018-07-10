@@ -1,16 +1,22 @@
 import isEmpty from 'lodash/isEmpty';
 import {
   SET_CURRENT_USER,
+  AUTH_ERROR,
   EDIT_USER,
   SET_API_STATUS,
-  SET_PROGRESS,
+  UPDATE_USER_FAILED,
+  IMAGE_UPLOAD,
+  IMAGE_ERROR_UPLOAD
 } from '../actions/types';
 
 const initialState = {
   isAuthenticated: false,
   user: {},
+  updateUserError: [],
   isLoading: false,
-  uploadProgress: 0
+  imageUrl: '',
+  imageUploadError: '',
+  errors: []
 };
 
 /**
@@ -26,6 +32,24 @@ export default (state = initialState, action = {}) => {
         isAuthenticated: !isEmpty(action.user),
         user: action.user
       };
+    
+    case AUTH_ERROR:
+      return {
+        ...state,
+        errors: action.errors
+      };
+
+    case IMAGE_UPLOAD:
+      return {
+        ...state,
+        imageUrl: action.url
+      };
+
+    case IMAGE_ERROR_UPLOAD:
+      return {
+        ...state,
+        imageUploadError: action.error
+      };
 
     case EDIT_USER:
       return {
@@ -33,16 +57,16 @@ export default (state = initialState, action = {}) => {
         user: action.user
       };
 
+    case UPDATE_USER_FAILED:
+      return {
+        ...state,
+        updateUserError: action.errors
+      };
+
     case SET_API_STATUS:
       return {
         ...state,
         isLoading: action.status
-      };
-
-    case SET_PROGRESS:
-      return {
-        ...state,
-        uploadProgress: action.progress
       };
 
     default:

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { signout, isLoading } from '../actions/userActions';
-import addFlashMessage from '../actions/flashMessages';
+import { signout } from '../actions/userActions';
 import decodeToken from './decodeToken';
 
 /**
@@ -19,25 +18,20 @@ export default function (AuthenticatedComponent) {
  */
   class AuthVerification extends Component {
     /**
-   * @description Fetches all businesses
-   * @returns {null} null
-   * @memberof AllBusinesses
+   * @description Higher Order Component
+   * @returns {null} Authenticated component
+   * @memberof AuthVerification
    */
     componentWillMount() {
-      if (!this.props.isAuthenticated) {
-        this.props.addFlashMessage({
-          type: 'error',
-          text: 'You need to signin to access this page'
-        });
-        this.context.router.history.push('/signin');
-      }
+      const { history } = this.context.router;
       if (!decodeToken()) {
-        this.props.addFlashMessage({
-          type: 'error',
-          text: 'Session expired, please signin again'
-        });
+        toastr.error('Session expired, please signin again');
         this.props.signout();
-        this.context.router.history.push('/signin');
+        history.push('/signin');
+      }
+      if (!this.props.isAuthenticated) {
+        toastr.error('You need to signin to access this page');
+        history.push('/signin');
       }
     }
 
@@ -58,13 +52,12 @@ export default function (AuthenticatedComponent) {
 
   AuthVerification.propTypes = {
     signout: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    addFlashMessage: PropTypes.func.isRequired
+    isAuthenticated: PropTypes.bool.isRequired
   };
 
   const mapStateToProps = state => ({
     isAuthenticated: state.authUser.isAuthenticated
   });
 
-  return connect(mapStateToProps, { addFlashMessage, signout, isLoading })(AuthVerification);
+  return connect(mapStateToProps, { signout })(AuthVerification);
 }

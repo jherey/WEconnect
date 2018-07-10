@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from './components/Home/HomePage.jsx';
-import Navbar from './components/Navbar/Navbar.jsx';
-import Footer from './components/Footer.jsx';
-import Signin from './components/Signin/Signin.jsx';
-import Signup from './components/Signup/Signup.jsx';
-import Register from './components/NewBusiness/NewBusiness.jsx';
-import EditBusiness from './components/EditBusiness/EditBusiness.jsx';
-import BusinessProfile from './components/BusinessProfile/BusinessProfile.jsx';
-import AllBusinesses from './components/AllBusinesses/AllBusinesses.jsx';
-import Search from './components/Search/Search.jsx';
-import Dashboard from './components/Dashboard/Dashboard.jsx';
-import FlashMessage from './components/FlashMessage/FlashMessage.jsx';
+import Home from './components/pages/HomePage.jsx';
+import Navbar from './components/common/Navbar.jsx';
+import Footer from './components/common/Footer.jsx';
+import Signin from './components/users/Signin.jsx';
+import Signup from './components/users/Signup.jsx';
+import Register from './components/users/NewBusiness.jsx';
+import EditBusiness from './components/users/EditBusiness.jsx';
+import BusinessProfile from './components/users/BusinessProfile.jsx';
+import AllBusinesses from './components/pages/AllBusinesses/AllBusinesses.jsx';
+import Search from './components/common/SearchPage.jsx';
+import Dashboard from './components/pages/Dashboard.jsx';
 import authVerification from './utils/authVerification';
 import styles from './public/styles/index.scss';
 
@@ -20,7 +19,7 @@ import styles from './public/styles/index.scss';
  * @class App
  * @extends {Component}
  */
-class App extends Component {
+class 	App extends Component {
   /**
    * @memberof App
    * @return {ReactElement} markup
@@ -30,7 +29,6 @@ class App extends Component {
 			<BrowserRouter>
 				<div>
 					<Navbar />
-					<FlashMessage />
 					<Switch>
 						<Route path="/" exact component={Home} />
 						<Route path="/signin" exact component={Signin} />
