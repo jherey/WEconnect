@@ -1,5 +1,4 @@
-import DotEnv from 'dotenv-webpack';
-
+const DotEnv = require('dotenv-webpack');
 const path = require('path');
 
 module.exports = {
