@@ -21,7 +21,6 @@ import {
   reviews,
   newReview,
   review,
-  userData,
   updatedReview
 } from '../mocks/mockData';
 

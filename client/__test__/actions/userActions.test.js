@@ -32,11 +32,6 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const userId = 1;
 
-function FormDataMock() {
-  this.append = jest.fn();
-}
-global.FormData = FormDataMock;
-
 describe('User actions', () => {
   beforeEach(() => {
     global.toastr = {
@@ -72,7 +67,7 @@ describe('User actions', () => {
         { type: SET_API_STATUS, status: false }
       ];
       const store = mockStore({});
-      return store.dispatch(signupUser(userData, props))
+      return store.dispatch(signupUser(userData, props)) // eslint-disable-line no-undef
         .then(() => {
           expect(store.getActions()).toEqual(expectedAction);
           done();
@@ -118,7 +113,7 @@ describe('User actions', () => {
         { type: SET_API_STATUS, status: false }
       ];
       const store = mockStore({});
-      return store.dispatch(signinUser(userData, props))
+      return store.dispatch(signinUser(userData, props)) // eslint-disable-line no-undef
         .then(() => {
           expect(store.getActions()).toEqual(expectedAction);
           done();

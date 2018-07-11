@@ -1,19 +1,14 @@
 import $ from 'jquery';
 
-global.$ = global.jQuery = $;
+global.$ = global.jQuery = $; // eslint-disable-line no-multi-assign
 window.jQuery = $;
 
 global.$ = () => ({
-  removeClass: () => {},
   click: () => {},
-  hide: () => {},
-  show: () => {},
   modal: () => {}
 });
 
 const props = { history: [] };
-
-// Make Enzyme functions available in all test files without importing
 global.props = props;
 
 global.window = window;

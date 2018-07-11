@@ -48,11 +48,6 @@ const businessId = 1;
 const pageNumber = 1;
 const userId = 1;
 
-function FormDataMock() {
-  this.append = jest.fn();
-}
-global.FormData = FormDataMock;
-
 describe('Business actions', () => {
   beforeEach(() => {
     global.toastr = {
@@ -122,7 +117,7 @@ describe('Business actions', () => {
         { type: SET_API_STATUS, status: false }
       ];
       const store = mockStore({});
-      return store.dispatch(createBusiness(businessData, props))
+      return store.dispatch(createBusiness(businessData, props)) // eslint-disable-line no-undef
         .then(() => {
           expect(store.getActions()).toEqual(expectedAction);
           done();
