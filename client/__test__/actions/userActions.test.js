@@ -207,7 +207,6 @@ describe('User actions', () => {
 
   describe('When I upload an image', () => {
     it('should dispatch an IMAGE_UPLOAD type on sucess', (done) => {
-      // const cloudinaryApi = 'https://api.cloudinary.com/v1_1/diiceprhy/image/upload';
       moxios.stubRequest('https://api.cloudinary.com/v1_1/diiceprhy/image/upload', {
         status: 200,
         response: imageUploadResponse

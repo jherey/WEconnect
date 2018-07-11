@@ -37,9 +37,14 @@
     "chai-http": "^3.0.0",
     "classnames": "^2.2.5",
     "dotenv": "^5.0.1",
+    "dotenv-webpack": "^1.5.7",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-15": "^1.0.5",
     "express": "^4.16.2",
     "express-validator": "^5.0.3",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "jest": "^23.3.0",
+    "jquery": "^3.3.1",
     "jsonwebtoken": "^8.2.0",
     "lodash": "^4.17.5",
     "moment": "^2.22.1",
@@ -52,6 +57,7 @@
     "react-dom": "^16.3.1",
     "react-paginate": "^5.2.3",
     "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.2.2",
     "react-star-rating-component": "^1.4.1",
     "react-text-truncate": "^0.13.1",
@@ -71,11 +77,13 @@
     "webpack-merge": "^4.1.2"
   },
   "jest": {
+    "verbose": true,
     "collectCoverage": true,
-    "testEnvironment": "node",
     "setupFiles": [
-      "./client/__test__/mocks/localStorageMock.js"
-    ]
+      "./client/__test__/mocks/localStorageMock.js",
+      "<rootDir>/test-env.js"
+    ],
+    "setupTestFrameworkScriptFile": "./client/__test__/setup.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -96,11 +104,11 @@
     "expect": "^22.4.3",
     "fetch-mock": "^6.4.4",
     "istanbul": "^0.4.5",
-    "jest": "^22.4.3",
     "mocha": "^5.0.4",
     "moxios": "^0.4.0",
     "node-sass": "^4.8.3",
     "nodemon": "^1.17.1",
+    "react-test-renderer": "^16.4.1",
     "redux-mock-store": "^1.5.3",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3"

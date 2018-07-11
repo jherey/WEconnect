@@ -11,6 +11,8 @@ import {
   UPDATE_USER_FAILED
 } from './types';
 
+require('dotenv').config();
+
 /**
  * @description - Updates loading status
  * @param { Boolean } status
@@ -128,14 +130,14 @@ export function userImageUploadError(error) {
  * @param {*} image
  * @returns {Object} user
  */
-export const imageUpload = (image) => {
-  const { UPLOAD_PRESET } = process.env;
-  const CLOUD_API = process.env.CLOUDINARY_API;
+export const imageUpload = image => (dispatch) => {
+  const uploadPreset = process.env.UPLOAD_PRESET;
+  const cloudinaryApi = process.env.CLOUDINARY_API;
   const data = new FormData();
   data.append('file', image);
-  data.append('upload_preset', UPLOAD_PRESET);
+  data.append('upload_preset', uploadPreset);
   delete axios.defaults.headers.common.Authorization;
-  return dispatch => axios.post(CLOUD_API, data)
+  return axios.post(cloudinaryApi, data)
     .then((response) => {
       const { token } = localStorage;
       axios.defaults.headers.common.Authorization = token;

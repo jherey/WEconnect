@@ -54,7 +54,13 @@ function FormDataMock() {
 global.FormData = FormDataMock;
 
 describe('Business actions', () => {
-  beforeEach(() => moxios.install());
+  beforeEach(() => {
+    global.toastr = {
+      success: () => {},
+      error: () => {}
+    };
+    moxios.install();
+  });
   afterEach(() => moxios.uninstall());
 
   it('action to set the upload progress of an image', () => {
@@ -116,7 +122,7 @@ describe('Business actions', () => {
         { type: SET_API_STATUS, status: false }
       ];
       const store = mockStore({});
-      return store.dispatch(createBusiness(businessData))
+      return store.dispatch(createBusiness(businessData, props))
         .then(() => {
           expect(store.getActions()).toEqual(expectedAction);
           done();

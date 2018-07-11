@@ -16,6 +16,8 @@ import {
   DELETE_SUCCESS
 } from './types';
 
+require('dotenv').config();
+
 /**
  * @description - Set progress value
  * @export { Function } - Set Upload Progress
@@ -59,11 +61,13 @@ export function businessImageUploadError(error) {
  * @returns {Object} user
  */
 export const imageUpload = image => (dispatch) => {
+  const uploadPreset = process.env.UPLOAD_PRESET;
+  const cloudinaryApi = process.env.CLOUDINARY_API;
   const data = new FormData();
   data.append('file', image);
-  data.append('upload_preset', 'ugio7gfd');
+  data.append('upload_preset', uploadPreset);
   delete axios.defaults.headers.common.Authorization;
-  return axios.post('https://api.cloudinary.com/v1_1/diiceprhy/image/upload', data)
+  return axios.post(cloudinaryApi, data)
     .then((response) => {
       const { token } = localStorage;
       axios.defaults.headers.common.Authorization = token;
@@ -229,7 +233,7 @@ export const deleteBusiness = id => (dispatch) => {
       dispatch(isLoading(false));
     })
     .catch(() => {
-      toastr.err('Business delete failed!');
+      toastr.error('Business delete failed!');
       dispatch(isLoading(false));
     });
 };
