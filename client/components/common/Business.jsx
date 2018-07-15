@@ -5,12 +5,10 @@ import { Link } from 'react-router-dom';
 import imageAvatar from '../../public/images/business-avatar.png';
 
 // Business component
-const Business = (props) => {
+const Business = ({
   // Destructure props
-  const {
-    id, name, description, businessImage, category, user
-  } = props;
-  return (
+  id, name, description, businessImage, category, user
+}) => (
 		<div className='card h-100'>
 			<div className="avatar mx-auto white">
 				{/* Business image */}
@@ -41,8 +39,7 @@ const Business = (props) => {
 				</Link>
 			</div>
 		</div>
-  );
-};
+);
 
 // Business prop types
 Business.propTypes = {

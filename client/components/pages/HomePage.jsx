@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BusinessList from './BusinessList.jsx';
-import Spinner from '../common/Spinner.jsx';
 import { getBusinessesByPage } from '../../actions/businessActions';
 
 /**
@@ -18,8 +17,9 @@ class HomePage extends Component {
 * @returns {null} null
 */
   componentWillMount() {
+    const { getBusinessesByPageAction } = this.props;
     // Action to get businesses
-    this.props.getBusinessesByPage(1);
+    getBusinessesByPageAction(1);
   }
 
   /**
@@ -36,17 +36,8 @@ class HomePage extends Component {
           <h1 className="container catchphrase">Connecting People, Connecting Businesses</h1>
         </div>
 				<div className="businesses">
-          {
-            isLoading
-            ?
-            // Display spinner
-            <div style={{ marginTop: '10%', textAlign: 'center' }}>
-              <Spinner />
-            </div>
-            :
-            // Render business list
-            <BusinessList businesses={businesses} />
-          }
+          {/* Render business list */}
+          <BusinessList businesses={businesses} isLoading={isLoading} />
 				</div>
 			</div>
     );
@@ -60,9 +51,11 @@ const mapStateToProps = state => ({
 
 // Prop types for homepage
 HomePage.propTypes = {
-  getBusinessesByPage: PropTypes.func.isRequired,
+  getBusinessesByPageAction: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  businesses: PropTypes.array,
+  businesses: PropTypes.object,
 };
 
-export default connect(mapStateToProps, { getBusinessesByPage })(HomePage);
+export default connect(mapStateToProps, {
+  getBusinessesByPageAction: getBusinessesByPage
+})(HomePage);

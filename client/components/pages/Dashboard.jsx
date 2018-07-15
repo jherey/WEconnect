@@ -24,9 +24,10 @@ class DashboardPage extends Component {
 */
   constructor(props) {
     super(props);
+    const { user } = this.props.authUser;
     // Dashboard page initial state
     this.state = {
-      id: this.props.authUser.user.id,
+      id: user.id,
       firstname: '',
       lastname: '',
       username: '',
@@ -48,8 +49,8 @@ class DashboardPage extends Component {
 * @returns {null} null
 */
   componentWillMount() {
-    const { user } = this.props.authUser;
-    this.props.getAUserBusiness(user.id);
+    const { authUser, getAUserBusinessAction } = this.props;
+    getAUserBusinessAction(authUser.user.id);
   }
 
   /**
@@ -90,7 +91,9 @@ class DashboardPage extends Component {
   uploadImage(event) {
     this.setState({ profilepic: '', uploading: true });
     const image = event.target.files[0];
-    this.props.imageUpload(image).then(() => {
+    const { imageUploadAction } = this.props;
+    // Action to upload an image
+    imageUploadAction(image).then(() => {
       const { authUser } = this.props;
       if (authUser.imageUploadError === '') {
         this.setState({ uploading: false, profilepic: authUser.imageUrl });
@@ -110,7 +113,8 @@ class DashboardPage extends Component {
   onSubmit(event) {
     event.preventDefault();
     document.getElementById('hidePopUpBtn').click();
-    this.props.updateUser(this.state);
+    const { updateUserAction } = this.props;
+    updateUserAction(this.state);
   }
 
   /**
@@ -190,10 +194,6 @@ class DashboardPage extends Component {
   }
 }
 
-DashboardPage.contextTypes = {
-  router: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => ({
   authUser: state.authUser,
   businessList: state.businesses.userBusiness,
@@ -201,15 +201,16 @@ const mapStateToProps = state => ({
 });
 
 DashboardPage.propTypes = {
-  getAUserBusiness: PropTypes.func.isRequired,
+  getAUserBusinessAction: PropTypes.func.isRequired,
   authUser: PropTypes.object.isRequired,
-  updateUser: PropTypes.func.isRequired,
+  updateUserAction: PropTypes.func.isRequired,
   businessList: PropTypes.array,
   uploadImage: PropTypes.func,
-  imageUpload: PropTypes.func.isRequired
+  imageUploadAction: PropTypes.func.isRequired
 };
 
-export default connect(
-  mapStateToProps,
-  { imageUpload, getAUserBusiness, updateUser }
-)(DashboardPage);
+export default connect(mapStateToProps, {
+  imageUploadAction: imageUpload,
+  getAUserBusinessAction: getAUserBusiness,
+  updateUserAction: updateUser
+})(DashboardPage);

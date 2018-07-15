@@ -190,10 +190,6 @@ const BusinessProfilePage = ({
   );
 };
 
-BusinessProfilePage.contextTypes = {
-  router: PropTypes.object.isRequired
-};
-
 // Prop types for business profile page
 BusinessProfilePage.propTypes = {
   formDetails: PropTypes.object.isRequired,

@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Business from '../common/Business.jsx';
+import Spinner from '../common/Spinner.jsx';
 
 // Business list compoennt
-const BusinessList = ({ businesses }) => {
+const BusinessList = ({ businesses, isLoading }) => {
+  if (businesses.allBusinesses === undefined || isLoading) {
+    return <Spinner />;
+  }
   const noBusiness = (<h5 className="none">There are no businesses yet</h5>);
 
   // Loop through businesses
-  const businessComponent = businesses.map((business, i) => {
+  const businessComponent = businesses.allBusinesses.rows.map((business, i) => {
     if (i < 8) {
       return (
 				<div className="col-lg-3 col-md-6 py-2" key={business.id}>
@@ -40,7 +44,8 @@ const BusinessList = ({ businesses }) => {
 
 // Prop types for business list
 BusinessList.propTypes = {
-  businesses: PropTypes.array
+  businesses: PropTypes.object,
+  isLoading: PropTypes.bool.isRequired
 };
 
 export default BusinessList;

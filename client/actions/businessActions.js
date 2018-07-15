@@ -236,13 +236,13 @@ export const deleteBusiness = id => (dispatch) => {
 
 /**
  * @description - Updates store with all businesses
- * @param {*} businesses
+ * @param {*} businessesData
  * @returns { Businesses } - Action
  */
-export function allBusinesses(businesses) {
+export function allBusinesses(businessesData) {
   return {
     type: GET_BUSINESSES,
-    businesses
+    businessesData
   };
 }
 
@@ -267,8 +267,8 @@ export const getBusinessesByPage = pageNumber => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses?pageNum=${pageNumber}`)
     .then((res) => {
-      dispatch(allBusinesses(res.data.allBusinesses.rows));
-      dispatch(paginationDetails(res.data.pageDetails));
+      dispatch(allBusinesses(res.data));
+      // dispatch(paginationDetails(res.data.pageDetails));
       dispatch(isLoading(false));
     })
     .catch(() => {
@@ -319,17 +319,20 @@ export function businessFound(searchResponse) {
  * @param {*} searchWord
  * @param {*} type
  * @param {*} pageNum
+ * @param {*} history
  * @returns { BusinessesFound } - Action
  */
-export const search = (searchWord, type, pageNum) => (dispatch) => {
+export const search = (searchWord, type, pageNum, history) => (dispatch) => {
   dispatch(isLoading(true));
   return axios.get(`/api/v1/businesses?${type}=${searchWord}&pageNum=${pageNum}`)
     .then((response) => {
       dispatch(businessFound(response.data));
+      history.push('/search');
       dispatch(isLoading(false));
     })
     .catch((error) => {
       dispatch(businessFound(error.response.data));
+      history.push('/search');
       dispatch(isLoading(false));
     });
 };

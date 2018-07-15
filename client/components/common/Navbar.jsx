@@ -48,14 +48,16 @@ class Navbar extends Component {
 */
   onSubmit(event) {
     event.preventDefault();
+    const { keyword, type } = this.state;
+    const { searchBusiness } = this.props;
     // Return toast error if search fields is empty
-    if (this.state.keyword.trim() === '' || this.state.type.trim() === '') {
+    if (keyword.trim() === '' || type.trim() === '') {
       return toastr.error('Please type a search query and select a type');
     }
+    // Destructure history
+    const { history } = this.context.router;
     // Calls the search action
-    this.props.search(this.state.keyword, this.state.type, 1).then(() => {
-      this.context.router.history.push('/search');
-    });
+    searchBusiness(keyword, type, 1, history);
   }
 
   /**
@@ -131,10 +133,10 @@ Navbar.contextTypes = {
 
 Navbar.propTypes = {
   authUser: PropTypes.object.isRequired,
-  search: PropTypes.func.isRequired,
+  searchBusiness: PropTypes.func.isRequired,
   signoutAction: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, {
-  signoutAction: signout, search
+  signoutAction: signout, searchBusiness: search
 })(Navbar);
