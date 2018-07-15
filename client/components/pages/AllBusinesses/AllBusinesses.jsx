@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactPagination from 'react-paginate';
-import Spinner from '../../common/Spinner.jsx';
 import AllBusinessList from './AllBusinessList.jsx';
 import { getBusinessesByPage } from '../../../actions/businessActions';
 
@@ -29,7 +28,8 @@ class AllBusinesses extends Component {
    * @memberof AllBusinesses
    */
   componentWillMount() {
-    this.props.getBusinessesByPage(1);
+    const { getBusinessesByPageAction } = this.props;
+    getBusinessesByPageAction(1);
   }
 
   /**
@@ -38,7 +38,8 @@ class AllBusinesses extends Component {
 * @return {null} no return or void
 */
   onPageChange(page) {
-    this.props.getBusinessesByPage(page.selected + 1);
+    const { getBusinessesByPageAction } = this.props;
+    getBusinessesByPageAction(page.selected + 1);
   }
 
   /**
@@ -49,21 +50,24 @@ class AllBusinesses extends Component {
 */
   renderPagination() {
     const { paginate } = this.props;
-    return (
-      <ReactPagination
-        previousLabel={'previous'}
-        nextLabel={'next'}
-        breakLabel={<a href="">...</a>}
-        breakClassName={'break-me'}
-        pageCount={paginate.totalPages}
-        marginPagesDisplayed={paginate.currentPage}
-        pageRangeDisplayed={8}
-        onPageChange={this.onPageChange}
-        containerClassName={'paginate justify-content-center'}
-        subContainerClassName={'pages paginate'}
-        activeClassName={'active'}
-      />
-    );
+    const { totalPages, currentPage, count } = paginate;
+    if (count > 8) {
+      return (
+        <ReactPagination
+          previousLabel='previous'
+          nextLabel='next'
+          breakLabel={<a href="">...</a>}
+          breakClassName='break-me'
+          pageCount={totalPages}
+          marginPagesDisplayed={currentPage}
+          pageRangeDisplayed={8}
+          onPageChange={this.onPageChange}
+          containerClassName='paginate justify-content-center'
+          subContainerClassName='pages paginate'
+          activeClassName='active'
+        />
+      );
+    }
   }
 
   /**
@@ -71,25 +75,19 @@ class AllBusinesses extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { businesses, isLoading } = this.props;
+    const { businesses, isLoading, paginate } = this.props;
     return (
 			<div className="paddingBottom">
-        {
-          isLoading
-          ?
-          // Show spinner if loading is true
-          <div style={{ marginTop: '10%', textAlign: 'center' }}>
-            <Spinner />
-          </div>
-          :
-          // Display businesses if loading is false
+          {/* Display businesses if loading is false */}
           <div id='allbusiness'>
             {/* Component that lists all businesses */}
-            <AllBusinessList businesses={businesses} isLoading={isLoading} />
+            <AllBusinessList
+              businesses={businesses}
+              isLoading={isLoading}
+            />
             {/* Render pagination */}
-            { this.props.paginate.count > 8 ? this.renderPagination() : null }
+            { paginate === undefined ? null : this.renderPagination() }
           </div>
-        }
 			</div>
     );
   }
@@ -98,18 +96,20 @@ class AllBusinesses extends Component {
 const mapStateToProps = state => ({
   businesses: state.businesses.businesses,
   isLoading: state.authUser.isLoading,
-  paginate: state.businesses.pageDetails
+  paginate: state.businesses.businesses.pageDetails
 });
 
 // Prop types for all businesses
 AllBusinesses.propTypes = {
-  getBusinessesByPage: PropTypes.func.isRequired,
+  getBusinessesByPageAction: PropTypes.func.isRequired,
   count: PropTypes.number,
-  businesses: PropTypes.array,
+  businesses: PropTypes.object.isRequired,
   isLoading: PropTypes.bool,
   totalPages: PropTypes.number,
   currentPage: PropTypes.number,
   paginate: PropTypes.object
 };
 
-export default connect(mapStateToProps, { getBusinessesByPage })(AllBusinesses);
+export default connect(mapStateToProps, {
+  getBusinessesByPageAction: getBusinessesByPage
+})(AllBusinesses);

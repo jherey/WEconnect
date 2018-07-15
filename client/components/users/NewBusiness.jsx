@@ -55,9 +55,11 @@ class NewBusiness extends Component {
   uploadImage(event) {
     this.setState({ businessImage: '', uploading: true });
     const image = event.target.files[0];
+    const { imageUploadAction } = this.props;
     // Action to upload an image
-    this.props.imageUpload(image).then(() => {
-      this.setState({ uploading: false, businessImage: this.props.newBusinessImage });
+    imageUploadAction(image).then(() => {
+      const { newBusinessImage } = this.props;
+      this.setState({ uploading: false, businessImage: newBusinessImage });
     });
   }
 
@@ -68,8 +70,9 @@ class NewBusiness extends Component {
 */
   onSubmit(event) {
     event.preventDefault();
+    const { createBusinessAction } = this.props;
     // Action to register a new business
-    this.props.createBusiness(this.state, this.props);
+    createBusinessAction(this.state, this.props);
   }
 
   /**
@@ -77,7 +80,7 @@ class NewBusiness extends Component {
 	* @return {ReactElement} markup
 	*/
   render() {
-    const { authUser } = this.props;
+    const { authUser, createBusinessAction } = this.props;
 
     return (
 			<div>
@@ -86,7 +89,7 @@ class NewBusiness extends Component {
           authUser={authUser}
           formDetails={this.state}
           uploadImage={this.uploadImage}
-          createBusiness={this.props.createBusiness}
+          createBusiness={createBusinessAction}
           onChange={this.onChange}
           onSubmit={this.onSubmit}
 				/>
@@ -105,12 +108,13 @@ NewBusiness.contextTypes = {
 };
 
 NewBusiness.propTypes = {
-  createBusiness: PropTypes.func,
-  imageUpload: PropTypes.func,
+  createBusinessAction: PropTypes.func,
+  imageUploadAction: PropTypes.func,
   authUser: PropTypes.object.isRequired,
   newBusinessImage: PropTypes.string
 };
 
 export default connect(mapStateToProps, {
-  createBusiness, imageUpload
+  createBusinessAction: createBusiness,
+  imageUploadAction: imageUpload
 })(NewBusiness);

@@ -56,8 +56,9 @@ class Signin extends Component {
 */
   onSubmit(event) {
     event.preventDefault();
+    const { signinUserAction } = this.props;
     // Action to signin a user
-    this.props.signinUser(this.state, this.props);
+    signinUserAction(this.state, this.props);
   }
 
   /**
@@ -65,11 +66,13 @@ class Signin extends Component {
    * @return {ReactElement} markup
    */
   render() {
+    const { authUser } = this.props;
+
     return (
 			<div>
         {/* Render signin form */}
 				<SigninForm
-          authUser={this.props.authUser}
+          authUser={authUser}
           formDetails={this.state}
           onChange={this.onChange}
           onSubmit={this.onSubmit}
@@ -89,9 +92,12 @@ Signin.contextTypes = {
 };
 
 Signin.propTypes = {
-  signinUser: PropTypes.func.isRequired,
+  signinUserAction: PropTypes.func.isRequired,
   authUser: PropTypes.object,
   isLoading: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { signinUser, isLoading })(Signin);
+export default connect(mapStateToProps, {
+  signinUserAction: signinUser,
+  isLoading
+})(Signin);

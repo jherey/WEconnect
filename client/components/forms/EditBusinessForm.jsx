@@ -79,6 +79,8 @@ const EditBusinessForm = ({
 										<option value='fashion'>Fashion</option>
 										<option value='transport'>Transport</option>
 										<option value='entertainment'>Entertainment</option>
+										<option value='construction'>Construction</option>
+										<option value='advertising'>Advertising</option>
 										<option value='others'>Others</option>
 									</select>
 								</div>

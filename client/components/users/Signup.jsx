@@ -68,8 +68,9 @@ class Signup extends Component {
   uploadImage(event) {
     this.setState({ profilepic: '', uploading: true });
     const image = event.target.files[0];
+    const { imageUploadAction } = this.props;
     // Action to upload an image
-    this.props.imageUpload(image).then(() => {
+    imageUploadAction(image).then(() => {
       // Sets state of uploading to false after uploading image
       this.setState({ uploading: false });
     });
@@ -83,8 +84,9 @@ class Signup extends Component {
  */
   onSubmit(event) {
     event.preventDefault();
+    const { signupUserAction } = this.props;
     // Action to signup a user
-    this.props.signupUser(this.state, this.props);
+    signupUserAction(this.state, this.props);
   }
 
   /**
@@ -92,11 +94,13 @@ class Signup extends Component {
    * @return {ReactElement} markup
    */
   render() {
+    const { authUser } = this.props;
+
     return (
 			<div>
         {/* Render signup form */}
 				<SignupForm
-          authUser={this.props.authUser}
+          authUser={authUser}
           uploadImage={this.uploadImage}
           formDetails={this.state}
           onChange={this.onChange}
@@ -117,9 +121,12 @@ Signup.contextTypes = {
 
 Signup.propTypes = {
   authUser: PropTypes.object.isRequired,
-  signupUser: PropTypes.func.isRequired,
+  signupUserAction: PropTypes.func.isRequired,
   uploadImage: PropTypes.func,
-  imageUpload: PropTypes.func
+  imageUploadAction: PropTypes.func
 };
 
-export default connect(mapStateToProps, { signupUser, imageUpload })(Signup);
+export default connect(mapStateToProps, {
+  signupUserAction: signupUser,
+  imageUploadAction: imageUpload
+})(Signup);

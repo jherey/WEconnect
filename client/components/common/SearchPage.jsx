@@ -39,20 +39,21 @@ class SearchPage extends Component {
 * @memberof SearchPage
 */
   renderPagination() {
+    const { totalPages, currentPage } = this.props.paginate;
     return (
       // Pagination component
       <ReactPagination
-        previousLabel={'previous'}
-        nextLabel={'next'}
+        previousLabel='previous'
+        nextLabel='next'
         breakLabel={<a href="">...</a>}
-        breakClassName={'break-me'}
-        pageCount={this.props.paginate.totalPages}
-        marginPagesDisplayed={this.props.paginate.currentPage}
+        breakClassName='break-me'
+        pageCount={totalPages}
+        marginPagesDisplayed={currentPage}
         pageRangeDisplayed={8}
         onPageChange={this.onPageChange}
-        containerClassName={'paginate justify-content-center'}
-        subContainerClassName={'pages paginate'}
-        activeClassName={'active'}
+        containerClassName='paginate justify-content-center'
+        subContainerClassName='pages paginate'
+        activeClassName='active'
       />
     );
   }
@@ -64,6 +65,7 @@ class SearchPage extends Component {
   render() {
     // Destructure props
     const { allBusinesses, searchWord } = this.props.searchResults;
+    const { paginate } = this.props;
 
     // No business found
     if (allBusinesses === undefined) {
@@ -104,7 +106,7 @@ class SearchPage extends Component {
               </div>
             </div>
             {/* Render pagination */}
-            { this.props.paginate.count > 8 ? this.renderPagination() : null }
+            { paginate.count > 8 ? this.renderPagination() : null }
           </div>
         }
 			</div>
