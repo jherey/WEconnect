@@ -47,7 +47,8 @@ class EditBusiness extends Component {
 * @returns {null} null
 */
   componentWillMount() {
-    this.props.fetchBusiness(this.props.match.params.id);
+    const { fetchBusinessAction, match } = this.props;
+    fetchBusinessAction(match.params.id);
   }
 
   /**
@@ -67,8 +68,9 @@ class EditBusiness extends Component {
   uploadImage(event) {
     this.setState({ businessImage: '', uploading: true });
     const image = event.target.files[0];
+    const { imageUploadAction } = this.props;
     // Action to upload an image
-    this.props.imageUpload(image).then(() => {
+    imageUploadAction(image).then(() => {
       const { businesses, newBusinessImage } = this.props;
       if (businesses.imageUploadError === '') {
         this.setState({ uploading: false, businessImage: newBusinessImage });
@@ -87,12 +89,14 @@ class EditBusiness extends Component {
 */
   onSubmit(event) {
     event.preventDefault();
+    const { updateBusinessAction } = this.props;
     // Action to update a business
-    this.props.updateBusiness(this.state, this.context).then(() => {
+    updateBusinessAction(this.state, this.props).then(() => {
       const { businesses, business } = this.props;
       if (businesses.updateSuccess !== '') {
+        const { history } = this.context.router;
         // Route user to business profile page
-        this.context.router.history.push(`/${business.id}`);
+        history.push(`/${business.id}`);
       }
     });
   }
@@ -102,7 +106,7 @@ class EditBusiness extends Component {
    * @return {ReactElement} markup
    */
   render() {
-    const { authUser, match } = this.props;
+    const { authUser, match, updateBusinessAction } = this.props;
     const { id } = match.params;
 
     return (
@@ -112,7 +116,7 @@ class EditBusiness extends Component {
           id={id}
           authUser={authUser}
           uploadImage={this.uploadImage}
-          updateBusiness={this.props.updateBusiness}
+          updateBusiness={updateBusinessAction}
           formDetails={this.state}
           onChange={this.onChange}
           onSubmit={this.onSubmit}
@@ -140,9 +144,9 @@ EditBusiness.propTypes = {
   authUser: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   imageUpload: PropTypes.func,
-  fetchBusiness: PropTypes.func.isRequired,
-  updateBusiness: PropTypes.func.isRequired,
-  uploadImage: PropTypes.func,
+  fetchBusinessAction: PropTypes.func.isRequired,
+  updateBusinessAction: PropTypes.func.isRequired,
+  imageUploadAction: PropTypes.func,
   currentBusiness: PropTypes.object,
   business: PropTypes.object,
   businesses: PropTypes.object,
@@ -151,5 +155,7 @@ EditBusiness.propTypes = {
 };
 
 export default connect(mapStateToProps, {
-  imageUpload, updateBusiness, fetchBusiness
+  imageUploadAction: imageUpload,
+  updateBusinessAction: updateBusiness,
+  fetchBusinessAction: fetchBusiness
 })(EditBusiness);

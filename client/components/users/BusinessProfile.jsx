@@ -51,8 +51,9 @@ class BusinessProfile extends Component {
 */
   componentWillMount() {
     const { id } = this.props.match.params;
-    this.props.fetchBusiness(id);
-    this.props.fetchReviews(id);
+    const { fetchBusinessAction, fetchReviewsAction } = this.props;
+    fetchBusinessAction(id);
+    fetchReviewsAction(id);
   }
 
   /**
@@ -146,8 +147,9 @@ class BusinessProfile extends Component {
     if (review.trim() === '' || starRating < 1) {
       return toastr.error('Please type a review and give a rating');
     }
+    const { addReviewAction, currentBusiness } = this.props;
     const { profilepic, sex } = this.props.authUser.user;
-    this.props.addReview(this.props.currentBusiness.id, this.state, { profilepic, sex })
+    addReviewAction(currentBusiness.id, this.state, { profilepic, sex })
       .then(() => {
         this.setState({ starRating: 0 });
       });
@@ -165,8 +167,9 @@ class BusinessProfile extends Component {
     if (this.state.editedReview.trim() === '' || this.state.editedStarRating < 1) {
       return toastr.error('Please type a review and give a rating');
     }
+    const { editReviewAction } = this.props;
     const { profilepic, sex } = this.props.authUser.user;
-    this.props.editReview(businessId, reviewId, this.state, { profilepic, sex })
+    editReviewAction(businessId, reviewId, this.state, { profilepic, sex })
       .then(() => {
         this.setState({ editing: null });
       });
@@ -181,11 +184,13 @@ class BusinessProfile extends Component {
     event.preventDefault();
     this.setState({ errors: '' });
     document.getElementById('deleteBtn').click();
-    this.props.deleteBusiness(this.props.currentBusiness.id).then(() => {
+    const { deleteBusinessAction } = this.props;
+    deleteBusinessAction(this.props.currentBusiness.id).then(() => {
       const { deleteSuccess } = this.props.business;
       if (deleteSuccess !== '') {
+        const { history } = this.context.router;
         toastr.success('Business deleted');
-        this.context.router.history.push('/');
+        history.push('/');
       }
     });
   }
@@ -195,15 +200,19 @@ class BusinessProfile extends Component {
    * @return {ReactElement} markup
    */
   render() {
+    const {
+      currentBusiness, authUser, averageRating, deleteBusinessAction, userId, reviews
+    } = this.props;
+
     return (
 			<div className="paddingBottom">
 				<BusinessProfilePage
-          id={this.props.currentBusiness.id}
-          authUser={this.props.authUser}
-          currentBusiness={this.props.currentBusiness}
-          averageRating={this.props.averageRating}
-					deleteBusiness={this.props.deleteBusiness}
-          userId={this.props.userId}
+          id={currentBusiness.id}
+          authUser={authUser}
+          currentBusiness={currentBusiness}
+          averageRating={averageRating}
+					deleteBusiness={deleteBusinessAction}
+          userId={userId}
           formDetails={this.state}
           onEditStarClick={this.onEditStarClick}
           onStarClick={this.onStarClick}
@@ -212,7 +221,7 @@ class BusinessProfile extends Component {
           switchEditReview={this.switchEditReview}
           onReviewChange={this.onReviewChange}
           handleSubmit={this.handleSubmit}
-          reviews={this.props.reviews}
+          reviews={reviews}
           setToDeleteReview={this.setToDeleteReview}
           onReviewDelete={this.onReviewDelete}
           submitEditedReview={this.submitEditedReview}
@@ -241,27 +250,27 @@ BusinessProfile.propTypes = {
   business: PropTypes.object,
   authUser: PropTypes.object,
   match: PropTypes.object.isRequired,
-  fetchBusiness: PropTypes.func,
+  fetchBusinessAction: PropTypes.func,
   currentBusiness: PropTypes.object.isRequired,
   averageRating: PropTypes.number,
   id: PropTypes.number,
-  deleteBusiness: PropTypes.func.isRequired,
-  fetchReviews: PropTypes.func.isRequired,
+  deleteBusinessAction: PropTypes.func.isRequired,
+  fetchReviewsAction: PropTypes.func.isRequired,
   userId: PropTypes.number,
-  addReview: PropTypes.func,
+  addReviewAction: PropTypes.func,
   switchEditReview: PropTypes.func,
   deleteReviewAction: PropTypes.func.isRequired,
   deleteSuccess: PropTypes.string,
   reviews: PropTypes.array,
-  editReview: PropTypes.func.isRequired
+  editReviewAction: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, {
-  editReview,
-  addReview,
-  fetchBusiness,
-  deleteBusiness,
-  fetchReviews,
+  editReviewAction: editReview,
+  addReviewAction: addReview,
+  fetchBusinessAction: fetchBusiness,
+  deleteBusinessAction: deleteBusiness,
+  fetchReviewsAction: fetchReviews,
   deleteReviewAction: deleteReview
 })(BusinessProfile);
 

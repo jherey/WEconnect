@@ -5,7 +5,6 @@ import {
   USER_BUSINESSES,
   FOUND_BUSINESSES,
   CURRENT_BUSINESS,
-  SET_PAGINATION,
   BUSINESS_IMAGE_UPLOAD,
   BUSINESS_IMAGE_ERROR_UPLOAD,
   UPDATE_SUCCESS,
@@ -23,12 +22,11 @@ import {
 
 const initialState = {
   averageRating: 0,
-  businesses: [],
+  businesses: {},
   userBusiness: [],
   currentBusiness: {},
   createBusinessErrors: [],
   searchResults: {},
-  pageDetails: {},
   imageUrl: '',
   imageUploadError: '',
   uploadSuccess: '',
@@ -61,7 +59,7 @@ export default function businesses(state = initialState, action = {}) {
     case GET_BUSINESSES:
       return {
         ...state,
-        businesses: action.businesses
+        businesses: action.businessesData
       };
 
     case BUSINESS_IMAGE_UPLOAD:
@@ -110,12 +108,6 @@ export default function businesses(state = initialState, action = {}) {
       return {
         ...state,
         currentBusiness: action.business
-      };
-
-    case SET_PAGINATION:
-      return {
-        ...state,
-        pageDetails: action.pageDetails
       };
 
     case DELETE_SUCCESS:
