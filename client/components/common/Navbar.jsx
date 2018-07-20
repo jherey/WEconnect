@@ -13,7 +13,7 @@ import { search } from '../../actions/businessActions';
  * @class  Navbar
  * @extends {Component}
  */
-class Navbar extends Component {
+export class Navbar extends Component {
   /**
 * @description Creates an instance of Navbar component
 * @param {object} props

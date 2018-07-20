@@ -10,7 +10,7 @@ import {
 
 /**
  * @description - Updates reviews store
- * @param {*} reviews
+ * @param { Array } reviews
  * @returns { reviews } - Action
  */
 export function getReview(reviews) {
@@ -22,7 +22,7 @@ export function getReview(reviews) {
 
 /**
  * @description - Updates store with all businesses
- * @param {*} ratings
+ * @param { Number } ratings
  * @returns { Businesses } - Action
  */
 export function averageRating(ratings) {
@@ -34,7 +34,7 @@ export function averageRating(ratings) {
 
 /**
  * @description - Gets all reviews for a business
- * @param {*} id
+ * @param { Number } id
  * @returns { reviews } - Action
  */
 export const fetchReviews = id => (dispatch) => {
@@ -52,7 +52,7 @@ export const fetchReviews = id => (dispatch) => {
 
 /**
  * @description - Adds review to store
- * @param {*} review
+ * @param { Object } review
  * @returns { review } - Action
  */
 export function postReviewSuccess(review) {
@@ -64,9 +64,9 @@ export function postReviewSuccess(review) {
 
 /**
  * @description - Posts a new review
- * @param {*} id
- * @param {*} review
- * @param {*} user
+ * @param { Number } id
+ * @param { Object } review
+ * @param { Object } user
  * @returns { review } - Action
  */
 export const addReview = (id, review, user) => (dispatch) => {
@@ -85,7 +85,7 @@ export const addReview = (id, review, user) => (dispatch) => {
 
 /**
  * @description - Adds review to store
- * @param {*} review
+ * @param { Object } review
  * @returns { review } - Action
  */
 export function editReviewSuccess(review) {
@@ -97,10 +97,10 @@ export function editReviewSuccess(review) {
 
 /**
  * @description - Posts a new review
- * @param {*} businessId
- * @param {*} reviewId
- * @param {*} review
- * @param {object} user
+ * @param { Number } businessId
+ * @param { Number } reviewId
+ * @param { Object } review
+ * @param { Object } user
  * @returns { review } - Action
  */
 export const editReview = (businessId, reviewId, review, user) => (dispatch) => {
@@ -119,7 +119,7 @@ export const editReview = (businessId, reviewId, review, user) => (dispatch) => 
 
 /**
  * @description - Deletes review from store
- * @param {reviewId} reviewId
+ * @param { Number } reviewId
  * @returns { reviewId } - Action
  */
 export function reviewDeleted(reviewId) {
@@ -131,8 +131,8 @@ export function reviewDeleted(reviewId) {
 
 /**
  * @description - Deletes a new review
- * @param {*} businessId
- * @param {*} reviewId
+ * @param { Number } businessId
+ * @param { Number } reviewId
  * @returns { deletedReviewId } - Action
  */
 export const deleteReview = (businessId, reviewId) => (dispatch) => {

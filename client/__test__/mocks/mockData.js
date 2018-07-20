@@ -2,6 +2,19 @@ import jwt from 'jsonwebtoken';
 
 export const props = {};
 
+export const signupState = {
+  firstname: '',
+  lastname: '',
+  username: '',
+  sex: '',
+  email: '',
+  profilepic: '',
+  password: '',
+  confirmPassword: '',
+  errors: [],
+  uploading: false
+};
+
 export const userData = {
   id: 1,
   firstname: 'jeremiah',
@@ -145,8 +158,4 @@ export const reviews = {
   message: 'Reviews Found!',
   reviews: [{ ...review.createdReview }],
   averageRating: 4
-};
-
-export const userDetails = {
-
 };

@@ -11,8 +11,6 @@ import {
   UPDATE_USER_FAILED
 } from './types';
 
-require('dotenv').config();
-
 /**
  * @description - Updates loading status
  * @param { Boolean } status
@@ -27,8 +25,8 @@ export function isLoading(status) {
 
 /**
  * @description - Sets current user in store
- * @param {*} user
- * @returns {Object} user
+ * @param { Object } user
+ * @returns { Object } user
  */
 export function setCurrentUser(user) {
   return {
@@ -39,8 +37,8 @@ export function setCurrentUser(user) {
 
 /**
  * @description - Sets current user in store
- * @param {*} errors
- * @returns {Object} user
+ * @param { Array } errors
+ * @returns { Object } user
  */
 export function authError(errors) {
   return {
@@ -51,8 +49,8 @@ export function authError(errors) {
 
 /**
  * @description - Creates a new user
- * @param {*} userData
- * @param {*} props
+ * @param { Object } userData
+ * @param { Object } props
  * @returns { user } - Action
  */
 export const signupUser = (userData, props) => (dispatch) => {
@@ -77,9 +75,9 @@ export const signupUser = (userData, props) => (dispatch) => {
 
 /**
  * @description - Login a user
- * @param {*} userData
- * @param {*} props
- * @returns {Object} loggedin user
+ * @param { Object } userData
+ * @param { Object } props
+ * @returns { Object } loggedin user
  */
 export const signinUser = (userData, props) => (dispatch) => {
   dispatch(isLoading(true));
@@ -103,8 +101,8 @@ export const signinUser = (userData, props) => (dispatch) => {
 
 /**
  * @description - Sets one user in store
- * @param {*} url
- * @returns {Object} user
+ * @param { String } url
+ * @returns { Object } user
  */
 export function userImageUpload(url) {
   return {
@@ -115,8 +113,8 @@ export function userImageUpload(url) {
 
 /**
  * @description - Sets one user in store
- * @param {*} error
- * @returns {Object} user
+ * @param { String } error
+ * @returns { Object } user
  */
 export function userImageUploadError(error) {
   return {
@@ -127,17 +125,16 @@ export function userImageUploadError(error) {
 
 /**
  * @description - Sets one user in store
- * @param {*} image
- * @returns {Object} user
+ * @param { String } image
+ * @returns { Object } user
  */
 export const imageUpload = image => (dispatch) => {
   const uploadPreset = process.env.UPLOAD_PRESET;
-  const cloudinaryApi = process.env.CLOUDINARY_API;
   const data = new FormData();
   data.append('file', image);
   data.append('upload_preset', uploadPreset);
   delete axios.defaults.headers.common.Authorization;
-  return axios.post(cloudinaryApi, data)
+  return axios.post('https://api.cloudinary.com/v1_1/diiceprhy/image/upload', data)
     .then((response) => {
       const { token } = localStorage;
       axios.defaults.headers.common.Authorization = token;
@@ -152,8 +149,8 @@ export const imageUpload = image => (dispatch) => {
 
 /**
  * @description - Sets one user in store
- * @param {*} user
- * @returns {Object} user
+ * @param { Object } user
+ * @returns { Object } user
  */
 export function editUser(user) {
   return {
@@ -164,8 +161,8 @@ export function editUser(user) {
 
 /**
  * @description - Sets one user in store
- * @param {*} errors
- * @returns {Object} user
+ * @param { Array } errors
+ * @returns { Object } user
  */
 export function updateFailed(errors) {
   return {
@@ -176,7 +173,7 @@ export function updateFailed(errors) {
 
 /**
  * @description - Updates a business
- * @param {*} updatedUserDetails
+ * @param { Object } updatedUserDetails
  * @returns { User } - Action
  */
 export const updateUser = updatedUserDetails => (dispatch) => {
@@ -197,7 +194,7 @@ export const updateUser = updatedUserDetails => (dispatch) => {
 
 /**
  * @description - Removes token from local storage
- * @returns {*} object
+ * @returns { Object } object
  */
 export const signout = () => (dispatch) => {
   localStorage.removeItem('token');

@@ -10,7 +10,7 @@ import SigninForm from '../forms/SigninForm.jsx';
  * @class  Signin
  * @extends {Component}
  */
-class Signin extends Component {
+export class Signin extends Component {
   /**
 * @description Creates an instance of signin form
 * @param {object} props

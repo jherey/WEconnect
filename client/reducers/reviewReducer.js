@@ -28,7 +28,7 @@ export default function (state = initialState, action = {}) {
       });
       return { ...state, reviews: reviewList };
     }
-    
+
     case DELETE_REVIEW:
       return { ...state, reviews: state.reviews.filter(review => review.id !== action.reviewId) };
 

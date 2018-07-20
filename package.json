@@ -38,8 +38,6 @@
     "classnames": "^2.2.5",
     "dotenv": "^5.0.1",
     "dotenv-webpack": "^1.5.7",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-15": "^1.0.5",
     "express": "^4.16.2",
     "express-validator": "^5.0.3",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
@@ -84,7 +82,9 @@
       "./client/__test__/mocks/localStorageMock.js",
       "<rootDir>/test-env.js"
     ],
-    "setupTestFrameworkScriptFile": "./client/__test__/setup.js"
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png)$": "<rootDir>/client/__test__/mocks/fileMock.js"
+    }
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -96,6 +96,8 @@
     "chai-spies": "^1.0.0",
     "coveralls": "^3.0.0",
     "css-loader": "^0.28.11",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-react": "^1.1.7",

@@ -116,7 +116,7 @@ describe('User Reducer', () => {
     expect(newState.isLoading).toEqual(true);
   });
 
-  it('should return the initial state', () => {
+  it('should return the initial state if no action type is called', () => {
     const initialState = {
       isAuthenticated: false,
       user: {},

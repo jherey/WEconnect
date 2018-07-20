@@ -13,7 +13,7 @@ let currentBusinessId, currentReviewId;
  * @class  BusinessProfile
  * @extends {Component}
  */
-class BusinessProfile extends Component {
+export class BusinessProfile extends Component {
   /**
 * @description Creates an instance of Business Profile Page
 * @param {object} props

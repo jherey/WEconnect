@@ -57,32 +57,41 @@ describe('Business reducer', () => {
 
   it('should get business details when passed with GET_BUSINESSES', () => {
     const initialState = {
-      businesses: []
+      businesses: {}
     };
-    const businesses = [
-      {
-        id: 1,
-        businessName: 'andela',
-        website: 'www.andela.com',
-        category: 'technology',
-        businessInfo: 'Lorem ipsum dolor sit amet',
-        email: 'andela@gmail.com',
-        businessImage: 'https://jeremiah.jpg',
-        location: 'nigeria',
-        createdAt: '2018-06-10T17:50:27.544Z',
-        updatedAt: '2018-07-07T12:06:30.314Z',
-        userId: 1
+    const allBusinesses = {
+      message: 'Businesses found',
+      businesses: [
+        {
+          id: 1,
+          businessName: 'andela',
+          website: 'www.andela.com',
+          category: 'technology',
+          businessInfo: 'Lorem ipsum dolor sit amet',
+          email: 'andela@gmail.com',
+          businessImage: 'https://jeremiah.jpg',
+          location: 'nigeria',
+          createdAt: '2018-06-10T17:50:27.544Z',
+          updatedAt: '2018-07-07T12:06:30.314Z',
+          userId: 1
+        }
+      ],
+      pageDetails: {
+        totalPages: 1,
+        currentPage: 1
       }
-    ];
+    };
+
     const action = {
       type: GET_BUSINESSES,
-      businesses
+      businessesData: allBusinesses
     };
     const newState = businessReducer(initialState, action);
-    expect(newState.businesses[0].id).toEqual(1);
-    expect(newState.businesses[0].website).toEqual('www.andela.com');
-    expect(newState.businesses[0].email).toEqual('andela@gmail.com');
-    expect(newState.businesses[0].location).toEqual('nigeria');
+    expect(newState.businesses.message).toEqual('Businesses found');
+    expect(newState.businesses.businesses[0].id).toEqual(1);
+    expect(newState.businesses.businesses[0].website).toEqual('www.andela.com');
+    expect(newState.businesses.businesses[0].email).toEqual('andela@gmail.com');
+    expect(newState.businesses.businesses[0].location).toEqual('nigeria');
   });
 
   it('should save profile image when passed with BUSINESS_IMAGE_UPLOAD', () => {
@@ -223,25 +232,6 @@ describe('Business reducer', () => {
     const newState = businessReducer(initialState, action);
     expect(newState.currentBusiness.id).toEqual(1);
     expect(newState.currentBusiness.businessName).toEqual('andela');
-  });
-
-  it('should set pagination when passed with SET_PAGINATION', () => {
-    const initialState = {
-      pageDetails: {}
-    };
-    const pageDetails = {
-      count: 12,
-      totalPages: 3,
-      currentPage: 1
-    };
-    const action = {
-      type: SET_PAGINATION,
-      pageDetails
-    };
-    const newState = businessReducer(initialState, action);
-    expect(newState.pageDetails.count).toEqual(12);
-    expect(newState.pageDetails.totalPages).toEqual(3);
-    expect(newState.pageDetails.currentPage).toEqual(1);
   });
 
   it('should show average rating for a business when passed with DELETE_SUCCESS', () => {

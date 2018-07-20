@@ -197,7 +197,6 @@ BusinessProfilePage.propTypes = {
   addReview: PropTypes.func,
   averageRating: PropTypes.number,
   id: PropTypes.number,
-  deleteBusiness: PropTypes.func.isRequired,
   fetchReviews: PropTypes.func,
   userId: PropTypes.number,
   authUser: PropTypes.object,
