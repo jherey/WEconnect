@@ -124,8 +124,8 @@ const BusinessProfilePage = ({
 						currentBusiness.userId === userId
 						?
 							<div style={{ display: 'inline-block', float: 'right' }}>
-								<Link to={`/${id}/edit`} className="btn btn-primary mr-2"> Edit</Link>
-								<button className="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+								<Link to={`/${id}/edit`} id="editBusiness" className="btn btn-primary mr-2"> Edit</Link>
+								<button className="btn btn-danger" id="deleteBusiness" data-toggle="modal" data-target="#deleteModal">
 									Delete
 								</button>
 							</div>
@@ -177,6 +177,7 @@ const BusinessProfilePage = ({
 							<button type="button" className="btn btn-secondary" data-dismiss="modal">No</button>
 							{/* Button to delete a business */}
 							<button
+								id="delete"
 								className="btn btn-danger"
 								onClick={onDelete}
 							>

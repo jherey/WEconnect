@@ -151,7 +151,7 @@ export class BusinessProfile extends Component {
     const { profilepic, sex } = this.props.authUser.user;
     addReviewAction(currentBusiness.id, this.state, { profilepic, sex })
       .then(() => {
-        this.setState({ starRating: 0 });
+        this.setState({ starRating: 0, review: '' });
       });
   }
 

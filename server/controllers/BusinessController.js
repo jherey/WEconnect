@@ -263,7 +263,7 @@ const Business = {
             message: 'Business Not Found!',
           });
         } else if (pageNumber > pages) {
-          return res.status(404).send({
+          return res.status(200).send({
             message: 'No business found',
             allBusinesses,
             searchWord: name || location || category || null,

@@ -29,7 +29,7 @@ const NewReviewForm = ({
     />
   </div>
   {/* Button to submit a review */}
-  <button className="btn btn-primary" type="submit" >
+  <button id="postReview" className="btn btn-primary" type="submit" >
     Post Review
   </button>
 </form>
