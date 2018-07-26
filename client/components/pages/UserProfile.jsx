@@ -26,7 +26,7 @@ const UserProfile = ({ currentUser, image }) => (
       {/* Link ti register a new Business */}
       <Link className="btn btn-primary" to="/register">Register a Business</Link> <br /><br />
       {/* Button to edit user profile */}
-      <button className="btn btn-primary" data-toggle="modal" data-target="#editUserModal">
+      <button id="editProfile" className="btn btn-primary" data-toggle="modal" data-target="#editUserModal">
         Edit Profile
       </button>
     </div>

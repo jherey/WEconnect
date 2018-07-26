@@ -13,7 +13,7 @@ let currentBusinessId, currentReviewId;
  * @class  BusinessProfile
  * @extends {Component}
  */
-class BusinessProfile extends Component {
+export class BusinessProfile extends Component {
   /**
 * @description Creates an instance of Business Profile Page
 * @param {object} props
@@ -151,7 +151,7 @@ class BusinessProfile extends Component {
     const { profilepic, sex } = this.props.authUser.user;
     addReviewAction(currentBusiness.id, this.state, { profilepic, sex })
       .then(() => {
-        this.setState({ starRating: 0 });
+        this.setState({ starRating: 0, review: '' });
       });
   }
 

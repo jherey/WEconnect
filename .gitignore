@@ -17,3 +17,6 @@ build
 .env
 
 .DS_Store
+selenium-debug.log
+reports
+bin

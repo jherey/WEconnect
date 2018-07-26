@@ -7,7 +7,6 @@ import {
   CURRENT_BUSINESS,
   SET_API_STATUS,
   GET_BUSINESSES,
-  SET_PAGINATION,
   USER_BUSINESSES,
   FOUND_BUSINESSES,
   SET_PROGRESS,
@@ -48,13 +47,14 @@ const businessId = 1;
 const pageNumber = 1;
 const userId = 1;
 
-function FormDataMock() {
-  this.append = jest.fn();
-}
-global.FormData = FormDataMock;
-
 describe('Business actions', () => {
-  beforeEach(() => moxios.install());
+  beforeEach(() => {
+    global.toastr = {
+      success: () => {},
+      error: () => {}
+    };
+    moxios.install();
+  });
   afterEach(() => moxios.uninstall());
 
   it('action to set the upload progress of an image', () => {
@@ -102,7 +102,7 @@ describe('Business actions', () => {
   });
 
   describe('When I call the add business action', () => {
-    it('Then it should dispatch an action to add a business', (done) => {
+    it('should dispatch an action to add a business', (done) => {
       moxios.stubRequest('/api/v1/businesses', {
         status: 201,
         response: {
@@ -116,14 +116,14 @@ describe('Business actions', () => {
         { type: SET_API_STATUS, status: false }
       ];
       const store = mockStore({});
-      return store.dispatch(createBusiness(businessData))
+      return store.dispatch(createBusiness(businessData, props)) // eslint-disable-line no-undef
         .then(() => {
           expect(store.getActions()).toEqual(expectedAction);
           done();
         });
     });
 
-    it('Then it should dispatch an action to add a business', (done) => {
+    it('creates CREATE_BUSINESS_FAILED when creating a business fails', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -148,7 +148,7 @@ describe('Business actions', () => {
   });
 
   describe('When I call the get business action', () => {
-    it('Then it should dispatch an action to get a business', (done) => {
+    it('creates a CURRENT_BUSINESS type', (done) => {
       moxios.stubRequest(`/api/v1/businesses/${businessId}`, {
         status: 200,
         response: {
@@ -169,7 +169,7 @@ describe('Business actions', () => {
         });
     });
 
-    it('Then it should not dispatch an action to get a business', (done) => {
+    it('should not dispatch an action to get a business', (done) => {
       moxios.stubRequest('/api/v1/businesses/8', {
         status: 404,
         response: {
@@ -190,7 +190,7 @@ describe('Business actions', () => {
   });
 
   describe('When I dispatch the update business action', () => {
-    it('Then I should update a business', (done) => {
+    it('should update a business', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -216,7 +216,7 @@ describe('Business actions', () => {
         });
     });
 
-    it('Then I should update a business', (done) => {
+    it('should update a business', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -270,7 +270,7 @@ describe('Business actions', () => {
         });
     });
 
-    it('should delete a business', (done) => {
+    it('should not delete a business', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -301,8 +301,7 @@ describe('Business actions', () => {
       });
       const expectedAction = [
         { type: SET_API_STATUS, status: true },
-        { type: GET_BUSINESSES, businesses: allBusinesses.allBusinesses.rows },
-        { type: SET_PAGINATION, pageDetails: allBusinesses.pageDetails },
+        { type: GET_BUSINESSES, businessesData: allBusinesses },
         { type: SET_API_STATUS, status: false }
       ];
       const store = mockStore({});
@@ -339,20 +338,23 @@ describe('Business actions', () => {
           response: allBusinesses
         });
       });
+      const searchWord = 'and';
+      const type = 'name';
+      const history = [];
       const expectedAction = [
         { type: SET_API_STATUS, status: true },
         { type: FOUND_BUSINESSES, searchResponse: allBusinesses },
         { type: SET_API_STATUS, status: false }
       ];
       const store = mockStore({});
-      return store.dispatch(search(userId))
+      return store.dispatch(search(searchWord, type, userId, history))
         .then(() => {
           expect(store.getActions()).toEqual(expectedAction);
           done();
         });
     });
 
-    it('Then it should not dispatch an action to search all businesses', (done) => {
+    it('creates a FOUND_BUSINESSES if no business found', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -365,8 +367,11 @@ describe('Business actions', () => {
         { type: FOUND_BUSINESSES, searchResponse: allBusinesses },
         { type: SET_API_STATUS, status: false }
       ];
+      const searchWord = 'and';
+      const type = 'name';
+      const history = [];
       const store = mockStore({});
-      return store.dispatch(search(userId))
+      return store.dispatch(search(searchWord, type, pageNumber, history))
         .then(() => {
           expect(store.getActions()).toEqual(expectedAction);
           done();

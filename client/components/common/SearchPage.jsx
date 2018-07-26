@@ -11,7 +11,7 @@ import Business from '../common/Business.jsx';
  * @class  Search
  * @extends {Component}
  */
-class SearchPage extends Component {
+export class SearchPage extends Component {
   /**
 * @description Creates an instance of SearchPage
 * @param {object} props

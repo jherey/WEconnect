@@ -182,7 +182,6 @@ const NewBusinessForm = ({
 
 // New business form prop types
 NewBusinessForm.propTypes = {
-  createBusiness: PropTypes.func.isRequired,
   formDetails: PropTypes.object.isRequired,
   uploadImage: PropTypes.func,
   onChange: PropTypes.func,

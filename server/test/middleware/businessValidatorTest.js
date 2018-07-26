@@ -27,7 +27,7 @@ describe('MIDDLEWARE TESTS', () => {
         .end((err, res) => {
           expect(res.body).to.have.property('message')
             .eql('No business found');
-          expect(res.status).to.equal(404);
+          expect(res.status).to.equal(200);
           done();
         });
     });
@@ -63,7 +63,7 @@ describe('MIDDLEWARE TESTS', () => {
         .end((err, res) => {
           expect(res.body).to.have.property('message')
             .eql('No business found');
-          expect(res.status).to.equal(404);
+          expect(res.status).to.equal(200);
           done();
         });
     });

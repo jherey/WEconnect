@@ -7,7 +7,6 @@ import {
   USER_BUSINESSES,
   FOUND_BUSINESSES,
   CURRENT_BUSINESS,
-  SET_PAGINATION,
   BUSINESS_IMAGE_UPLOAD,
   BUSINESS_IMAGE_ERROR_UPLOAD,
   UPDATE_SUCCESS,
@@ -19,7 +18,7 @@ import {
 /**
  * @description - Set progress value
  * @export { Function } - Set Upload Progress
- * @param { number } progress - Upload status
+ * @param { Number } progress - Upload status
  * @returns { Number } - Action
  */
 export function setProgress(progress) {
@@ -31,8 +30,8 @@ export function setProgress(progress) {
 
 /**
  * @description - Sets one user in store
- * @param {*} url
- * @returns {Object} user
+ * @param { String } url
+ * @returns { Object } user
  */
 export function businessImageUpload(url) {
   return {
@@ -43,8 +42,8 @@ export function businessImageUpload(url) {
 
 /**
  * @description - Sets one user in store
- * @param {*} error
- * @returns {Object} user
+ * @param { String } error
+ * @returns { Object } user
  */
 export function businessImageUploadError(error) {
   return {
@@ -55,13 +54,14 @@ export function businessImageUploadError(error) {
 
 /**
  * @description - Sets one user in store
- * @param {*} image
- * @returns {Object} user
+ * @param { File } image
+ * @returns { Object } user
  */
 export const imageUpload = image => (dispatch) => {
+  const uploadPreset = process.env.UPLOAD_PRESET;
   const data = new FormData();
   data.append('file', image);
-  data.append('upload_preset', 'ugio7gfd');
+  data.append('upload_preset', uploadPreset);
   delete axios.defaults.headers.common.Authorization;
   return axios.post('https://api.cloudinary.com/v1_1/diiceprhy/image/upload', data)
     .then((response) => {
@@ -78,7 +78,7 @@ export const imageUpload = image => (dispatch) => {
 /**
  * @description - Add new business
  * @export { Function } - Add business to store
- * @param {*} business
+ * @param { Object } business
  * @returns { Business } - Action
  */
 export function addBusiness(business) {
@@ -91,7 +91,7 @@ export function addBusiness(business) {
 /**
  * @description - Add new business
  * @export { Function } - Add business to store
- * @param {*} errors
+ * @param { Array } errors
  * @returns { Business } - Action
  */
 export function createBusinessError(errors) {
@@ -103,9 +103,9 @@ export function createBusinessError(errors) {
 
 /**
  * @export { Function } - Create new business
- * @param {*} businessData
- * @param {*} props
- * @returns {Object} business
+ * @param { Object } businessData
+ * @param { Object } props
+ * @returns { Object } business
  */
 export const createBusiness = (businessData, props) => (dispatch) => {
   dispatch(isLoading(true));
@@ -128,7 +128,7 @@ export const createBusiness = (businessData, props) => (dispatch) => {
 /**
  * @description - Gets one business
  * @export { Function } - Get business from store
- * @param {*} business
+ * @param { Object } business
  * @returns { Business } - Action
  */
 export function getOneBusiness(business) {
@@ -141,7 +141,7 @@ export function getOneBusiness(business) {
 /**
  * @description - Add new business
  * @export { Function } - Add business to store
- * @param {*} id
+ * @param { Number } id
  * @returns { Business } - Action
  */
 export const fetchBusiness = id => (dispatch) => {
@@ -159,7 +159,7 @@ export const fetchBusiness = id => (dispatch) => {
 /**
  * @description - Gets one business
  * @export { Function } - Get business from store
- * @param {*} success
+ * @param { String } success
  * @returns { Business } - Action
  */
 export function updateBusinessSuccess(success) {
@@ -172,7 +172,7 @@ export function updateBusinessSuccess(success) {
 /**
  * @description - Gets one business
  * @export { Function } - Get business from store
- * @param {*} errors
+ * @param { Array } errors
  * @returns { Business } - Action
  */
 export function updateBusinessError(errors) {
@@ -184,7 +184,7 @@ export function updateBusinessError(errors) {
 
 /**
  * @description - Updates a business
- * @param {*} updatedBusinessData
+ * @param { Object } updatedBusinessData
  * @returns { Business } - Action
  */
 export const updateBusiness = updatedBusinessData => (dispatch) => {
@@ -206,7 +206,7 @@ export const updateBusiness = updatedBusinessData => (dispatch) => {
 /**
  * @description - Gets one business
  * @export { Function } - Get business from store
- * @param {*} message
+ * @param { String } message
  * @returns { Business } - Action
  */
 export function deleteBusinessSuccess(message) {
@@ -218,7 +218,7 @@ export function deleteBusinessSuccess(message) {
 
 /**
  * @description - Deletes a business
- * @param {*} id
+ * @param { Number } id
  * @returns { BusinessId } - Action
  */
 export const deleteBusiness = id => (dispatch) => {
@@ -229,14 +229,14 @@ export const deleteBusiness = id => (dispatch) => {
       dispatch(isLoading(false));
     })
     .catch(() => {
-      toastr.err('Business delete failed!');
+      toastr.error('Business delete failed!');
       dispatch(isLoading(false));
     });
 };
 
 /**
  * @description - Updates store with all businesses
- * @param {*} businessesData
+ * @param { Object } businessesData
  * @returns { Businesses } - Action
  */
 export function allBusinesses(businessesData) {
@@ -247,20 +247,8 @@ export function allBusinesses(businessesData) {
 }
 
 /**
- *  @description - Updates store with page details
- * @param {*} pageDetails
- * @returns { Object } - Action
- */
-export function paginationDetails(pageDetails) {
-  return {
-    type: SET_PAGINATION,
-    pageDetails
-  };
-}
-
-/**
  * @description - Gets businesses by page
- * @param {*} pageNumber
+ * @param { Number } pageNumber
  * @returns { Businesses } - Action
  */
 export const getBusinessesByPage = pageNumber => (dispatch) => {
@@ -268,7 +256,6 @@ export const getBusinessesByPage = pageNumber => (dispatch) => {
   return axios.get(`/api/v1/businesses?pageNum=${pageNumber}`)
     .then((res) => {
       dispatch(allBusinesses(res.data));
-      // dispatch(paginationDetails(res.data.pageDetails));
       dispatch(isLoading(false));
     })
     .catch(() => {
@@ -278,7 +265,7 @@ export const getBusinessesByPage = pageNumber => (dispatch) => {
 
 /**
  * @description - Updates store with all businesses
- * @param {*} businesses
+ * @param { Object } businesses
  * @returns { Businesses } - Action
  */
 export function userBusinesses(businesses) {
@@ -290,7 +277,7 @@ export function userBusinesses(businesses) {
 
 /**
  * @description - Gets all user's businesses
- * @param {*} userId
+ * @param { Number } userId
  * @returns { userBusinesses } - Action
  */
 export const getAUserBusiness = userId => (dispatch) => {
@@ -304,7 +291,7 @@ export const getAUserBusiness = userId => (dispatch) => {
 
 /**
  * @description - Updates store with search results
- * @param {*} searchResponse
+ * @param { Object } searchResponse
  * @returns { Businesses } - Action
  */
 export function businessFound(searchResponse) {
@@ -316,10 +303,10 @@ export function businessFound(searchResponse) {
 
 /**
  * @description - Search results
- * @param {*} searchWord
- * @param {*} type
- * @param {*} pageNum
- * @param {*} history
+ * @param { String } searchWord
+ * @param { String } type
+ * @param { Number } pageNum
+ * @param { Object } history
  * @returns { BusinessesFound } - Action
  */
 export const search = (searchWord, type, pageNum, history) => (dispatch) => {

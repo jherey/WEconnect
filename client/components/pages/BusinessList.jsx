@@ -36,7 +36,7 @@ const BusinessList = ({ businesses, isLoading }) => {
 			<h2 className='text-center latest'>Latest Businesses</h2>
 			<div className="row">
 				{/* Conditional rendering */}
-				{businesses.length === 0 ? noBusiness : businessComponent}
+				{businesses.allBusinesses.rows.length === 0 ? noBusiness : businessComponent}
 			</div>
 		</div>
   );

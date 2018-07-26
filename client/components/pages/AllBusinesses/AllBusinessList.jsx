@@ -33,7 +33,7 @@ const AllBusinessList = ({ businesses, isLoading }) => {
 			<div className="container allBusinesses">
 				<div className="row">
 					{/* Conditional rendering */}
-					{businesses.length === 0 ? noBusiness : businessComponent}
+					{businesses.allBusinesses.rows.length === 0 ? noBusiness : businessComponent}
 				</div>
 			</div>
 		</div>

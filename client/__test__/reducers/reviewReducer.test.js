@@ -77,6 +77,31 @@ describe('Review reducer', () => {
     expect(newState.reviews[0].star).toEqual(1);
   });
 
+  it('should return initial review if review not found if passed with EDIT_REVIEW', () => {
+    const initialState = {
+      reviews: [
+        {
+          id: 1,
+          review: 'good firm again',
+          star: 4
+        }
+      ],
+      review: {}
+    };
+    const review = {
+      id: 8,
+      review: 'like them',
+      star: 5
+    };
+    const action = {
+      type: EDIT_REVIEW,
+      review
+    };
+    const newState = reviewReducer(initialState, action);
+    expect(newState.reviews[0].review).toEqual('good firm again');
+    expect(newState.reviews[0].star).toEqual(4);
+  });
+
   it('delets a review when passed with DELETE_REVIEW', () => {
     const initialState = {
       reviews: [

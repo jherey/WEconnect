@@ -10,7 +10,7 @@ import { signupUser, imageUpload } from '../../actions/userActions';
  * @class  Signup
  * @extends {Component}
  */
-class Signup extends Component {
+export class Signup extends Component {
   /**
 * @description Creates an instance of signup form
 * @param {object} props
@@ -98,7 +98,6 @@ class Signup extends Component {
 
     return (
 			<div>
-        {/* Render signup form */}
 				<SignupForm
           authUser={authUser}
           uploadImage={this.uploadImage}

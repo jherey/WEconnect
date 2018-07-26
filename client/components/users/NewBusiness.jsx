@@ -10,7 +10,7 @@ import { createBusiness, imageUpload } from '../../actions/businessActions';
  * @class  NewBusiness
  * @extends {Component}
  */
-class NewBusiness extends Component {
+export class NewBusiness extends Component {
   /**
 * @description Creates an instance of Business Profile Page
 * @param {object} props

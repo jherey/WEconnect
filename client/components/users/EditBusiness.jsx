@@ -10,7 +10,7 @@ import { updateBusiness, fetchBusiness, imageUpload } from '../../actions/busine
  * @class  EditBusiness
  * @extends {Component}
  */
-class EditBusiness extends Component {
+export class EditBusiness extends Component {
   /**
 * @description Creates an instance of edit business form
 * @param {object} props
