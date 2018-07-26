@@ -78,7 +78,7 @@ export class Navbar extends Component {
 					<Link className="nav-link" to="/dashboard">Dashboard</Link>
 				</li>
 				<li className="nav-item mr-5">
-					<Link className="nav-link" to="/" onClick={signoutAction}>Sign out</Link>
+					<Link className="nav-link signout" id="signout" to="/" onClick={signoutAction}>Sign out</Link>
 				</li>
 			</ul>
     );

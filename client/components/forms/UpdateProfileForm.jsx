@@ -98,7 +98,7 @@ const UpdateProfileForm = ({
                 <button
                   disabled={authUser.isLoading || uploading}
                   id="signup"
-                  className="btn btn-orange btn-lg"
+                  className="btn btn-orange btn-lg editProfile"
                 >
                   {
                     authUser.isLoading ?
