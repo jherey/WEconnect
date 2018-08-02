@@ -42,7 +42,7 @@ describe('User actions', () => {
   });
   afterEach(() => moxios.uninstall());
 
-  it('action to set API status on request', (done) => {
+  it('should dispatch an action to set API status on request', (done) => {
     const status = true;
     const expectedAction = {
       type: SET_API_STATUS,
@@ -52,8 +52,8 @@ describe('User actions', () => {
     done();
   });
 
-  describe('When I call the signup action', () => {
-    it('Then it should dispatch an action to set the current user', (done) => {
+  describe('Signup Action', () => {
+    it('should dispatch an action to set the current user', (done) => {
       moxios.stubRequest('/api/v1/auth/signup', {
         status: 201,
         response: {
@@ -74,7 +74,7 @@ describe('User actions', () => {
         });
     });
 
-    it('Then it should not dispatch an action to set the current user on error', (done) => {
+    it('should not dispatch an action to set the current user on error', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -98,8 +98,8 @@ describe('User actions', () => {
     });
   });
 
-  describe('When I call the signin action', () => {
-    it('Then it should dispatch an action to set the current user', (done) => {
+  describe('Signin Action', () => {
+    it('should dispatch an action to set the current user', (done) => {
       moxios.stubRequest('/api/v1/auth/login', {
         status: 200,
         response: {
@@ -120,7 +120,7 @@ describe('User actions', () => {
         });
     });
 
-    it('Then it should dispatch a signin error action', (done) => {
+    it('should dispatch a signin error action', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -144,8 +144,8 @@ describe('User actions', () => {
     });
   });
 
-  describe('When I call the update user action', () => {
-    it('Then it should dispatch an action to update the details of the user', (done) => {
+  describe('Update User Action', () => {
+    it('should dispatch an action to update the details of the user', (done) => {
       moxios.stubRequest(`/api/v1/auth/${userId}`, {
         status: 200,
         response: {
@@ -166,7 +166,7 @@ describe('User actions', () => {
         });
     });
 
-    it('Then it should dispatch an update failed action', (done) => {
+    it('should dispatch an update failed action', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -190,8 +190,8 @@ describe('User actions', () => {
     });
   });
 
-  describe('When I call the signout user action', () => {
-    it('Then it should dispatch an action to delete the details of the user', (done) => {
+  describe('Signout Action', () => {
+    it('should dispatch an action to remove user from store', (done) => {
       const expectedAction = [{ type: SET_CURRENT_USER, user: {} }];
       const store = mockStore({});
       store.dispatch(signout());
@@ -200,7 +200,7 @@ describe('User actions', () => {
     });
   });
 
-  describe('When I upload an image', () => {
+  describe('Upload Image Action', () => {
     it('should dispatch an IMAGE_UPLOAD type on sucess', (done) => {
       moxios.stubRequest('https://api.cloudinary.com/v1_1/diiceprhy/image/upload', {
         status: 200,
@@ -217,7 +217,7 @@ describe('User actions', () => {
         });
     });
 
-    it('creates IMAGE_UPLOAD when upload is done', (done) => {
+    it('should dispatch IMAGE_UPLOAD action type when upload is done', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({

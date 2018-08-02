@@ -48,7 +48,7 @@ describe('Component: SearchPage', () => {
   });
 });
 
-describe('Component: SearchPage', () => {
+describe('Component: SearchPage with no business', () => {
   let props;
   const setup = () => {
     props = {
@@ -84,7 +84,7 @@ describe('Component: SearchPage', () => {
   });
 });
 
-describe('Component: SearchPage', () => {
+describe('Component: SearchPage with pagination', () => {
   let props;
   const setup = () => {
     props = {

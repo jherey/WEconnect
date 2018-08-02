@@ -9,6 +9,7 @@ module.exports = {
       .assert.containsText('h2', 'Latest Businesses')
       .assert.visible('footer')
       .assert.visible('p')
+      .pause(3000);
     browser.end();
   }
 };

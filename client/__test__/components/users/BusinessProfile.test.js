@@ -77,18 +77,6 @@ describe('Component: BusinessProfile', () => {
     expect(action.state.review).toEqual('Great place to work');
   });
 
-  // it('should set review value in the state when the value changes', () => {
-  //   const wrapper = setup();
-
-  //   const action = wrapper.instance();
-
-  //   const businessId = 1;
-  //   const reviewId = 4;
-
-  //   action.setToDeleteReview(businessId, reviewId);
-  //   expect(action.currentBusinessId).toEqual(1);
-  // });
-
   it('should change the star rating when the value changes', () => {
     const wrapper = setup();
 
@@ -98,14 +86,6 @@ describe('Component: BusinessProfile', () => {
     action.onEditStarClick(nextValue);
     expect(action.state.editedStarRating).toEqual(4);
   });
-
-  // it('should upload business image', () => {
-  //   const wrapper = setup();
-  //   const action = wrapper.instance();
-  //   const newBusiness = jest.spyOn(wrapper.instance(), 'uploadImage');
-  //   action.uploadImage({ target: { files: ['1'] } });
-  //   expect(newBusiness).toBeCalled();
-  // });
 
   it('should submit a review when form is submitted', () => {
     const wrapper = setup();

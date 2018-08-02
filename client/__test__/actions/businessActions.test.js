@@ -47,7 +47,7 @@ const businessId = 1;
 const pageNumber = 1;
 const userId = 1;
 
-describe('Business actions', () => {
+describe('Business Actions', () => {
   beforeEach(() => {
     global.toastr = {
       success: () => {},
@@ -57,7 +57,7 @@ describe('Business actions', () => {
   });
   afterEach(() => moxios.uninstall());
 
-  it('action to set the upload progress of an image', () => {
+  it('should dispatch an action to set the upload progress of an image', () => {
     const progress = '57';
     const expectedAction = {
       type: SET_PROGRESS,
@@ -66,8 +66,8 @@ describe('Business actions', () => {
     expect(setProgress(progress)).toEqual(expectedAction);
   });
 
-  describe('When I upload an image', () => {
-    it('creates IMAGE_UPLOAD when upload is done', async (done) => {
+  describe('Upload Image Action', () => {
+    it('should diaptch IMAGE_UPLOAD action type when upload is successful', async (done) => {
       moxios.stubRequest('https://api.cloudinary.com/v1_1/diiceprhy/image/upload', {
         status: 200,
         response: imageUploadResponse
@@ -83,7 +83,7 @@ describe('Business actions', () => {
         });
     });
 
-    it('creates IMAGE_UPLOAD when upload is done', async (done) => {
+    it('should display error when upload fails', async (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -101,7 +101,7 @@ describe('Business actions', () => {
     });
   });
 
-  describe('When I call the add business action', () => {
+  describe('Add Business Action', () => {
     it('should dispatch an action to add a business', (done) => {
       moxios.stubRequest('/api/v1/businesses', {
         status: 201,
@@ -123,7 +123,7 @@ describe('Business actions', () => {
         });
     });
 
-    it('creates CREATE_BUSINESS_FAILED when creating a business fails', (done) => {
+    it('should dispatch CREATE_BUSINESS_FAILED when creating a business fails', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -147,8 +147,8 @@ describe('Business actions', () => {
     });
   });
 
-  describe('When I call the get business action', () => {
-    it('creates a CURRENT_BUSINESS type', (done) => {
+  describe('Get Business Action', () => {
+    it('should dispatch CURRENT_BUSINESS action type', (done) => {
       moxios.stubRequest(`/api/v1/businesses/${businessId}`, {
         status: 200,
         response: {
@@ -189,8 +189,8 @@ describe('Business actions', () => {
     });
   });
 
-  describe('When I dispatch the update business action', () => {
-    it('should update a business', (done) => {
+  describe('Update Business Action', () => {
+    it('should update a business on success', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -216,7 +216,7 @@ describe('Business actions', () => {
         });
     });
 
-    it('should update a business', (done) => {
+    it('should not update a business on error', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -243,8 +243,8 @@ describe('Business actions', () => {
     });
   });
 
-  describe('Delete business action', () => {
-    it('should delete a business', (done) => {
+  describe('Delete Business Action', () => {
+    it('should delete a business on success', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -270,7 +270,7 @@ describe('Business actions', () => {
         });
     });
 
-    it('should not delete a business', (done) => {
+    it('should not delete a business on error', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -293,8 +293,8 @@ describe('Business actions', () => {
     });
   });
 
-  describe('When I call the get all businesses action', () => {
-    it('Then it should dispatch an action to get all businesses by page', (done) => {
+  describe('Get all Businesses Action', () => {
+    it('should dispatch an action to get all businesses by page', (done) => {
       moxios.stubRequest(`/api/v1/businesses?pageNum=${pageNumber}`, {
         status: 200,
         response: allBusinesses
@@ -312,7 +312,7 @@ describe('Business actions', () => {
         });
     });
 
-    it('Then it should not dispatch an action to get all businesses by page', (done) => {
+    it('should not dispatch an action to get all businesses by page', (done) => {
       moxios.stubRequest(`/api/v1/businesses?pageNum=${pageNumber}`, {
         status: 404
       });
@@ -329,8 +329,8 @@ describe('Business actions', () => {
     });
   });
 
-  describe('When I call the search a business action', () => {
-    it('Then it should dispatch an action to search all businesses', (done) => {
+  describe('Search Business Action', () => {
+    it('should dispatch an action to search all businesses', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -354,7 +354,7 @@ describe('Business actions', () => {
         });
     });
 
-    it('creates a FOUND_BUSINESSES if no business found', (done) => {
+    it('should dispatch FOUND_BUSINESSES action type if no business found', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -379,8 +379,8 @@ describe('Business actions', () => {
     });
   });
 
-  describe('When I call the get a user business action', () => {
-    it('Then it should dispatch an action to get a user business', (done) => {
+  describe('User Business Action', () => {
+    it('should dispatch an action to get a user\'s business', (done) => {
       moxios.stubRequest(`/api/v1/${userId}/businesses`, {
         status: 200,
         response: userBusinesses

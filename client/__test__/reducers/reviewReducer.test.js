@@ -8,7 +8,7 @@ import {
 } from '../../actions/types';
 
 describe('Review reducer', () => {
-  it('gets all reviews for a business when passed with GET_REVIEWS', () => {
+  it('should get all reviews for a business when passed with GET_REVIEWS action type', () => {
     const initialState = {
       reviews: []
     };
@@ -34,7 +34,7 @@ describe('Review reducer', () => {
     expect(newState.reviews[0].star).toEqual(5);
   });
 
-  it('posts a new review when passed with POST_REVIEW', () => {
+  it('should post a new review when passed with POST_REVIEW action type', () => {
     const initialState = {
       reviews: [],
       review: {}
@@ -52,7 +52,7 @@ describe('Review reducer', () => {
     expect(newState.reviews[0].star).toEqual(4);
   });
 
-  it('edits a review when passed with EDIT_REVIEW', () => {
+  it('should edit a review when passed with EDIT_REVIEW action type', () => {
     const initialState = {
       reviews: [
         {
@@ -77,7 +77,7 @@ describe('Review reducer', () => {
     expect(newState.reviews[0].star).toEqual(1);
   });
 
-  it('should return initial review if review not found if passed with EDIT_REVIEW', () => {
+  it('should return initial review if review not found if passed with EDIT_REVIEW action type', () => {
     const initialState = {
       reviews: [
         {
@@ -102,7 +102,7 @@ describe('Review reducer', () => {
     expect(newState.reviews[0].star).toEqual(4);
   });
 
-  it('delets a review when passed with DELETE_REVIEW', () => {
+  it('should delete a review when passed with DELETE_REVIEW action type', () => {
     const initialState = {
       reviews: [
         {
