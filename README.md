@@ -8,12 +8,22 @@
 WeConnect provides a platform that brings businesses and individuals together. This platform creates awareness for businesses and gives the users the ability to write reviews about the businesses they have interacted with.
 
 ## Table of Contents
-1. <a href="#tech-stack-used">Tech Stack Used</a>
-2. <a href="#application-features">Application Features</a>
-3. <a href="#how-to-use">How To Use</a>
-4. <a href="#author">Author</a>
-5. <a href="#license">License</a>
+1. <a href="#hosted-app">Link to Hosted App</a>
+2. <a href="#pivotal-tracker">Link to Pivotal Tracker</a>
+3. <a href="#tech-stack-used">Tech Stack Used</a>
+4. <a href="#application-features">Application Features</a>
+5. <a href="#how-to-use">How To Use</a>
+6. <a href="#author">Author</a>
+7. <a href="#license">License</a>
 
+
+## Link to Hosted App
+
+https://weconnect-server.herokuapp.com/
+
+## Link to Pivotal Tracker
+
+https://www.pivotaltracker.com/n/projects/2153206
 
 ## Tech Stack Used
 

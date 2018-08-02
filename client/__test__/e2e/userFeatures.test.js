@@ -1,4 +1,3 @@
-// const path = require('path');
 const userInfo = require('../mocks/userDetails');
 
 module.exports = {

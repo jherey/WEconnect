@@ -113,26 +113,4 @@ describe('Connected NewBusiness component', () => {
     const wrapper = shallow(<ConnectedEditBusiness store={store} />);
     expect(wrapper.length).toBe(1);
   });
-
-  // it('should set state on image upload success', () => {
-  //   const store = mockStore({
-  //     authUser: {
-  //       user: {
-  //         id: 1,
-  //         name: 'jherey'
-  //       }
-  //     },
-  //     businesses: {
-  //       id: 1,
-  //       businessName: 'Andela',
-  //       imageUrl: 'andela.com',
-  //       imageUploadError: ''
-  //     }
-  //   });
-  //   const wrapper = shallow(<ConnectedEditBusiness store={store} />);
-  //   const action = wrapper.instance();
-  //   const editBusiness = jest.spyOn(wrapper.instance(), 'uploadImage');
-  //   action.uploadImage({ target: { files: ['1'] } });
-  //   expect(editBusiness).toBeCalled();
-  // });
 });

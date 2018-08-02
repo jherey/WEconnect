@@ -29,7 +29,7 @@ const mockStore = configureMockStore(middlewares);
 
 const id = 1;
 
-describe('Review actions', () => {
+describe('Review Actions', () => {
   beforeEach(() => {
     global.toastr = {
       success: () => {},
@@ -39,8 +39,8 @@ describe('Review actions', () => {
   });
   afterEach(() => moxios.uninstall());
 
-  describe('When I call the get all reviews action', () => {
-    it('Then it should dispatch an action to get all the reviews and average rating', (done) => {
+  describe('Get Reviews Action', () => {
+    it('should dispatch an action to get all the reviews and average rating of the business', (done) => {
       moxios.stubRequest(`/api/v1/businesses/${id}/reviews`, {
         status: 200,
         response: reviews
@@ -58,10 +58,8 @@ describe('Review actions', () => {
           done();
         });
     });
-  });
 
-  describe('When I call the get all reviews action', () => {
-    it('Then it should not dispatch an action to get all the reviews and average rating', (done) => {
+    it('should not dispatch an action to get all the reviews and average rating', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -81,8 +79,8 @@ describe('Review actions', () => {
     });
   });
 
-  describe('When I post a review', () => {
-    it('Then it should dispatch an action to post a review', (done) => {
+  describe('Post Review Action', () => {
+    it('should dispatch an action to post a review', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -103,7 +101,7 @@ describe('Review actions', () => {
         });
     });
 
-    it('Then it should dispatch an action to post a review', (done) => {
+    it('should dispatch an action to show error on posting a review', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -126,8 +124,8 @@ describe('Review actions', () => {
     });
   });
 
-  describe('When I edit a review', () => {
-    it('Then it should dispatch an action to edit the review', (done) => {
+  describe('Edit Review Action', () => {
+    it('should dispatch an action to edit the review', (done) => {
       moxios.stubRequest(`/api/v1/businesses/${id}/reviews/${id}`, {
         status: 200,
         response: {
@@ -149,7 +147,7 @@ describe('Review actions', () => {
         });
     });
 
-    it('Then it should dispatch an action to edit the review', (done) => {
+    it('should dispatch an action to edit the review', (done) => {
       moxios.stubRequest(`/api/v1/businesses/${id}/reviews/${id}`, {
         status: 400
       });
@@ -166,8 +164,8 @@ describe('Review actions', () => {
     });
   });
 
-  describe('When I delete a review', () => {
-    it('Then it should dispatch an action to delete the review', (done) => {
+  describe('Delete Review Action', () => {
+    it('should dispatch an action to delete the review', (done) => {
       moxios.wait(() => {
         const request = moxios.requests.mostRecent();
         request.respondWith({
@@ -191,7 +189,7 @@ describe('Review actions', () => {
     });
   });
 
-  it('Then it should dispatch an action to delete the review', (done) => {
+  it('should dispatch an action to delete the review', (done) => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({

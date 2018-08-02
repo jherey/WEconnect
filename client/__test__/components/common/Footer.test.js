@@ -7,7 +7,7 @@ import Footer from '../../../components/common/Footer.jsx';
 configure({ adapter: new Adapter() });
 
 describe('Component: Footer', () => {
-  it('tests that the Footer component successfully rendered', () => {
+  it('should render the component successfully', () => {
     const wrapper = shallow(<Footer />);
     expect(wrapper.find('footer').length).toBe(1);
     expect(wrapper.find('p').length).toBe(1);
